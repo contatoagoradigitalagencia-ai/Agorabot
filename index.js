@@ -72,21 +72,25 @@ io.on("connection", (socket) => {
 	// });
 
 	socket.on("contacts", async (payload, callback) => {
-		// callback({
-		// 	ok: true,
-		// 	data: Array(15).fill({
-		// 		photo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT548e7yKxVzd9AoGwcjuciTV94wTtuZPzyC_-kWy3r&s",
-		// 		phone: "+00 (00) 00000-0000",
-		// 		lastMessage: "Last message..."
-		// 	})
-		// });
-
-		const chats = await Chat.find({});
-		console.log(chats);
 		callback({
 			ok: true,
-			data: chats
+			data: await Chat.find({})
 		});
+	});
+
+	socket.on("open_chat", async (payload, callback) => {
+		const { phone } = payload;
+
+		await Chat.updateOne(
+			{
+				phone: phone
+			},
+			{
+				$set: {
+					"lastMessage.humanViewed": true
+				}
+			}
+		);
 	});
 
 	setInterval(() => {

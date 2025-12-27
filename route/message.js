@@ -1,4 +1,4 @@
-import sendMessage from "../send_message/send-message.js";
+import sendText from "../send_message/send-text.js";
 
 /**
  * @author VAMPETA
@@ -17,6 +17,6 @@ export default async function message(req, res) {
 
 	if (typeof password !== "string" || password !== process.env.PASSWORD) return (res.sendStatus(401));
 	if (typeof number !== "string" || typeof message !== "string") return (res.sendStatus(400));
-	const response = await sendMessage(number, message);
+	const response = await sendText(number, message);
 	res.sendStatus(response.status);
 }

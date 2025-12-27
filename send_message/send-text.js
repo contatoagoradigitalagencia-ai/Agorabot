@@ -1,16 +1,12 @@
 import axios from "axios";
 
-async function saveMongoDB() {
-
-}
-
 /**
  * @author VAMPETA
  * @brief FUNCAO CRIADA PARA ENVIAR MENSAGENS SIMPLES
  * @param number NUMERO QUE VAI RECEBER A MENSAGEM
  * @param message MENSAGEM QUE SERA ENVIADA
 */
-export default async function sendMessage(number, message) {
+export default async function sendText(number, message) {
 	const res = await axios({
 		method: "POST",
 		url: "https://graph.facebook.com/v22.0/" + process.env.IDENTIFICACAO_DO_NUMERO_DE_TELEFONE + "/messages",

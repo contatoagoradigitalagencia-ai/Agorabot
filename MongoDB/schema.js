@@ -1,10 +1,27 @@
 import mongoose from "mongoose";
 
+const lastMessage = new mongoose.Schema(
+	{
+		text: String,
+		timestamp: {
+			type: Date,
+			default: Date.now
+		},
+		humanViewed: {
+			type: Boolean,
+			default: false
+		},
+		status: {
+			type: String,
+			default: undefined
+		}
+	},
+	{ _id: false }
+);
 const chats = new mongoose.Schema({
 	photo: {
 		type: String,
-		default: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT548e7yKxVzd9AoGwcjuciTV94wTtuZPzyC_-kWy3r&s",
-		require: false
+		default: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT548e7yKxVzd9AoGwcjuciTV94wTtuZPzyC_-kWy3r&s"
 	},
 	phone: {
 		type: String,
@@ -15,14 +32,7 @@ const chats = new mongoose.Schema({
 		type: String,
 		default: ""
 	},
-	lastMessage: {
-		text: String,
-		timesTamp: Date,
-		status: {
-			type: String,
-			default: undefined
-		}
-	}
+	lastMessage: lastMessage
 });
 
 const messages = new mongoose.Schema({
@@ -39,9 +49,9 @@ const messages = new mongoose.Schema({
 		type: String,
 		require: true
 	},
-	timesTamp: {
+	timestamp: {
 		type: Date,
-		required: true
+		default: Date.now
 	},
 	status: {
 		type: String,
