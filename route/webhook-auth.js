@@ -10,7 +10,6 @@
  * @returns 403 - TIPO DE OPERACAO INESPERADO OU TOKEN INVALIDO
 */
 export default function webhookAuth(req, res) {
-	console.log("veio aki")
 	const mode = req.query["hub.mode"];
     const token = req.query["hub.verify_token"];
     const challenge = req.query["hub.challenge"];

@@ -1,9 +1,5 @@
 import { Chat, Message } from "./schema.js";
 
-// export async function saveReadReceived() {
-
-// }
-
 /**
  * @author VAMPETA
  * @brief FUNCAO CRIADA PARA SALVAR STATUS DE RECEBIDO E VISUALIZADO NO MONGODB

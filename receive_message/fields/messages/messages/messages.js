@@ -39,7 +39,6 @@ export default async function messages(value) {
 				break;
 
 			case ("sticker"):
-console.log(value);
 				sticker(value, message);
 				break;
 

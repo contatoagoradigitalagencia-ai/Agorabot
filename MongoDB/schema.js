@@ -1,5 +1,17 @@
 import mongoose from "mongoose";
 
+const login = new mongoose.Schema({
+	phone: {
+		type: String,
+		required: true,
+		unique: true
+	},
+	password: {
+		type: String,
+		required: true
+	}
+});
+
 const lastMessage = new mongoose.Schema(
 	{
 		text: String,
@@ -83,7 +95,8 @@ const messages = new mongoose.Schema({
 	// }
 });
 
+const Login = mongoose.model("Login", login);
 const Chat = mongoose.model("Chat", chats);
 const Message = mongoose.model("Message", messages);
 
-export { Chat, Message };
+export { Login, Chat, Message };
