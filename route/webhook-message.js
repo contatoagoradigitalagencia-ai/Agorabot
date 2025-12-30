@@ -1,4 +1,4 @@
-import FieldMessages from "../receive_message/fields/messages/change.js";
+import fieldMessages from "../receive_message/fields/messages/change.js";
 
 /**
  * @author VAMPETA
@@ -9,11 +9,12 @@ import FieldMessages from "../receive_message/fields/messages/change.js";
  * @param {Array} req.entry DADOS RECEBIDO DO WHATSAPP
 */
 export default async function webhookMessage(req, res) {
-	for (const entry of req.entry) {
+	for (const entry of req.body.entry) {
 		for (const change of entry.changes) {
+			if (change.value.messaging_product !== "whatsapp") continue ;
 			switch (change.field) {
 				case ("messages"):
-					FieldMessages(change);
+					await fieldMessages(change);
 					break;
 
 				case ("message_template_status_update"):

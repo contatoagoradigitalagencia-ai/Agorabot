@@ -7,6 +7,5 @@
 */
 export default function verifyProductIndicator(req, res, next) {
 	if (req.body.object !== "whatsapp_business_account") return ;
-	req.entry = req.body.entry;
 	next();
 }

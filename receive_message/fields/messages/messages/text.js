@@ -50,7 +50,7 @@ async function test(value, message) {
  * @param {Object} message UM UNICO ELEMENTO DE req.body.entry[n].changes[n].value.messages[n]
 */
 export default async function text(value, message) {
-	test(value, message);
+// test(value, message);
 
 	readMessage(message.id);
 	await saveTextReceived(message.id, message.from, message.text.body);
@@ -60,5 +60,5 @@ export default async function text(value, message) {
 
 	// const teste = sockets.get(message.from);
 	// console.log(teste)
-	console.log(value)
+	// console.log(value)
 }

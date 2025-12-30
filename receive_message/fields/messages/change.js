@@ -1,3 +1,5 @@
+import { Account } from "../../../MongoDB/schema.js";
+
 import messages from "./messages/messages.js";
 import statuses from "./statuses/statuses.js";
 
@@ -26,11 +28,21 @@ import statuses from "./statuses/statuses.js";
  * @brief ENCAMINHA PARA A FUNCAO QUE TRATA CORRETAMENTE CADA CAMPO EXISTENTE
  * @param {Object} change UMA DAS POSICOES DO CAMPO req.body.entry[n].changes[n]
 */
-export default function FieldMessages(change) {
-	if (change.value.messaging_product) {}
-	if (change.value.metadata) {}
-	if (change.value.contacts) {}
-	if (change.value.messages) messages(change.value);
-	if (change.value.statuses) statuses(change.value);
-	if (change.value.errors) {}
+export default async function fieldMessages(change) {
+	try {
+		const phoneNumberIdentification = change?.value?.metadata.phone_number_id;
+		if (!phoneNumberIdentification) throw (null);
+		const account = await Account.findOne({ "meta.identificacao_do_numero_de_telefone": phoneNumberIdentification });
+// console.log(account)	// DEVO REPASSAR account PARA AS PROXIMAS FUNCOES UTILIZAREM OS DADOS?
+
+		if (!account) return ;
+		if (change.value.messaging_product) {}
+		if (change.value.metadata) {}
+		if (change.value.contacts) {}
+		if (change.value.messages) await messages(change.value);
+		if (change.value.statuses) await statuses(change.value);
+		if (change.value.errors) {}
+	} catch (error) {
+		console.log("Erro em FieldMessages");
+	}
 }

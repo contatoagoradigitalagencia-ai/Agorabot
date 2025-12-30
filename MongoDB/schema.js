@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const login = new mongoose.Schema({
+const accounts = new mongoose.Schema({
 	phone: {
 		type: String,
 		required: true,
@@ -9,6 +9,20 @@ const login = new mongoose.Schema({
 	password: {
 		type: String,
 		required: true
+	},
+	meta: {
+		identificacao_do_numero_de_telefone: {
+			type: String,
+			required: true,
+		},
+		access_token: {
+			type: String,
+			required: true,
+		},
+		chave_secreta_do_aplicativo: {
+			type: String,
+			required: true,
+		}
 	}
 });
 
@@ -95,8 +109,8 @@ const messages = new mongoose.Schema({
 	// }
 });
 
-const Login = mongoose.model("Login", login);
-const Chat = mongoose.model("Chat", chats);
-const Message = mongoose.model("Message", messages);
+const Account = mongoose.model("account", accounts);
+const Chat = mongoose.model("chat", chats);
+const Message = mongoose.model("message", messages);
 
-export { Login, Chat, Message };
+export { Account, Chat, Message };

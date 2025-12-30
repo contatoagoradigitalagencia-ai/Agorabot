@@ -7,8 +7,8 @@ import configWebSocket from "./configs/websocket.js";
 import configEvents from "./websocket/events.js";
 
 const app = configExprees();
-configAxios();
 configDotenv();
+configAxios();
 connectMongoDB();
 configRoutes(app);
 const { server, io } = configWebSocket(app);
