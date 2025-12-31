@@ -3,15 +3,16 @@ import axios from "axios";
 /**
  * @author VAMPETA
  * @brief FUNCAO CRIADA PARA ENVIAR MENSAGENS SIMPLES
- * @param number NUMERO QUE VAI RECEBER A MENSAGEM
- * @param message MENSAGEM QUE SERA ENVIADA
+ * @param {String} number NUMERO QUE VAI RECEBER A MENSAGEM
+ * @param {String} message MENSAGEM QUE SERA ENVIADA
+ * @param {Object} account DADOS DO NUMERO QUE RECEBEU ATUALIZACOES
 */
-export default async function sendText(number, message) {
+export default async function sendText(number, message, account) {
 	const res = await axios({
 		method: "POST",
-		url: "https://graph.facebook.com/v22.0/" + process.env.IDENTIFICACAO_DO_NUMERO_DE_TELEFONE + "/messages",
+		url: "https://graph.facebook.com/v22.0/" + account.identificacao_do_numero_de_telefone + "/messages",
 		headers: {
-			Authorization: "Bearer " + process.env.ACCESS_TOKEN
+			Authorization: "Bearer " + account.access_token
 		},
 		data: {
 			messaging_product: "whatsapp",
@@ -22,7 +23,7 @@ export default async function sendText(number, message) {
 			}
 		}
 	});
-
 	const wamid = res.data?.messages[0]?.id;
+
 	return ((res.status === 200 && wamid) ? wamid : null);
 }

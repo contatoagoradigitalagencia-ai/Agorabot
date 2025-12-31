@@ -45,6 +45,10 @@ const lastMessage = new mongoose.Schema(
 	{ _id: false }
 );
 const chats = new mongoose.Schema({
+	// idPhone: {						// IMPLEMENTAR ESSE IDENTIFICADOR DE NUMERO
+	// 	type: String,
+	// 	require: true
+	// },
 	photo: {
 		type: String,
 		default: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT548e7yKxVzd9AoGwcjuciTV94wTtuZPzyC_-kWy3r&s"
@@ -62,6 +66,10 @@ const chats = new mongoose.Schema({
 });
 
 const messages = new mongoose.Schema({
+	// idPhone: {						// IMPLEMENTAR ESSE IDENTIFICADOR DE NUMERO
+	// 	type: String,
+	// 	require: true
+	// },
 	phone: {
 		type: String,
 		required: true
@@ -110,7 +118,7 @@ const messages = new mongoose.Schema({
 });
 
 const Account = mongoose.model("account", accounts);
-const Chat = mongoose.model("chat", chats);
-const Message = mongoose.model("message", messages);
+const Chat = mongoose.model("chat", chats);				// TA FALTANDO IDENTIFICAR QUAL NUMERO RECEBEU A MENSAGEM
+const Message = mongoose.model("message", messages);	// TA FALTANDO IDENTIFICAR QUAL NUMERO RECEBEU A MENSAGEM
 
 export { Account, Chat, Message };

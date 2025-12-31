@@ -4,8 +4,9 @@ import { saveStatusSent } from "../../../../MongoDB/readMessage.js";
  * @author VAMPETA
  * @brief TRATA O CASO DE req.body.entry[n].changes[n].field === "statuses" && req.body.entry[n].changes[n].value === true
  * @param {Object} value CAMPO value PRESENTE EM req.body.entry[n].changes[n].value
+ * @param {Object} account DADOS DO NUMERO QUE RECEBEU ATUALIZACOES
 */
-export default async function statuses(value) {
+export default async function statuses(value, account) {
 	for (const status of value.statuses) {
 		switch (status.status) {
 			case ("sent"):

@@ -48,13 +48,14 @@ async function test(value, message) {
  * @brief TRATA A MENSAGEM CASO ELA SEJA DO TIPO "text"
  * @param {Object} value CAMPO value PRESENTE EM req.body.entry[n].changes[n].value
  * @param {Object} message UM UNICO ELEMENTO DE req.body.entry[n].changes[n].value.messages[n]
+ * @param {Object} account DADOS DO NUMERO QUE RECEBEU ATUALIZACOES
 */
-export default async function text(value, message) {
+export default async function text(value, message, account) {
 // test(value, message);
 
 	readMessage(message.id);
 	await saveTextReceived(message.id, message.from, message.text.body);
-	const wamid = await sendText(message.from, "Mensagem recebida com sucesso!");
+	const wamid = await sendText(message.from, "Mensagem recebida com sucesso!", account);
 	if (wamid) await saveTextSent(wamid, message.from, "Mensagem recebida com sucesso!");
 
 

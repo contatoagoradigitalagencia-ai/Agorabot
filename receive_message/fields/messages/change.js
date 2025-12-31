@@ -32,16 +32,15 @@ export default async function fieldMessages(change) {
 	try {
 		const phoneNumberIdentification = change?.value?.metadata.phone_number_id;
 		if (!phoneNumberIdentification) throw (null);
-		const account = await Account.findOne({ "meta.identificacao_do_numero_de_telefone": phoneNumberIdentification });
-// console.log(account)	// DEVO REPASSAR account PARA AS PROXIMAS FUNCOES UTILIZAREM OS DADOS?
+		const account = await Account.findOne({ "meta.identificacao_do_numero_de_telefone": phoneNumberIdentification }, { meta: 1, _id: 0 });
 
-		if (!account) return ;
-		if (change.value.messaging_product) {}
-		if (change.value.metadata) {}
-		if (change.value.contacts) {}
-		if (change.value.messages) await messages(change.value);
-		if (change.value.statuses) await statuses(change.value);
-		if (change.value.errors) {}
+		if (!account) throw (null);
+		// if (change.value.messaging_product) {}
+		// if (change.value.metadata) {}
+		// if (change.value.contacts) {}
+		if (change.value.messages) await messages(change.value, account.meta);
+		if (change.value.statuses) await statuses(change.value, account.meta);
+		// if (change.value.errors) {}
 	} catch (error) {
 		console.log("Erro em FieldMessages");
 	}

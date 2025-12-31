@@ -3,7 +3,8 @@
  * @brief TRATA A MENSAGEM CASO ELA SEJA DO TIPO "sticker"
  * @param {Object} value CAMPO value PRESENTE EM req.body.entry[n].changes[n].value
  * @param {Object} message UM UNICO ELEMENTO DE req.body.entry[n].changes[n].value.messages[n]
+ * @param {Object} account DADOS DO NUMERO QUE RECEBEU ATUALIZACOES
 */
-export default async function sticker(value, message) {
+export default async function sticker(value, message, account) {
 	console.log("chegou figurinha");
 }
