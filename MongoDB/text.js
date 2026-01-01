@@ -3,14 +3,16 @@ import { Chat, Message } from "./schema.js";
 /**
  * @author VAMPETA
  * @brief FUNCAO CRIADA PARA SALVAR MENSAGENS DE TEXTO RECEBIDAS NO MONGODB
+ * @param idPhone IDENTIFICADOR DO NUMERO DE TELEFONE DO BOT
  * @param wamid ID DA MENSAGEM ENVIADA
  * @param phone NUMERO QUE VAI RECEBER A MENSAGEM
  * @param message MENSAGEM QUE SERA ENVIADA
 */
-export async function saveTextReceived(wamid, phone, message) {
+export async function saveTextReceived(idPhone, wamid, phone, message) {
     try {
         if (!(await Chat.findOne({ phone: phone }))) {
             await Chat.create({
+				idPhone: idPhone,
                 phone: phone,
                 lastMessage: {
                     text: message
@@ -36,6 +38,7 @@ console.log("chat nao atualizado no mongodb (recebida)");
 
     try {
 	await Message.create({
+		idPhone: idPhone,
 		phone: phone,
 		wamid: wamid,
 		type: "text",
@@ -50,11 +53,12 @@ console.log("mensagem nao salva no mongodb (recebida)");
 /**
  * @author VAMPETA
  * @brief FUNCAO CRIADA PARA SALVAR MENSAGENS DE TEXTO ENVIADAS NO MONGODB
+ * @param idPhone IDENTIFICADOR DO NUMERO DE TELEFONE DO BOT
  * @param wamid ID DA MENSAGEM ENVIADA
  * @param phone NUMERO QUE VAI RECEBER A MENSAGEM
  * @param message MENSAGEM QUE SERA ENVIADA
 */
-export async function saveTextSent(wamid, phone, message) {
+export async function saveTextSent(idPhone, wamid, phone, message) {
 	try {
 		await Chat.updateOne(
 			{
@@ -74,6 +78,7 @@ console.log("chat nao atualizado no mongodb (enviada)");
 	}
 	try {
 		await Message.create({
+			idPhone: idPhone,
 			phone: phone,
 			wamid: wamid,
 			direction: "outbound",

@@ -11,22 +11,22 @@ export default async function statuses(value, account) {
 		switch (status.status) {
 			case ("sent"):
 // console.log(value.metadata.display_phone_number, "Mensagem entregue e aceita pela meta");
-				await saveStatusSent(status.id, status.recipient_id, "sent");
+				await saveStatusSent(account.identificacao_do_numero_de_telefone, status.id, status.recipient_id, "sent");
 				break;
 
 			case ("delivered"):
 // console.log(value.metadata.display_phone_number, "Mensagem entregue ao destinatario");
-				await saveStatusSent(status.id, status.recipient_id, "delivered");
+				await saveStatusSent(account.identificacao_do_numero_de_telefone, status.id, status.recipient_id, "delivered");
 				break;
 
 			case ("read"):
 // console.log(value.metadata.display_phone_number, "Mensagem lida pelo destinatario");
-				await saveStatusSent(status.id, status.recipient_id, "read");
+				await saveStatusSent(account.identificacao_do_numero_de_telefone, status.id, status.recipient_id, "read");
 				break;
 
 			case ("failed"):
 console.log("Mensagem ano aceita pela meta ou falhou", status.errors);
-				await saveStatusSent(status.id, status.recipient_id, "failed");
+				await saveStatusSent(account.identificacao_do_numero_de_telefone, status.id, status.recipient_id, "failed");
 				break;
 		}
 	}

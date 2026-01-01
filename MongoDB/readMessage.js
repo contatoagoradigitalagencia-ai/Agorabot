@@ -7,11 +7,12 @@ import { Chat, Message } from "./schema.js";
  * @param phone NUMERO QUE VAI MUDAR O STATUS
  * @param status STATUS DA MENSAGEM
 */
-export async function saveStatusSent(wamid, phone, status) {
+export async function saveStatusSent(idPhone, wamid, phone, status) {
 	try {
 		await Chat.updateOne(
 			{
-				phone: phone,
+				idPhone: idPhone,
+				phone: phone
 			},
 			{
 				$set: {
