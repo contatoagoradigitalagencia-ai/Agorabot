@@ -20,7 +20,7 @@ export default async function webhookMessage(req, res) {
 				case ("message_template_status_update"):
 					break;
 
-				case ("account_update"): 
+				case ("account_update"):
 					break;
 
 				case ("phone_number_quality_update"):

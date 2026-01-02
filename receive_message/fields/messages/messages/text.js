@@ -6,7 +6,7 @@ import sendText from "../../../../send_message/send-text.js";
 import { saveTextReceived, saveTextSent } from "../../../../MongoDB/text.js";
 
 import sockets from "../../../../websocket/sockets.js";
-
+import Groq from "groq-sdk";
 
 async function pokeApi(message) {	// CONSULTA A POKEAPI E ENVIA A IMAGEM E STATS DO POKEMON
 	const res = await axios({
@@ -51,7 +51,8 @@ async function test(value, message) {
 export default async function text(value, message, account) {
 // test(value, message);
 
-	await readMessage(account, message.id);	
+
+	await readMessage(account, message.id);
 	await saveTextReceived(account.identificacao_do_numero_de_telefone, message.id, message.from, message.text.body);
 	const wamid = await sendText(message.from, "Mensagem recebida com sucesso!", account);
 	if (wamid) await saveTextSent(account.identificacao_do_numero_de_telefone, wamid, message.from, "Mensagem recebida com sucesso!");
@@ -59,5 +60,4 @@ export default async function text(value, message, account) {
 
 	// const teste = sockets.get(message.from);
 	// console.log(teste)
-	// console.log(value)
 }

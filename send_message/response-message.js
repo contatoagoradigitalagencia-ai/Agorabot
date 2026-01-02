@@ -27,3 +27,5 @@ export default async function responseMessage(wamid, number, message) {
 		}
 	});
 }
+
+					// AINDA NAO TERMINADO

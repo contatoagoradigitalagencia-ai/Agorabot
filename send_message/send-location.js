@@ -30,3 +30,5 @@ export default async function sendLocation(number, latitude, longitude, name, ad
 	});
 
 }
+
+					// AINDA NAO TERMINADO

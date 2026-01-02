@@ -8,26 +8,8 @@ import { saveStatusSent } from "../../../../MongoDB/readMessage.js";
 */
 export default async function statuses(value, account) {
 	for (const status of value.statuses) {
-		switch (status.status) {
-			case ("sent"):
-// console.log(value.metadata.display_phone_number, "Mensagem entregue e aceita pela meta");
-				await saveStatusSent(account.identificacao_do_numero_de_telefone, status.id, status.recipient_id, "sent");
-				break;
-
-			case ("delivered"):
-// console.log(value.metadata.display_phone_number, "Mensagem entregue ao destinatario");
-				await saveStatusSent(account.identificacao_do_numero_de_telefone, status.id, status.recipient_id, "delivered");
-				break;
-
-			case ("read"):
-// console.log(value.metadata.display_phone_number, "Mensagem lida pelo destinatario");
-				await saveStatusSent(account.identificacao_do_numero_de_telefone, status.id, status.recipient_id, "read");
-				break;
-
-			case ("failed"):
-console.log("Mensagem ano aceita pela meta ou falhou", status.errors);
-				await saveStatusSent(account.identificacao_do_numero_de_telefone, status.id, status.recipient_id, "failed");
-				break;
+		if (status.status == "sent" || status.status == "delivered" || status.status == "read" || status.status == "failed") {
+			await saveStatusSent(account.identificacao_do_numero_de_telefone, status.id, status.recipient_id, status.status);
 		}
 	}
 }

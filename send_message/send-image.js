@@ -27,3 +27,5 @@ export default async function sendImage(number, link, caption) {
 
 	// console.log(res.status)
 }
+
+					// AINDA NAO TERMINADO

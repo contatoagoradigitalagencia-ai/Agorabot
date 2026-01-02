@@ -26,3 +26,5 @@ export default async function reactMessage(number, wamid, emoji) {
 	});
 
 }
+
+					// AINDA NAO TERMINADO

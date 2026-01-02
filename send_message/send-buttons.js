@@ -35,3 +35,5 @@ export default async function sendButons(number) {
 		}
 	});
 }
+
+					// AINDA NAO TERMINADO

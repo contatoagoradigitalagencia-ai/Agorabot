@@ -38,3 +38,5 @@ export default async function sendList(number) {
 		}
 	});
 }
+
+					// AINDA NAO TERMINADO
