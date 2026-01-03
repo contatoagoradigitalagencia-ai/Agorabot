@@ -1,53 +1,57 @@
 import { Chat, Message } from "./schema.js";
+import saveError from "./error.js";
 
 /**
  * @author VAMPETA
  * @brief FUNCAO CRIADA PARA SALVAR MENSAGENS DE TEXTO RECEBIDAS NO MONGODB
  * @param idPhone IDENTIFICADOR DO NUMERO DE TELEFONE DO BOT
  * @param wamid ID DA MENSAGEM ENVIADA
- * @param phone NUMERO QUE VAI RECEBER A MENSAGEM
- * @param message MENSAGEM QUE SERA ENVIADA
+ * @param phone NUMERO QUE RECEBEU A MENSAGEM
+ * @param message MENSAGEM ENVIADA
 */
 export async function saveTextReceived(idPhone, wamid, phone, message) {
-    try {
-        if (!(await Chat.findOne({ phone: phone }))) {
-            await Chat.create({
+	try {
+		if (!(await Chat.findOne({ idPhone: idPhone, phone: phone }))) {
+			await Chat.create({
 				idPhone: idPhone,
-                phone: phone,
-                lastMessage: {
-                    text: message
-                }
-            });
-        } else {
-            await Chat.updateOne(
-                {
-                    phone: phone
-                },
-                {
-                    $set: {
-                        lastMessage: {
-                            text: message
-                        }
-                    }
-                }
-            );
-        }
-    } catch (error) {
-console.log("chat nao atualizado no mongodb (recebida)");
-    }
+				phone: phone,
+				lastMessage: {
+					text: message,
+					type: "text"
+				}
+			});
+		} else {
+			await Chat.updateOne(
+				{
+					idPhone: idPhone,
+					phone: phone
+				},
+				{
+					$set: {
+						lastMessage: {
+							text: message,
+							type: "text"
+						}
+					}
+				}
+			);
+		}
+	} catch (error) {
+		saveError(idPhone, error);
+	}
 
-    try {
-	await Message.create({
-		idPhone: idPhone,
-		phone: phone,
-		wamid: wamid,
-		type: "text",
-		text: message,
-		direction: "inbound"
-	});
-    } catch (error) {
-console.log("mensagem nao salva no mongodb (recebida)");
-    }
+	try {
+		await Message.create({
+			idPhone: idPhone,
+			phone: phone,
+			wamid: wamid,
+			type: "text",
+			text: message,
+			direction: "inbound"
+		});
+	} catch (error) {
+		saveError(idPhone, error);
+	}
 }
 
 /**
@@ -74,7 +78,7 @@ export async function saveTextSent(idPhone, wamid, phone, message) {
 			}
 		);
 	} catch (error) {
-console.log("chat nao atualizado no mongodb (enviada)");
+		saveError(idPhone, error);
 	}
 	try {
 		await Message.create({
@@ -87,6 +91,6 @@ console.log("chat nao atualizado no mongodb (enviada)");
 			text: message
 		});
 	} catch (error) {
-console.log("mensagem nao salva no mongodb (enviada)");
+		saveError(idPhone, error);
 	}
 }

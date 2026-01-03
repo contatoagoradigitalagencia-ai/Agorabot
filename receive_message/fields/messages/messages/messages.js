@@ -1,8 +1,6 @@
 import sendText from "../../../../send_message/send-text.js";
 import responseMessage from "../../../../send_message/response-message.js";
 
-import { saveTextSent } from "../../../../MongoDB/text.js";
-
 import text from "./text.js";
 import sticker from "./sticker.js";
 
@@ -23,24 +21,22 @@ async function interactive(value, message) {
  * @param {Object} account DADOS DO NUMERO QUE RECEBEU ATUALIZACOES
 */
 export default async function messages(value, account) {
-	for (const message of value.messages) {
+	for (const message of value.messages) {							// COLOCAR UM TRY CATCH
 		switch (message.type) {
 			case ("text"):
 				await text(value, message, account);
 				break;
 
-			case ("sticker"):
-				await sticker(value, message, account);
-				break;
+			// case ("sticker"):
+			// 	await sticker(value, message, account);
+			// 	break;
 
-			case ("interactive"):
-				await interactive(value, message, account);
-				break;
+			// case ("interactive"):
+			// 	await interactive(value, message, account);
+			// 	break;
 
 			default:
-console.log("type nao suportado:", message.type);
-				const wamid = await sendText(message.from, "No momento o meu servidor nao suporta esse tipo de mensagem", account);
-				if (wamid) await saveTextSent(wamid, message.from, "No momento o meu servidor nao suporta esse tipo de mensagem");	// TA FALTANDO IDENTIFICAR QUAL NUMERO RECEBEU A MENSAGEM
+				await sendText(message.from, account.messageNotSupported, account);
 		}
 	}
 }

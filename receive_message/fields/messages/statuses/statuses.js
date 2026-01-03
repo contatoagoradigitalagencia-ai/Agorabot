@@ -8,7 +8,7 @@ import { saveStatusSent } from "../../../../MongoDB/readMessage.js";
 */
 export default async function statuses(value, account) {
 	for (const status of value.statuses) {
-		if (status.status == "sent" || status.status == "delivered" || status.status == "read" || status.status == "failed") {
+		if (status.status === "sent" || status.status === "delivered" || status.status === "read" || status.status === "failed") {
 			await saveStatusSent(account.identificacao_do_numero_de_telefone, status.id, status.recipient_id, status.status);
 		}
 	}

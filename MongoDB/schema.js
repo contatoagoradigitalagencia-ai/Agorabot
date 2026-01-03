@@ -10,25 +10,29 @@ const accounts = new mongoose.Schema({
 		type: String,
 		required: true
 	},
-	meta: {
-		identificacao_do_numero_de_telefone: {
-			type: String,
-			required: true,
-		},
-		access_token: {
-			type: String,
-			required: true,
-		},
-		chave_secreta_do_aplicativo: {
-			type: String,
-			required: true,
-		}
+	idPhone: {
+		type: String,
+		require: true,
+		unique: true
+	},
+	accessToken: {
+		type: String,
+		require: true,
+		unique: true
+	},
+	messageNotSupported: {
+		type: String,
+		require: true
 	}
 });
 
 const lastMessage = new mongoose.Schema(
 	{
 		text: String,
+		type: {
+			type: String,
+			require: true
+		},
 		timestamp: {
 			type: Date,
 			default: Date.now
@@ -39,7 +43,7 @@ const lastMessage = new mongoose.Schema(
 		},
 		status: {
 			type: String,
-			default: undefined
+			default: "sending"
 		}
 	},
 	{ _id: false }
@@ -64,6 +68,19 @@ const chats = new mongoose.Schema({
 	lastMessage: lastMessage
 });
 
+const image = new mongoose.Schema(
+	{
+		link: {
+			type: String,
+			require: true
+		},
+		caption: {
+			type: String,
+			require: false
+		}
+	},
+	{ _id: false }
+);
 const messages = new mongoose.Schema({
 	idPhone: {
 		type: String,
@@ -88,7 +105,7 @@ const messages = new mongoose.Schema({
 	},
 	status: {
 		type: String,
-		default: undefined
+		default: "sending"
 	},
 	type: {
 		type: String,
@@ -98,10 +115,7 @@ const messages = new mongoose.Schema({
 		type: String,
 		default: undefined
 	},
-	// image: {
-	// 	type: String,
-	// 	default: undefined
-	// },
+	image: image,
 	// location: {
 	// 	type: Object,
 	// 	default: undefined
@@ -116,8 +130,20 @@ const messages = new mongoose.Schema({
 	// }
 });
 
-const Account = mongoose.model("account", accounts);
-const Chat = mongoose.model("chat", chats);				// TA FALTANDO IDENTIFICAR QUAL NUMERO RECEBEU A MENSAGEM
-const Message = mongoose.model("message", messages);	// TA FALTANDO IDENTIFICAR QUAL NUMERO RECEBEU A MENSAGEM
+const error = new mongoose.Schema({
+	idPhone: {
+		type: String,
+		require: true
+	},
+	error: {
+		type: String,
+		require: true
+	}
+});
 
-export { Account, Chat, Message };
+const Account = mongoose.model("account", accounts);
+const Chat = mongoose.model("chat", chats);
+const Message = mongoose.model("message", messages);
+const Error = mongoose.model("error", error);
+
+export { Account, Chat, Message, Error };

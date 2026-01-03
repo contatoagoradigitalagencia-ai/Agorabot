@@ -1,4 +1,5 @@
 import fieldMessages from "../receive_message/fields/messages/change.js";
+import saveError from "../MongoDB/error.js";
 
 /**
  * @author VAMPETA
@@ -11,7 +12,7 @@ import fieldMessages from "../receive_message/fields/messages/change.js";
 export default async function webhookMessage(req, res) {
 	for (const entry of req.body.entry) {
 		for (const change of entry.changes) {
-			if (change.value.messaging_product !== "whatsapp") continue ;
+			if (change?.value.messaging_product !== "whatsapp") continue ;
 			switch (change.field) {
 				case ("messages"):
 					await fieldMessages(change);
@@ -36,7 +37,7 @@ export default async function webhookMessage(req, res) {
 					break;
 
 				default:
-					console.log("Evento desconhecido:", change.field);
+					saveError(change?.value?.metadata.phone_number_id, `Erro na função "webhookMessage": Evento desconhecido ==> ${change.field}`);
 			}
 		}
 	}

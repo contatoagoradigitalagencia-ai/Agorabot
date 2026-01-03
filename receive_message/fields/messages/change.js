@@ -1,4 +1,5 @@
 import { Account } from "../../../MongoDB/schema.js";
+import saveError from "../../../MongoDB/error.js";
 
 import messages from "./messages/messages.js";
 import statuses from "./statuses/statuses.js";
@@ -29,19 +30,20 @@ import statuses from "./statuses/statuses.js";
  * @param {Object} change UMA DAS POSICOES DO CAMPO req.body.entry[n].changes[n]
 */
 export default async function fieldMessages(change) {
+	const idPhone = change?.value?.metadata.phone_number_id;
+
 	try {
-		const phoneNumberIdentification = change?.value?.metadata.phone_number_id;
-		if (!phoneNumberIdentification) throw (null);
-		const account = await Account.findOne({ "meta.identificacao_do_numero_de_telefone": phoneNumberIdentification }, { meta: 1, _id: 0 });
+		if (!idPhone) throw (null);
+		const account = await Account.findOne({ "idPhone": idPhone });
 
 		if (!account) throw (null);
 		// if (change.value.messaging_product) {}
 		// if (change.value.metadata) {}
 		// if (change.value.contacts) {}
-		if (change.value.messages) await messages(change.value, account.meta);
-		if (change.value.statuses) await statuses(change.value, account.meta);
+		if (change.value.messages) await messages(change.value, account);
+		if (change.value.statuses) await statuses(change.value, account);
 		// if (change.value.errors) {}
 	} catch (error) {
-		console.log("Erro em FieldMessages");
+		saveError(((idPhone) ? idPhone : "Sem idPhone"), `Error na funcao "fieldMessages": ${error}`);
 	}
 }

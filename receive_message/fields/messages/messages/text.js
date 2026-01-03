@@ -3,6 +3,7 @@ import axios from "axios";
 import readMessage from "../../../../send_message/read-message.js";
 import reactMessage from "../../../../send_message/react-message.js";
 import sendText from "../../../../send_message/send-text.js";
+import sendImage from "../../../../send_message/send-image.js";
 import { saveTextReceived, saveTextSent } from "../../../../MongoDB/text.js";
 
 import sockets from "../../../../websocket/sockets.js";
@@ -51,12 +52,13 @@ async function test(value, message) {
 export default async function text(value, message, account) {
 // test(value, message);
 
-
 	await readMessage(account, message.id);
-	await saveTextReceived(account.identificacao_do_numero_de_telefone, message.id, message.from, message.text.body);
-	const wamid = await sendText(message.from, "Mensagem recebida com sucesso!", account);
-	if (wamid) await saveTextSent(account.identificacao_do_numero_de_telefone, wamid, message.from, "Mensagem recebida com sucesso!");
+	await saveTextReceived(account.idPhone, message.id, message.from, message.text.body);
 
+	// ATIVACAO DE MICROSSERVICOS COMO CHATBOT
+
+	await sendText(message.from, "Mensagem recebida com sucesso!", account);
+	await sendImage(message.from, "https://i1.sndcdn.com/artworks-qAOgl3ivzZzIw0dz-3mVPvA-t1080x1080.jpg", "Satoru Gojo", account);
 
 	// const teste = sockets.get(message.from);
 	// console.log(teste)
