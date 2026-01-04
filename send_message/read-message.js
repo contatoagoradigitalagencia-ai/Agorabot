@@ -9,9 +9,9 @@ import axios from "axios";
 export default async function readMessage(account, wamid) {
 	const res = await axios({
 		method: "POST",
-		url: "https://graph.facebook.com/v22.0/" + account.identificacao_do_numero_de_telefone + "/messages",
+		url: "https://graph.facebook.com/v22.0/" + account.idPhone + "/messages",
 		headers: {
-			Authorization: "Bearer " + account.access_token
+			Authorization: "Bearer " + account.accessToken
 		},
 		data: {
 			messaging_product: "whatsapp",

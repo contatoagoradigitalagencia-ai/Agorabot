@@ -43,7 +43,7 @@ const lastMessage = new mongoose.Schema(
 		},
 		status: {
 			type: String,
-			default: "sending"
+			default: undefined
 		}
 	},
 	{ _id: false }
@@ -53,13 +53,13 @@ const chats = new mongoose.Schema({
 		type: String,
 		require: true
 	},
-	photo: {
-		type: String,
-		default: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT548e7yKxVzd9AoGwcjuciTV94wTtuZPzyC_-kWy3r&s"
-	},
 	phone: {
 		type: String,
 		required: true
+	},
+	photo: {
+		type: String,
+		default: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT548e7yKxVzd9AoGwcjuciTV94wTtuZPzyC_-kWy3r&s"
 	},
 	name: {
 		type: String,
@@ -105,7 +105,7 @@ const messages = new mongoose.Schema({
 	},
 	status: {
 		type: String,
-		default: "sending"
+		default: undefined
 	},
 	type: {
 		type: String,

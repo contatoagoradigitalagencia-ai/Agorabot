@@ -1,4 +1,5 @@
 import { Chat, Message } from "./schema.js";
+import saveError from "./error.js";
 
 /**
  * @author VAMPETA
@@ -7,7 +8,7 @@ import { Chat, Message } from "./schema.js";
  * @param phone NUMERO QUE VAI MUDAR O STATUS
  * @param status STATUS DA MENSAGEM
 */
-export async function saveStatusSent(idPhone, wamid, phone, status) {
+export async function saveStatusMessage(idPhone, wamid, phone, status) {
 	try {
 		await Chat.updateOne(
 			{
@@ -21,7 +22,7 @@ export async function saveStatusSent(idPhone, wamid, phone, status) {
 			}
 		);
 	} catch (error) {
-console.log("status do chat nao atualizado no mongodb (enviado)");
+		await saveError(idPhone, error);
 	}
 
 	try {
@@ -36,6 +37,6 @@ console.log("status do chat nao atualizado no mongodb (enviado)");
 			}
 		);
 	} catch (error) {
-console.log("status da mensagem nao atualizado no mongodb (enviado)");
+		await saveError(idPhone, error);
 	}
 }

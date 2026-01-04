@@ -1,64 +1,23 @@
-import axios from "axios";
-
-import readMessage from "../../../../send_message/read-message.js";
-import reactMessage from "../../../../send_message/react-message.js";
 import sendText from "../../../../send_message/send-text.js";
 import sendImage from "../../../../send_message/send-image.js";
-import { saveTextReceived, saveTextSent } from "../../../../MongoDB/text.js";
+import { saveTextReceived } from "../../../../MongoDB/text.js";
 
 import sockets from "../../../../websocket/sockets.js";
-import Groq from "groq-sdk";
-
-async function pokeApi(message) {	// CONSULTA A POKEAPI E ENVIA A IMAGEM E STATS DO POKEMON
-	const res = await axios({
-		method: "GET",
-		url: "https://pokeapi.co/api/v2/pokemon/" + message.text.body
-	});
-
-	if (res.status !== 200) return (sendText(message.from, "Pokemon nao encontrado"));
-	const stats = Object.fromEntries(res.data.stats.map((s) => [s.stat.name, s.base_stat]));
-	sendImage(message.from, res.data.sprites.front_default, `Nome: ${res.data.name}\nHp: ${stats.hp}\nAttck: ${stats.attack}\nDefense: ${stats.defense}\nSpeed: ${stats.speed}`);
-}
-
-async function test(value, message) {
-	console.log("Name:", value.contacts[0]?.profile?.name);
-	console.log("Number:", message.from);
-	const date = new Date(Number(message.timestamp) * 1000);
-	const dia = date.getDate();
-	const mes = date.getMonth() + 1;
-	const ano = date.getFullYear();
-	const hora = date.getHours();
-	const minuto = date.getMinutes();
-	console.log("Data", `${hora}:${minuto} ${dia}/${mes}/${ano}`);
-	console.log("Texto:", message.text.body);
-	console.log("\n")
-	// reactMessage(message.from, message.id, "👍");
-
-	// await pokeApi(message);
-	// sendText(message.from, `Nome: ${res.data.name}\nHp: ${stats.hp}\nAttck: ${stats.attack}\nDefense: ${stats.defense}\nSpeed: ${stats.speed}`);
-	// sendImage(message.from, res.data.sprites.front_default, `Nome: ${res.data.name}\nHp: ${stats.hp}\nAttck: ${stats.attack}\nDefense: ${stats.defense}\nSpeed: ${stats.speed}`);
-	// sendLocation(message.from);
-	// sendButons(message.from);	// AINDA NAO CONFIGUREI PARA INTERPRETAR A RESPOSTA DESSE TIPO DE MENSAGEM
-	// sendList(message.from);		// AINDA NAO CONFIGUREI PARA INTERPRETAR A RESPOSTA DESSE TIPO DE MENSAGEM
-}
+// import Groq from "groq-sdk";
 
 /**
  * @author VAMPETA
  * @brief TRATA A MENSAGEM CASO ELA SEJA DO TIPO "text"
- * @param {Object} value CAMPO value PRESENTE EM req.body.entry[n].changes[n].value
  * @param {Object} message UM UNICO ELEMENTO DE req.body.entry[n].changes[n].value.messages[n]
  * @param {Object} account DADOS DO NUMERO QUE RECEBEU ATUALIZACOES
 */
-export default async function text(value, message, account) {
-// test(value, message);
+export default async function text(message, account) {
+	await saveTextReceived(account.idPhone, message.id, message.from, message.text.body, new Date(Number(message.timestamp) * 1000).toISOString());
 
-	await readMessage(account, message.id);
-	await saveTextReceived(account.idPhone, message.id, message.from, message.text.body);
+	// ATIVACAO DE MICROSSERVICOS COMO CHATBOT			// COMECAR A TRABALHAR NISSO?
 
-	// ATIVACAO DE MICROSSERVICOS COMO CHATBOT
-
-	await sendText(message.from, "Mensagem recebida com sucesso!", account);
-	await sendImage(message.from, "https://i1.sndcdn.com/artworks-qAOgl3ivzZzIw0dz-3mVPvA-t1080x1080.jpg", "Satoru Gojo", account);
+	// await sendText(message.from, "Mensagem recebida com sucesso!", account);
+	// await sendImage(message.from, "https://i1.sndcdn.com/artworks-qAOgl3ivzZzIw0dz-3mVPvA-t1080x1080.jpg", "Satoru Gojo", account);
 
 	// const teste = sockets.get(message.from);
 	// console.log(teste)

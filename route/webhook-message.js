@@ -12,33 +12,28 @@ import saveError from "../MongoDB/error.js";
 export default async function webhookMessage(req, res) {
 	for (const entry of req.body.entry) {
 		for (const change of entry.changes) {
-			if (change?.value.messaging_product !== "whatsapp") continue ;
-			switch (change.field) {
-				case ("messages"):
-					await fieldMessages(change);
-					break;
+			try {
+				if (change?.value.messaging_product !== "whatsapp") continue ;
+				switch (change.field) {
+					case ("messages"):
+						await fieldMessages(change);
+						break;
 
-				case ("message_template_status_update"):
-					break;
-
-				case ("account_update"):
-					break;
-
-				case ("phone_number_quality_update"):
-					break;
-
-				case ("business_capability_update"):
-					break;
-
-				case ("waba_ownership_change"):
-					break;
-
-				case ("security"):
-					break;
-
-				default:
-					saveError(change?.value?.metadata.phone_number_id, `Erro na função "webhookMessage": Evento desconhecido ==> ${change.field}`);
+					default:
+						throw (`Evento não suportado ==> ${change.field}`);
+				}
+			} catch (error) {
+				const idPhone = change?.value?.metadata.phone_number_id;
+				await saveError(((idPhone) ? idPhone : "Sem idPhone"), `Error na funcao "webhookMessage": ${error}`);
 			}
 		}
 	}
 }
+
+// messages
+// message_template_status_update
+// account_update
+// phone_number_quality_update
+// business_capability_update
+// waba_ownership_change
+// security

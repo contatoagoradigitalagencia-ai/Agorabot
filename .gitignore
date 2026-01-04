@@ -3,3 +3,6 @@ node_modules/
 
 # Arquivos de ambiente
 .env
+
+# Google Sheets
+teste.json

@@ -4,26 +4,6 @@ import saveError from "../../../MongoDB/error.js";
 import messages from "./messages/messages.js";
 import statuses from "./statuses/statuses.js";
 
-// function messaging_product() {
-
-// }
-
-// function metadata() {
-
-// }
-
-// function contacts() {
-
-// }
-
-// messages MOVIDO
-
-// statuses MOVIDO
-
-// function errors() {
-
-// }
-
 /**
  * @author VAMPETA
  * @brief ENCAMINHA PARA A FUNCAO QUE TRATA CORRETAMENTE CADA CAMPO EXISTENTE
@@ -44,6 +24,13 @@ export default async function fieldMessages(change) {
 		if (change.value.statuses) await statuses(change.value, account);
 		// if (change.value.errors) {}
 	} catch (error) {
-		saveError(((idPhone) ? idPhone : "Sem idPhone"), `Error na funcao "fieldMessages": ${error}`);
+		await saveError(((idPhone) ? idPhone : "Sem idPhone"), `Error na funcao "fieldMessages": ${error}`);
 	}
 }
+
+// change.value.messaging_product
+// change.value.metadata
+// change.value.contacts
+// change.value.messages
+// change.value.statuses
+// change.value.errors

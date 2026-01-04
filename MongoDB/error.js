@@ -1,8 +1,14 @@
 import { Error } from "./schema.js";
 
+/**
+ * @author VAMPETA
+ * @brief FUNCAO CRIADA PARA SALVAR MENSAGENS DE IMAGENS ENVIADAS NO MONGODB
+ * @param idPhone IDENTIFICADOR DO NUMERO DE TELEFONE DO BOT
+ * @param error MENSAGEM DE ERRO
+*/
 export default async function saveError(idPhone, error) {
 	try {
-		console.log("Erro encontrado:", error);
+		console.log(error);
 		await Error.create({
 			idPhone: idPhone,
 			error: error

@@ -39,7 +39,7 @@ export async function saveImageSent(idPhone, wamid, phone, link, message) {
 			);
 		}
 	} catch (error) {
-		saveError(idPhone, error);
+		await saveError(idPhone, error);
 	}
 
 	try {
@@ -56,6 +56,6 @@ export async function saveImageSent(idPhone, wamid, phone, link, message) {
 			}
 		});
 	} catch (error) {
-		saveError(idPhone, error);
+		await saveError(idPhone, error);
 	}
 }

@@ -9,7 +9,7 @@ import saveError from "./error.js";
  * @param phone NUMERO QUE RECEBEU A MENSAGEM
  * @param message MENSAGEM ENVIADA
 */
-export async function saveTextReceived(idPhone, wamid, phone, message) {
+export async function saveTextReceived(idPhone, wamid, phone, message, timestamp) {
 	try {
 		if (!(await Chat.findOne({ idPhone: idPhone, phone: phone }))) {
 			await Chat.create({
@@ -17,7 +17,8 @@ export async function saveTextReceived(idPhone, wamid, phone, message) {
 				phone: phone,
 				lastMessage: {
 					text: message,
-					type: "text"
+					type: "text",
+					timestamp: timestamp
 				}
 			});
 		} else {
@@ -30,27 +31,27 @@ export async function saveTextReceived(idPhone, wamid, phone, message) {
 					$set: {
 						lastMessage: {
 							text: message,
-							type: "text"
+							type: "text",
+							timestamp: timestamp
 						}
 					}
 				}
 			);
 		}
 	} catch (error) {
-		saveError(idPhone, error);
+		await saveError(idPhone, error);
 	}
-
 	try {
 		await Message.create({
 			idPhone: idPhone,
 			phone: phone,
 			wamid: wamid,
+			direction: "inbound",
 			type: "text",
-			text: message,
-			direction: "inbound"
+			text: message
 		});
 	} catch (error) {
-		saveError(idPhone, error);
+		await saveError(idPhone, error);
 	}
 }
 
@@ -64,21 +65,35 @@ export async function saveTextReceived(idPhone, wamid, phone, message) {
 */
 export async function saveTextSent(idPhone, wamid, phone, message) {
 	try {
-		await Chat.updateOne(
-			{
-				phone: phone
-			},
-			{
-				$set: {
-					lastMessage: {
-						text: message,
-						status: "sent"
+		if (!(await Chat.findOne({ idPhone: idPhone, phone: phone }))) {
+			await Chat.create({
+				idPhone: idPhone,
+				phone: phone,
+				lastMessage: {
+					text: message,
+					type: "text",
+					status: "sending"
+				}
+			});
+		} else {
+			await Chat.updateOne(
+				{
+					idPhone: idPhone,
+					phone: phone
+				},
+				{
+					$set: {
+						lastMessage: {
+							text: message,
+							type: "text",
+							status: "sent"
+						}
 					}
 				}
-			}
-		);
+			);
+		}
 	} catch (error) {
-		saveError(idPhone, error);
+		await saveError(idPhone, error);
 	}
 	try {
 		await Message.create({
@@ -91,6 +106,6 @@ export async function saveTextSent(idPhone, wamid, phone, message) {
 			text: message
 		});
 	} catch (error) {
-		saveError(idPhone, error);
+		await saveError(idPhone, error);
 	}
 }

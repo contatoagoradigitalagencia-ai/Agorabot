@@ -1,18 +1,11 @@
+import readMessage from "../../../../send_message/read-message.js";
+import { saveTextReceived } from "../../../../MongoDB/text.js";
 import sendText from "../../../../send_message/send-text.js";
-import responseMessage from "../../../../send_message/response-message.js";
+import saveError from "../../../../MongoDB/error.js";
 
 import text from "./text.js";
-import sticker from "./sticker.js";
-
-/**
- * @author VAMPETA
- * @brief TRATA A MENSAGEM CASO ELA SEJA DO TIPO "interactive"
- * @param {Object} value CAMPO value PRESENTE EM req.body.entry[n].changes[n].value
- * @param {Object} message UM UNICO ELEMENTO DE req.body.entry[n].changes[n].value.messages[n]
-*/
-async function interactive(value, message) {
-	responseMessage(message.id, message.from, `Opção selecionada: ${message.interactive[message.interactive.type].title}`);
-}
+// import sticker from "./sticker.js";
+// import interactive from "./interactive.js";
 
 /**
  * @author VAMPETA
@@ -21,27 +14,33 @@ async function interactive(value, message) {
  * @param {Object} account DADOS DO NUMERO QUE RECEBEU ATUALIZACOES
 */
 export default async function messages(value, account) {
-	for (const message of value.messages) {							// COLOCAR UM TRY CATCH
-		switch (message.type) {
-			case ("text"):
-				await text(value, message, account);
-				break;
-
-			// case ("sticker"):
-			// 	await sticker(value, message, account);
-			// 	break;
-
-			// case ("interactive"):
-			// 	await interactive(value, message, account);
-			// 	break;
-
-			default:
-				await sendText(message.from, account.messageNotSupported, account);
+	for (const message of value.messages) {
+		try {
+			await readMessage(account, message.id, message.from);
+			switch (message.type) {
+				case ("text"):
+					await text(message, account);
+					break;
+	
+				// case ("sticker"):
+				// 	await sticker(value, message, account);
+				// 	break;
+	
+				// case ("interactive"):
+				// 	await interactive(value, message, account);
+				// 	break;
+	
+				default:
+					await saveTextReceived(account.idPhone, message.id, message.from, `Mensagem não suportada: ${message.type}`, new Date(Number(message.timestamp) * 1000).toISOString());
+					await sendText(message.from, account.messageNotSupported, account);
+			}
+		} catch (error) {
+			await saveError(account.idPhone, `Error na funcao "messages": ${error}`);
 		}
 	}
 }
 
-// text					messages[n].text.body
+// text					messages[n].text
 // image				messages[n].image
 // video				messages[n].video
 // audio				messages[n].audio
