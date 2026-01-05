@@ -1,4 +1,4 @@
-import { Chat } from "../MongoDB/schema.js";
+import Chat from "../MongoDB/schemas/chats.js";
 
 /**
  * @author VAMPETA

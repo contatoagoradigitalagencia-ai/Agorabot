@@ -1,4 +1,4 @@
-import { Error } from "./schema.js";
+import Error from "./schemas/error.js";
 
 /**
  * @author VAMPETA

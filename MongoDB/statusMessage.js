@@ -1,4 +1,5 @@
-import { Chat, Message } from "./schema.js";
+import Chat from "./schemas/chats.js";
+import Messages from "./schemas/messages.js";
 import saveError from "./error.js";
 
 /**
@@ -26,7 +27,7 @@ export async function saveStatusMessage(idPhone, wamid, phone, status) {
 	}
 
 	try {
-		await Message.updateOne(
+		await Messages.updateOne(
 			{
 				wamid: wamid
 			},

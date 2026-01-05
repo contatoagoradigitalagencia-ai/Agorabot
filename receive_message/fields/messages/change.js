@@ -1,4 +1,4 @@
-import { Account } from "../../../MongoDB/schema.js";
+import Account from "../../../MongoDB/schemas/accounts.js";
 import saveError from "../../../MongoDB/error.js";
 
 import messages from "./messages/messages.js";

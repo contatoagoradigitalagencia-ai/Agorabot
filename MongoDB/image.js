@@ -1,4 +1,5 @@
-import { Chat, Message } from "./schema.js";
+import Chat from "./schemas/chats.js";
+import Messages from "./schemas/messages.js";
 import saveError from "./error.js";
 
 /**
@@ -43,7 +44,7 @@ export async function saveImageSent(idPhone, wamid, phone, link, message) {
 	}
 
 	try {
-		await Message.create({
+		await Messages.create({
 			idPhone: idPhone,
 			phone: phone,
 			wamid: wamid,

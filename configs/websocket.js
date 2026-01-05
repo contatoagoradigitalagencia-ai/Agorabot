@@ -1,6 +1,6 @@
 import http from "http";
 import { Server } from "socket.io";
-import { Account } from "../MongoDB/schema.js";
+import Account from "../MongoDB/schemas/accounts.js";
 
 /**
  * @author VAMPETA
