@@ -14,7 +14,7 @@ export default async function fieldMessages(change) {
 
 	try {
 		if (!idPhone) throw (null);
-		const account = await Account.findOne({ "idPhone": idPhone });
+		const account = await Account.findOne({ "idPhone": idPhone }).select("-_id -password");
 
 		if (!account) throw (null);
 		// if (change.value.messaging_product) {}

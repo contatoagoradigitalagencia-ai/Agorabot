@@ -5,10 +5,6 @@ import mongoose from "mongoose";
  * @brief INICIA A CONEXAO COM O MONGODB
 */
 export default async function connectMongoDB() {
-	if (!process.env.MONGO_URI) {
-		console.log("\x1b[33mVariável MONGO_URI não definida\x1b[0m");
-		process.exit(1);
-	}
 	if (mongoose.connection.readyState === 1) return ;
 	try {
 		await mongoose.connect(process.env.MONGO_URI);
