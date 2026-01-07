@@ -5,6 +5,10 @@ const error = new mongoose.Schema({
 		type: String,
 		required: true
 	},
+	timestamp: {
+		type: Date,
+		default: Date.now
+	},
 	error: {
 		type: String,
 		required: true

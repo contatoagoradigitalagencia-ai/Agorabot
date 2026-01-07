@@ -32,7 +32,7 @@ export default async function messages(value, account) {
 	
 				default:
 					await saveTextReceived(account.idPhone, message.id, message.from, `Mensagem não suportada: ${message.type}`, new Date(Number(message.timestamp) * 1000).toISOString());
-					await sendText(message.from, account.messageNotSupported, account);
+					await sendText(account, message.from, account.messageNotSupported);
 			}
 		} catch (error) {
 			await saveError(account.idPhone, `Error na funcao "messages": ${error}`);

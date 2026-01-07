@@ -6,12 +6,12 @@ import saveError from "../MongoDB/error.js";
 /**
  * @author VAMPETA
  * @brief FUNCAO CRIADA PARA ENVIAR MENSAGENS SIMPLES
+ * @param {Object} account DADOS DO NUMERO QUE RECEBEU ATUALIZACOES
  * @param {String} number NUMERO QUE VAI RECEBER A MENSAGEM
  * @param {String} message MENSAGEM QUE SERA ENVIADA
- * @param {Object} account DADOS DO NUMERO QUE RECEBEU ATUALIZACOES
  * @return {String} RETORNA O WAMID DA MENSAGEM
 */
-export default async function sendText(number, message, account) {
+export default async function sendText(account, number, message) {
 	try {
 		const res = await axios({
 			method: "POST",
