@@ -1,8 +1,7 @@
+import { mongodb } from "../../../../configs/mongodb.js";
 import sendText from "../../../../send_message/send-text.js";
 import sendImage from "../../../../send_message/send-image.js";
-import { saveTextReceived } from "../../../../MongoDB/text.js";
 
-import { googleSheets } from "../../../../configs/google sheets.js";
 import sockets from "../../../../websocket/sockets.js";
 // import Groq from "groq-sdk";
 
@@ -15,7 +14,7 @@ import vampeta from "../../../../clients/Vampeta/index.js";
  * @param {Object} account DADOS DO NUMERO QUE RECEBEU ATUALIZACOES
 */
 export default async function text(message, account) {
-	await saveTextReceived(account.idPhone, message.id, message.from, message.text.body, new Date(Number(message.timestamp) * 1000).toISOString());
+	await mongodb.saveTextReceived(account.idPhone, message.id, message.from, message.text.body, new Date(Number(message.timestamp) * 1000).toISOString());
 
 
 

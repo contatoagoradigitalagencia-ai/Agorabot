@@ -1,4 +1,4 @@
-import { saveStatusMessage } from "../../../../MongoDB/statusMessage.js";
+import { mongodb } from "../../../../configs/mongodb.js";
 
 /**
  * @author VAMPETA
@@ -8,8 +8,12 @@ import { saveStatusMessage } from "../../../../MongoDB/statusMessage.js";
 */
 export default async function statuses(value, account) {
 	for (const status of value.statuses) {
-		if (status.status === "sent" || status.status === "delivered" || status.status === "read" || status.status === "failed") {
-			await saveStatusMessage(account.idPhone, status.id, status.recipient_id, status.status);
+		try {
+			if (status.status === "sent" || status.status === "delivered" || status.status === "read" || status.status === "failed") {
+				await mongodb.saveStatusMessage(account.idPhone, status.id, status.recipient_id, status.status);
+			}
+		} catch (error) {
+			await mongodb.saveError(account.idPhone, `Error na funcao "statuses": ${error}`);
 		}
 	}
 }

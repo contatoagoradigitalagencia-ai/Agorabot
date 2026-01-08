@@ -1,4 +1,4 @@
-import { GoogleSheets } from "../Google Sheets/GoogleSheets.js";
+import GoogleSheets from "../Google Sheets/GoogleSheets.js";
 
 let googleSheets = null;
 

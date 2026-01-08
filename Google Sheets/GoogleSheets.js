@@ -1,11 +1,11 @@
 import { google } from "googleapis";
-import saveError from "../MongoDB/error.js";
+import { mongodb } from "../configs/mongodb.js";
 
 /**
  * @author VAMPETA
  * @brief CLASSE CRIADA PARA GERENCIAR A CONEXAO COM O GOOGLE SHEETS
 */
-export class GoogleSheets {
+export default class GoogleSheets {
 	#googleSheets = null;
 
 	constructor() {}
@@ -15,7 +15,7 @@ export class GoogleSheets {
 	 * @brief INICIA A CONEXAO COM O GOOGLE SHEETS
 	*/
 	async connect() {
-		if (this.#googleSheets) return;
+		if (this.#googleSheets) return ;
 		const auth = new google.auth.GoogleAuth({
 			credentials: {
 				type: "service_account",
@@ -52,8 +52,8 @@ export class GoogleSheets {
 				return (obj);
 			}));
 		} catch (error) {
-			await saveError(((account.idPhone) ? account.idPhone : "Sem idPhone"), `Error na funcao "fieldMessages": ${error}`);
-			return (null);
+			await mongodb.saveError(((account.idPhone) ? account.idPhone : "Sem idPhone"), `Error na funcao "getPage": ${error}`);
+			return ([]);
 		}
 	}
 

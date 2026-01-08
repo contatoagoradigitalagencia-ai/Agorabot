@@ -1,4 +1,4 @@
-import Chat from "../MongoDB/schemas/chats.js";
+import { mongodb } from "../configs/mongodb.js";
 
 /**
  * @author VAMPETA
@@ -10,7 +10,7 @@ export default async function open_chat(payload, callback) {
 	const { phone } = payload;
 
 	if (!phone) return ;
-	await Chat.updateOne(
+	await mongodb.Chat.updateOne(
 		{
 			phone: phone
 		},

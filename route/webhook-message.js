@@ -1,5 +1,5 @@
+import { mongodb } from "../configs/mongodb.js";
 import fieldMessages from "../receive_message/fields/messages/change.js";
-import saveError from "../MongoDB/error.js";
 
 /**
  * @author VAMPETA
@@ -10,10 +10,12 @@ import saveError from "../MongoDB/error.js";
  * @param {Array} req.entry DADOS RECEBIDO DO WHATSAPP
 */
 export default async function webhookMessage(req, res) {
+	if (!Array.isArray(req.body?.entry)) return ;
 	for (const entry of req.body.entry) {
+		if (!Array.isArray(entry?.changes)) continue;
 		for (const change of entry.changes) {
 			try {
-				if (change?.value.messaging_product !== "whatsapp") continue ;
+				if (change?.value.messaging_product !== "whatsapp") continue;
 				switch (change.field) {
 					case ("messages"):
 						await fieldMessages(change);
@@ -24,7 +26,7 @@ export default async function webhookMessage(req, res) {
 				}
 			} catch (error) {
 				const idPhone = change?.value?.metadata.phone_number_id;
-				await saveError(((idPhone) ? idPhone : "Sem idPhone"), `Error na funcao "webhookMessage": ${error}`);
+				await mongodb.saveError(((idPhone) ? idPhone : "Sem idPhone"), `Error na funcao "webhookMessage": ${error}`);
 			}
 		}
 	}

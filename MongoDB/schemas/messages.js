@@ -14,7 +14,7 @@ const image = new mongoose.Schema(
 	{ _id: false }
 );
 
-const messages = new mongoose.Schema({
+const message = new mongoose.Schema({
 	idPhone: {
 		type: String,
 		required: true
@@ -63,4 +63,4 @@ const messages = new mongoose.Schema({
 	// }
 });
 
-export default mongoose.model("message", messages);
+export default mongoose.model("message", message);

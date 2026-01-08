@@ -1,4 +1,4 @@
-import Chat from "../MongoDB/schemas/chats.js";
+import { mongodb } from "../configs/mongodb.js";
 
 /**
  * @author VAMPETA
@@ -9,6 +9,6 @@ import Chat from "../MongoDB/schemas/chats.js";
 export default async function contacts(payload, callback) {
 	callback({
 		ok: true,
-		data: await Chat.find({})
+		data: await mongodb.Chat.find({})
 	});
 }

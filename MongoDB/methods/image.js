@@ -1,10 +1,6 @@
-import Chat from "./schemas/chats.js";
-import Messages from "./schemas/messages.js";
-import saveError from "./error.js";
-
 /**
  * @author VAMPETA
- * @brief FUNCAO CRIADA PARA SALVAR MENSAGENS DE IMAGENS ENVIADAS NO MONGODB
+ * @brief METODO CRIADO PARA SALVAR MENSAGENS DE IMAGENS ENVIADAS NO MONGODB
  * @param idPhone IDENTIFICADOR DO NUMERO DE TELEFONE DO BOT
  * @param wamid ID DA MENSAGEM ENVIADA
  * @param phone NUMERO QUE QUE RECEBEU A MENSAGEM
@@ -13,8 +9,8 @@ import saveError from "./error.js";
 */
 export async function saveImageSent(idPhone, wamid, phone, link, message) {
 	try {
-		if (!(await Chat.findOne({ idPhone: idPhone, phone: phone }))) {
-			await Chat.create({
+		if (!(await this.Chat.findOne({ idPhone: idPhone, phone: phone }))) {
+			await this.Chat.create({
 				idPhone: idPhone,
 				phone: phone,
 				lastMessage: {
@@ -24,7 +20,7 @@ export async function saveImageSent(idPhone, wamid, phone, link, message) {
 				}
 			});
 		} else {
-			await Chat.updateOne(
+			await this.Chat.updateOne(
 				{
 					idPhone: idPhone,
 					phone: phone
@@ -40,11 +36,11 @@ export async function saveImageSent(idPhone, wamid, phone, link, message) {
 			);
 		}
 	} catch (error) {
-		await saveError(idPhone, error);
+		await this.saveError(idPhone, `Error no metodo "saveImageSent": ${error}`);
 	}
 
 	try {
-		await Messages.create({
+		await this.Message.create({
 			idPhone: idPhone,
 			phone: phone,
 			wamid: wamid,
@@ -57,6 +53,6 @@ export async function saveImageSent(idPhone, wamid, phone, link, message) {
 			}
 		});
 	} catch (error) {
-		await saveError(idPhone, error);
+		await this.saveError(idPhone, `Error no metodo "saveImageSent": ${error}`);
 	}
 }

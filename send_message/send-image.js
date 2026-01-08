@@ -1,18 +1,17 @@
 import axios from "axios";
 
-import { saveImageSent } from "../MongoDB/image.js";
-import saveError from "../MongoDB/error.js";
+import { mongodb } from "../configs/mongodb.js";
 
 /**
  * @author VAMPETA
  * @brief FUNCAO CRIADA PARA ENVIAR IMAGEM
+ * @param {Object} account DADOS DO NUMERO QUE RECEBEU ATUALIZACOES
  * @param {String} number NUMERO QUE VAI RECEBER A MENSAGEM
  * @param {String} link URL DA IMAGEM
  * @param {String} caption MENSAGEM QUE SERA ENVIADA JUNTO COM A IMAGEM
- * @param {Object} account DADOS DO NUMERO QUE RECEBEU ATUALIZACOES
  * @return {String} RETORNA O WAMID DA MENSAGEM
 */
-export default async function sendImage(number, link, caption, account) {
+export default async function sendImage(account, number, link, caption) {
 	try {
 		const res = await axios({
 			method: "POST",
@@ -34,9 +33,9 @@ export default async function sendImage(number, link, caption, account) {
 		if (res.status !== 200) throw (`O axios retornou status ${res.status} ==> ${res.data}`);
 		const wamid = res.data?.messages?.[0]?.id;
 		if (!wamid) throw ("Wamid não retornado pela API da Meta");
-		if (wamid) await saveImageSent(account.idPhone, wamid, number, link, caption);
+		if (wamid) await mongodb.saveImageSent(account.idPhone, wamid, number, link, caption);
 		return (wamid);
 	} catch (error) {
-		await saveError(account.idPhone, `Erro na função "sendImage": ${error}`);
+		await mongodb.saveError(account.idPhone, `Erro na função "sendImage": ${error}`);
 	}
 }

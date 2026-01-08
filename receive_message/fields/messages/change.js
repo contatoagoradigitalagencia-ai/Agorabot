@@ -1,5 +1,4 @@
-import Account from "../../../MongoDB/schemas/accounts.js";
-import saveError from "../../../MongoDB/error.js";
+import { mongodb } from "../../../configs/mongodb.js";
 
 import messages from "./messages/messages.js";
 import statuses from "./statuses/statuses.js";
@@ -14,7 +13,7 @@ export default async function fieldMessages(change) {
 
 	try {
 		if (!idPhone) throw (null);
-		const account = await Account.findOne({ "idPhone": idPhone }).select("-_id -password");
+		const account = await mongodb.Account.findOne({ "idPhone": idPhone }).select("-_id -password");
 
 		if (!account) throw (null);
 		// if (change.value.messaging_product) {}
@@ -24,7 +23,7 @@ export default async function fieldMessages(change) {
 		if (change.value.statuses) await statuses(change.value, account);
 		// if (change.value.errors) {}
 	} catch (error) {
-		await saveError(((idPhone) ? idPhone : "Sem idPhone"), `Error na funcao "fieldMessages": ${error}`);
+		await mongodb.saveError(((idPhone) ? idPhone : "Sem idPhone"), `Error na funcao "fieldMessages": ${error}`);
 	}
 }
 

@@ -1,7 +1,6 @@
 import axios from "axios";
 
-import { saveTextSent } from "../MongoDB/text.js";
-import saveError from "../MongoDB/error.js";
+import { mongodb } from "../configs/mongodb.js";
 
 /**
  * @author VAMPETA
@@ -32,9 +31,9 @@ export default async function sendText(account, number, message) {
 		if (res.status !== 200) throw (`O axios retornou status ${res.status} ==> ${res.data}`);
 		const wamid = res.data?.messages?.[0]?.id;
 		if (!wamid) throw ("Wamid não retornado pela API da Meta");
-		await saveTextSent(account.idPhone, wamid, number, message);
+		await mongodb.saveTextSent(account.idPhone, wamid, number, message);
 		return (wamid);
 	} catch (error) {
-		await saveError(account.idPhone, `Erro na função "sendText": ${error}`);
+		await mongodb.saveError(account.idPhone, `Erro na função "sendText": ${error}`);
 	}
 }

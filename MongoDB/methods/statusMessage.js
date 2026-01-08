@@ -1,17 +1,13 @@
-import Chat from "./schemas/chats.js";
-import Messages from "./schemas/messages.js";
-import saveError from "./error.js";
-
 /**
  * @author VAMPETA
- * @brief FUNCAO CRIADA PARA SALVAR STATUS DE RECEBIDO E VISUALIZADO NO MONGODB
+ * @brief METODO CRIADO PARA SALVAR STATUS DE RECEBIDO E VISUALIZADO NO MONGODB
  * @param wamid ID DA MENSAGEM ENVIADA
  * @param phone NUMERO QUE VAI MUDAR O STATUS
  * @param status STATUS DA MENSAGEM
 */
 export async function saveStatusMessage(idPhone, wamid, phone, status) {
 	try {
-		await Chat.updateOne(
+		await this.Chat.updateOne(
 			{
 				idPhone: idPhone,
 				phone: phone
@@ -23,11 +19,11 @@ export async function saveStatusMessage(idPhone, wamid, phone, status) {
 			}
 		);
 	} catch (error) {
-		await saveError(idPhone, error);
+		await this.saveError(idPhone, `Error no metodo "saveStatusMessage": ${error}`);
 	}
 
 	try {
-		await Messages.updateOne(
+		await this.Message.updateOne(
 			{
 				wamid: wamid
 			},
@@ -38,6 +34,6 @@ export async function saveStatusMessage(idPhone, wamid, phone, status) {
 			}
 		);
 	} catch (error) {
-		await saveError(idPhone, error);
+		await this.saveError(idPhone, `Error no metodo "saveStatusMessage": ${error}`);
 	}
 }
