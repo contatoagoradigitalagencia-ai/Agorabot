@@ -21,7 +21,6 @@ export async function saveStatusMessage(idPhone, wamid, phone, status) {
 	} catch (error) {
 		await this.saveError(idPhone, `Error no metodo "saveStatusMessage": ${error}`);
 	}
-
 	try {
 		await this.Message.updateOne(
 			{

@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import { mongodb } from "../configs/mongodb.js";
+import mongodb from "../MongoDB/Mongodb.js";
 
 /**
  * @author VAMPETA

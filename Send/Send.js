@@ -1,11 +1,4 @@
+import Send from "./class.js";
+import mongodb from "../MongoDB/Mongodb.js";
 
-
-/**
- * @author VAMPETA
- * @brief CLASSE CRIADA PARA GERENCIAR METODOS DE ENVIO DE MENSAGENS
-*/
-class Send {
-	constructor() {}
-}
-
-export default new Send();
+export default new Send(mongodb);

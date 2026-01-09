@@ -14,6 +14,42 @@ const image = new mongoose.Schema(
 	{ _id: false }
 );
 
+const arrayList = new mongoose.Schema(
+	{
+		id: {
+			type: String,
+			required: true
+		},
+		title: {
+			type: String,
+			required: true
+		},
+		description: {
+			type: String,
+			required: true
+		}
+	},
+	{ _id: false }
+);
+
+const list = new mongoose.Schema(
+	{
+		text: {
+			type: String,
+			required: true
+		},
+		button: {
+			type: String,
+			required: true
+		},
+		list: {
+			type: [arrayList],
+			required: true
+		}
+	},
+	{ _id: false }
+);
+
 const message = new mongoose.Schema({
 	idPhone: {
 		type: String,
@@ -49,6 +85,7 @@ const message = new mongoose.Schema({
 		default: undefined
 	},
 	image: image,
+	list: list,
 	// location: {
 	// 	type: Object,
 	// 	default: undefined

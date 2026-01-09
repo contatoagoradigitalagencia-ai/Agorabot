@@ -1,6 +1,7 @@
 import http from "http";
 import { Server } from "socket.io";
-import { mongodb } from "./mongodb.js";
+
+import mongodb from "../MongoDB/Mongodb.js";
 
 /**
  * @author VAMPETA

@@ -1,16 +1,14 @@
 import axios from "axios";
 
-import { mongodb } from "../configs/mongodb.js";
-
 /**
  * @author VAMPETA
- * @brief FUNCAO CRIADA PARA ENVIAR MENSAGENS SIMPLES
+ * @brief METODO CRIADO PARA ENVIAR MENSAGENS SIMPLES
  * @param {Object} account DADOS DO NUMERO QUE RECEBEU ATUALIZACOES
  * @param {String} number NUMERO QUE VAI RECEBER A MENSAGEM
  * @param {String} message MENSAGEM QUE SERA ENVIADA
  * @return {String} RETORNA O WAMID DA MENSAGEM
 */
-export default async function sendText(account, number, message) {
+export default async function text(account, number, message) {
 	try {
 		const res = await axios({
 			method: "POST",
@@ -31,9 +29,10 @@ export default async function sendText(account, number, message) {
 		if (res.status !== 200) throw (`O axios retornou status ${res.status} ==> ${res.data}`);
 		const wamid = res.data?.messages?.[0]?.id;
 		if (!wamid) throw ("Wamid não retornado pela API da Meta");
-		await mongodb.saveTextSent(account.idPhone, wamid, number, message);
+		await this.mongodb.saveTextSent(account.idPhone, wamid, number, message);
 		return (wamid);
 	} catch (error) {
-		await mongodb.saveError(account.idPhone, `Erro na função "sendText": ${error}`);
+		await this.mongodb.saveError(account.idPhone, `Erro na função "text": ${error}`);
+		return (null);
 	}
 }

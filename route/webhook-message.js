@@ -1,4 +1,4 @@
-import { mongodb } from "../configs/mongodb.js";
+import mongodb from "../MongoDB/Mongodb.js";
 import fieldMessages from "../receive_message/fields/messages/change.js";
 
 /**

@@ -1,6 +1,6 @@
 /**
  * @author VAMPETA
- * @brief METODO CRIADO PARA SALVAR MENSAGENS DE IMAGENS ENVIADAS NO MONGODB
+ * @brief METODO CRIADO PARA SALVAR MENSAGENS DE IMAGENS NO MONGODB
  * @param idPhone IDENTIFICADOR DO NUMERO DE TELEFONE DO BOT
  * @param wamid ID DA MENSAGEM ENVIADA
  * @param phone NUMERO QUE QUE RECEBEU A MENSAGEM
@@ -38,7 +38,6 @@ export async function saveImageSent(idPhone, wamid, phone, link, message) {
 	} catch (error) {
 		await this.saveError(idPhone, `Error no metodo "saveImageSent": ${error}`);
 	}
-
 	try {
 		await this.Message.create({
 			idPhone: idPhone,

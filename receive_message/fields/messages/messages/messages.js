@@ -1,6 +1,5 @@
-import { mongodb } from "../../../../configs/mongodb.js";
-import readMessage from "../../../../send_message/read-message.js";
-import sendText from "../../../../send_message/send-text.js";
+import mongodb from "../../../../MongoDB/Mongodb.js";
+import send from "../../../../Send/Send.js";
 
 import text from "./text.js";
 // import sticker from "./sticker.js";
@@ -15,7 +14,7 @@ import text from "./text.js";
 export default async function messages(value, account) {
 	for (const message of value.messages) {
 		try {
-			await readMessage(account, message.id, message.from);
+			await send.read(account, message.id, message.from);
 			switch (message.type) {
 				case ("text"):
 					await text(message, account);
@@ -30,8 +29,8 @@ export default async function messages(value, account) {
 				// 	break;
 	
 				default:
-					await mongodb.saveTextReceived(account.idPhone, message.id, message.from, `Mensagem não suportada: ${message.type}`, new Date(Number(message.timestamp) * 1000).toISOString());
-					await sendText(account, message.from, account.messageNotSupported);
+					await mongodb.saveTextReceived(account.idPhone, message.id, message.from, `Mensagem não suportada: ${message.type}`, message.timestamp);
+					await send.text(account, message.from, account.messageNotSupported);
 			}
 		} catch (error) {
 			await mongodb.saveError(account.idPhone, `Error na funcao "messages": ${error}`);

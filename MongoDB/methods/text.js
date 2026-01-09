@@ -1,9 +1,9 @@
 /**
  * @author VAMPETA
- * @brief METODO CRIADO PARA SALVAR MENSAGENS DE TEXTO RECEBIDAS NO MONGODB
+ * @brief METODO CRIADO PARA SALVAR MENSAGENS DE TEXTO NO MONGODB
  * @param idPhone IDENTIFICADOR DO NUMERO DE TELEFONE DO BOT
  * @param wamid ID DA MENSAGEM ENVIADA
- * @param phone NUMERO QUE RECEBEU A MENSAGEM
+ * @param phone NUMERO QUE ENVIOU A MENSAGEM
  * @param message MENSAGEM ENVIADA
 */
 export async function saveTextReceived(idPhone, wamid, phone, message, timestamp) {
@@ -15,7 +15,7 @@ export async function saveTextReceived(idPhone, wamid, phone, message, timestamp
 				lastMessage: {
 					text: message,
 					type: "text",
-					timestamp: timestamp
+					timestamp: new Date(Number(timestamp) * 1000).toISOString()
 				}
 			});
 		} else {
@@ -29,7 +29,7 @@ export async function saveTextReceived(idPhone, wamid, phone, message, timestamp
 						lastMessage: {
 							text: message,
 							type: "text",
-							timestamp: timestamp
+							timestamp: new Date(Number(timestamp) * 1000).toISOString()
 						}
 					}
 				}
@@ -57,7 +57,7 @@ export async function saveTextReceived(idPhone, wamid, phone, message, timestamp
  * @brief METODO CRIADO PARA SALVAR MENSAGENS DE TEXTO ENVIADAS NO MONGODB
  * @param idPhone IDENTIFICADOR DO NUMERO DE TELEFONE DO BOT
  * @param wamid ID DA MENSAGEM ENVIADA
- * @param phone NUMERO QUE VAI RECEBER A MENSAGEM
+ * @param phone NUMERO QUE RECEBEU A MENSAGEM
  * @param message MENSAGEM QUE SERA ENVIADA
 */
 export async function saveTextSent(idPhone, wamid, phone, message) {
