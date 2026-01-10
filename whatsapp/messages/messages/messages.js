@@ -3,7 +3,7 @@ import send from "../../../Send/Send.js";
 
 import text from "./text.js";
 // import sticker from "./sticker.js";
-// import interactive from "./interactive.js";
+import interactive from "./interactive.js";
 
 /**
  * @author VAMPETA
@@ -24,9 +24,9 @@ export default async function messages(value, account) {
 				// 	await sticker(value, message, account);
 				// 	break;
 	
-				// case ("interactive"):
-				// 	await interactive(value, message, account);
-				// 	break;
+				case ("interactive"):
+					await interactive(account, value, message);
+					break;
 	
 				default:
 					await mongodb.saveTextReceived(account.idPhone, message.id, message.from, `Mensagem não suportada: ${message.type}`, message.timestamp);

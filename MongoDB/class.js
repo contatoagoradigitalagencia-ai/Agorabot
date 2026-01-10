@@ -4,7 +4,7 @@ import { saveReactReceived, saveReactSent } from "./methods/react.js";
 import { saveTextReceived, saveTextSent } from "./methods/text.js";
 import { saveImageSent } from "./methods/image.js";
 import { saveListSent } from "./methods/list.js";
-import { saveError } from "./methods/Error.js";
+import { saveError } from "./methods/error.js";
 
 /**
  * @author VAMPETA
