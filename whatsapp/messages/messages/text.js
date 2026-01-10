@@ -1,8 +1,8 @@
-import mongodb from "../../../../MongoDB/Mongodb.js";
+import mongodb from "../../../MongoDB/Mongodb.js";
 
-import sockets from "../../../../websocket/sockets.js";
+import sockets from "../../../websocket/sockets.js";
 
-import vampeta from "../../../../clients/Vampeta/index.js";
+import vampeta from "../../../clients/Vampeta/index.js";
 
 /**
  * @author VAMPETA

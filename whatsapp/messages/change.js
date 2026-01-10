@@ -1,4 +1,4 @@
-import mongodb from "../../../MongoDB/Mongodb.js";
+import mongodb from "../../MongoDB/Mongodb.js";
 
 import messages from "./messages/messages.js";
 import statuses from "./statuses/statuses.js";

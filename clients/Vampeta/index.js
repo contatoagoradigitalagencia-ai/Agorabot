@@ -16,10 +16,8 @@ export default async function vampeta(account, message) {
 	// }));
 // console.log(list)
 	// await send.list(account, message.from, "Confira abaixo nossos produtos", "Nossos produtos", list);
-// PAREI AKI RESPONDEDO COM UMA LISTA
-// AINDA NAO TERMINEI send-list		// E SE EU CRIAR UMA CLASSE PRA ENVIAR MENSAGENS?	// IDEIA DO CAO		// MAS ACHEI BOA	// AMANHA FAREI ISSO
-// ACHO Q VOU CRIAR UMA CLASSE PRO MONGODB TBM		// FIZ ISSO E ACABEI PERDENDO O DIA TODO (MAS FOI BOM PRA REFORSAR POO EM JS)
 
+	await send.react(account, message.from, message.id, "😀");
 	// await send.text(account, message.from, "testando");
 	// await send.image(account, message.from, "https://i.ytimg.com/vi/h_D3VFfhvs4/hq720.jpg", "michael jackson");
 }

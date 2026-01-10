@@ -1,4 +1,3 @@
-// import responseMessage from "../../../../send_message/response-message.js";
 
 /**
  * @author VAMPETA

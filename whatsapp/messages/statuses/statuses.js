@@ -1,4 +1,4 @@
-import mongodb from "../../../../MongoDB/Mongodb.js";
+import mongodb from "../../../MongoDB/Mongodb.js";
 
 /**
  * @author VAMPETA
@@ -9,7 +9,7 @@ import mongodb from "../../../../MongoDB/Mongodb.js";
 export default async function statuses(value, account) {
 	for (const status of value.statuses) {
 		try {
-			if (status.status) await mongodb.saveStatusMessage(account.idPhone, status.id, status.recipient_id, status.status);	// "sent" "delivered" "read" "failed"
+			if (status.status) await mongodb.saveVisualization(account.idPhone, status.id, status.recipient_id, status.status);	// "sent" "delivered" "read" "failed"
 			if (status.errors) throw (JSON.stringify(status.errors, null, 2));
 		} catch (error) {
 			await mongodb.saveError(account.idPhone, `Error na funcao "statuses": ${error}`);

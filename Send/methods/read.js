@@ -26,6 +26,6 @@ export default async function read(account, wamid) {
 		return (res.status === 200 && res.data.success);
 	} catch (error) {
 		await this.mongodb.saveError(account.idPhone, `Erro na função "read": ${error}`);
-		return (null);
+		return (false);
 	}
 }

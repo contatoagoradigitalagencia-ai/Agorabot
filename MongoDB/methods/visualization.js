@@ -5,7 +5,7 @@
  * @param phone NUMERO QUE VAI MUDAR O STATUS
  * @param status STATUS DA MENSAGEM
 */
-export async function saveStatusMessage(idPhone, wamid, phone, status) {
+export async function saveVisualization(idPhone, wamid, phone, status) {
 	try {
 		await this.Chat.updateOne(
 			{
@@ -19,7 +19,7 @@ export async function saveStatusMessage(idPhone, wamid, phone, status) {
 			}
 		);
 	} catch (error) {
-		await this.saveError(idPhone, `Error no metodo "saveStatusMessage": ${error}`);
+		await this.saveError(idPhone, `Error no metodo "saveVisualization": ${error}`);
 	}
 	try {
 		await this.Message.updateOne(
@@ -33,6 +33,6 @@ export async function saveStatusMessage(idPhone, wamid, phone, status) {
 			}
 		);
 	} catch (error) {
-		await this.saveError(idPhone, `Error no metodo "saveStatusMessage": ${error}`);
+		await this.saveError(idPhone, `Error no metodo "saveVisualization": ${error}`);
 	}
 }
