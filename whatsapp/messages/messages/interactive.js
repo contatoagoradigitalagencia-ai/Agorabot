@@ -1,5 +1,5 @@
-import googleSheets from "../../../Google Sheets/GoogleSheets.js";
-import send from "../../../Send/Send.js";
+// import googleSheets from "../../../Google Sheets/GoogleSheets.js";
+// import send from "../../../Send/Send.js";
 
 /**
  * @author VAMPETA
@@ -16,13 +16,13 @@ export default async function interactive(account, value, message) {
 // SO PRO RAMON VER
 // console.log(JSON.stringify(message, null, 2))
 // console.log(message.interactive.list_reply.title)
-	const page = await googleSheets.getPage(account, "Produtos");
+	// const page = await googleSheets.getPage(account, "Produtos");
 	// console.log(page)
-	for (const product of page) {
-		if (message.interactive.list_reply.title === product.Produto) {
-			console.log(product)
-			await send.image(account, message.from, product.Foto, `${product.Produto}\nR$${product.Preco},00`);
-		}
-	}
+	// for (const product of page) {
+	// 	if (message.interactive.list_reply.title === product.Produto) {
+	// 		console.log(product)
+	// 		await send.image(account, message.from, product.Foto, `${product.Produto}\nR$${product.Preco},00`);
+	// 	}
+	// }
 // SO PRO RAMON VER
 }

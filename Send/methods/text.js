@@ -4,11 +4,11 @@ import axios from "axios";
  * @author VAMPETA
  * @brief METODO CRIADO PARA ENVIAR MENSAGENS SIMPLES
  * @param {Object} account DADOS DO NUMERO QUE RECEBEU ATUALIZACOES
- * @param {String} number NUMERO QUE VAI RECEBER A MENSAGEM
+ * @param {String} phone NUMERO QUE VAI RECEBER A MENSAGEM
  * @param {String} message MENSAGEM QUE SERA ENVIADA
  * @return {String} RETORNA O WAMID DA MENSAGEM
 */
-export default async function text(account, number, message) {
+export default async function text(account, phone, message) {
 	try {
 		const res = await axios({
 			method: "POST",
@@ -18,7 +18,7 @@ export default async function text(account, number, message) {
 			},
 			data: {
 				messaging_product: "whatsapp",
-				to: number,
+				to: phone,
 				type: "text",
 				text: {
 					body: message
@@ -29,7 +29,7 @@ export default async function text(account, number, message) {
 		if (res.status !== 200) throw (`O axios retornou status ${res.status} ==> ${res.data}`);
 		const wamid = res.data?.messages?.[0]?.id;
 		if (!wamid) throw ("Wamid não retornado pela API da Meta");
-		await this.mongodb.saveTextSent(account.idPhone, wamid, number, message);
+		await this.mongodb.saveTextSent(account.idPhone, wamid, phone, message);
 		return (wamid);
 	} catch (error) {
 		await this.mongodb.saveError(account.idPhone, `Erro na função "text": ${error}`);

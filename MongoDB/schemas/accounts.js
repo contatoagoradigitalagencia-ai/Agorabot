@@ -1,10 +1,10 @@
 import mongoose from "mongoose";
 
-const accounts = new mongoose.Schema({
+const account = new mongoose.Schema({
 	phone: {
 		type: String,
-		required: true,
-		unique: true
+		required: true
+		// unique: true
 	},
 	password: {
 		type: String,
@@ -12,22 +12,27 @@ const accounts = new mongoose.Schema({
 	},
 	idPhone: {
 		type: String,
-		required: true,
-		unique: true
+		required: true
+		// unique: true
 	},
 	accessToken: {
 		type: String,
-		required: true,
-		unique: true
+		required: true
+		// unique: true
+	},
+	spreadsheet: {
+		type: String
+		// unique: true
 	},
 	messageNotSupported: {
 		type: String,
 		required: true
-	},
-	spreadsheet: {
-		type: String,
-		unique: true
 	}
 });
 
-export default mongoose.model("account", accounts);
+account.index({ phone: 1 }, { unique: true });
+account.index({ idPhone: 1 }, { unique: true });
+account.index({ accessToken: 1 }, { unique: true });
+account.index({ spreadsheet: 1 }, { unique: true, sparse: true });
+
+export default mongoose.model("account", account);

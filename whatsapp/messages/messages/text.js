@@ -3,6 +3,7 @@ import mongodb from "../../../MongoDB/Mongodb.js";
 import sockets from "../../../websocket/sockets.js";
 
 import vampeta from "../../../clients/Vampeta/index.js";
+import ramon from "../../../clients/Ramon/index.js";
 
 /**
  * @author VAMPETA
@@ -15,6 +16,7 @@ export default async function text(message, account) {
 
 // DONO DA CONTA
 	await vampeta(account, message);
+	// await ramon(account, message);	// SO PRO RAMON VER
 // DONO DA CONTA
 
 // FRONT END WEBSOCKET

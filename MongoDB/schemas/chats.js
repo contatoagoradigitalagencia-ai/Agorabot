@@ -2,7 +2,10 @@ import mongoose from "mongoose";
 
 const lastMessage = new mongoose.Schema(
 	{
-		text: String,
+		text: {
+			type: String,
+			required: true
+		},
 		type: {
 			type: String,
 			required: true
@@ -42,5 +45,7 @@ const chats = new mongoose.Schema({
 	},
 	lastMessage: lastMessage
 });
+
+chats.index({ idPhone: 1, phone: 1 }, { unique: true });
 
 export default mongoose.model("chat", chats);

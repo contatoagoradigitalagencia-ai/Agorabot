@@ -4,12 +4,12 @@ import axios from "axios";
  * @author VAMPETA
  * @brief FUNCAO CRIADA PARA ENVIAR IMAGEM
  * @param {Object} account DADOS DO NUMERO QUE RECEBEU ATUALIZACOES
- * @param {String} number NUMERO QUE VAI RECEBER A MENSAGEM
+ * @param {String} phone NUMERO QUE VAI RECEBER A MENSAGEM
  * @param {String} link URL DA IMAGEM
  * @param {String} caption MENSAGEM QUE SERA ENVIADA JUNTO COM A IMAGEM
  * @return {String} RETORNA O WAMID DA MENSAGEM
 */
-export default async function image(account, number, link, caption) {
+export default async function image(account, phone, link, caption) {
 	try {
 		const res = await axios({
 			method: "POST",
@@ -19,7 +19,7 @@ export default async function image(account, number, link, caption) {
 			},
 			data: {
 				messaging_product: "whatsapp",
-				to: number,
+				to: phone,
 				type: "image",
 				image: {
 					link: link,
@@ -31,7 +31,7 @@ export default async function image(account, number, link, caption) {
 		if (res.status !== 200) throw (`O axios retornou status ${res.status} ==> ${res.data}`);
 		const wamid = res.data?.messages?.[0]?.id;
 		if (!wamid) throw ("Wamid não retornado pela API da Meta");
-		if (wamid) await this.mongodb.saveImageSent(account.idPhone, wamid, number, link, caption);
+		if (wamid) await this.mongodb.saveImageSent(account.idPhone, wamid, phone, link, caption);
 		return (wamid);
 	} catch (error) {
 		await this.mongodb.saveError(account.idPhone, `Erro na função "image": ${error}`);

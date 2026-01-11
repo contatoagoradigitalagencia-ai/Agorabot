@@ -8,34 +8,18 @@ import send from "../../Send/Send.js";
  * @param {Object} message UM UNICO ELEMENTO DE req.body.entry[n].changes[n].value.messages[n]
 */
 export default async function vampeta(account, message) {
-	// const page = await googleSheets.getPage(account, "Produtos");
-	// const list = page.map((line, i) => ({
-	// 	id: i,
-	// 	title: line.Produto,
-	// 	description: `R$${line.Preco},00`
-	// }));
+// 	const page = await googleSheets.getPage(account, "Produtos");
+// 	const list = page.map((line, i) => ({
+// 		id: i,
+// 		title: line.Produto,
+// 		description: `R$${line.Preco},00`
+// 	}));
 // console.log(list)
-	// await send.list(account, message.from, "Confira abaixo nossos produtos", "Nossos produtos", list);
+// 	await send.list(account, message.from, "Confira abaixo nossos produtos", "Nossos produtos", list);
 
 	// await send.react(account, message.from, message.id, "😀");
 	// await send.text(account, message.from, "testando");
 	// await send.image(account, message.from, "https://i.ytimg.com/vi/h_D3VFfhvs4/hq720.jpg", "michael jackson");
+	// await send.image(account, message.from, "https://i.ytimg.com/vi/h_D3VFfhvs4/hq720.jpg");
 
-
-
-
-// SO PRO RAMON VER
-	if (message.text.body === "Quero ver seus produtos") {
-		const page = await googleSheets.getPage(account, "Produtos");
-		const list = page.map((line, i) => ({
-			id: i,
-			title: line.Produto,
-			description: `R$${line.Preco},00`
-		}));
-	
-		await send.list(account, message.from, "Confira abaixo nossos produtos", "Nossos produtos", list);
-	} else {
-		await send.text(account, message.from, "Não entendi");
-	}
-// SO PRO RAMON VER
 }

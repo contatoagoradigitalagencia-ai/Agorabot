@@ -9,32 +9,27 @@
 */
 export async function saveImageSent(idPhone, wamid, phone, link, message) {
 	try {
-		if (!(await this.Chat.findOne({ idPhone: idPhone, phone: phone }))) {
-			await this.Chat.create({
+		await this.Chat.updateOne(
+			{
 				idPhone: idPhone,
-				phone: phone,
-				lastMessage: {
-					text: message,
-					type: "image",
-					image: true
-				}
-			});
-		} else {
-			await this.Chat.updateOne(
-				{
+				phone: phone
+			},
+			{
+				$set: {
+					lastMessage: {
+						text: (message) ? message : "Foto",
+						type: "image",
+						status: "sending"
+					}
+				},
+				$setOnInsert: {
 					idPhone: idPhone,
 					phone: phone
-				},
-				{
-					$set: {
-						lastMessage: {
-							text: message,
-							type: "image"
-						}
-					}
 				}
-			);
-		}
+			},
+			{ upsert: true }
+		);
+
 	} catch (error) {
 		await this.saveError(idPhone, `Error no metodo "saveImageSent": ${error}`);
 	}

@@ -10,33 +10,26 @@
 */
 export async function saveListSent(idPhone, wamid, phone, text, button, list) {
 	try {
-		if (!(await this.Chat.findOne({ idPhone: idPhone, phone: phone }))) {
-			await this.Chat.create({
+		await this.Chat.updateOne(
+			{
 				idPhone: idPhone,
-				phone: phone,
-				lastMessage: {
-					text: text,
-					type: "text",
-					status: "sending"
-				}
-			});
-		} else {
-			await this.Chat.updateOne(
-				{
+				phone: phone
+			},
+			{
+				$set: {
+					lastMessage: {
+						text,
+						type: "list",
+						status: "sending"
+					}
+				},
+				$setOnInsert: {
 					idPhone: idPhone,
 					phone: phone
-				},
-				{
-					$set: {
-						lastMessage: {
-							text: text,
-							type: "text",
-							status: "sent"
-						}
-					}
 				}
-			);
-		}
+			},
+			{ upsert: true }
+		);
 	} catch (error) {
 		await this.saveError(idPhone, `Error no metodo "saveListSent": ${error}`);
 	}

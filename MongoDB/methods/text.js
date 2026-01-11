@@ -8,33 +8,27 @@
 */
 export async function saveTextReceived(idPhone, wamid, phone, message, timestamp) {
 	try {
-		if (!(await this.Chat.findOne({ idPhone: idPhone, phone: phone }))) {
-			await this.Chat.create({
+		await this.Chat.updateOne(
+			{
 				idPhone: idPhone,
-				phone: phone,
-				lastMessage: {
-					text: message,
-					type: "text",
-					timestamp: new Date(Number(timestamp) * 1000).toISOString()
-				}
-			});
-		} else {
-			await this.Chat.updateOne(
-				{
+				phone: phone
+			},
+			{
+				$set: {
+					lastMessage: {
+						text: message,
+						type: "text",
+						timestamp: new Date(Number(timestamp) * 1000)
+					}
+				},
+				$setOnInsert: {
 					idPhone: idPhone,
 					phone: phone
-				},
-				{
-					$set: {
-						lastMessage: {
-							text: message,
-							type: "text",
-							timestamp: new Date(Number(timestamp) * 1000).toISOString()
-						}
-					}
 				}
-			);
-		}
+			},
+			{ upsert: true }
+		);
+
 	} catch (error) {
 		await this.saveError(idPhone, `Error no metodo "saveTextReceived": ${error}`);
 	}
@@ -62,33 +56,26 @@ export async function saveTextReceived(idPhone, wamid, phone, message, timestamp
 */
 export async function saveTextSent(idPhone, wamid, phone, message) {
 	try {
-		if (!(await this.Chat.findOne({ idPhone: idPhone, phone: phone }))) {
-			await this.Chat.create({
+		await this.Chat.updateOne(
+			{
 				idPhone: idPhone,
-				phone: phone,
-				lastMessage: {
-					text: message,
-					type: "text",
-					status: "sending"
-				}
-			});
-		} else {
-			await this.Chat.updateOne(
-				{
+				phone: phone
+			},
+			{
+				$set: {
+					lastMessage: {
+						text: message,
+						type: "text",
+						status: "sending"
+					}
+				},
+				$setOnInsert: {
 					idPhone: idPhone,
 					phone: phone
-				},
-				{
-					$set: {
-						lastMessage: {
-							text: message,
-							type: "text",
-							status: "sent"
-						}
-					}
 				}
-			);
-		}
+			},
+			{ upsert: true }
+		);
 	} catch (error) {
 		await this.saveError(idPhone, `Error no metodo "saveTextSent": ${error}`);
 	}

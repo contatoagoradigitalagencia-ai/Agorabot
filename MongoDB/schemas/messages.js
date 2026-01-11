@@ -61,8 +61,8 @@ const message = new mongoose.Schema({
 	},
 	wamid: {
 		type: String,
-		required: true,
-		unique: true
+		required: true
+		// unique: true
 	},
 	direction: {
 		type: String,
@@ -79,6 +79,9 @@ const message = new mongoose.Schema({
 	type: {
 		type: String,
 		required: true
+	},
+	react: {
+		type: String
 	},
 	text: {
 		type: String,
@@ -99,5 +102,7 @@ const message = new mongoose.Schema({
 	// 	default: undefined
 	// }
 });
+
+message.index({ wamid: 1 }, { unique: true });
 
 export default mongoose.model("message", message);
