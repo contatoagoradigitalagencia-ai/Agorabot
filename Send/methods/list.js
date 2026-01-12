@@ -6,8 +6,9 @@ import axios from "axios"
  * @param {Object} account DADOS DO NUMERO QUE RECEBEU ATUALIZACOES
  * @param {String} phone NUMERO QUE VAI RECEBER A MENSAGEM
  * @param {String} text TEXTO/TITULO MOSTRADO AO USUARIO
- * @param {String} button TEXTO DO BOTAO CLICAVEL DA LISTA
+ * @param {String} button TEXTO DO BOTAO QUE ABRE A LISTA
  * @param {Array} list ARRAY COM ITENS DA LISTA
+ * @return {String} RETORNA O WAMID DA MENSAGEM
 */
 export default async function list(account, phone, text, button, list) {
 	try {
@@ -30,14 +31,18 @@ export default async function list(account, phone, text, button, list) {
 							{
 								title: "Categoria A",
 								rows: list
-							}
+							},
+							// {
+							// 	title: "Categoria B",	// ESSA BUDEGA TA ERRADA
+							// 	rows: list
+							// }
 						]
 					}
 				}
 			}
 		});
 
-        if (res.status !== 200) throw (`O axios retornou status ${res.status} ==> ${res.data}`);
+        if (res.status !== 200) throw (`O axios retornou status ${res.status} ==> ${JSON.stringify(res.data, null, 2)}`);
 		const wamid = res.data?.messages?.[0]?.id;
 		if (!wamid) throw ("Wamid não retornado pela API da Meta");
 		if (wamid) await this.mongodb.saveListSent(account.idPhone, wamid, phone, text, button, list);

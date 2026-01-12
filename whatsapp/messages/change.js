@@ -19,8 +19,8 @@ export default async function fieldMessages(change) {
 		// if (change.value.messaging_product) {}
 		// if (change.value.metadata) {}
 		// if (change.value.contacts) {}
-		if (change.value.messages) await messages(change.value, account);
-		if (change.value.statuses) await statuses(change.value, account);
+		if (change.value.messages) await messages(account, change.value);
+		if (change.value.statuses) await statuses(account, change.value);
 		// if (change.value.errors) {}
 	} catch (error) {
 		await mongodb.saveError(((idPhone) ? idPhone : "Sem idPhone"), `Error na funcao "fieldMessages": ${error}`);

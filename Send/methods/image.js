@@ -28,7 +28,7 @@ export default async function image(account, phone, link, caption) {
 			}
 		});
 
-		if (res.status !== 200) throw (`O axios retornou status ${res.status} ==> ${res.data}`);
+		if (res.status !== 200) throw (`O axios retornou status ${res.status} ==> ${JSON.stringify(res.data, null, 2)}`);
 		const wamid = res.data?.messages?.[0]?.id;
 		if (!wamid) throw ("Wamid não retornado pela API da Meta");
 		if (wamid) await this.mongodb.saveImageSent(account.idPhone, wamid, phone, link, caption);

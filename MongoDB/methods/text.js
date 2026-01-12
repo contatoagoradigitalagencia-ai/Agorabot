@@ -5,6 +5,7 @@
  * @param wamid ID DA MENSAGEM ENVIADA
  * @param phone NUMERO QUE ENVIOU A MENSAGEM
  * @param message MENSAGEM ENVIADA
+ * @param timestamp DATA QUE A MENSAGEM CHEGOU (UNIX TIMESTAMP)
 */
 export async function saveTextReceived(idPhone, wamid, phone, message, timestamp) {
 	try {
@@ -28,7 +29,6 @@ export async function saveTextReceived(idPhone, wamid, phone, message, timestamp
 			},
 			{ upsert: true }
 		);
-
 	} catch (error) {
 		await this.saveError(idPhone, `Error no metodo "saveTextReceived": ${error}`);
 	}

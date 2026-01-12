@@ -1,8 +1,9 @@
 import read from "./methods/read.js";
-import react from "./methods/react.js";
+import reaction from "./methods/reaction.js";
 import text from "./methods/text.js";
 import image from "./methods/image.js";
 import list from "./methods/list.js";
+import button from "./methods/button.js";
 
 /**
  * @author VAMPETA
@@ -14,9 +15,10 @@ export default class Send {
 	constructor(mongodb) {
 		this.mongodb = mongodb;
 		this.read = read.bind(this);
-		this.react = react.bind(this);
+		this.reaction = reaction.bind(this);
 		this.text = text.bind(this);
 		this.image = image.bind(this);
 		this.list = list.bind(this);
+		this.button = button.bind(this);
 	}
 };

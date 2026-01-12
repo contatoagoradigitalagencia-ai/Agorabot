@@ -3,25 +3,30 @@ import send from "../../../Send/Send.js";
 
 import text from "./text.js";
 import interactive from "./interactive.js";
+import reaction from "./reaction.js";
 // import sticker from "./sticker.js";
 
 /**
  * @author VAMPETA
  * @brief TRATA O CASO DE req.body.entry[n].changes[n].field === "messages" && req.body.entry[n].changes[n].value === true
- * @param {Object} value CAMPO value PRESENTE EM req.body.entry[n].changes[n].value
  * @param {Object} account DADOS DO NUMERO QUE RECEBEU ATUALIZACOES
+ * @param {Object} value CAMPO value PRESENTE EM req.body.entry[n].changes[n].value
 */
-export default async function messages(value, account) {
+export default async function messages(account, value) {
 	for (const message of value.messages) {
 		try {
 			await send.read(account, message.id, message.from);
 			switch (message.type) {
 				case ("text"):
-					await text(message, account);
+					await text(account, message);
 					break;
 					
 				case ("interactive"):
-					await interactive(account, value, message);
+					await interactive(account, message);
+					break;
+
+				case ("reaction"):
+					await reaction(account, message);
 					break;
 
 				// case ("sticker"):

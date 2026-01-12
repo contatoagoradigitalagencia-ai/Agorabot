@@ -9,7 +9,7 @@ import axios from "axios";
  * @param {String} emoji EMOJI QUE SERA USADO NA REACAO
  * @return {String} RETORNA O WAMID DA REACAO DA MENSAGEM 
 */
-export default async function react(account, phone, wamid, emoji) {
+export default async function reaction(account, phone, wamid, emoji) {
 	try {
 		const res = await axios({
 			method: "POST",
@@ -28,13 +28,13 @@ export default async function react(account, phone, wamid, emoji) {
 			}
 		});
 
-		if (res.status !== 200) throw (`O axios retornou status ${res.status} ==> ${res.data}`);
+		if (res.status !== 200) throw (`O axios retornou status ${res.status} ==> ${JSON.stringify(res.data, null, 2)}`);
 		const wamidReact = res.data?.messages?.[0]?.id;
 		if (!wamidReact) throw ("Wamid não retornado pela API da Meta");
-		await this.mongodb.saveReactSent(account.idPhone, wamid, phone, emoji);
+		await this.mongodb.saveReactionSent(account.idPhone, wamid, phone, emoji);
 		return (wamidReact);
 	} catch (error) {
-		await this.mongodb.saveError(account.idPhone, `Erro na função "react": ${error}`);
+		await this.mongodb.saveError(account.idPhone, `Erro na função "reaction": ${error}`);
 		return (null);
 	}
 }
