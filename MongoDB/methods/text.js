@@ -1,30 +1,29 @@
 /**
  * @author VAMPETA
  * @brief METODO CRIADO PARA SALVAR MENSAGENS DE TEXTO NO MONGODB
- * @param idPhone IDENTIFICADOR DO NUMERO DE TELEFONE DO BOT
- * @param wamid ID DA MENSAGEM ENVIADA
- * @param phone NUMERO QUE ENVIOU A MENSAGEM
- * @param message MENSAGEM ENVIADA
- * @param timestamp DATA QUE A MENSAGEM CHEGOU (UNIX TIMESTAMP)
+ * @param {String} idPhone IDENTIFICADOR DO NUMERO DE TELEFONE DO BOT
+ * @param {Object} message UM UNICO ELEMENTO DE req.body.entry[n].changes[n].value.messages[n]
 */
-export async function saveTextReceived(idPhone, wamid, phone, message, timestamp) {
+export async function saveTextReceived(idPhone, message) {
+	const { id, from, timestamp, ...data } = message;
+
 	try {
 		await this.Chat.updateOne(
 			{
 				idPhone: idPhone,
-				phone: phone
+				phone: from
 			},
 			{
 				$set: {
 					lastMessage: {
-						text: message,
+						text: data.text.body,
 						type: "text",
 						timestamp: new Date(Number(timestamp) * 1000)
 					}
 				},
 				$setOnInsert: {
 					idPhone: idPhone,
-					phone: phone
+					phone: from
 				}
 			},
 			{ upsert: true }
@@ -35,11 +34,10 @@ export async function saveTextReceived(idPhone, wamid, phone, message, timestamp
 	try {
 		await this.Message.create({
 			idPhone: idPhone,
-			phone: phone,
-			wamid: wamid,
+			phone: from,
+			wamid: id,
 			direction: "inbound",
-			type: "text",
-			text: message
+			data: data
 		});
 	} catch (error) {
 		await this.saveError(idPhone, `Error no metodo "saveTextReceived": ${error}`);
@@ -49,12 +47,12 @@ export async function saveTextReceived(idPhone, wamid, phone, message, timestamp
 /**
  * @author VAMPETA
  * @brief METODO CRIADO PARA SALVAR MENSAGENS DE TEXTO ENVIADAS NO MONGODB
- * @param idPhone IDENTIFICADOR DO NUMERO DE TELEFONE DO BOT
- * @param wamid ID DA MENSAGEM ENVIADA
- * @param phone NUMERO QUE RECEBEU A MENSAGEM
- * @param message MENSAGEM QUE SERA ENVIADA
+ * @param {String} idPhone IDENTIFICADOR DO NUMERO DE TELEFONE DO BOT
+ * @param {String} wamid ID DA MENSAGEM ENVIADA
+ * @param {String} phone NUMERO QUE RECEBEU A MENSAGEM
+ * @param {String} data CAMPO data ENVIADO NA REQUISICAO (NAO CONTEM OS CAMPOS "messaging_product" E "to")
 */
-export async function saveTextSent(idPhone, wamid, phone, message) {
+export async function saveTextSent(idPhone, wamid, phone, data) {
 	try {
 		await this.Chat.updateOne(
 			{
@@ -64,7 +62,7 @@ export async function saveTextSent(idPhone, wamid, phone, message) {
 			{
 				$set: {
 					lastMessage: {
-						text: message,
+						text: data.text.body,
 						type: "text",
 						status: "sending"
 					}
@@ -85,9 +83,8 @@ export async function saveTextSent(idPhone, wamid, phone, message) {
 			phone: phone,
 			wamid: wamid,
 			direction: "outbound",
-			status: "sent",
-			type: "text",
-			text: message
+			status: "sending",
+			data: data
 		});
 	} catch (error) {
 		await this.saveError(idPhone, `Error no metodo "saveTextSent": ${error}`);

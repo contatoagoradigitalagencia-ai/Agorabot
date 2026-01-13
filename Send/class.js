@@ -4,6 +4,7 @@ import text from "./methods/text.js";
 import image from "./methods/image.js";
 import list from "./methods/list.js";
 import button from "./methods/button.js";
+import location from "./methods/location.js";
 
 /**
  * @author VAMPETA
@@ -20,5 +21,6 @@ export default class Send {
 		this.image = image.bind(this);
 		this.list = list.bind(this);
 		this.button = button.bind(this);
+		this.location = location.bind(this);
 	}
 };

@@ -5,12 +5,16 @@ import axios from "axios";
  * @brief METODO CRIADO PARA ENVIAR BOTOES CLICAVEIS PARA O CLIENTE
  * @param {Object} account DADOS DO NUMERO QUE RECEBEU ATUALIZACOES
  * @param {String} phone NUMERO QUE VAI RECEBER A MENSAGEM
- * @param {String} tilte TITULO DOS BOTOES
- * @param {Array} buttons ARRAY DE TEXTOS QUE SERAO MOSTRADOS NO BOTAO
+ * @param {Array<Object>} buttons ARRAY DE OBJETOS QUE MONTA O BOTAO
  * @param {Object} header OBJETO QUE PODE CONTER UMA TEXTO IMAGEM VIDEO OU DOCUMENTO (OPCIONAL)
+ * @param {Object} options OBTETO QUE RECEBE header body E footer (OBRIGATORIO SOMENTE O body)
+ * @param {Object} [options.header] TITULO DESCRITIVO DOS BOTOES QUE PODE SER ADICIONADO (OPCIONAL)
+ * @param {Object} [options.body] TEXTO PRINCIPAL MOSTRADO AO USUARIO (OBRIGATORIO)
+ * @param {Object} [options.footer] TEXTO EXTRA QUE PODE SER ADICIONADO DEPOIS DE body (OPCIONAL)
  * @return {String} RETORNA O WAMID DA MENSAGEM
 */
-export default async function button(account, phone, title, buttons, header) {
+export default async function button(account, phone, buttons, options) {
+	const { header, body, footer } = options;
 	let headerKey = null;
 	let headerValue = null;
 
@@ -21,45 +25,65 @@ export default async function button(account, phone, title, buttons, header) {
 			headerKey = Object.keys(header)[0];
 			headerValue = header[headerKey];
 		}
+		const data = {
+			messaging_product: "whatsapp",
+			to: phone,
+			type: "interactive",
+			interactive: {
+				type: "button",
+				header: (header) ? {
+					type: headerKey,
+					[headerKey]: headerValue
+				} : undefined,
+				body: {
+					text: body.text
+				},
+				footer: (footer) ? {
+					text: footer.text
+				} : undefined,
+				action: {
+					buttons: buttons
+				}
+			},
+		};
 		const res = await axios({
 			method: "POST",
 			url: "https://graph.facebook.com/v22.0/" + account.idPhone + "/messages",
 			headers: {
 				Authorization: "Bearer " + account.accessToken
 			},
-			data: {
-				messaging_product: "whatsapp",
-				to: phone,
-				type: "interactive",
-				interactive: {
-					type: "button",
-					header: (header) ? {
-						type: headerKey,
-						[headerKey]: headerValue
-					} : undefined,
-					body: {
-						text: title
-					},
-					action: {
-						buttons: buttons.map((title, i) => ({
-							type: "reply",
-							reply: {
-								id: i,
-								title: title
-							}
-						}))
-					}
-				},
-			}
+			data: data
 		});
 
 		if (res.status !== 200) throw (`O axios retornou status ${res.status} ==> ${JSON.stringify(res.data, null, 2)}`);
 		const wamid = res.data?.messages?.[0]?.id;
 		if (!wamid) throw ("Wamid não retornado pela API da Meta");
-		// await this.mongodb.saveButtonSent();				// TA FALTANDO CRIAR ISSO AKI (ANTES EU PRECISO CRIAR SCHEMA E UMA FUNCAO DENTRO DO MONGODB)
+		delete data.messaging_product;
+		delete data.to;
+		await this.mongodb.saveButtonSent(account.idPhone, wamid, phone, data);
 		return (wamid);
 	} catch (error) {
 		await this.mongodb.saveError(account.idPhone, `Erro na função "buttons": ${error}`);
 		return (null);
 	}
 }
+
+
+
+// const buttons = [		// PADRAO DO CAMPO buttons
+// 	{
+// 		type: "reply",
+// 		reply:
+// 		{
+// 			id: 1,
+// 			title: "title 1"
+// 		}
+// 	},
+// 	{
+// 		type: "reply",
+// 		reply: {
+// 			id: 2,
+// 			title: "title 2"
+// 		}
+// 	}
+// ];

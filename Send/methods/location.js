@@ -5,18 +5,23 @@ import axios from "axios";
  * @brief METODO CRIADO PARA ENVIAR MENSAGENS SIMPLES
  * @param {Object} account DADOS DO NUMERO QUE RECEBEU ATUALIZACOES
  * @param {String} phone NUMERO QUE VAI RECEBER A MENSAGEM
- * @param {String} message MENSAGEM QUE SERA ENVIADA
+ * @param {Float} latitude LATIDUDE DO MAPA MUNDI
+ * @param {Float} longitude LONGITUDE DO MAPA MUNDI
+ * @param {String} name NOME DADO NO CORPO DA MENSAGEM (TEXTO DE LIVRE DIGITACAO E NAO VERIFICADO PELA META)
+ * @param {String} address ENDERECO COMPLETO (TEXTO DE LIVRE DIGITACAO E NAO VERIFICADO PELA META)
  * @return {String} RETORNA O WAMID DA MENSAGEM
 */
-export default async function text(account, phone, message) {
+export default async function location(account, phone, latitude, longitude, name, address) {
 	try {
 		const data = {
 			messaging_product: "whatsapp",
 			to: phone,
-			type: "text",
-			text: {
-				body: message,
-				// preview_url: false	// REVISAR ESSE ASSUNTO DPS
+			type: "location",
+			location: {
+				latitude: latitude,
+				longitude: longitude,
+				name: name,
+				address: address
 			}
 		};
 		const res = await axios({
@@ -33,10 +38,10 @@ export default async function text(account, phone, message) {
 		if (!wamid) throw ("Wamid não retornado pela API da Meta");
 		delete data.messaging_product;
 		delete data.to;
-		await this.mongodb.saveTextSent(account.idPhone, wamid, phone, data);
+		await this.mongodb.saveLocationSent(account.idPhone, wamid, phone, data);
 		return (wamid);
 	} catch (error) {
-		await this.mongodb.saveError(account.idPhone, `Erro na função "text": ${error}`);
+		await this.mongodb.saveError(account.idPhone, `Erro na função "location": ${error}`);
 		return (null);
 	}
 }

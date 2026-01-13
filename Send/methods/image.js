@@ -11,27 +11,30 @@ import axios from "axios";
 */
 export default async function image(account, phone, link, caption) {
 	try {
+		const data = {
+			messaging_product: "whatsapp",
+			to: phone,
+			type: "image",
+			image: {
+				link: link,
+				caption: caption
+			}
+		};
 		const res = await axios({
 			method: "POST",
 			url: "https://graph.facebook.com/v22.0/" + account.idPhone + "/messages",
 			headers: {
 				Authorization: "Bearer " + account.accessToken
 			},
-			data: {
-				messaging_product: "whatsapp",
-				to: phone,
-				type: "image",
-				image: {
-					link: link,
-					caption: caption
-				}
-			}
+			data: data
 		});
 
 		if (res.status !== 200) throw (`O axios retornou status ${res.status} ==> ${JSON.stringify(res.data, null, 2)}`);
 		const wamid = res.data?.messages?.[0]?.id;
 		if (!wamid) throw ("Wamid não retornado pela API da Meta");
-		if (wamid) await this.mongodb.saveImageSent(account.idPhone, wamid, phone, link, caption);
+		delete data.messaging_product;
+		delete data.to;
+		if (wamid) await this.mongodb.saveImageSent(account.idPhone, wamid, phone, data);
 		return (wamid);
 	} catch (error) {
 		await this.mongodb.saveError(account.idPhone, `Erro na função "image": ${error}`);

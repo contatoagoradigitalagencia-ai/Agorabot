@@ -1,12 +1,12 @@
 /**
  * @author VAMPETA
- * @brief METODO CRIADO PARA SALVAR MENSAGENS DE LISTA NO MONGODB
+ * @brief METODO CRIADO PARA SALVAR MENSAGENS DE TEXTO ENVIADAS NO MONGODB
  * @param {String} idPhone IDENTIFICADOR DO NUMERO DE TELEFONE DO BOT
  * @param {String} wamid ID DA MENSAGEM ENVIADA
  * @param {String} phone NUMERO QUE RECEBEU A MENSAGEM
  * @param {String} data CAMPO data ENVIADO NA REQUISICAO (NAO CONTEM OS CAMPOS "messaging_product" E "to")
 */
-export async function saveListSent(idPhone, wamid, phone, data) {
+export async function saveLocationSent(idPhone, wamid, phone, data) {
 	try {
 		await this.Chat.updateOne(
 			{
@@ -16,8 +16,8 @@ export async function saveListSent(idPhone, wamid, phone, data) {
 			{
 				$set: {
 					lastMessage: {
-						text: data.interactive.body.text,
-						type: "list",
+						text: data.location.name,
+						type: "location",
 						status: "sending"
 					}
 				},
@@ -29,7 +29,7 @@ export async function saveListSent(idPhone, wamid, phone, data) {
 			{ upsert: true }
 		);
 	} catch (error) {
-		await this.saveError(idPhone, `Error no metodo "saveListSent": ${error}`);
+		await this.saveError(idPhone, `Error no metodo "saveLocationSent": ${error}`);
 	}
 	try {
 		await this.Message.create({
@@ -41,6 +41,6 @@ export async function saveListSent(idPhone, wamid, phone, data) {
 			data: data
 		});
 	} catch (error) {
-		await this.saveError(idPhone, `Error no metodo "saveListSent": ${error}`);
+		await this.saveError(idPhone, `Error no metodo "saveLocationSent": ${error}`);
 	}
 }

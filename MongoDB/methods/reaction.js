@@ -67,8 +67,7 @@ export async function saveReactionSent(idPhone, wamid, phone, emoji) {
 				$set: {
 					lastMessage: {
 						text: `Você reagiu com "${emoji}"`,
-						type: "reaction",
-						status: "sending"
+						type: "reaction"
 					}
 				},
 				$setOnInsert: {

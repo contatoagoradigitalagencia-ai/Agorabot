@@ -1,13 +1,12 @@
 /**
  * @author VAMPETA
  * @brief METODO CRIADO PARA SALVAR MENSAGENS DE IMAGENS NO MONGODB
- * @param idPhone IDENTIFICADOR DO NUMERO DE TELEFONE DO BOT
- * @param wamid ID DA MENSAGEM ENVIADA
- * @param phone NUMERO QUE QUE RECEBEU A MENSAGEM
- * @param link URL DA IMAGEM ENVIADA
- * @param message MENSAGEM ENVIADA JUNTO COM A IMAGEM
+ * @param {String} idPhone IDENTIFICADOR DO NUMERO DE TELEFONE DO BOT
+ * @param {String} wamid ID DA MENSAGEM ENVIADA
+ * @param {String} phone NUMERO QUE QUE RECEBEU A MENSAGEM
+ * @param {String} data CAMPO data ENVIADO NA REQUISICAO (NAO CONTEM OS CAMPOS "messaging_product" E "to")
 */
-export async function saveImageSent(idPhone, wamid, phone, link, message) {
+export async function saveImageSent(idPhone, wamid, phone, data) {
 	try {
 		await this.Chat.updateOne(
 			{
@@ -17,7 +16,7 @@ export async function saveImageSent(idPhone, wamid, phone, link, message) {
 			{
 				$set: {
 					lastMessage: {
-						text: (message) ? message : "Foto",
+						text: (data.image.caption) ? data.image.caption : "Foto",
 						type: "image",
 						status: "sending"
 					}
@@ -39,12 +38,8 @@ export async function saveImageSent(idPhone, wamid, phone, link, message) {
 			phone: phone,
 			wamid: wamid,
 			direction: "outbound",
-			status: "sent",
-			type: "image",
-			image: {
-				link: link,
-				caption: message
-			}
+			status: "sending",
+			data: data
 		});
 	} catch (error) {
 		await this.saveError(idPhone, `Error no metodo "saveImageSent": ${error}`);

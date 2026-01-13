@@ -4,6 +4,8 @@ import { saveReactionReceived, saveReactionSent } from "./methods/reaction.js";
 import { saveTextReceived, saveTextSent } from "./methods/text.js";
 import { saveImageSent } from "./methods/image.js";
 import { saveListSent } from "./methods/list.js";
+import { saveButtonSent } from "./methods/button.js";
+import { saveLocationSent } from "./methods/location.js";
 import { saveError } from "./methods/error.js";
 
 /**
@@ -27,6 +29,8 @@ export default class Mongodb {
         this.saveTextSent = saveTextSent.bind(this);
         this.saveImageSent = saveImageSent.bind(this);
         this.saveListSent = saveListSent.bind(this);
+        this.saveButtonSent = saveButtonSent.bind(this);
+        this.saveLocationSent = saveLocationSent.bind(this);
         this.saveError = saveError.bind(this);
     }
 };

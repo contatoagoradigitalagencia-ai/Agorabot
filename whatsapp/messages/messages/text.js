@@ -13,7 +13,7 @@ import { vampetaText } from "../../../clients/Vampeta/index.js";
 */
 export default async function text(account, message) {
 	try {
-		await mongodb.saveTextReceived(account.idPhone, message.id, message.from, message.text.body, message.timestamp);
+		await mongodb.saveTextReceived(account.idPhone, message);
 
 // DONO DA CONTA
 		await vampetaText(account, message);
