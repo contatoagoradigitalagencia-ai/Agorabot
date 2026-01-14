@@ -5,22 +5,20 @@ import axios from "axios";
  * @brief METODO CRIADO PARA ENVIAR BOTOES CLICAVEIS PARA O CLIENTE
  * @param {Object} account DADOS DO NUMERO QUE RECEBEU ATUALIZACOES
  * @param {String} phone NUMERO QUE VAI RECEBER A MENSAGEM
- * @param {Array<Object>} buttons ARRAY DE OBJETOS QUE MONTA O BOTAO
- * @param {Object} header OBJETO QUE PODE CONTER UMA TEXTO IMAGEM VIDEO OU DOCUMENTO (OPCIONAL)
- * @param {Object} options OBTETO QUE RECEBE header body E footer (OBRIGATORIO SOMENTE O body)
+ * @param {Object} options OBTETO QUE RECEBE header body E footer (OBRIGATORIO SOMENTE O body E action)
+ * @param {Object} [options.context] CAMPO OPICIONAL PARA INDICAR QUE ESTA MENSAGEM E UMA RESPOSTA A OUTRA (OPCIONAL)
  * @param {Object} [options.header] TITULO DESCRITIVO DOS BOTOES QUE PODE SER ADICIONADO (OPCIONAL)
  * @param {Object} [options.body] TEXTO PRINCIPAL MOSTRADO AO USUARIO (OBRIGATORIO)
  * @param {Object} [options.footer] TEXTO EXTRA QUE PODE SER ADICIONADO DEPOIS DE body (OPCIONAL)
+ * @param {Array<Object>} [options.action] ARRAY DE OBJETOS COM OS BOTOES (OBRIGATORIO)
  * @return {String} RETORNA O WAMID DA MENSAGEM
 */
-export default async function button(account, phone, buttons, options) {
-	const { header, body, footer } = options;
+export default async function button(account, phone, options = {}) {
+	const { context, header, body, footer, action } = options;
 	let headerKey = null;
 	let headerValue = null;
 
 	try {
-		if (buttons.length === 0) throw (`O parametro "buttons" recebeu 0 elementos (o mínimo são 1)`);
-		if (buttons.length > 3) throw (`O parametro "buttons" recebeu ${buttons.length} elementos (o máximo são 3)`);
 		if (header) {
 			headerKey = Object.keys(header)[0];
 			headerValue = header[headerKey];
@@ -28,6 +26,9 @@ export default async function button(account, phone, buttons, options) {
 		const data = {
 			messaging_product: "whatsapp",
 			to: phone,
+			context: (context) ? {
+				message_id: context.message_id
+			} : undefined,
 			type: "interactive",
 			interactive: {
 				type: "button",
@@ -42,7 +43,7 @@ export default async function button(account, phone, buttons, options) {
 					text: footer.text
 				} : undefined,
 				action: {
-					buttons: buttons
+					buttons: action.buttons
 				}
 			},
 		};
@@ -63,7 +64,7 @@ export default async function button(account, phone, buttons, options) {
 		await this.mongodb.saveButtonSent(account.idPhone, wamid, phone, data);
 		return (wamid);
 	} catch (error) {
-		await this.mongodb.saveError(account.idPhone, `Erro na função "buttons": ${error}`);
+		await this.mongodb.saveError(account.idPhone, `Erro na função "button": ${error}`);
 		return (null);
 	}
 }

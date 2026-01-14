@@ -5,11 +5,13 @@ import axios from "axios";
  * @brief FUNCAO CRIADA PARA REAGIR A UMA MENSAGEM
  * @param {Object} account DADOS DO NUMERO QUE RECEBEU ATUALIZACOES
  * @param {String} phone NUMERO QUE VAI RECEBER A REACAO
- * @param {String} wamid ID DA MENSAGEM QUE VAI SER REAGIDA
- * @param {String} emoji EMOJI QUE SERA USADO NA REACAO
+ * @param {Object} options OBTETO QUE RECEBE reaction (OBRIGATORIO)
+ * @param {Object} [options.reaction] CONTEM O ID DA MENSAGEM REAGIDA E O EMOJI (OBRIGATORIO)
  * @return {String} RETORNA O WAMID DA REACAO DA MENSAGEM 
 */
-export default async function reaction(account, phone, wamid, emoji) {
+export default async function reaction(account, phone, options = {}) {
+	const { reaction } = options;
+
 	try {
 		const res = await axios({
 			method: "POST",
@@ -22,8 +24,8 @@ export default async function reaction(account, phone, wamid, emoji) {
 				to: phone,
 				type: "reaction",
 				reaction: {
-					message_id: wamid,
-					emoji: emoji
+					message_id: reaction.message_id,
+					emoji: reaction.emoji
 				}
 			}
 		});

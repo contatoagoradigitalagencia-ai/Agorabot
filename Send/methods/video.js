@@ -2,16 +2,16 @@ import axios from "axios";
 
 /**
  * @author VAMPETA
- * @brief FUNCAO CRIADA PARA ENVIAR IMAGEM
+ * @brief FUNCAO CRIADA PARA ENVIAR VIDEO
  * @param {Object} account DADOS DO NUMERO QUE RECEBEU ATUALIZACOES
  * @param {String} phone NUMERO QUE VAI RECEBER A MENSAGEM
- * @param {Object} options OBTETO QUE PODE RECEBER context E image (OBRIGATORIO)
+ * @param {Object} options OBTETO QUE PODE RECEBER context E video (OBRIGATORIO)
  * @param {Object} [options.context] CAMPO OPICIONAL PARA INDICAR QUE ESTA MENSAGEM E UMA RESPOSTA A OUTRA (OPCIONAL)
- * @param {Object} [options.image] IMAGEM COM DESCRICAO QUE SERA ENVIADA (O link E OBRIGATORIO MAS O caption NAO)
+ * @param {Object} [options.video] VIDEO COM DESCRICAO QUE SERA ENVIADA (O link E OBRIGATORIO MAS O caption NAO)
  * @return {String} RETORNA O WAMID DA MENSAGEM
 */
-export default async function image(account, phone, options = {}) {
-	const { context, image } = options;
+export default async function video(account, phone, options = {}) {
+	const { context, video } = options;
 
 	try {
 		const data = {
@@ -20,10 +20,10 @@ export default async function image(account, phone, options = {}) {
 			context: (context) ? {
 				message_id: context.message_id
 			} : undefined,
-			type: "image",
-			image: {
-				link: image.link,
-				caption: image.caption
+			type: "video",
+			video: {
+				link: video.link,
+				caption: video.caption
 			}
 		};
 		const res = await axios({
@@ -40,10 +40,10 @@ export default async function image(account, phone, options = {}) {
 		if (!wamid) throw ("Wamid não retornado pela API da Meta");
 		delete data.messaging_product;
 		delete data.to;
-		if (wamid) await this.mongodb.saveImageSent(account.idPhone, wamid, phone, data);
+		if (wamid) await this.mongodb.saveVideoSent(account.idPhone, wamid, phone, data);
 		return (wamid);
 	} catch (error) {
-		await this.mongodb.saveError(account.idPhone, `Erro na função "image": ${error}`);
+		await this.mongodb.saveError(account.idPhone, `Erro na função "video": ${error}`);
 		return (null);
 	}
 }

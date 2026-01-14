@@ -5,21 +5,24 @@ import axios from "axios"
  * @brief FUNCAO CRIADA PARA ENVIAR UMA MENSAGEM COM LISTA
  * @param {Object} account DADOS DO NUMERO QUE RECEBEU ATUALIZACOES
  * @param {String} phone NUMERO QUE VAI RECEBER A MENSAGEM
- * @param {String} button TEXTO DO BOTAO QUE ABRE A LISTA
- * @param {Array<Object>} sections ARRAY COM CATEGORIAS E DENTRO UMA LISTA DE ITENS DA LISTA
  * @param {Object} options OBTETO QUE RECEBE header body E footer (OBRIGATORIO SOMENTE O body)
  * @param {Object} [options.header] TITULO DESCRITIVO DA LISTA QUE PODE SER ADICIONADO (OPCIONAL)
  * @param {Object} [options.body] TEXTO PRINCIPAL MOSTRADO AO USUARIO (OBRIGATORIO)
  * @param {Object} [options.footer] TEXTO EXTRA QUE PODE SER ADICIONADO DEPOIS DE body (OPCIONAL)
+ * @param {String} [options.button] TEXTO DO BOTAO QUE ABRE A LISTA (OBRIGATORIO)
+ * @param {Array<Object>} [options.section] ARRAY COM CATEGORIAS E DENTRO UMA LISTA DE ITENS DA LISTA (OBRIGATORIO)
  * @return {String} RETORNA O WAMID DA MENSAGEM
 */
-export default async function list(account, phone, button, sections, options) {
-	const { header, body, footer } = options;
+export default async function list(account, phone, options = {}) {
+	const { context, header, body, footer, action } = options;
 
 	try {
 		const data = {
 			messaging_product: "whatsapp",
 			to: phone,
+			context: (context) ? {
+				message_id: context.message_id
+			} : undefined,
 			type: "interactive",
 			interactive: {
 				type: "list",
@@ -34,8 +37,8 @@ export default async function list(account, phone, button, sections, options) {
 					text: footer.text
 				} : undefined,
 				action: {
-					button: button,
-					sections: sections
+					button: action.button,
+					sections: action.sections
 				}
 			}
 		}

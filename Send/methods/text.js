@@ -5,17 +5,24 @@ import axios from "axios";
  * @brief METODO CRIADO PARA ENVIAR MENSAGENS SIMPLES
  * @param {Object} account DADOS DO NUMERO QUE RECEBEU ATUALIZACOES
  * @param {String} phone NUMERO QUE VAI RECEBER A MENSAGEM
- * @param {String} message MENSAGEM QUE SERA ENVIADA
+ * @param {Object} options OBTETO QUE PODE RECEBER context E text (OBRIGATORIO)
+ * @param {Object} [options.context] CAMPO OPICIONAL PARA INDICAR QUE ESTA MENSAGEM E UMA RESPOSTA A OUTRA (OPCIONAL)
+ * @param {Object} [options.body] MENSAGEM QUE SERA ENVIADA (OBRIGATORIO)
  * @return {String} RETORNA O WAMID DA MENSAGEM
 */
-export default async function text(account, phone, message) {
+export default async function text(account, phone, options = {}) {
+	const { context, text } = options;
+
 	try {
 		const data = {
 			messaging_product: "whatsapp",
 			to: phone,
+			context: (context) ? {
+				message_id: context.message_id
+			} : undefined,
 			type: "text",
 			text: {
-				body: message,
+				body: text.body,
 				// preview_url: false	// REVISAR ESSE ASSUNTO DPS
 			}
 		};

@@ -5,23 +5,27 @@ import axios from "axios";
  * @brief METODO CRIADO PARA ENVIAR MENSAGENS SIMPLES
  * @param {Object} account DADOS DO NUMERO QUE RECEBEU ATUALIZACOES
  * @param {String} phone NUMERO QUE VAI RECEBER A MENSAGEM
- * @param {Float} latitude LATIDUDE DO MAPA MUNDI
- * @param {Float} longitude LONGITUDE DO MAPA MUNDI
- * @param {String} name NOME DADO NO CORPO DA MENSAGEM (TEXTO DE LIVRE DIGITACAO E NAO VERIFICADO PELA META)
- * @param {String} address ENDERECO COMPLETO (TEXTO DE LIVRE DIGITACAO E NAO VERIFICADO PELA META)
+ * @param {Object} options OBTETO QUE PODE RECEBER context E image (OBRIGATORIO)
+ * @param {Object} [options.context] CAMPO OPICIONAL PARA INDICAR QUE ESTA MENSAGEM E UMA RESPOSTA A OUTRA (OPCIONAL)
+ * @param {Object} [options.location] CONTEM LATITUDE LONGITUDE NAME E ADDRESS (SOMENTE LATITUDE E LONGITUDE SAO OBRIGATORIOS OBRIGATORIO)
  * @return {String} RETORNA O WAMID DA MENSAGEM
 */
-export default async function location(account, phone, latitude, longitude, name, address) {
+export default async function location(account, phone, options = {}) {
+	const { context, location } = options;
+
 	try {
 		const data = {
 			messaging_product: "whatsapp",
 			to: phone,
+			context: (context) ? {
+				message_id: context.message_id
+			} : undefined,
 			type: "location",
 			location: {
-				latitude: latitude,
-				longitude: longitude,
-				name: name,
-				address: address
+				latitude: location.latitude,
+				longitude: location.longitude,
+				name: location.name,
+				address: location.address
 			}
 		};
 		const res = await axios({

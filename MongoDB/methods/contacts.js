@@ -1,12 +1,12 @@
 /**
  * @author VAMPETA
- * @brief METODO CRIADO PARA SALVAR MENSAGENS DE IMAGENS NO MONGODB
+ * @brief METODO CRIADO PARA SALVAR MENSAGENS DE CONTATOS NO MONGODB
  * @param {String} idPhone IDENTIFICADOR DO NUMERO DE TELEFONE DO BOT
  * @param {String} wamid ID DA MENSAGEM ENVIADA
- * @param {String} phone NUMERO QUE QUE RECEBEU A MENSAGEM
+ * @param {String} phone NUMERO QUE RECEBEU A MENSAGEM
  * @param {String} data CAMPO data ENVIADO NA REQUISICAO (NAO CONTEM OS CAMPOS "messaging_product" E "to")
 */
-export async function saveImageSent(idPhone, wamid, phone, data) {
+export async function saveContactsSent(idPhone, wamid, phone, data) {
 	try {
 		await this.Chat.updateOne(
 			{
@@ -16,8 +16,8 @@ export async function saveImageSent(idPhone, wamid, phone, data) {
 			{
 				$set: {
 					lastMessage: {
-						text: (data.image.caption) ? data.image.caption : "Foto",
-						type: "image",
+						text: data.contacts[0].name.formatted_name,
+						type: "contacts",
 						status: "sending"
 					}
 				},
@@ -29,7 +29,7 @@ export async function saveImageSent(idPhone, wamid, phone, data) {
 			{ upsert: true }
 		);
 	} catch (error) {
-		await this.saveError(idPhone, `Error no metodo "saveImageSent": ${error}`);
+		await this.saveError(idPhone, `Error no metodo "saveContactsSent": ${error}`);
 	}
 	try {
 		await this.Message.create({
@@ -41,6 +41,6 @@ export async function saveImageSent(idPhone, wamid, phone, data) {
 			data: data
 		});
 	} catch (error) {
-		await this.saveError(idPhone, `Error no metodo "saveImageSent": ${error}`);
+		await this.saveError(idPhone, `Error no metodo "saveContactsSent": ${error}`);
 	}
 }
