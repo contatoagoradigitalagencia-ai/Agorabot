@@ -15,12 +15,13 @@ import reaction from "./reaction.js";
 export default async function messages(account, value) {
 	for (const message of value.messages) {
 		try {
+			await mongodb.saveContact(account.idPhone, message.from, value.contacts);
 			await send.read(account, message.id, message.from);
 			switch (message.type) {
 				case ("text"):
 					await text(account, message);
 					break;
-					
+
 				case ("interactive"):
 					await interactive(account, message);
 					break;
@@ -34,8 +35,8 @@ export default async function messages(account, value) {
 				// 	break;
 	
 				default:
-					await mongodb.saveTextReceived(account.idPhone, message.id, message.from, `Mensagem não suportada: ${message.type}`, message.timestamp);
-					await send.text(account, message.from, account.messageNotSupported);
+					await mongodb.saveTextReceived(account.idPhone, { id: message.id, from: message.from, timestamp: message.timestamp, type: "text", text: { body: `Mensagem não suportada: ${message.type}` } });
+					await send.text(account, message.from, { text: { body: account.messageNotSupported } });
 			}
 		} catch (error) {
 			await mongodb.saveError(account.idPhone, `Error na funcao "messages": ${error}`);

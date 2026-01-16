@@ -7,6 +7,7 @@ import location from "./methods/location.js";
 import contacts from "./methods/contacts.js";
 import button from "./methods/button.js";
 import list from "./methods/list.js";
+import template from "./methods/template.js";
 
 /**
  * @author VAMPETA
@@ -26,5 +27,6 @@ export default class Send {
 		this.contacts = contacts.bind(this);
 		this.button = button.bind(this);
 		this.list = list.bind(this);
+		this.template = template.bind(this);
 	}
 };

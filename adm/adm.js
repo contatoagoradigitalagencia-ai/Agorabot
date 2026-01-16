@@ -1,5 +1,6 @@
-import googleSheets from "../../Google Sheets/GoogleSheets.js";
-import send from "../../Send/Send.js";
+import send from "../Send/Send.js";
+
+import reaction from "./commands/messages/reaction.js";
 
 const sections = [
 	{
@@ -68,13 +69,13 @@ const buttons = [
 
 /**
  * @author VAMPETA
- * @brief FUNCAO QUE CONTROLA O COMPORTAMENTO DO BOT DE UM CLIENTE ESPECIFICO PARA RECEBIMENTO DO TIPO "text"
+ * @brief GERENCIA A ATIVACAO DOS COMANDOS DE ADM
  * @param {Object} account DADOS DO NUMERO QUE RECEBEU ATUALIZACOES
  * @param {Object} message UM UNICO ELEMENTO DE req.body.entry[n].changes[n].value.messages[n]
 */
-export async function vampetaText(account, message) {
+export default async function adm(account, message) {
 	if (message.text.body === "/all" || message.text.body === "/reaction") {
-		await send.reaction(account, message.from, { reaction: { message_id: message.id, emoji: "😀" } });
+		await reaction(account, message);
 	}
 
 	if (message.text.body === "/all" || message.text.body === "/text") {
@@ -126,14 +127,8 @@ export async function vampetaText(account, message) {
 		await send.template(account, message.from, "teste_1");
 		await send.template(account, message.from, "teste_2");
 	}
-}
 
-/**
- * @author VAMPETA
- * @brief FUNCAO QUE CONTROLA O COMPORTAMENTO DO BOT DE UM CLIENTE ESPECIFICO PARA RECEBIMENTO DO TIPO "interactive"
- * @param {Object} account DADOS DO NUMERO QUE RECEBEU ATUALIZACOES
- * @param {Object} message UM UNICO ELEMENTO DE req.body.entry[n].changes[n].value.messages[n]
-*/
-export async function vampetaInteractive(account, message) {
-	console.log(message)
+	if (message.text.body === "/help") {
+		await send.text(account, message.from, { text: { body: "Comando criado para auxiliar a listar os comandos existente (ainda nao esta funcionado esse comando kkkk)" } });
+	}
 }

@@ -1,4 +1,5 @@
 import { connect } from "./methods/connect.js";
+import { saveContact } from "./methods/contact.js";
 import { saveVisualization } from "./methods/visualization.js";
 import { saveReactionReceived, saveReactionSent } from "./methods/reaction.js";
 import { saveTextReceived, saveTextSent } from "./methods/text.js";
@@ -24,6 +25,7 @@ export default class Mongodb {
 
     constructor() {
         this.connect = connect.bind(this);
+        this.saveContact = saveContact.bind(this);
         this.saveVisualization = saveVisualization.bind(this);
         this.saveReactionReceived = saveReactionReceived.bind(this);
         this.saveReactionSent = saveReactionSent.bind(this);

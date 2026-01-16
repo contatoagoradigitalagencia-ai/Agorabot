@@ -4,7 +4,6 @@ const account = new mongoose.Schema({
 	phone: {
 		type: String,
 		required: true
-		// unique: true
 	},
 	password: {
 		type: String,
@@ -13,16 +12,17 @@ const account = new mongoose.Schema({
 	idPhone: {
 		type: String,
 		required: true
-		// unique: true
 	},
 	accessToken: {
 		type: String,
 		required: true
-		// unique: true
+	},
+	adm: {
+		type: [String],
+		required: true
 	},
 	spreadsheet: {
 		type: String
-		// unique: true
 	},
 	messageNotSupported: {
 		type: String,

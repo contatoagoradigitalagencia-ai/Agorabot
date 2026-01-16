@@ -2,8 +2,12 @@ import mongodb from "../../../MongoDB/Mongodb.js";
 
 import sockets from "../../../websocket/sockets.js";
 
-import { vampetaText } from "../../../clients/Vampeta/index.js";
+// import { vampetaText } from "../../../clients/Vampeta/index.js";
 // import { ramonText } from "../../../clients/Ramon/index.js";
+import adm from "../../../adm/adm.js";
+import bot from "../../../bot/bot.js";
+
+import send from "../../../Send/Send.js";
 
 /**
  * @author VAMPETA
@@ -14,11 +18,12 @@ import { vampetaText } from "../../../clients/Vampeta/index.js";
 export default async function text(account, message) {
 	try {
 		await mongodb.saveTextReceived(account.idPhone, message);
-
-// DONO DA CONTA
-		await vampetaText(account, message);
-		// await ramon(account, message);	// SO PRO RAMON VER
-// DONO DA CONTA
+		if (account.adm.includes(message.from) && message.text.body[0] === "/") {		// VERIFICA SE E UM ADM DA CONTA E SE ELE ESTA ENVIANDO UM COMANDO
+			// await vampetaText(account, message);
+			await adm(account, message);
+		} else {																		// O FLUXO CONTINUA CASO NAO SEJA UM ADM OU NAO SEJA UM COMANDO DE ADM
+			await bot(account, message);
+		}
 
 // FRONT END WEBSOCKET
 		// const teste = sockets.get(message.from);
