@@ -1,4 +1,5 @@
 import send from "../../../Send/Send.js";
+import mongodb from "../../../MongoDB/Mongodb.js";
 
 /**
  * @author VAMPETA
@@ -10,6 +11,6 @@ export default async function reaction(account, message) {
 	try {
 		await send.reaction(account, message.from, { reaction: { message_id: message.id, emoji: "😀" } });
 	} catch (error) {
-		// FALTA SALVAR ERRO
+		await mongodb.saveError(account.idPhone, `Error na funcao "reaction": ${error}`);
 	}
 }

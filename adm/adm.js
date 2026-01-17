@@ -1,71 +1,18 @@
 import send from "../Send/Send.js";
+import mongodb from "../MongoDB/Mongodb.js";
 
+import help from "./commands/help.js";
+import contatos from "./commands/contatos.js";
+import all from "./commands/all.js";
 import reaction from "./commands/messages/reaction.js";
-
-const sections = [
-	{
-		title: "categoria 1",
-		rows: [
-			{
-				id: 1,
-				title: "title 1",
-				description: "description 1"
-			},
-			{
-				id: 2,
-				title: "title 2",
-				description: "description 2"
-			},
-			{
-				id: 3,
-				title: "title 3",
-				description: "description 3"
-			}
-		]
-	},
-	{
-		title: "categoria 2",
-		rows: [
-			{
-				id: 1,
-				title: "title 1",
-				description: "description 1"
-			}
-		]
-	},
-	{
-		title: "categoria 3",
-		rows: [
-			{
-				id: 1,
-				title: "title 1",
-				description: "description 1"
-			},
-			{
-				id: 2,
-				title: "title 2",
-				description: "description 2"
-			}
-		]
-	},
-];
-
-const buttons = [
-	{
-		type: "reply",
-		reply: {
-			id: 1,
-			title: "title 1"
-		}
-	},
-	{
-		type: "reply",
-		reply: {
-			id: 2,
-			title: "title 2"
-		}
-	}
-];
+import text from "./commands/messages/text.js";
+import image from "./commands/messages/image.js";
+import video from "./commands/messages/video.js";
+import location from "./commands/messages/location.js";
+import contacts from "./commands/messages/contacts.js";
+import button from "./commands/messages/button.js";
+import list from "./commands/messages/list.js";
+// import template from "./commands/messages/template.js";	// DESABILITADO PARA NAO GERAR COBRANCAS
 
 /**
  * @author VAMPETA
@@ -74,61 +21,60 @@ const buttons = [
  * @param {Object} message UM UNICO ELEMENTO DE req.body.entry[n].changes[n].value.messages[n]
 */
 export default async function adm(account, message) {
-	if (message.text.body === "/all" || message.text.body === "/reaction") {
-		await reaction(account, message);
-	}
+	try {
+		switch (message.text.body) {
+			case "/help":
+				await help(account, message);
+				break;
 
-	if (message.text.body === "/all" || message.text.body === "/text") {
-		await send.text(account, message.from, { text: { body: "texto" } });
-		await send.text(account, message.from, { context: { message_id: message.id }, text: { body: "texto" } });
-	}
+			case "/contatos":
+				await contatos(account, message);
+				break;
 
-	if (message.text.body === "/all" || message.text.body === "/image") {
-		await send.image(account, message.from, { image: { link: "https://i.ytimg.com/vi/h_D3VFfhvs4/hq720.jpg" } });
-		await send.image(account, message.from, { context: { message_id: message.id }, image: { link: "https://i.ytimg.com/vi/h_D3VFfhvs4/hq720.jpg" } });
-		await send.image(account, message.from, { image: { link: "https://i.ytimg.com/vi/h_D3VFfhvs4/hq720.jpg", caption: "descricao" } });
-	}
+			case "/all":
+				await all(account, message);
+				break;
 
-	if (message.text.body === "/all" || message.text.body === "/video") {
-		await send.video(account, message.from, { video: { link: "https://download.samplelib.com/mp4/sample-5s.mp4" } });
-		await send.video(account, message.from, { context: { message_id: message.id }, video: { link: "https://download.samplelib.com/mp4/sample-5s.mp4" } });
-		await send.video(account, message.from, { video: { link: "https://download.samplelib.com/mp4/sample-5s.mp4", caption: "descricao" } });
-	}
+			case "/reaction":
+				await reaction(account, message);
+				break;
 
-	if (message.text.body === "/all" || message.text.body === "/location") {
-		await send.location(account, message.from, { location: { latitude: -22.909916052379334, longitude: -43.19812500764271 } });
-		await send.location(account, message.from, { location: { latitude: -22.909916052379334, longitude: -43.19812500764271, name: "42 Rio", address: "R. Marquês de Sapucaí, 200 - Santo Cristo, Rio de Janeiro - RJ, 20210-072" } });
-		await send.location(account, message.from, { context: { message_id: message.id }, location: { latitude: -22.909916052379334, longitude: -43.19812500764271, name: "42 Rio", address: "R. Marquês de Sapucaí, 200 - Santo Cristo, Rio de Janeiro - RJ, 20210-072" } });
-	}
+			case "/text":
+				await text(account, message);
+				break;
 
-	if (message.text.body === "/all" || message.text.body === "/contacts") {
-		await send.contacts(account, message.from, { contacts: { name: { formatted_name: "nome", first_name: "primeiro nome" }, phones: [{ phone: "(00) 0000-00000" }, { phone: "(00) 0000-00000" }], org: { company: "compania", title: "titulo" } } });
-		await send.contacts(account, message.from, { context: { message_id: message.id }, contacts: { name: { formatted_name: "nome", first_name: "primeiro nome" }, phones: [{ phone: "(00) 0000-00000" }, { phone: "(00) 0000-00000" }], org: { company: "compania", title: "titulo" } } });
-		await send.contacts(account, message.from, { contacts: { name: { formatted_name: "nome", first_name: "primeiro nome" }, emails: [{ email: "email@dominio.com" }, { email: "email@dominio.com" }], org: { company: "compania", title: "titulo" } } });
-		await send.contacts(account, message.from, { contacts: { name: { formatted_name: "nome", first_name: "primeiro nome" }, phones: [{ phone: "(00) 0000-00000" }, { phone: "(00) 0000-00000" }], emails: [{ email: "email@dominio.com" }, { email: "email@dominio.com" }], org: { company: "compania", title: "titulo" } } });
-	}
+			case "/image":
+				await image(account, message);
+				break;
 
-	if (message.text.body === "/all" || message.text.body === "/button") {
-		await send.button(account, message.from, { body: { text: "texto do body" }, action: { buttons: buttons } });
-		await send.button(account, message.from, { context: { message_id: message.id }, body: { text: "texto do body" }, action: { buttons: buttons } });
-		await send.button(account, message.from, { header: { text: "texto do header" }, body: { text: "texto do body" }, footer: { text: "texto do footer" }, action: { buttons: buttons } });
-		await send.button(account, message.from, { header: { image: { link: "https://cloudfront-us-east-1.images.arcpublishing.com/bloomberglinea/D4G26SQFRNHRHBVURTB5HJSIFI.png" } }, body: { text: "texto do body" }, action: { buttons: buttons } });
-		await send.button(account, message.from, { header: { video: { link: "https://download.samplelib.com/mp4/sample-5s.mp4" } }, body: { text: "texto do body" }, action: { buttons: buttons } });
-		await send.button(account, message.from, { header: { document: { link: "https://equilead.org/assets/eventagendadocument/sample.pdf", filename: "pdf teste" } }, body: { text: "texto do body" }, action: { buttons: buttons } });
-	}
+			case "/video":
+				await video(account, message);
+				break;
 
-	if (message.text.body === "/all" || message.text.body === "/list") {
-		await send.list(account, message.from, { body: { text: "texto do body" }, action: { button: "botao", sections: sections } });
-		await send.list(account, message.from, { context: { message_id: message.id }, body: { text: "texto do body" }, action: { button: "botao", sections: sections } });
-		await send.list(account, message.from, { header: { text: "texto do header" }, body: { text: "texto do body" }, footer: { text: "texto do footer" }, action: { button: "botao", sections: sections } });
-	}
+			case "/location":
+				await location(account, message);
+				break;
 
-	if (message.text.body === "/template") {
-		await send.template(account, message.from, "teste_1");
-		await send.template(account, message.from, "teste_2");
-	}
+			case "/contacts":
+				await contacts(account, message);
+				break;
 
-	if (message.text.body === "/help") {
-		await send.text(account, message.from, { text: { body: "Comando criado para auxiliar a listar os comandos existente (ainda nao esta funcionado esse comando kkkk)" } });
+			case "/button":
+				await button(account, message);
+				break;
+
+			case "/list":
+				await list(account, message);
+				break;
+
+			// case "/template":	// DESABILITADO PARA NAO GERAR COBRANCAS
+			// 	await template(account, message);
+			// 	break;
+
+			default:
+				await send.text(account, message.from, { text: { body: "Comando não encontrado. Digite `/help` para ver os comandos disponíveis." } });
+		}
+	} catch (error) {
+		await mongodb.saveError(account.idPhone, `Error na funcao "bot": ${error}`);
 	}
 }

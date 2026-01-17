@@ -35,10 +35,10 @@ export default async function contacts(account, phone, options = {}) {
 						email: email.email,
 						type: "WORK"
 					})) : undefined,
-					org: {
+					org: (contacts.org) ? {
 						company: contacts.org.company,
 						title: contacts.org.title
-					}
+					} : undefined
 				}
 			]
 		};

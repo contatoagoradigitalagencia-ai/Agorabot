@@ -1,13 +1,13 @@
 import mongodb from "../../../MongoDB/Mongodb.js";
 
-import sockets from "../../../websocket/sockets.js";
+// import sockets from "../../../websocket/sockets.js";
 
 // import { vampetaText } from "../../../clients/Vampeta/index.js";
 // import { ramonText } from "../../../clients/Ramon/index.js";
 import adm from "../../../adm/adm.js";
 import bot from "../../../bot/bot.js";
 
-import send from "../../../Send/Send.js";
+// import send from "../../../Send/Send.js";
 
 /**
  * @author VAMPETA
