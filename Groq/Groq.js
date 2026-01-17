@@ -1,3 +1,3 @@
-import Groq from "groq-sdk";
+import Groq from "./class.js";
 
-export default new Groq({ apiKey: "" });
+export default new Groq();

@@ -4,6 +4,7 @@ import configDotenv from "./configs/dotenv.js";
 import configRoutes from "./route/routes.js";
 import connectMongoDB from "./configs/mongodb.js";
 import connectGoogleSheets from "./configs/google sheets.js";
+import connectGroq from "./configs/groq.js";
 import configWebSocket from "./configs/websocket.js";
 // import configEvents from "./websocket/events.js";    // POR ENQUANTO O FRONT END ESTA PAUSADO
 
@@ -11,6 +12,7 @@ configDotenv();
 configAxios();
 await connectMongoDB();
 await connectGoogleSheets();
+await connectGroq();
 const app = configExprees();
 configRoutes(app);
 const { server, io } = configWebSocket(app);

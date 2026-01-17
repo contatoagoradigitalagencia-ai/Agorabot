@@ -12,7 +12,8 @@ export default function configDotenv() {
 		"MONGO_URI",
 		"GOOGLE_SHEETS_PROJECT_ID",
 		"GOOGLE_SHEETS_PRIVATE_KEY",
-		"GOOGLE_SHEETS_CLIENT_EMAIL"
+		"GOOGLE_SHEETS_CLIENT_EMAIL",
+		"GROQ_APY_KEY"
 	];
 	for (const variable of variables) {
 		if (!process.env[variable]) {

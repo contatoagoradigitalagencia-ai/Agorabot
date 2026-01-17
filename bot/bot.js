@@ -1,12 +1,5 @@
 import send from "../Send/Send.js";
 import mongodb from "../MongoDB/Mongodb.js";
-
-// import Groq from "groq-sdk";
-
-// const groq = new Groq({
-// 	apiKey: ""
-// });
-
 import groq from "../Groq/Groq.js";
 
 /**
@@ -23,7 +16,7 @@ export default async function bot(account, message) {
 		messages.unshift({ role: "user", content: message.text.body });
 		messages.reverse();
 // console.log(messages);
-		const res = await groq.chat.completions.create({
+		const res = await groq.groq.chat.completions.create({
 			model: "llama-3.1-8b-instant",
 			// messages: [
 			// 	{
