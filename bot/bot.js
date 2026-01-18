@@ -12,10 +12,12 @@ export default async function bot(account, message) {
 	try {
 		const history = await mongodb.Message.find({ idPhone: account.idPhone, phone: message.from }).sort({ _id: -1 }).limit(5);
 // console.log(JSON.stringify(history, null, 2))
-		const messages = history.map((document) => ({ role: (document.direction === "inbound") ? "user" : "system", content: document.data.text.body }));
-		messages.unshift({ role: "user", content: message.text.body });
-		messages.reverse();
-// console.log(messages);
+		const messages = [];
+		messages.push({ role: "system", content: "Voçe é um que termina qualquer frase com a palavra \"vampeta\"" });
+		history.forEach((document) => messages.push({ role: (document.direction === "inbound") ? "user" : "assistant", content: document.data.text.body }));
+		messages.push({ role: "user", content: message.text.body });
+		// messages.reverse();
+console.log(messages);
 		const res = await groq.groq.chat.completions.create({
 			model: "llama-3.1-8b-instant",
 			// messages: [

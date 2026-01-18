@@ -12,7 +12,8 @@ export default async function contatos(account, message) {
 		const contacts = await mongodb.Contact.find({ idPhone: account.idPhone });
 
 		contacts.forEach(async (contact) => {
-			await send.contacts(account, message.from, { contacts: { name: { formatted_name: contact.name, first_name: contact.name }, phones: [{ phone: contact.phone }] } });
+			const name = (contact.name) ? contact.name : "Sem nome";
+			await send.contacts(account, message.from, { contacts: { name: { formatted_name: name, first_name: name }, phones: [{ phone: contact.phone }] } });
 		});
 	} catch (error) {
 		await mongodb.saveError(account.idPhone, `Error na funcao "contatos": ${error}`);
