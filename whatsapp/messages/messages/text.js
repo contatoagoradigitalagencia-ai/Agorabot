@@ -4,7 +4,7 @@ import mongodb from "../../../MongoDB/Mongodb.js";
 
 // import { vampetaText } from "../../../clients/Vampeta/index.js";
 // import { ramonText } from "../../../clients/Ramon/index.js";
-import adm from "../../../adm/adm.js";
+import commands from "../../../commands/commands.js";
 import bot from "../../../bot/bot.js";
 
 // import send from "../../../Send/Send.js";
@@ -20,7 +20,7 @@ export default async function text(account, message) {
 		await mongodb.saveTextReceived(account.idPhone, message);
 		if (account.adm.includes(message.from) && message.text.body[0] === "/") {		// VERIFICA SE E UM ADM DA CONTA E SE ELE ESTA ENVIANDO UM COMANDO
 			// await vampetaText(account, message);
-			await adm(account, message);
+			await commands(account, message);
 		} else {																		// O FLUXO CONTINUA CASO NAO SEJA UM ADM OU NAO SEJA UM COMANDO DE ADM
 			await bot(account, message);
 		}

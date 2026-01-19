@@ -1,5 +1,5 @@
-import send from "../../Send/Send.js";
-import mongodb from "../../MongoDB/Mongodb.js";
+import send from "../Send/Send.js";
+import mongodb from "../MongoDB/Mongodb.js";
 
 /**
  * @author VAMPETA

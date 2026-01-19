@@ -27,6 +27,17 @@ const account = new mongoose.Schema({
 	messageNotSupported: {
 		type: String,
 		required: true
+	},
+	bot: {
+		model: {
+			type: String
+		},
+		prompt: {
+			type: String
+		},
+		page: {
+			type: String
+		}
 	}
 });
 

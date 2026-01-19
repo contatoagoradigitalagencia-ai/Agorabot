@@ -1,5 +1,6 @@
 import send from "../Send/Send.js";
 import mongodb from "../MongoDB/Mongodb.js";
+import googleSheets from "../Google Sheets/GoogleSheets.js";
 import groq from "../Groq/Groq.js";
 
 /**
@@ -11,32 +12,17 @@ import groq from "../Groq/Groq.js";
 export default async function bot(account, message) {
 	try {
 		const history = await mongodb.Message.find({ idPhone: account.idPhone, phone: message.from }).sort({ _id: -1 }).limit(5);
-// console.log(JSON.stringify(history, null, 2))
-		const messages = [];
-		messages.push({ role: "system", content: "Voçe é um que termina qualquer frase com a palavra \"vampeta\"" });
-		history.forEach((document) => messages.push({ role: (document.direction === "inbound") ? "user" : "assistant", content: document.data.text.body }));
-		messages.push({ role: "user", content: message.text.body });
-		// messages.reverse();
-console.log(messages);
+		let table = await googleSheets.getPage(account, account.bot.page);
+		table = (table.length) ? JSON.stringify(table) : null;
+		const messages = [{ role: "system", content: account.bot.prompt + ((table) ? `\nSegue uma tabela para consulta de dados:\n${table}` : "") }];
+		history.forEach((document) => messages.unshift({ role: (document.direction === "inbound") ? "user" : "assistant", content: document.data.text.body }));
 		const res = await groq.groq.chat.completions.create({
-			model: "llama-3.1-8b-instant",
-			// messages: [
-			// 	{
-			// 		role: "system",
-			// 		content: "Você é um assistente técnico especializado em Node.js."
-			// 	},
-			// 	{
-			// 		role: "user",
-			// 		content: "oi"
-			// 	}
-			// ],
+			model: account.bot.model,
 			messages: messages,
 			temperature: 0.7,
-			max_tokens: 512,
+			max_tokens: 15,
 			top_p: 1
 		});
-// console.log(JSON.stringify(res, null, 2))
-		// await send.text(account, message.from, { text: { body: "Oi, eu sou um bot!" } });
 		await send.text(account, message.from, { text: { body: res.choices[0].message.content } });
 	} catch (error) {
 		await mongodb.saveError(account.idPhone, `Error na funcao "bot": ${error}`);

@@ -1,5 +1,7 @@
 import { connect } from "./methods/connect.js";
+import { saveAdm, removeAdm } from "./methods/adm.js";
 import { saveContact } from "./methods/contact.js";
+import { savePrompt } from "./methods/prompt.js";
 import { saveVisualization } from "./methods/visualization.js";
 import { saveReactionReceived, saveReactionSent } from "./methods/reaction.js";
 import { saveTextReceived, saveTextSent } from "./methods/text.js";
@@ -26,6 +28,9 @@ export default class Mongodb {
     constructor() {
         this.connect = connect.bind(this);
         this.saveContact = saveContact.bind(this);
+        this.saveAdm = saveAdm.bind(this);
+        this.removeAdm = removeAdm.bind(this);
+        this.savePrompt = savePrompt.bind(this);
         this.saveVisualization = saveVisualization.bind(this);
         this.saveReactionReceived = saveReactionReceived.bind(this);
         this.saveReactionSent = saveReactionSent.bind(this);

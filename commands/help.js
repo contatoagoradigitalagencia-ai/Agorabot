@@ -1,5 +1,5 @@
-import send from "../../Send/Send.js";
-import mongodb from "../../MongoDB/Mongodb.js";
+import send from "../Send/Send.js";
+import mongodb from "../MongoDB/Mongodb.js";
 
 const text = `
 Olá! Abaixo estão os comandos que você pode utilizar e uma breve explicação de cada um:
@@ -7,8 +7,25 @@ Olá! Abaixo estão os comandos que você pode utilizar e uma breve explicação
 \`/help\`
 Exibe esta mensagem de ajuda com todos os comandos disponíveis.
 
+\`/adm\`
+Lista os atuais administradores do bot que podem usar comandos.
+
+\`/add_adm\`
+Adiciona um novo número como administrador.
+Exemplo de uso: \`/add_adm 55210000000\` (Apenas código de país + DDD + número. Sem hífen, espaços ou caracteres especias).
+
+\`/remove_adm\`
+Remove um número como administrador.
+Exemplo de uso: \`/add_adm 55210000000\` (Apenas código de país + DDD + número. Sem hífen, espaços ou caracteres especias).
+
 \`/contatos\`
 Lista os números salvos automaticamente quando alguém envia uma mensagem para este bot.
+
+\`/prompt\`
+Exibe o atual prompt que instruí a IA para elaborar respostas.
+
+\`/new_prompt\`
+O comando "/new_prompt <novo prompt>" substitui o antigo prompt por <novo prompt>. Exemplo: "/new_prompt Agora voçe vai atender clientes de uma pizzaria"
 
 
 📲 Comandos para testar as possibilidades de envio de mensagens atualmente:
