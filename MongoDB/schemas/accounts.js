@@ -1,5 +1,31 @@
 import mongoose from "mongoose";
 
+const bot = new mongoose.Schema({
+	messageNotSupported: {
+		type: String,
+		default: ""
+	},
+	model: {
+		type: String,
+		required: true
+	},
+	prompt: {
+		type: String,
+		default: ""
+	}
+});
+
+const googleSheets = new mongoose.Schema({
+	spreadsheet: {
+		type: String,
+		required: true
+	},
+	pages: {
+		type: [String],
+		default: []
+	}
+});
+
 const account = new mongoose.Schema({
 	phone: {
 		type: String,
@@ -21,29 +47,19 @@ const account = new mongoose.Schema({
 		type: [String],
 		required: true
 	},
-	spreadsheet: {
-		type: String
-	},
-	messageNotSupported: {
-		type: String,
+	googleSheets: {
+		type: googleSheets,
 		required: true
 	},
 	bot: {
-		model: {
-			type: String
-		},
-		prompt: {
-			type: String
-		},
-		page: {
-			type: String
-		}
+		type: bot,
+		required: true
 	}
 });
 
 account.index({ phone: 1 }, { unique: true });
 account.index({ idPhone: 1 }, { unique: true });
 account.index({ accessToken: 1 }, { unique: true });
-account.index({ spreadsheet: 1 }, { unique: true, sparse: true });
+account.index({ "googleSheets.spreadsheet": 1 }, { unique: true, sparse: true });
 
 export default mongoose.model("account", account);

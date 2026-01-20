@@ -12,7 +12,7 @@ export default async function add_adm(account, message) {
 		const contact = message.text.body.split(" ").slice(1).join(" ");
 
 		if (!contact) {
-			await send.text(account, message.from, { text: { body: "Adicione o número de Whatsapp que deseje torna administrador após o comando `/add_adm`" } });
+			await send.text(account, message.from, { text: { body: "Adicione o número de Whatsapp que deseje torna administrador após o comando `/adicionar_adm`" } });
 			return ;
 		}
 		await mongodb.saveAdm(account.idPhone, contact);

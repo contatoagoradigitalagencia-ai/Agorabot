@@ -3,7 +3,7 @@ import mongodb from "../../MongoDB/Mongodb.js";
 
 /**
  * @author VAMPETA
- * @brief FUNCAO RESPONSAVEL PELO COMANDO "/remove_adm"
+ * @brief FUNCAO RESPONSAVEL PELO COMANDO "/remover_adm"
  * @param {Object} account DADOS DO NUMERO QUE RECEBEU ATUALIZACOES
  * @param {Object} message UM UNICO ELEMENTO DE req.body.entry[n].changes[n].value.messages[n]
 */
@@ -12,7 +12,7 @@ export default async function remove_adm(account, message) {
 		const contact = message.text.body.split(" ").slice(1).join(" ");
 
 		if (!contact) {
-			await send.text(account, message.from, { text: { body: "Adicione o número de Whatsapp que deseja remover como administrador após o comando `/remove_adm`" } });
+			await send.text(account, message.from, { text: { body: "Informe o número de Whatsapp que deseja remover como administrador após o comando `/remover_adm`" } });
 			return ;
 		}
 		await mongodb.removeAdm(account.idPhone, contact);

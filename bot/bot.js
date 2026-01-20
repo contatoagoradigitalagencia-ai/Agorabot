@@ -12,7 +12,7 @@ import groq from "../Groq/Groq.js";
 export default async function bot(account, message) {
 	try {
 		const history = await mongodb.Message.find({ idPhone: account.idPhone, phone: message.from }).sort({ _id: -1 }).limit(5);
-		let table = await googleSheets.getPage(account, account.bot.page);
+		let table = await googleSheets.getPage(account, account.googleSheets.page);			// O BOT NAO ESTA LENDO ISSO PQ account.googleSheets.page VIROU ARRAY
 		table = (table.length) ? JSON.stringify(table) : null;
 		const messages = [{ role: "system", content: account.bot.prompt + ((table) ? `\nSegue uma tabela para consulta de dados:\n${table}` : "") }];
 		history.forEach((document) => messages.unshift({ role: (document.direction === "inbound") ? "user" : "assistant", content: document.data.text.body }));

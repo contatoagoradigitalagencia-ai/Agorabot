@@ -5,9 +5,13 @@ import help from "./help.js";
 import adm from "./adm/adm.js";
 import add_adm from "./adm/add_adm.js";
 import remove_adm from "./adm/remove_adm.js";
-import contatos from "./contatos.js";
+import message_not_supported from "./bot/message_not_supported.js";
+import new_message_not_supported from "./bot/new_message_not_supported.js";
+import remove_message_not_supported from "./bot/remove_message_not_supported.js";
 import prompt from "./bot/prompt.js";
 import new_prompt from "./bot/new_prompt.js";
+import { spreadsheets, add_spreadsheets, remove_spreadsheets } from "./googleSheets/spreadsheets.js";		// PADRONIZAR
+import contatos from "./contatos.js";
 import all_messages from "./messages/all_messages.js";
 import reaction from "./messages/reaction.js";
 import text from "./messages/text.js";
@@ -30,7 +34,7 @@ export default async function commands(account, message) {
 		const command = message.text.body.split(" ");
 
 		switch (command[0]) {
-			case "/help":
+			case "/ajuda":
 				await help(account, message);
 				break;
 
@@ -38,27 +42,51 @@ export default async function commands(account, message) {
 				await adm(account, message);
 				break;
 
-			case "/add_adm":
+			case "/adicionar_adm":
 				await add_adm(account, message);
 				break;
 
-			case "/remove_adm":
+			case "/remover_adm":
 				await remove_adm(account, message);
 				break;
 
-			case "/contatos":
-				await contatos(account, message);
+			case "/mensagem_não_suportada":
+				await message_not_supported(account, message);
+				break;
+
+			case "/nova_mensagem_não_suportada":
+				await new_message_not_supported(account, message);
+				break;
+
+			case "/remover_mensagem_não_suportada":
+				await remove_message_not_supported(account, message);
 				break;
 
 			case "/prompt":
 				await prompt(account, message);
 				break;
 
-			case "/new_prompt":
+			case "/novo_prompt":
 				await new_prompt(account, message);
 				break;
 
-			case "/all_messages":
+			case "/planilhas":
+				await spreadsheets(account, message);
+				break;
+
+			case "/adicionar_planilha":
+				await add_spreadsheets(account, message);
+				break;
+
+			case "/remover_planilha":
+				await remove_spreadsheets(account, message);
+				break;
+
+			case "/contatos":
+				await contatos(account, message);
+				break;
+
+			case "/todas_mensagens":
 				await all_messages(account, message);
 				break;
 
@@ -99,7 +127,7 @@ export default async function commands(account, message) {
 			// 	break;
 
 			default:
-				await send.text(account, message.from, { text: { body: "Comando não encontrado. Digite `/help` para ver os comandos disponíveis." } });
+				await send.text(account, message.from, { text: { body: "Comando não encontrado. Digite `/ajuda` para ver os comandos disponíveis." } });
 		}
 	} catch (error) {
 		await mongodb.saveError(account.idPhone, `Error na funcao "bot": ${error}`);

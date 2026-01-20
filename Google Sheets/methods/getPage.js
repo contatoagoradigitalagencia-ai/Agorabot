@@ -7,7 +7,7 @@
 export default async function getPage(account, page) {
 	try {
 		const res = await this.googleSheets.spreadsheets.values.get({
-			spreadsheetId: account.spreadsheet,
+			spreadsheetId: account.googleSheets.spreadsheet,
 			range: page
 		});
 		if (!Array.isArray(res.data.values) || res.data.values.length < 2) return ([]);

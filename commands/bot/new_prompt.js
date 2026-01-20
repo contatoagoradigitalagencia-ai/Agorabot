@@ -3,7 +3,7 @@ import mongodb from "../../MongoDB/Mongodb.js";
 
 /**
  * @author VAMPETA
- * @brief FUNCAO RESPONSAVEL PELO COMANDO "/new_prompt"
+ * @brief FUNCAO RESPONSAVEL PELO COMANDO "/novo_prompt"
  * @param {Object} account DADOS DO NUMERO QUE RECEBEU ATUALIZACOES
  * @param {Object} message UM UNICO ELEMENTO DE req.body.entry[n].changes[n].value.messages[n]
 */

@@ -1,8 +1,6 @@
 // import googleSheets from "../../../Google Sheets/GoogleSheets.js";
 // import send from "../../../Send/Send.js";
-
-import { vampetaInteractive } from "../../../clients/Vampeta/index.js";
-// import { ramonInteractive } from "../../../clients/Ramon/index.js";
+import mongodb from "../../../MongoDB/Mongodb.js";
 
 /**
  * @author VAMPETA
@@ -12,12 +10,6 @@ import { vampetaInteractive } from "../../../clients/Vampeta/index.js";
 */
 export default async function interactive(account, message) {
 	try {
-// DONO DA CONTA
-		// await vampetaInteractive(account, message);
-		// await ramonInteractive(account, message);	// SO PRO RAMON VER
-// DONO DA CONTA
-
-
 		if (message.interactive.type === "list_reply") {
 console.log("chegou resposta de lista")
 		}

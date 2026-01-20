@@ -36,7 +36,7 @@ export default async function messages(account, value) {
 	
 				default:
 					await mongodb.saveTextReceived(account.idPhone, { id: message.id, from: message.from, timestamp: message.timestamp, type: "text", text: { body: `Mensagem não suportada: ${message.type}` } });
-					await send.text(account, message.from, { text: { body: account.messageNotSupported } });
+					if (account.bot.messageNotSupported) await send.text(account, message.from, { text: { body: account.bot.messageNotSupported } });
 			}
 		} catch (error) {
 			await mongodb.saveError(account.idPhone, `Error na funcao "messages": ${error}`);
