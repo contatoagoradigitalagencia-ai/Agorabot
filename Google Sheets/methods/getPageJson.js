@@ -1,10 +1,11 @@
 /**
  * @author VAMPETA
- * @brief BUSCA UMA PAGINA DENTRO DE UMA PLANILHA
+ * @brief BUSCA UMA PAGINA DENTRO DE UMA PLANILHA E TRANFORMA EM JSON
  * @param {String} spreadsheet ID DA PLANILHA
  * @param {String} page NOME DA PAGINA
+ * @return {Array<Object>} RETORNA UM OBJETO COM O CONTEUDO DE page NO FORMATO JSON
 */
-export default async function getPage(account, page) {
+export default async function getPageJson(account, page) {
 	try {
 		const res = await this.googleSheets.spreadsheets.values.get({
 			spreadsheetId: account.googleSheets.spreadsheet,
@@ -19,7 +20,7 @@ export default async function getPage(account, page) {
 			return (obj);
 		}));
 	} catch (error) {
-		await this.mongodb.saveError(((account.idPhone) ? account.idPhone : "Sem idPhone"), `Error na funcao "getPage": ${error}`);
+		await this.mongodb.saveError(account.idPhone, `Error na funcao "getPageJson": ${error}`);
 		return ([]);
 	}
 }

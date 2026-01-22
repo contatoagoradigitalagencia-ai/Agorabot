@@ -2,15 +2,10 @@ import send from "../Send/Send.js";
 import mongodb from "../MongoDB/Mongodb.js";
 
 import help from "./help.js";
-import adm from "./adm/adm.js";
-import add_adm from "./adm/add_adm.js";
-import remove_adm from "./adm/remove_adm.js";
-import message_not_supported from "./bot/message_not_supported.js";
-import new_message_not_supported from "./bot/new_message_not_supported.js";
-import remove_message_not_supported from "./bot/remove_message_not_supported.js";
-import prompt from "./bot/prompt.js";
-import new_prompt from "./bot/new_prompt.js";
-import { spreadsheets, add_spreadsheets, remove_spreadsheets } from "./googleSheets/spreadsheets.js";		// PADRONIZAR
+import { adm, add_adm, remove_adm } from "./adm/adm.js";
+import { message_not_supported, new_message_not_supported, remove_message_not_supported } from "./bot/message_not_supported.js";
+import { prompt, new_prompt } from "./bot/prompt.js";
+import { spreadsheets, available_spreadsheets, view_spreadsheet, add_spreadsheets, remove_spreadsheets } from "./googleSheets/spreadsheets.js";
 import contatos from "./contatos.js";
 import all_messages from "./messages/all_messages.js";
 import reaction from "./messages/reaction.js";
@@ -72,6 +67,14 @@ export default async function commands(account, message) {
 
 			case "/planilhas":
 				await spreadsheets(account, message);
+				break;
+
+			case "/planilhas_disponíveis":
+				await available_spreadsheets(account, message);
+				break;
+
+			case "/ver_planilha":
+				await view_spreadsheet(account, message);
 				break;
 
 			case "/adicionar_planilha":

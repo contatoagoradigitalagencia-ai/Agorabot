@@ -45,6 +45,12 @@ O comando */novo_prompt <novo prompt>* substitui o antigo prompt por <novo promp
 \`/planilhas\`
 Exibe quais planilhas estão alimentando a IA do bot.
 
+\`/planilhas_disponíveis\`
+Lista as planilhas disponíveis que podem ser usadas para alimentar a IA do bot.
+
+\`/ver_planilha\`
+O comando */ver_planilha <nome da planilha>* exibe o conteúdo de uma planilha. Exemplo: */ver_planilha produtos*
+
 \`/adicionar_planilha\`
 O comando */adicionar_planilha <nome da planilha>* adiciona mais uma planilha que o bot vai ler antes de responder. Exemplo: */adicionar_planilha produtos*
 
