@@ -12,6 +12,14 @@ const bot = new mongoose.Schema({
 	prompt: {
 		type: String,
 		default: ""
+	},
+	historySize: {
+		type: Number,
+		required: true
+	},
+	maxTokens: {
+		type: Number,
+		required: true
 	}
 });
 

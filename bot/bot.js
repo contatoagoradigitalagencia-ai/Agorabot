@@ -50,9 +50,10 @@ async function prompt(account) {
  * @param {Object} message UM UNICO ELEMENTO DE req.body.entry[n].changes[n].value.messages[n]
  * @return {Array<Object>} RETORNA UMA STRING COM AS INFORMACOES DAS PAGINAS
 */
-async function chatHistory(account, message) {
+async function chatHistory(account, message) {	// AKI BUGA SE NO HISTORICO TIVER OUTRO TIPO DE MENSAGEM Q NAO SEJA TEXTO
 	try {
-		const history = await mongodb.Message.find({ idPhone: account.idPhone, phone: message.from }).sort({ _id: -1 }).limit(5);
+		const history = await mongodb.Message.find({ idPhone: account.idPhone, phone: message.from }).sort({ _id: -1 }).limit(account.bot.historySize);
+		// const history = await mongodb.Message.find({ idPhone: account.idPhone, phone: message.from, "data.type": "text" }).sort({ _id: -1 }).limit(account.bot.historySize);
 
 		return (history.map((message) => ({ role: (message.direction === "inbound") ? "user" : "assistant", content: message.data.text.body })).reverse());
 	} catch (error) {
@@ -72,9 +73,9 @@ export default async function bot(account, message) {
 		const res = await groq.groq.chat.completions.create({
 			model: account.bot.model,
 			messages: [ await prompt(account), ...(await chatHistory(account, message)) ],
-			temperature: 0.7,
-			max_tokens: 30,
-			top_p: 1
+			max_tokens: account.bot.maxTokens,
+			temperature: 0.2,
+			top_p: 0.9
 		});
 
 		await send.text(account, message.from, { text: { body: res.choices[0].message.content } });
