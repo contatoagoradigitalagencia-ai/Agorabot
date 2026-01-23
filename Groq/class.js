@@ -1,4 +1,6 @@
 import { connect } from "./methods/connect.js";
+import prompt from "./methods/prompt.js";
+import chatHistory from "./methods/chatHistory.js";
 
 /**
  * @author VAMPETA
@@ -9,5 +11,7 @@ export default class Groq {
 
 	constructor() {
 		this.connect = connect.bind(this);
+		this.prompt = prompt.bind(this);
+		this.chatHistory = chatHistory.bind(this);
 	}
 };
