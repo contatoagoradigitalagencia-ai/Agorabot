@@ -1,7 +1,6 @@
 import connect from "./methods/connect.js";
-import getPages from "./methods/getPages.js";
-import getPageJson from "./methods/getPageJson.js";
-import getPageTable from "./methods/getPageTable.js";
+import { getPages } from "./methods/getPages.js";
+import { getPageJson, getPageJsonText, getPageTable } from "./methods/getPage.js";
 
 /**
  * @author VAMPETA
@@ -16,6 +15,7 @@ export default class GoogleSheets {
 		this.connect = connect.bind(this);
 		this.getPages = getPages.bind(this);
 		this.getPageJson = getPageJson.bind(this);
+		this.getPageJsonText = getPageJsonText.bind(this);
 		this.getPageTable = getPageTable.bind(this);
 	}
 };

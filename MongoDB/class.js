@@ -1,4 +1,4 @@
-import { connect } from "./methods/connect.js";
+import connect from "./methods/connect.js";
 import { saveAdm, removeAdm } from "./methods/adm.js";
 import { saveContact } from "./methods/contact.js";
 import { saveMessageNotSupported } from "./methods/messageNotSupported.js";

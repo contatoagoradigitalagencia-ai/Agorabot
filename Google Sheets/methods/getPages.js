@@ -4,7 +4,7 @@
  * @param {String} spreadsheet ID DA PLANILHA
  * @return {Array<String>} RETORNA UMA ARRAY COM OS NOMES DAS PAGINAS EXISTENTES ATUALMENTE
 */
-export default async function getPages(account) {
+export async function getPages(account) {
 	try {
 		const res = await this.googleSheets.spreadsheets.get({
 			spreadsheetId: account.googleSheets.spreadsheet,
