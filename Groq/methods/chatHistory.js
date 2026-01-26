@@ -5,10 +5,9 @@
  * @param {Object} message UM UNICO ELEMENTO DE req.body.entry[n].changes[n].value.messages[n]
  * @return {Array<Object>} RETORNA UMA STRING COM AS INFORMACOES DAS PAGINAS
 */
-export async function chatHistory(account, message) {	// AKI BUGA SE NO HISTORICO TIVER OUTRO TIPO DE MENSAGEM Q NAO SEJA TEXTO
+export async function chatHistory(account, message) {
 	try {
-		const history = await this.mongodb.Message.find({ idPhone: account.idPhone, phone: message.from }).sort({ _id: -1 }).limit(account.bot.historySize);
-		// const history = await this.mongodb.Message.find({ idPhone: account.idPhone, phone: message.from, "data.type": "text" }).sort({ _id: -1 }).limit(account.bot.historySize);
+		const history = await this.mongodb.Message.find({ idPhone: account.idPhone, phone: message.from, "data.type": "text" }).sort({ _id: -1 }).limit(account.bot.historySize);
 
 		return (history.map((message) => ({ role: (message.direction === "inbound") ? "user" : "assistant", content: message.data.text.body })).reverse());
 	} catch (error) {

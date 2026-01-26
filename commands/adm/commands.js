@@ -1,22 +1,13 @@
-import send from "../Send/Send.js";
-import mongodb from "../MongoDB/Mongodb.js";
+import send from "../../Send/Send.js";
+import mongodb from "../../MongoDB/Mongodb.js";
 
-import help from "./help.js";
-import { adm, add_adm, remove_adm } from "./adm/adm.js";
-import { message_not_supported, new_message_not_supported, remove_message_not_supported } from "./bot/message_not_supported.js";
-import { prompt, new_prompt } from "./bot/prompt.js";
-import { spreadsheets, available_spreadsheets, view_spreadsheet, add_spreadsheets, remove_spreadsheets } from "./googleSheets/spreadsheets.js";
-import contatos from "./contatos.js";
-import all_messages from "./messages/all_messages.js";
-import reaction from "./messages/reaction.js";
-import text from "./messages/text.js";
-import image from "./messages/image.js";
-import video from "./messages/video.js";
-import location from "./messages/location.js";
-import contacts from "./messages/contacts.js";
-import button from "./messages/button.js";
-import list from "./messages/list.js";
-// import template from "./commands/messages/template.js";	// DESABILITADO PARA NAO GERAR COBRANCAS
+import { help } from "./help.js";
+import { adm, add_adm, remove_adm } from "./adm.js";
+import { message_not_supported, new_message_not_supported, remove_message_not_supported } from "./message_not_supported.js";
+import { prompt, new_prompt } from "./prompt.js";
+import { spreadsheets, available_spreadsheets, view_spreadsheet, add_spreadsheets, remove_spreadsheets } from "./spreadsheets.js";
+import { contatos } from "./contatos.js";
+import { all_messages, reaction, text, image, video, location, contacts, button, list /*, template */ } from "./messages.js";
 
 /**
  * @author VAMPETA
@@ -24,7 +15,7 @@ import list from "./messages/list.js";
  * @param {Object} account DADOS DO NUMERO QUE RECEBEU ATUALIZACOES
  * @param {Object} message UM UNICO ELEMENTO DE req.body.entry[n].changes[n].value.messages[n]
 */
-export default async function commands(account, message) {
+export default async function commandsAdm(account, message) {
 	try {
 		const command = message.text.body.split(" ");
 
@@ -133,6 +124,6 @@ export default async function commands(account, message) {
 				await send.text(account, message.from, { text: { body: "Comando não encontrado. Digite `/ajuda` para ver os comandos disponíveis." } });
 		}
 	} catch (error) {
-		await mongodb.saveError(account.idPhone, `Error na funcao "bot": ${error}`);
+		await mongodb.saveError(account.idPhone, `Error na funcao "commandsAdm": ${error}`);
 	}
 }

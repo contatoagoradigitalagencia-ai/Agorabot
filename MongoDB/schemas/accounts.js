@@ -20,6 +20,12 @@ const bot = new mongoose.Schema({
 	maxTokens: {
 		type: Number,
 		required: true
+	},
+	location: {
+		latitude: Number,
+		longitude: Number,
+		name: String,
+		address: String
 	}
 });
 

@@ -2,8 +2,9 @@ import mongodb from "../../../MongoDB/Mongodb.js";
 
 // import sockets from "../../../websocket/sockets.js";
 
-import commands from "../../../commands/commands.js";
-import bot from "../../../bot/bot.js";
+import commandsAdm from "../../../commands/adm/commands.js";
+// import bot from "../../../bot/bot.js";
+import groq from "../../../Groq/Groq.js";
 
 // import send from "../../../Send/Send.js";
 
@@ -17,9 +18,10 @@ export default async function text(account, message) {
 	try {
 		await mongodb.saveTextReceived(account.idPhone, message);
 		if (message.text.body[0] === "/" && account.adm.includes(message.from)) {
-			await commands(account, message);
+			await commandsAdm(account, message);
 		} else {
-			await bot(account, message);
+			// await bot(account, message);
+			await groq.bot(account, message);
 		}
 
 // FRONT END WEBSOCKET

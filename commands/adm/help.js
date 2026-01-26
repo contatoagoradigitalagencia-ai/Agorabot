@@ -1,5 +1,5 @@
-import send from "../Send/Send.js";
-import mongodb from "../MongoDB/Mongodb.js";
+import send from "../../Send/Send.js";
+import mongodb from "../../MongoDB/Mongodb.js";
 
 const text = `
 Olá! Abaixo estão os comandos que você pode utilizar e uma breve explicação de cada um:
@@ -98,7 +98,7 @@ Testa templates disponíveis para esse número (precisa de utorização prévia 
  * @param {Object} account DADOS DO NUMERO QUE RECEBEU ATUALIZACOES
  * @param {Object} message UM UNICO ELEMENTO DE req.body.entry[n].changes[n].value.messages[n]
 */
-export default async function help(account, message) {
+export async function help(account, message) {
 	try {
 		await send.text(account, message.from, { text: { body: text } });
 	} catch (error) {
