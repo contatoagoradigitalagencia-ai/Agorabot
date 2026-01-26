@@ -7,5 +7,8 @@
 */
 export default function response(req, res, next) {
 	res.sendStatus(200);
+const teste = new Date();
+console.log(teste.getTime())
+console.log(JSON.stringify(req.body, null, 2));
 	next();
 }

@@ -65,6 +65,9 @@ export default async function bot(account, message) {
 // console.log(JSON.stringify(res, null, 2))
 // console.log(res.choices[0].message)
 		await send.text(account, message.from, { text: { body: res.choices[0].message.content } });
+
+// CRIAR COMANDOS PARA O BOT PODER USAR
+// DEVO PASSAR ESSA LOGICA PARA DENTRO DA CLASSE DA Groq? ASSIM EU VOU PODER CRIAR CLASSES DE OUTRAS IAS E ALTERNAR FACILMENTE
 	} catch (error) {
 		await mongodb.saveError(account.idPhone, `Error na funcao "bot": ${error}`);
 	}
