@@ -15,13 +15,8 @@ import reaction from "./reaction.js";
 export default async function messages(account, value) {
 	for (const message of value.messages) {
 		try {
-			// if (await mongodb.Message.exists({ wamid: message.id })) continue;
-if (await mongodb.Message.exists({ wamid: message.id })) {
-	console.log("entrou no if")
-	continue;
-} else {
-	console.log("entrou no else")
-}
+			// if (await mongodb.Message.exists({ wamid: message.id })) continue;	// ISSO NAO ADIANTA PQ AS REQUISICOES ATRADAS SAO TRATADAS EM PARALELO
+			if (!(await mongodb.saveWamid(account.idPhone, message))) continue;
 			await mongodb.saveContact(account.idPhone, message.from, value.contacts);
 			await send.read(account, message.id, message.from);
 			switch (message.type) {

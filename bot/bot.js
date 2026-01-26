@@ -63,6 +63,7 @@ export default async function bot(account, message) {
 		});
 
 // console.log(JSON.stringify(res, null, 2))
+// console.log(JSON.stringify([ await groq.prompt(account), ...(await groq.chatHistory(account, message)) ], null, 2))
 // console.log(res.choices[0].message)
 		await send.text(account, message.from, { text: { body: res.choices[0].message.content } });
 

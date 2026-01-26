@@ -5,6 +5,7 @@ import { saveMessageNotSupported } from "./methods/messageNotSupported.js";
 import { savePrompt } from "./methods/prompt.js";
 import { saveSpreadsheets, removeSpreadsheets } from "./methods/spreadsheets.js";
 import { saveVisualization } from "./methods/visualization.js";
+import { saveWamid } from "./methods/wamid.js";
 import { saveReactionReceived, saveReactionSent } from "./methods/reaction.js";
 import { saveTextReceived, saveTextSent } from "./methods/text.js";
 import { saveImageSent } from "./methods/image.js";
@@ -37,6 +38,7 @@ export default class Mongodb {
         this.saveSpreadsheets = saveSpreadsheets.bind(this);
         this.removeSpreadsheets = removeSpreadsheets.bind(this);
         this.saveVisualization = saveVisualization.bind(this);
+        this.saveWamid = saveWamid.bind(this);
         this.saveReactionReceived = saveReactionReceived.bind(this);
         this.saveReactionSent = saveReactionSent.bind(this);
         this.saveTextReceived = saveTextReceived.bind(this);

@@ -32,13 +32,25 @@ export async function saveTextReceived(idPhone, message) {
 		await this.saveError(idPhone, `Error no metodo "saveTextReceived": ${error}`);
 	}
 	try {
-		await this.Message.create({
-			idPhone: idPhone,
-			phone: from,
-			wamid: id,
-			direction: "inbound",
-			data: data
-		});
+		// await this.Message.create({
+		// 	idPhone: idPhone,
+		// 	phone: from,
+		// 	wamid: id,
+		// 	direction: "inbound",
+		// 	timestamp: new Date(Number(timestamp) * 1000),
+		// 	data: data
+		// });
+		await this.Message.updateOne(
+			{
+				wamid: id
+			},
+			{
+				$set: {
+					timestamp: new Date(Number(timestamp) * 1000),
+					data: data
+				}
+			}
+		);
 	} catch (error) {
 		await this.saveError(idPhone, `Error no metodo "saveTextReceived": ${error}`);
 	}
