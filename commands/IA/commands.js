@@ -7,14 +7,16 @@ import mongodb from "../../MongoDB/Mongodb.js";
  * @brief GERENCIA A ATIVACAO DOS COMANDOS DE ADM
  * @param {Object} account DADOS DO NUMERO QUE RECEBEU ATUALIZACOES
  * @param {Object} message UM UNICO ELEMENTO DE req.body.entry[n].changes[n].value.messages[n]
- * @param {Object} commandArg COMANDO COM ARGUMENTO A SER EXECUTADO
+ * @param {Object} json RESPOSTA DA IA JA EM JSON
 */
-export default async function commandsIA(account, message, commandArg) {
+export default async function commandsIA(account, message, json) {
 	try {
-		const command = commandArg.split(" ");
+		// const command = json.split(" ");
 
-		switch (command[0]) {
+		// switch (command[0]) {
+		switch (json.command) {
 			case "/location":
+				// if ()		// E SE NAO TIVER COMPLETO account.bot.location?
 				await send.location(account, message.from, { location: { latitude: account.bot.location.latitude, longitude: account.bot.location.longitude, name: account.bot.location.name, address: account.bot.location.address } });
 				break;
 
