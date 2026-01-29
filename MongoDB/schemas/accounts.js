@@ -26,6 +26,9 @@ const bot = new mongoose.Schema({
 		longitude: Number,
 		name: String,
 		address: String
+	},
+	redirect: {
+		type: [String]
 	}
 });
 

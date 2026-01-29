@@ -14,6 +14,7 @@ import { saveLocationSent } from "./methods/location.js";
 import { saveContactsSent } from "./methods/contacts.js";
 import { saveButtonSent } from "./methods/button.js";
 import { saveListSent } from "./methods/list.js";
+import { updateRedirect } from "./methods/redirect.js";
 import { saveError } from "./methods/error.js";
 
 /**
@@ -49,6 +50,7 @@ export default class Mongodb {
         this.saveContactsSent = saveContactsSent.bind(this);
         this.saveButtonSent = saveButtonSent.bind(this);
         this.saveListSent = saveListSent.bind(this);
+        this.updateRedirect = updateRedirect.bind(this);
         this.saveError = saveError.bind(this);
     }
 };

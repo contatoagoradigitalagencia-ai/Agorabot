@@ -40,7 +40,7 @@ export async function bot(account, message) {
 		let json = null;
 		const messages = [await this.prompt(account), ...(await this.chatHistory(account, message))];
 
-		for (let retry = 0; retry < 2; retry++) {
+		for (let retry = 0; retry < 4; retry++) {
 			try {
 				const res = await this.groq.chat.completions.create({
 					model: account.bot.model,
@@ -62,13 +62,13 @@ console.log(json)
 			await send.text(account, message.from, { text: { body: "Tive um problema ao processar sua mensagem. Pode reescrever sua dúvida?" } });
 			return ;
 		}
-		if (json.command.length) {
-			await commandsIA(account, message, json.command);
-		}
 		if (json.text.length) {
 			for (const text of json.text) {
 				await send.text(account, message.from, { text: { body: text } });
 			}
+		}
+		if (json.command.length) {
+			await commandsIA(account, message, json.command);
 		}
 	} catch (error) {
 		await mongodb.saveError(account.idPhone, `Error na funcao "bot": ${error}`);
