@@ -21,12 +21,13 @@ const schema = `
 === CONTRATO DE RESPOSTA ===
 
 1. TODAS as respostas devem seguir exatamente este schema JSON.
-2. Nunca responda fora deste formato.
-3. Nunca invente campos.
-4. Os campos "text" e "command" SEMPRE devem existir.
-5. Ambos devem ser arrays.
-6. Arrays podem estar vazios, mas nunca ausentes.
-7. Cada item do array representa UMA ação independente.
+2. Sua resposta FINAL deve ser APENAS um JSON válido.
+3. Nunca responda fora deste formato.
+4. Nunca invente campos.
+5. Os campos "text" e "command" SEMPRE devem existir.
+6. Ambos devem ser arrays.
+7. Arrays podem estar vazios, mas nunca ausentes.
+8. Cada item do array representa UMA ação independente.
 
 Schema:
 {
@@ -144,8 +145,8 @@ export async function prompt(account) {
 
 		textPrompt += generalRules;
 		textPrompt += priorityRules;
-		textPrompt += ruleOfCoexistence;
 		textPrompt += schema;
+		textPrompt += ruleOfCoexistence;
 		textPrompt += command;
 		if (account.bot.location) textPrompt += location;
 		if (account.bot.redirect) textPrompt += redirect;

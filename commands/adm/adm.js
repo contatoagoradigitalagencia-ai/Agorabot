@@ -20,7 +20,7 @@ export async function adm(account, message) {
 
 /**
  * @author VAMPETA
- * @brief FUNCAO RESPONSAVEL PELO COMANDO "/add_adm"
+ * @brief FUNCAO RESPONSAVEL PELO COMANDO "/adicionar_adm"
  * @param {Object} account DADOS DO NUMERO QUE RECEBEU ATUALIZACOES
  * @param {Object} message UM UNICO ELEMENTO DE req.body.entry[n].changes[n].value.messages[n]
 */

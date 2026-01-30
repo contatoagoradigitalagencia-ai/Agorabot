@@ -6,6 +6,7 @@ import { adm, add_adm, remove_adm } from "./adm.js";
 import { message_not_supported, new_message_not_supported, remove_message_not_supported } from "./message_not_supported.js";
 import { prompt, new_prompt } from "./prompt.js";
 import { spreadsheets, available_spreadsheets, view_spreadsheet, add_spreadsheets, remove_spreadsheets } from "./spreadsheets.js";
+import { redirect, add_redirect, remove_redirect } from "./redirect.js";
 import { contatos } from "./contatos.js";
 import { all_messages, reaction, text, image, video, location, contacts, button, list /*, template */ } from "./messages.js";
 
@@ -15,7 +16,7 @@ import { all_messages, reaction, text, image, video, location, contacts, button,
  * @param {Object} account DADOS DO NUMERO QUE RECEBEU ATUALIZACOES
  * @param {Object} message UM UNICO ELEMENTO DE req.body.entry[n].changes[n].value.messages[n]
 */
-export default async function commandsAdm(account, message) {
+export default async function commandsAdm(account, message) {	// ACHO Q VOU CRIAR COMANDOS PARA CONFIGURAR LOCALIZACAO
 	try {
 		const command = message.text.body.split(" ");
 
@@ -74,6 +75,18 @@ export default async function commandsAdm(account, message) {
 
 			case "/remover_planilha":
 				await remove_spreadsheets(account, message);
+				break;
+
+			case "/redirecionamento":
+				await redirect(account, message);
+				break;
+
+			case "/adicionar_redirecionamento":
+				await add_redirect(account, message);
+				break;
+
+			case "/remover_redirecionamento":
+				await remove_redirect(account, message);
 				break;
 
 			case "/contatos":

@@ -41,3 +41,49 @@ export async function updateRedirect(idPhone) {
 		await this.saveError(idPhone, `Error no metodo "updateRedirect": ${error}`);
 	}
 }
+
+/**
+ * @author VAMPETA
+ * @brief METODO CRIADO PARA SALVAR NOVOS ATENDENTES QUE VAO ATENDER OS CLIENTES REDIRECIONADOS
+ * @param {String} idPhone IDENTIFICADOR DO NUMERO DE TELEFONE DO BOT
+ * @param {String} phone NUMERO QUE SERA ADICIONADO A LISTA DE ATENDENTES
+*/
+export async function saveRedirect(idPhone, phone) {
+	try {
+		await this.Account.updateOne(
+			{
+				idPhone: idPhone
+			},
+			{
+				$addToSet: {
+					"bot.redirect": phone
+				}
+			}
+		);
+	} catch (error) {
+		await this.saveError(idPhone, `Error no metodo "saveRedirect": ${error}`);
+	}
+}
+
+/**
+ * @author VAMPETA
+ * @brief METODO CRIADO PARA REMOVER ATENDENTE DA LISTA DE ATENDENTES
+ * @param {String} idPhone IDENTIFICADOR DO NUMERO DE TELEFONE DO BOT
+ * @param {String} phone NUMERO QUE SERA ADICIONADO A LISTA DE ADM
+*/
+export async function removeRedirect(idPhone, phone) {
+	try {
+		await this.Account.updateOne(
+			{
+				idPhone: idPhone
+			},
+			{
+				$pull: {
+					"bot.redirect": phone
+				}
+			}
+		);
+	} catch (error) {
+		await this.saveError(idPhone, `Error no metodo "removeRedirect": ${error}`);
+	}
+}

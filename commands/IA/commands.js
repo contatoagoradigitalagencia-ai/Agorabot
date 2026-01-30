@@ -25,7 +25,7 @@ export default async function commandsIA(account, message, commands) {
 					break;
 
 				default:
-					// await send.text(account, message.from, { text: { body: "Comando não encontrado. Digite `/ajuda` para ver os comandos disponíveis." } });
+					await mongodb.saveError(account.idPhone, `A IA envio um comando não existente: ${commandArg}`);
 			}
 		}
 	} catch (error) {

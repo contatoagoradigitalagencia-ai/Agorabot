@@ -14,7 +14,7 @@ import { saveLocationSent } from "./methods/location.js";
 import { saveContactsSent } from "./methods/contacts.js";
 import { saveButtonSent } from "./methods/button.js";
 import { saveListSent } from "./methods/list.js";
-import { updateRedirect } from "./methods/redirect.js";
+import { updateRedirect, saveRedirect, removeRedirect } from "./methods/redirect.js";
 import { saveError } from "./methods/error.js";
 
 /**
@@ -38,6 +38,8 @@ export default class Mongodb {
         this.savePrompt = savePrompt.bind(this);
         this.saveSpreadsheets = saveSpreadsheets.bind(this);
         this.removeSpreadsheets = removeSpreadsheets.bind(this);
+        this.saveRedirect = saveRedirect.bind(this);
+        this.removeRedirect = removeRedirect.bind(this);
         this.saveVisualization = saveVisualization.bind(this);
         this.saveWamid = saveWamid.bind(this);
         this.saveReactionReceived = saveReactionReceived.bind(this);

@@ -31,7 +31,8 @@ Exemplo de uso: */remover_adm 55210000000* (Apenas código de país + DDD + núm
 Exibe o atual avisou do bot para mensagens não suportadas.
 
 \`/nova_mensagem_não_suportada\`
-O comando */nova_mensagem_não_suportada <nova mensagem>* substitui a antiga mensagem por <nova mensagem>. Exemplo: */nova_mensagem_não_suportada Oi, infelizmente nosso chat não suporta este tipo de mensagem.*
+O comando */nova_mensagem_não_suportada <nova mensagem>* substitui a antiga mensagem por <nova mensagem>.
+Exemplo: */nova_mensagem_não_suportada Oi, infelizmente nosso chat não suporta este tipo de mensagem.*
 
 \`/remover_mensagem_não_suportada\`
 Remove o atual aviso de mensagem não suportada.
@@ -40,7 +41,8 @@ Remove o atual aviso de mensagem não suportada.
 Exibe o atual prompt que instruí a IA para elaborar respostas.
 
 \`/novo_prompt\`
-O comando */novo_prompt <novo prompt>* substitui o antigo prompt por <novo prompt>. Exemplo: */novo_prompt Agora você vai atender clientes de uma pizzaria.*
+O comando */novo_prompt <novo prompt>* substitui o antigo prompt por <novo prompt>.
+Exemplo: */novo_prompt Agora você vai atender clientes de uma pizzaria.*
 
 \`/planilhas\`
 Exibe quais planilhas estão alimentando a IA do bot.
@@ -49,14 +51,27 @@ Exibe quais planilhas estão alimentando a IA do bot.
 Lista as planilhas disponíveis que podem ser usadas para alimentar a IA do bot.
 
 \`/ver_planilha\`
-O comando */ver_planilha <nome da planilha>* exibe o conteúdo de uma planilha. Exemplo: */ver_planilha produtos*
+O comando */ver_planilha <nome da planilha>* exibe o conteúdo de uma planilha.
+Exemplo: */ver_planilha produtos*
 
 \`/adicionar_planilha\`
-O comando */adicionar_planilha <nome da planilha>* adiciona mais uma planilha que o bot vai ler antes de responder. Exemplo: */adicionar_planilha produtos*
+O comando */adicionar_planilha <nome da planilha>* adiciona mais uma planilha que o bot vai ler antes de responder.
+Exemplo: */adicionar_planilha produtos*
 
 \`/remover_planilha\`
-O comando */remover_planilha <nome da planilha>* remove uma planilha que o bot vai ler antes de responder. Exemplo: */remover_planilha produtos*
+O comando */remover_planilha <nome da planilha>* remove uma planilha que o bot vai ler antes de responder.
+Exemplo: */remover_planilha produtos*
 
+\`/redirecionamento\`
+Lista todos os contatos cadastrado para ser redirecionado para atendimento humano pela IA (caso não tenha nenhum número cadastrado a IA nunca vai tentar redirecionar um cliente)
+
+\`/adicionar_redirecionamento\`
+O comando */adicionar_redirecionamento <número de WhatsApp>* adiciona um atendente na fila de atendimento.
+Exemplo de uso: */adicionar_redirecionamento 55210000000* (Apenas código de país + DDD + número. Sem hífen, espaços ou caracteres especias).
+
+\`/remover_redirecionamento\`
+O comando */remover_redirecionamento <número de WhatsApp>* remove um atendente na fila de atendimento.
+Exemplo de uso: */adicionar_redirecionamento 55210000000* (Apenas código de país + DDD + número. Sem hífen, espaços ou caracteres especias).
 
 
 📲 Comandos para testar as possibilidades de envio de mensagens atualmente:
