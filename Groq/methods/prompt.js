@@ -46,6 +46,8 @@ const ruleOfCoexistence = `
 5. Nunca descreva comandos no campo "text".
 `
 
+
+
 const command = `
 === REGRAS PARA COMMAND ===
 
@@ -81,6 +83,23 @@ CRITÉRIOS DE USO:
 - A informação não existir na tabela
 - A solicitação envolver risco ou decisão sensível
 `;
+
+// const command = `
+// === COMANDOS DISPONÍVEIS ===
+// 1. Cada item em "command" executa UMA ação externa.
+// 2. Nunca explique comandos em "text".
+// 3. Nunca invente comandos.
+// 4. Ordem do array = ordem de execução.
+// 5. Se nenhum comando for necessário, use [].
+
+// Comandos:
+// `;
+
+// const location = `- /location → perguntas sobre endereço ou localização física.\n`;
+
+// const redirect = `- /redirect → fora de escopo, dado inexistente ou risco sensível.\n`;
+
+
 
 const text = `
 === REGRAS PARA TEXT ===
@@ -157,6 +176,7 @@ export async function prompt(account) {
 		textPrompt += safetyAndLimits;
 		textPrompt += closureAndFallback;
 		if (spreadsheets) textPrompt += `${data}${spreadsheets}`;
+console.log(textPrompt)
 		return ({
 			role: "system",
 			content: textPrompt
@@ -166,3 +186,66 @@ export async function prompt(account) {
 		return ({ role: "system", content: "" });
 	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+// === PRIORIDADE DE INSTRUÇÕES ===
+// 1. Sempre responda no schema definido.
+// 2. Nunca viole as regras de comando.
+// 3. Nunca invente comandos.
+// 4. Use comandos apenas quando necessário.
+
+// === SCHEMA DE RESPOSTA ===
+// {
+//   "text": [String],
+//   "command": [String]
+// }
+
+// === REGRAS DE COMMAND ===
+// - Cada item em "command" executa UMA ação externa.
+// - Nunca explique comandos no campo "text".
+// - Ordem do array define execução.
+// - Se não houver ação externa, use [].
+
+// === COMANDOS DISPONÍVEIS ===
+// - /location → perguntas sobre endereço ou localização física.
+// - /redirect → fora de escopo, dado inexistente ou risco sensível.
+
+// === PAPEL DA IA ===
+// Você é um atendente virtual de {TIPO_DO_BOT}.
+
+// === TABELA DE DADOS ===
+// {TABELA}
+
+
+		// textPrompt += generalRules;
+		// textPrompt += priorityRules;
+		// textPrompt += schema;
+		// textPrompt += ruleOfCoexistence;
+		// textPrompt += command;
+		// if (account.bot.location) textPrompt += location;
+		// if (account.bot.redirect) textPrompt += redirect;
+		// if (!account.bot.location && !account.bot.redirect) textPrompt += "Nenhum comando está disponível no momento."
+		// textPrompt += text;
+		// textPrompt += `${identity}${account.bot.prompt}\n`;
+		// textPrompt += ambiguityAndDoubts;
+		// textPrompt += safetyAndLimits;
+		// textPrompt += closureAndFallback;
+		// if (spreadsheets) textPrompt += `${data}${spreadsheets}`;
+
+// const generalRules = ``;
+// const schema = ``;
+// const rulesCommand = ``;
+// const commands = ``;
+// const availableCommands = ``;
+// const identity = ``;
+// const data = ``;
