@@ -176,7 +176,7 @@ export async function prompt(account) {
 		textPrompt += safetyAndLimits;
 		textPrompt += closureAndFallback;
 		if (spreadsheets) textPrompt += `${data}${spreadsheets}`;
-console.log(textPrompt)
+// console.log(textPrompt)
 		return ({
 			role: "system",
 			content: textPrompt
