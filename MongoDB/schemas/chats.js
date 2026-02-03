@@ -35,14 +35,14 @@ const chats = new mongoose.Schema({
 		type: String,
 		required: true
 	},
-	photo: {
-		type: String,
-		default: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT548e7yKxVzd9AoGwcjuciTV94wTtuZPzyC_-kWy3r&s"
-	},
-	name: {
-		type: String,
-		default: ""
-	},
+	// photo: {		// FOTO DO USUARIO (DESCONTINUADO PQ NAO TENHO COMO OBTER ELA)
+	// 	type: String,
+	// 	default: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT548e7yKxVzd9AoGwcjuciTV94wTtuZPzyC_-kWy3r&s"
+	// },
+	// name: {		// NAO E GARANTIDO O NOME DO USUARIO ESTAR DISPONIVEL
+	// 	type: String,
+	// 	default: ""
+	// },
 	lastMessage: lastMessage
 });
 

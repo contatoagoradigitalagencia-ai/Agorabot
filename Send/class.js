@@ -1,3 +1,4 @@
+import saveIo from "./methods/io.js";
 import read from "./methods/read.js";
 import reaction from "./methods/reaction.js";
 import text from "./methods/text.js";
@@ -15,9 +16,11 @@ import template from "./methods/template.js";
 */
 export default class Send {
 	mongodb = null;
+	io = null;
 
 	constructor(mongodb) {
 		this.mongodb = mongodb;
+		this.saveIo = saveIo.bind(this);
 		this.read = read.bind(this);
 		this.reaction = reaction.bind(this);
 		this.text = text.bind(this);

@@ -207,18 +207,6 @@ Regras de dados:
 - Se a informação não existir nos dados, diga claramente que não consta.
 `;
 
-// const ambiguity = `
-// Ambiguidade:
-// - Se a mensagem do cliente for ambígua, faça UMA pergunta de esclarecimento.
-// - Em caso de dúvida, use apenas "text" e não execute comandos.
-// `;
-
-// const security = `
-// Segurança:
-// - Não forneça aconselhamento profissional especializado quando aplicável.
-// - Não execute ações sensíveis sem confirmação explícita do cliente.
-// `;
-
 const ambiguityAndSecurity = `
 Ambiguidade e segurança:
 - Em caso de dúvida, peça esclarecimento e não execute comandos.
@@ -257,8 +245,6 @@ export async function prompt(account) {
 		if (account.bot.redirect) textPrompt += redirect;
 		if (!account.bot.location && !account.bot.redirect) textPrompt += "Nenhum comando está disponível no momento."
 		textPrompt += dataRules;
-		// textPrompt += ambiguity;
-		// textPrompt += security;
 		textPrompt += ambiguityAndSecurity;
 		textPrompt += fallback;
 		textPrompt += `${identity}${account.bot.prompt}\n`;
