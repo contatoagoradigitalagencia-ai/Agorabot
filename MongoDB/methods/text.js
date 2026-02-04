@@ -1,3 +1,5 @@
+import socket from "../../Socket/Socket.js";
+
 /**
  * @author VAMPETA
  * @brief METODO CRIADO PARA SALVAR MENSAGENS DE TEXTO NO MONGODB
@@ -46,6 +48,19 @@ export async function saveTextReceived(idPhone, message) {
 	} catch (error) {
 		await this.saveError(idPhone, `Error no metodo "saveTextReceived": ${error}`);
 	}
+	try {
+		await socket.emit.newMessage(idPhone, from, {
+			idPhone: idPhone,
+			phone: from,
+			wamid: id,
+			direction: "inbound",
+			status: "sending",
+			timestamp: new Date(Number(timestamp) * 1000),
+			data: data
+		});
+	} catch (error) {
+		await this.saveError(idPhone, `Error no metodo "saveTextReceived": ${error}`);
+	}
 }
 
 /**
@@ -57,6 +72,15 @@ export async function saveTextReceived(idPhone, message) {
  * @param {String} data CAMPO data ENVIADO NA REQUISICAO (NAO CONTEM OS CAMPOS "messaging_product" E "to")
 */
 export async function saveTextSent(idPhone, wamid, phone, data) {
+	const message = {
+		idPhone: idPhone,
+		phone: phone,
+		wamid: wamid,
+		direction: "outbound",
+		status: "sending",
+		data: data
+	};
+
 	try {
 		await this.Chat.updateOne(
 			{
@@ -82,14 +106,12 @@ export async function saveTextSent(idPhone, wamid, phone, data) {
 		await this.saveError(idPhone, `Error no metodo "saveTextSent": ${error}`);
 	}
 	try {
-		await this.Message.create({
-			idPhone: idPhone,
-			phone: phone,
-			wamid: wamid,
-			direction: "outbound",
-			status: "sending",
-			data: data
-		});
+		await this.Message.create(message);
+	} catch (error) {
+		await this.saveError(idPhone, `Error no metodo "saveTextSent": ${error}`);
+	}
+	try {
+		await socket.emit.newMessage(idPhone, phone, message);
 	} catch (error) {
 		await this.saveError(idPhone, `Error no metodo "saveTextSent": ${error}`);
 	}

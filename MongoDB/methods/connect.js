@@ -10,7 +10,7 @@ import Message from "../schemas/messages.js"
  * @author VAMPETA
  * @brief METODO QUE INICIA A CONEXAO COM O MONGODB
 */
-export default async function connect() {
+export async function connect() {
 	if (this.mongodb) return ;
 	if (mongoose.connection.readyState === 1) return ;
 	this.mongodb = await mongoose.connect(process.env.MONGO_URI);

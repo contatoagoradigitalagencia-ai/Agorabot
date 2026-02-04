@@ -49,6 +49,5 @@ export default function configWebSocket(app) {
 	});
 
 	io.use(authentication);
-	app.set("io", io);
 	return ({ server, io });
 }

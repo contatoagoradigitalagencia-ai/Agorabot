@@ -6,8 +6,7 @@ import connectMongoDB from "./configs/mongodb.js";
 import connectGoogleSheets from "./configs/google sheets.js";
 import connectGroq from "./configs/groq.js";
 import configWebSocket from "./configs/websocket.js";
-import configSend from "./configs/send.js";
-import configEvents from "./websocket/events.js";
+import configSocket from "./configs/socket.js";
 
 configDotenv();
 configAxios();
@@ -17,7 +16,6 @@ await connectGroq();
 const app = configExprees();
 configRoutes(app);
 const { server, io } = configWebSocket(app);
-configSend(io);
-configEvents(io);
+configSocket(io);
 
 server.listen(process.env.PORT || 3000, () => console.log("Servidor rodando"));

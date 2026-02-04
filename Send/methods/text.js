@@ -1,7 +1,5 @@
 import axios from "axios";
 
-import sockets from "../../websocket/sockets.js";
-
 /**
  * @author VAMPETA
  * @brief METODO CRIADO PARA ENVIAR MENSAGENS SIMPLES
@@ -43,31 +41,6 @@ export default async function text(account, phone, options = {}) {
 		delete data.messaging_product;
 		delete data.to;
 		await this.mongodb.saveTextSent(account.idPhone, wamid, phone, data);
-
-
-
-// console.log(sockets)
-// console.log(account.idPhone + phone)
-// const socket = sockets.get(account.idPhone + phone);
-// console.log(socket)
-for (const [key, socketSet] of sockets.entries()) {		// EU DEVERIA POR ISSO AKI OU NO MONGODB? PQ EU AKI SO CONSIGO ATUALIZAR MENSAGENS ENVIADAS E NAO REAPROVEITO DATA
-	for (const id of socketSet) {
-// console.log(id)
-		// await this.io.to(id).emit("teste", "kkkkkkkkkkkkkkkkkkkkkkkkkkk");
-		const message = {
-			idPhone: account.idPhone,
-			phone: phone,
-			wamid: wamid,
-			direction: "outbound",
-			status: "sending",
-			data: data
-		}
-		await this.io.to(id).emit("updateMessages", message);
-	}
-}
-// console.log(this.io)
-
-
 		return (wamid);
 	} catch (error) {
 		await this.mongodb.saveError(account.idPhone, `Erro na função "text": ${error}`);
