@@ -54,7 +54,7 @@ export async function saveTextReceived(idPhone, message) {
 			phone: from,
 			wamid: id,
 			direction: "inbound",
-			status: "sending",
+			// status: "sending",
 			timestamp: new Date(Number(timestamp) * 1000),
 			data: data
 		});
