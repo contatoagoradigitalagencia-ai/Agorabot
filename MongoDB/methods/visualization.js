@@ -1,3 +1,5 @@
+import socket from "../../Socket/Socket.js";
+
 /**
  * @author VAMPETA
  * @brief METODO CRIADO PARA SALVAR STATUS DE RECEBIDO E VISUALIZADO NO MONGODB
@@ -32,6 +34,11 @@ export async function saveVisualization(idPhone, wamid, phone, status) {
 				}
 			}
 		);
+	} catch (error) {
+		await this.saveError(idPhone, `Error no metodo "saveVisualization": ${error}`);
+	}
+	try {
+		await socket.emit.updateView(idPhone, phone, wamid, status);
 	} catch (error) {
 		await this.saveError(idPhone, `Error no metodo "saveVisualization": ${error}`);
 	}

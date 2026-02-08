@@ -54,7 +54,6 @@ export async function saveTextReceived(idPhone, message) {
 			phone: from,
 			wamid: id,
 			direction: "inbound",
-			// status: "sending",
 			timestamp: new Date(Number(timestamp) * 1000),
 			data: data
 		});
@@ -78,6 +77,7 @@ export async function saveTextSent(idPhone, wamid, phone, data) {
 		wamid: wamid,
 		direction: "outbound",
 		status: "sending",
+		timestamp: (new Date()).toISOString().replace("Z", "+00:00"),
 		data: data
 	};
 
