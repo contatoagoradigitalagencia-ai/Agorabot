@@ -28,6 +28,9 @@ const message = new mongoose.Schema({
 	react: {
 		type: String
 	},
+	context: {
+		type: Object
+	},
 	data: {
 		type: Object
 	}

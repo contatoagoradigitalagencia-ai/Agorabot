@@ -1,3 +1,5 @@
+import socket from "../../Socket/Socket.js";
+
 /**
  * @author VAMPETA
  * @brief METODO CRIADO PARA SALVAR REACOES RECEBIDAS NO MONGODB
@@ -43,6 +45,11 @@ export async function saveReactionReceived(idPhone, wamid, phone, emoji, timesta
 				}
 			}
 		);
+	} catch (error) {
+		await this.saveError(idPhone, `Error no metodo "saveReactionReceived": ${error}`);
+	}
+	try {
+		await socket.emit.newReact(idPhone, phone, wamid, emoji);		// PARECE Q A META NAO ESTA MAIS BUGADA COM REACOES
 	} catch (error) {
 		await this.saveError(idPhone, `Error no metodo "saveReactionReceived": ${error}`);
 	}

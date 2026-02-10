@@ -7,7 +7,8 @@ import socket from "../../Socket/Socket.js";
  * @param {Object} message UM UNICO ELEMENTO DE req.body.entry[n].changes[n].value.messages[n]
 */
 export async function saveTextReceived(idPhone, message) {
-	const { id, from, timestamp, ...data } = message;
+	const { id, from, timestamp, context, ...data } = message;
+	const fullContext = (context) ? await this.Message.findOne({ wamid: context.id }).select("-_id -__v") : null;
 
 	try {
 		await this.Chat.updateOne(
@@ -41,6 +42,7 @@ export async function saveTextReceived(idPhone, message) {
 			{
 				$set: {
 					timestamp: new Date(Number(timestamp) * 1000),
+					context: fullContext,
 					data: data
 				}
 			}
@@ -55,6 +57,7 @@ export async function saveTextReceived(idPhone, message) {
 			wamid: id,
 			direction: "inbound",
 			timestamp: new Date(Number(timestamp) * 1000),
+			context: fullContext,
 			data: data
 		});
 	} catch (error) {

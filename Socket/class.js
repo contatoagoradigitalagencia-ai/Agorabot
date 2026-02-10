@@ -1,7 +1,7 @@
 import { init } from "./methods/init.js";
 import { updateSockets, disconnect, configEvents } from "./methods/sockets.js";
 import { openChat } from "./methods/on/chat.js";
-import { newMessage, updateView } from "./methods/emit/chat.js";
+import { newMessage, updateView, newReact } from "./methods/emit/chat.js";
 
 /**
  * @author VAMPETA
@@ -21,5 +21,6 @@ export default class Socket {
 		this.on.openChat = openChat.bind(this);
 		this.emit.newMessage = newMessage.bind(this);
 		this.emit.updateView = updateView.bind(this);
+		this.emit.newReact = newReact.bind(this);
 	}
 };

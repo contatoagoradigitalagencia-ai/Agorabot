@@ -31,8 +31,27 @@ export async function updateView(idPhone, phone, wamid, status) {
 		const socket = this.sockets.get(idPhone + phone);
 
 		if (!socket) return ;
-		for (const id of socket) await this.io.to(id).emit("update_view", { wamid, status });
+		for (const id of socket) await this.io.to(id).emit("update_view", { wamid: wamid, status: status });
 	} catch (error) {
 		await mongodb.saveError(idPhone, `Error no metodo "updateView": ${error}`);
+	}
+}
+
+/**
+ * @author VAMPETA
+ * @brief METODO CRIADO PARA ATUALIZAR O FRONT END COM REACOES A MENSAGENS
+ * @param {String} idPhone IDENTIFICADOR DO NUMERO DE TELEFONE DO BOT
+ * @param {String} phone NUMERO QUE VAI RECEBER A MENSAGEM
+ * @param {String} wamid WAMID DA MENSAGEM QUE SERA ATUALIZADA
+ * @param {String} react EMOJI COM A REACAO
+*/
+export async function newReact(idPhone, phone, wamid, react) {
+	try {
+		const socket = this.sockets.get(idPhone + phone);
+
+		if (!socket) return ;
+		for (const id of socket) await this.io.to(id).emit("new_react", { wamid: wamid, react: react });
+	} catch (error) {
+		await mongodb.saveError(idPhone, `Error no metodo "newReact": ${error}`);
 	}
 }
