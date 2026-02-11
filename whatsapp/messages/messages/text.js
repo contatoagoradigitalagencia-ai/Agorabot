@@ -16,11 +16,6 @@ export default async function text(account, message) {
 		} else {
 			await groq.bot(account, message);
 		}
-
-// FRONT END WEBSOCKET
-		// const teste = sockets.get(message.from);
-		// console.log(teste)
-// FRONT END WEBSOCKET
 	} catch (error) {
 		await mongodb.saveError(account.idPhone, `Error na funcao "text": ${error}`);
 	}

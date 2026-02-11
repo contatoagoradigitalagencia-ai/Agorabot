@@ -9,7 +9,7 @@ import socket from "../../Socket/Socket.js";
  * @param emoji EMOJI USADO PARA REAGIR
  * @param timestamp DATA QUE A MENSAGEM CHEGOU (UNIX TIMESTAMP)
 */
-export async function saveReactionReceived(idPhone, wamid, phone, emoji, timestamp) {			// PARECE QUE A META TA BUGADA COM ISSO	(NAO TESTADO)
+export async function saveReactionReceived(idPhone, wamid, phone, emoji, timestamp) {
 	try {
 		await this.Chat.updateOne(
 			{
@@ -49,7 +49,7 @@ export async function saveReactionReceived(idPhone, wamid, phone, emoji, timesta
 		await this.saveError(idPhone, `Error no metodo "saveReactionReceived": ${error}`);
 	}
 	try {
-		await socket.emit.newReact(idPhone, phone, wamid, emoji);		// PARECE Q A META NAO ESTA MAIS BUGADA COM REACOES
+		await socket.emit.newReact(idPhone, phone, wamid, emoji);
 	} catch (error) {
 		await this.saveError(idPhone, `Error no metodo "saveReactionReceived": ${error}`);
 	}
@@ -100,5 +100,10 @@ export async function saveReactionSent(idPhone, wamid, phone, emoji) {
 		);
 	} catch (error) {
 		await this.saveError(idPhone, `Error no metodo "saveReactionSent": ${error}`);
+	}
+	try {
+		await socket.emit.newReact(idPhone, phone, wamid, emoji);
+	} catch (error) {
+		await this.saveError(idPhone, `Error no metodo "saveReactionReceived": ${error}`);
 	}
 }

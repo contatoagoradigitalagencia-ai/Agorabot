@@ -7,7 +7,7 @@ import send from "../../Send/Send.js";
  * @param {Object} account DADOS DO NUMERO QUE RECEBEU ATUALIZACOES
  * @param {Object} message UM UNICO ELEMENTO DE req.body.entry[n].changes[n].value.messages[n]
 */
-export default async function redirect(account, message) {		// E SE EU INCLUIR OUTROS TIPOS DE MENSAGENS NO HISTORICO DE MENSAGENS?
+export default async function redirect(account, message) {
 	try {
 		const contact = account.bot.redirect?.[0];
 
