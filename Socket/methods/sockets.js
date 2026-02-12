@@ -33,6 +33,7 @@ export async function configEvents() {
 	this.io.on("connection", async (socket) => {
 		this.updateSockets(socket);
 		socket.on("open_chat", (data, callback) => this.on.openChat(socket, data, callback));
+		socket.on("load_chat", (data, callback) => this.on.loadChat(socket, data, callback));
 		socket.on("disconnect", () => this.disconnect(socket));
 	});
 }

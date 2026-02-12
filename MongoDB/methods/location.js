@@ -9,6 +9,7 @@ import socket from "../../Socket/Socket.js";
  * @param {String} data CAMPO data ENVIADO NA REQUISICAO (NAO CONTEM OS CAMPOS "messaging_product" E "to")
 */
 export async function saveLocationSent(idPhone, wamid, phone, data) {
+	const fullContext = (data.context) ? await this.Message.findOne({ wamid: data.context.message_id }).select("-_id -__v") : undefined;
 	const message = {
 		idPhone: idPhone,
 		phone: phone,
@@ -16,6 +17,7 @@ export async function saveLocationSent(idPhone, wamid, phone, data) {
 		direction: "outbound",
 		status: "sending",
 		timestamp: (new Date()).toISOString().replace("Z", "+00:00"),
+		context: fullContext,
 		data: data
 	};
 
