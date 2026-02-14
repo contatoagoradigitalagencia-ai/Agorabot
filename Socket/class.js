@@ -18,7 +18,6 @@ export default class Socket {
 		this.updateSockets = updateSockets.bind(this);
 		this.disconnect = disconnect.bind(this);
 		this.configEvents = configEvents.bind(this);
-		// this.on.openChat = openChat.bind(this);		// DEPRECATED
 		this.on.loadChat = loadChat.bind(this);
 		this.emit.newMessage = newMessage.bind(this);
 		this.emit.updateView = updateView.bind(this);
