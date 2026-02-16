@@ -23,7 +23,7 @@ setTimeout(() => {
 			hasMore: messages.length === 15,
 			nextCursor: (ordered.length) ? ordered[0]._id : null
 		});
-}, 2000);
+}, 1000);
 	} catch (error) {
 		await mongodb.saveError(idPhone, `Error no metodo "loadChat": ${error}`);
 	}

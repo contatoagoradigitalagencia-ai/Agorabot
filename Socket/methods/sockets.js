@@ -32,8 +32,8 @@ console.log("Chat desconectado", "\x1b[33m==>\x1b[0m", "id:", socket.id, "idPhon
 export async function configEvents() {
 	this.io.on("connection", async (socket) => {
 		this.updateSockets(socket);
-		socket.on("open_chat", (data, callback) => this.on.openChat(socket, data, callback));
 		socket.on("load_chat", (data, callback) => this.on.loadChat(socket, data, callback));
+		socket.on("reply_window", (data, callback) => this.on.replyWindow(socket, data, callback));
 		socket.on("disconnect", () => this.disconnect(socket));
 	});
 }
