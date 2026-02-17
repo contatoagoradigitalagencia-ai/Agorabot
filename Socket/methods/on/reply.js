@@ -15,8 +15,11 @@ export async function replyWindow(socket, data, callback) {
 		const lastDate = new Date(timestamp);
 		const expirationDate = new Date(lastDate.getTime() + 24 * 60 * 60 * 1000);
 
+// console.log("expirationDate:", expirationDate)
+// console.log("date:", (new Date()))
+// console.log(expirationDate < (new Date()))
 setTimeout(() => {
-		callback(expirationDate < (new Date()));
+		callback(expirationDate > (new Date()));
 }, 1000);
 	} catch (error) {
 		await mongodb.saveError(idPhone, `Error no metodo "replyWindow": ${error}`);
