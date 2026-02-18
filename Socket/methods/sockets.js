@@ -1,3 +1,6 @@
+import mongodb from "../../MongoDB/Mongodb.js";
+// import send from "../../Send/Send.js";
+
 /**
  * @author VAMPETA
  * @brief ATUALIZA O MAPA DE SOCKETS COM O NOVO SOCKET CONECTADO
@@ -34,6 +37,23 @@ export async function configEvents() {
 		this.updateSockets(socket);
 		socket.on("load_chat", (data, callback) => this.on.loadChat(socket, data, callback));
 		socket.on("reply_window", (data, callback) => this.on.replyWindow(socket, data, callback));
+
+
+
+// socket.on("send_message_text", async (data, callback) => {
+// 	const { idPhone, phone } = socket.handshake.auth;
+
+// 	try {
+// 		const account = mongodb.Message.findOne({ idPhone: idPhone });
+
+// console.log(account)
+// 	} catch (error) {
+// 		await mongodb.saveError(idPhone, `Error no metodo "teste": ${error}`);
+// 	}
+// });
+
+
+
 		socket.on("disconnect", () => this.disconnect(socket));
 	});
 }
