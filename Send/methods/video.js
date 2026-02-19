@@ -1,4 +1,5 @@
 import axios from "axios";
+import mongodb from "../../MongoDB/Mongodb.js";
 
 /**
  * @author VAMPETA
@@ -40,10 +41,12 @@ export default async function video(account, phone, options = {}) {
 		if (!wamid) throw ("Wamid não retornado pela API da Meta");
 		delete data.messaging_product;
 		delete data.to;
-		if (wamid) await this.mongodb.saveVideoSent(account.idPhone, wamid, phone, data);
+		// if (wamid) await this.mongodb.saveVideoSent(account.idPhone, wamid, phone, data);
+		if (wamid) await mongodb.saveVideoSent(account.idPhone, wamid, phone, data);
 		return (wamid);
 	} catch (error) {
-		await this.mongodb.saveError(account.idPhone, `Erro na função "video": ${error}`);
+		// await this.mongodb.saveError(account.idPhone, `Erro na função "video": ${error}`);
+		await mongodb.saveError(account.idPhone, `Erro na função "video": ${error}`);
 		return (null);
 	}
 }

@@ -1,4 +1,5 @@
 import axios from "axios";
+import mongodb from "../../MongoDB/Mongodb.js";
 
 /**
  * @author VAMPETA
@@ -25,7 +26,8 @@ export default async function read(account, wamid) {
 		if (res.status !== 200) throw (`O axios retornou status ${res.status} ==> ${JSON.stringify(res.data, null, 2)}`);
 		return (res.status === 200 && res.data.success);
 	} catch (error) {
-		await this.mongodb.saveError(account.idPhone, `Erro na função "read": ${error}`);
+		// await this.mongodb.saveError(account.idPhone, `Erro na função "read": ${error}`);
+		await mongodb.saveError(account.idPhone, `Erro na função "read": ${error}`);
 		return (false);
 	}
 }

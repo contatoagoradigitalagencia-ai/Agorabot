@@ -13,8 +13,11 @@ async function authentication(socket, next) {
 	const { idPhone, phone } = socket.handshake.auth;
 
 	if (typeof idPhone !== "string" || typeof phone !== "string") return (next(new Error("Credenciais inválidas")));
+	const account = await mongodb.Account.findOne({ idPhone: idPhone });
+	if (!account) return (next(new Error("Cliente não encontrado")));
 	const chat = await mongodb.Chat.exists({ idPhone: idPhone, phone: phone });
 	if (!chat) return (next(new Error("Chat não encontrado")));
+	socket.account = account;
 	next();
 }
 

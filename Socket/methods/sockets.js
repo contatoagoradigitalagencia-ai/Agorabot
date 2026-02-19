@@ -1,5 +1,5 @@
 import mongodb from "../../MongoDB/Mongodb.js";
-// import send from "../../Send/Send.js";
+import send from "../../Send/Send.js";
 
 /**
  * @author VAMPETA
@@ -37,23 +37,7 @@ export async function configEvents() {
 		this.updateSockets(socket);
 		socket.on("load_chat", (data, callback) => this.on.loadChat(socket, data, callback));
 		socket.on("reply_window", (data, callback) => this.on.replyWindow(socket, data, callback));
-
-
-
-// socket.on("send_message_text", async (data, callback) => {
-// 	const { idPhone, phone } = socket.handshake.auth;
-
-// 	try {
-// 		const account = mongodb.Message.findOne({ idPhone: idPhone });
-
-// console.log(account)
-// 	} catch (error) {
-// 		await mongodb.saveError(idPhone, `Error no metodo "teste": ${error}`);
-// 	}
-// });
-
-
-
+		socket.on("send_text", (data, callback) => this.on.send_text(socket, data, callback));
 		socket.on("disconnect", () => this.disconnect(socket));
 	});
 }

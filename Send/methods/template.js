@@ -1,4 +1,5 @@
 import axios from "axios";
+import mongodb from "../../MongoDB/Mongodb.js";
 
 /**
  * @author VAMPETA
@@ -36,6 +37,7 @@ export default async function template(account, phone, template) {
 		delete data.messaging_product;
 		delete data.to;
 		// await this.mongodb.saveTemplateSent(account.idPhone, wamid, phone, data);
+		// await mongodb.saveTemplateSent(account.idPhone, wamid, phone, data);
 		return (wamid);
 
 
@@ -52,7 +54,8 @@ export default async function template(account, phone, template) {
 // console.log(response.data);
 
 	} catch (error) {
-		await this.mongodb.saveError(account.idPhone, `Erro na função "template": ${error}`);
+		// await this.mongodb.saveError(account.idPhone, `Erro na função "template": ${error}`);
+		await mongodb.saveError(account.idPhone, `Erro na função "template": ${error}`);
 		return (null);
 	}
 }

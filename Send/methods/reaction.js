@@ -1,4 +1,5 @@
 import axios from "axios";
+import mongodb from "../../MongoDB/Mongodb.js";
 
 /**
  * @author VAMPETA
@@ -33,10 +34,12 @@ export default async function reaction(account, phone, options = {}) {
 		if (res.status !== 200) throw (`O axios retornou status ${res.status} ==> ${JSON.stringify(res.data, null, 2)}`);
 		const wamidReact = res.data?.messages?.[0]?.id;
 		if (!wamidReact) throw ("Wamid não retornado pela API da Meta");
-		await this.mongodb.saveReactionSent(account.idPhone, reaction.message_id, phone, reaction.emoji);
+		// await this.mongodb.saveReactionSent(account.idPhone, reaction.message_id, phone, reaction.emoji);
+		await mongodb.saveReactionSent(account.idPhone, reaction.message_id, phone, reaction.emoji);
 		return (wamidReact);
 	} catch (error) {
-		await this.mongodb.saveError(account.idPhone, `Erro na função "reaction": ${error}`);
+		// await this.mongodb.saveError(account.idPhone, `Erro na função "reaction": ${error}`);
+		await mongodb.saveError(account.idPhone, `Erro na função "reaction": ${error}`);
 		return (null);
 	}
 }

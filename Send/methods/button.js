@@ -1,4 +1,5 @@
 import axios from "axios";
+import mongodb from "../../MongoDB/Mongodb.js";
 
 /**
  * @author VAMPETA
@@ -61,10 +62,12 @@ export default async function button(account, phone, options = {}) {
 		if (!wamid) throw ("Wamid não retornado pela API da Meta");
 		delete data.messaging_product;
 		delete data.to;
-		await this.mongodb.saveButtonSent(account.idPhone, wamid, phone, data);
+		// await this.mongodb.saveButtonSent(account.idPhone, wamid, phone, data);
+		await mongodb.saveButtonSent(account.idPhone, wamid, phone, data);
 		return (wamid);
 	} catch (error) {
-		await this.mongodb.saveError(account.idPhone, `Erro na função "button": ${error}`);
+		// await this.mongodb.saveError(account.idPhone, `Erro na função "button": ${error}`);
+		await mongodb.saveError(account.idPhone, `Erro na função "button": ${error}`);
 		return (null);
 	}
 }
