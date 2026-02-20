@@ -1,6 +1,3 @@
-import mongodb from "../../MongoDB/Mongodb.js";
-import send from "../../Send/Send.js";
-
 /**
  * @author VAMPETA
  * @brief ATUALIZA O MAPA DE SOCKETS COM O NOVO SOCKET CONECTADO
@@ -37,7 +34,8 @@ export async function configEvents() {
 		this.updateSockets(socket);
 		socket.on("load_chat", (data, callback) => this.on.loadChat(socket, data, callback));
 		socket.on("reply_window", (data, callback) => this.on.replyWindow(socket, data, callback));
-		socket.on("send_text", (data, callback) => this.on.send_text(socket, data, callback));
+		socket.on("send_text", (data, callback) => this.on.sendText(socket, data, callback));
+		socket.on("config:bot:on_off", (data, callback) => this.on.botOnOff(socket, data, callback));
 		socket.on("disconnect", () => this.disconnect(socket));
 	});
 }

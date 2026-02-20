@@ -11,5 +11,8 @@ import webhookMessage from "../route/webhook-message.js";
 */
 export default function configRoutes(app) {
 	app.get("/webhook", webhookAuth);
-	app.post("/webhook", verifySignature, response, verifyProductIndicator, webhookMessage);
+	app.post("/webhook", (req, res, next) => {
+		console.log("chegou mensagem");
+		next();
+	}, verifySignature, response, verifyProductIndicator, webhookMessage);
 }

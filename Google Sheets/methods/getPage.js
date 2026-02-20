@@ -1,3 +1,5 @@
+import mongodb from "../../MongoDB/Mongodb.js";
+
 /**
  * @author VAMPETA
  * @brief BUSCA UMA PAGINA DENTRO DE UMA PLANILHA E TRANFORMA EM JSON
@@ -21,7 +23,8 @@ export async function getPageJson(account, page) {
 		}
 		return (array);
 	} catch (error) {
-		await this.mongodb.saveError(account.idPhone, `Error na funcao "getPageJson": ${error}`);
+		// await this.mongodb.saveError(account.idPhone, `Error na funcao "getPageJson": ${error}`);
+		await mongodb.saveError(account.idPhone, `Error na funcao "getPageJson": ${error}`);
 		return ([]);
 	}
 }
@@ -44,7 +47,8 @@ export async function getPageJsonText(account) {
 		}
 		return (text);
 	} catch (error) {
-		await this.mongodb.saveError(account.idPhone, `Error na funcao "getPageJsonText": ${error}`);
+		// await this.mongodb.saveError(account.idPhone, `Error na funcao "getPageJsonText": ${error}`);
+		await mongodb.saveError(account.idPhone, `Error na funcao "getPageJsonText": ${error}`);
 		return ("");
 	}
 }
@@ -71,7 +75,8 @@ export async function getPageTable(account, page) {
 		}
 		return (text);
 	} catch (error) {
-		await this.mongodb.saveError(account.idPhone, `Error na funcao "getPageTable": ${error}`);
+		// await this.mongodb.saveError(account.idPhone, `Error na funcao "getPageTable": ${error}`);
+		await mongodb.saveError(account.idPhone, `Error na funcao "getPageTable": ${error}`);
 		return ("");
 	}
 }

@@ -1,3 +1,5 @@
+import mongodb from "../../MongoDB/Mongodb.js";
+
 /**
  * @author VAMPETA
  * @brief BUSCA OS NOMES DAS PAGINAS DISPONIVEIS DENTRO DA PLANILHA
@@ -13,7 +15,8 @@ export async function getPages(account) {
 
 		return (res.data.sheets.map((sheet) => (sheet.properties.title)));
 	} catch (error) {
-		await this.mongodb.saveError(account.idPhone, `Error na funcao "getPages": ${error}`);
+		// await this.mongodb.saveError(account.idPhone, `Error na funcao "getPages": ${error}`);
+		await mongodb.saveError(account.idPhone, `Error na funcao "getPages": ${error}`);
 		return ([]);
 	}
 }

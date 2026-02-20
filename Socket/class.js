@@ -3,7 +3,8 @@ import { updateSockets, disconnect, configEvents } from "./methods/sockets.js";
 import { loadChat } from "./methods/on/chat.js";
 import { newMessage, updateView, newReact } from "./methods/emit/chat.js";
 import { replyWindow } from "./methods/on/reply.js";
-import { send_text } from "./methods/on/send.js";
+import { sendText } from "./methods/on/send.js";
+import { botOnOff } from "./methods/on/configs.js";
 
 /**
  * @author VAMPETA
@@ -22,7 +23,8 @@ export default class Socket {
 		this.configEvents = configEvents.bind(this);
 		this.on.loadChat = loadChat.bind(this);
 		this.on.replyWindow = replyWindow.bind(this);
-		this.on.send_text = send_text.bind(this);
+		this.on.sendText = sendText.bind(this);
+		this.on.botOnOff = botOnOff.bind(this);
 		this.emit.newMessage = newMessage.bind(this);
 		this.emit.updateView = updateView.bind(this);
 		this.emit.newReact = newReact.bind(this);

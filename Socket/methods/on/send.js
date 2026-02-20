@@ -8,7 +8,7 @@ import send from "../../../Send/Send.js";
  * @param {Object} data DADOS ENVIADO PELO CLIENTE
  * @param {Object} callback FUNCAO DE RESPOSTA
 */
-export async function send_text(socket, data, callback) {
+export async function sendText(socket, data, callback) {
 	const { idPhone, phone } = socket.handshake.auth;
 	const { text } = data;
 

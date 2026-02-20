@@ -8,10 +8,11 @@ import { getPageJson, getPageJsonText, getPageTable } from "./methods/getPage.js
 */
 export default class GoogleSheets {
 	googleSheets = null;
-	mongodb = null;
+	// mongodb = null;
 
-	constructor(mongodb) {
-		this.mongodb = mongodb;
+	// constructor(mongodb) {
+	constructor() {
+		// this.mongodb = mongodb;
 		this.connect = connect.bind(this);
 		this.getPages = getPages.bind(this);
 		this.getPageJson = getPageJson.bind(this);
