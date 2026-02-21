@@ -9,12 +9,13 @@ import { chatHistory } from "./methods/chatHistory.js";
 */
 export default class Groq {
 	groq = null;
-	mongodb = null;
-	googleSheets = null;
+	// mongodb = null;
+	// googleSheets = null;
 
-	constructor(mongodb, googleSheets) {
-		this.mongodb = mongodb;
-		this.googleSheets = googleSheets;
+	// constructor(mongodb, googleSheets) {
+	constructor() {
+		// this.mongodb = mongodb;
+		// this.googleSheets = googleSheets;
 		this.connect = connect.bind(this);
 		this.bot = bot.bind(this);
 		this.prompt = prompt.bind(this);

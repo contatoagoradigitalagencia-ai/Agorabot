@@ -1,4 +1,4 @@
-import mongodb from "../../../MongoDB/Mongodb.js";
+import mongodb from "../../../../MongoDB/Mongodb.js";
 
 /**
  * @author VAMPETA
@@ -7,7 +7,7 @@ import mongodb from "../../../MongoDB/Mongodb.js";
  * @param {Object} data DADOS ENVIADO PELO CLIENTE
  * @param {Object} callback FUNCAO DE RESPOSTA
 */
-export async function loadChat(socket, data, callback) {
+export async function loadMessages(socket, data, callback) {
 	const { idPhone, phone } = socket.handshake.auth;
 	const { beforeId } = data;
 
@@ -25,6 +25,6 @@ setTimeout(() => {
 		});
 }, 1000);
 	} catch (error) {
-		await mongodb.saveError(idPhone, `Error no metodo "loadChat": ${error}`);
+		await mongodb.saveError(idPhone, `Error no metodo "loadMessages": ${error}`);
 	}
 }

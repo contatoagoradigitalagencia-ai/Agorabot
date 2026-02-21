@@ -49,7 +49,7 @@ export async function saveReactionReceived(idPhone, wamid, phone, emoji, timesta
 		await this.saveError(idPhone, `Error no metodo "saveReactionReceived": ${error}`);
 	}
 	try {
-		await socket.emit.newReact(idPhone, phone, wamid, emoji);
+		await socket.emit.messages.newReact(idPhone, phone, wamid, emoji);
 	} catch (error) {
 		await this.saveError(idPhone, `Error no metodo "saveReactionReceived": ${error}`);
 	}
@@ -102,7 +102,7 @@ export async function saveReactionSent(idPhone, wamid, phone, emoji) {
 		await this.saveError(idPhone, `Error no metodo "saveReactionSent": ${error}`);
 	}
 	try {
-		await socket.emit.newReact(idPhone, phone, wamid, emoji);
+		await socket.emit.messages.newReact(idPhone, phone, wamid, emoji);
 	} catch (error) {
 		await this.saveError(idPhone, `Error no metodo "saveReactionReceived": ${error}`);
 	}

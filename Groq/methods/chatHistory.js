@@ -1,3 +1,5 @@
+import mongodb from "../../MongoDB/Mongodb.js";
+
 /**
  * @author VAMPETA
  * @brief MONTA UM ARRAY DE OBJETOS COM O HISTORICO DE MENSAGENS
@@ -7,11 +9,13 @@
 */
 export async function chatHistory(account, message) {
 	try {
-		const history = await this.mongodb.Message.find({ idPhone: account.idPhone, phone: message.from, "data.type": "text" }).sort({ _id: -1 }).limit(account.bot.historySize);
+		// const history = await this.mongodb.Message.find({ idPhone: account.idPhone, phone: message.from, "data.type": "text" }).sort({ _id: -1 }).limit(account.bot.historySize);
+		const history = await mongodb.Message.find({ idPhone: account.idPhone, phone: message.from, "data.type": "text" }).sort({ _id: -1 }).limit(account.bot.historySize);
 
 		return (history.map((message) => ({ role: (message.direction === "inbound") ? "user" : "assistant", content: message.data.text.body })).reverse());
 	} catch (error) {
-		await this.mongodb.saveError(account.idPhone, `Error na funcao "chatHistory": ${error}`);
+		// await this.mongodb.saveError(account.idPhone, `Error na funcao "chatHistory": ${error}`);
+		await mongodb.saveError(account.idPhone, `Error na funcao "chatHistory": ${error}`);
 		return ([]);
 	}
 }
