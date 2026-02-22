@@ -51,7 +51,7 @@ export async function saveLocationSent(idPhone, wamid, phone, data) {
 		await this.saveError(idPhone, `Error no metodo "saveLocationSent": ${error}`);
 	}
 	try {
-		await socket.emit.newMessage(idPhone, phone, message);
+		await socket.emit.messages.newMessage(idPhone, phone, message);
 	} catch (error) {
 		await this.saveError(idPhone, `Error no metodo "saveLocationSent": ${error}`);
 	}

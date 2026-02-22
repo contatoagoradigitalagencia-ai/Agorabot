@@ -28,3 +28,24 @@ setTimeout(() => {
 		await mongodb.saveError(idPhone, `Error no metodo "loadMessages": ${error}`);
 	}
 }
+
+/**
+ * @author VAMPETA
+ * @brief METODO CRIADO ENVIAR MENSAGENS RAPIDAS PREDEFINIDAS PARA O FRONT END
+ * @param {Object} socket OBJETO SOCKET DO CLIENTE
+ * @param {Object} data DADOS ENVIADO PELO CLIENTE
+ * @param {Object} callback FUNCAO DE RESPOSTA
+*/
+export async function quickMessages(socket, data, callback) {
+	const { idPhone, phone } = socket.handshake.auth;
+
+	try {
+		const messages = await mongodb.QuickMessage.find({ idPhone: idPhone }).sort({ _id: -1 }).select("-_id -idPhone");
+
+setTimeout(() => {
+		callback(messages.map(({ message }) => (message)));
+}, 1000);
+	} catch (error) {
+		await mongodb.saveError(idPhone, `Error no metodo "quickMessages": ${error}`);
+	}
+}

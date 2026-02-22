@@ -1,8 +1,8 @@
 import { init } from "./methods/init.js";
 import { updateSockets, disconnect, configEvents } from "./methods/sockets.js";
-import { loadMessages } from "./methods/on/messages/messages.js";
+import { loadMessages, quickMessages } from "./methods/on/messages/messages.js";
 import { replyWindow } from "./methods/on/messages/reply.js";
-import { sendText } from "./methods/on/messages/send.js";
+import { sendText, sendLocation } from "./methods/on/messages/send.js";
 import { botOnOff } from "./methods/on/config/bot/configs.js";
 import { newMessage, updateView, newReact } from "./methods/emit/messages/chat.js";
 
@@ -30,7 +30,9 @@ export default class Socket {
 		this.configEvents = configEvents.bind(this);
 		this.on.messages.loadMessages = loadMessages.bind(this);
 		this.on.messages.replyWindow = replyWindow.bind(this);
+		this.on.messages.quickMessages = quickMessages.bind(this);
 		this.on.messages.sendText = sendText.bind(this);
+		this.on.messages.sendLocation = sendLocation.bind(this);
 		this.on.config.bot.botOnOff = botOnOff.bind(this);
 		this.emit.messages.newMessage = newMessage.bind(this);
 		this.emit.messages.updateView = updateView.bind(this);

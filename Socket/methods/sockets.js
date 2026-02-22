@@ -34,7 +34,9 @@ export async function configEvents() {
 		this.updateSockets(socket);
 		socket.on("messages:load_messages", (data, callback) => this.on.messages.loadMessages(socket, data, callback));
 		socket.on("messages:reply_window", (data, callback) => this.on.messages.replyWindow(socket, data, callback));
+		socket.on("messages:quick_messages", (data, callback) => this.on.messages.quickMessages(socket, data, callback));
 		socket.on("messages:send_text", (data, callback) => this.on.messages.sendText(socket, data, callback));
+		socket.on("messages:send_location", (data, callback) => this.on.messages.sendLocation(socket, data, callback));
 		socket.on("config:bot:on_off", (data, callback) => this.on.config.bot.botOnOff(socket, data, callback));
 		socket.on("disconnect", () => this.disconnect(socket));
 	});

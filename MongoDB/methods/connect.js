@@ -5,6 +5,7 @@ import Chat from "../schemas/chats.js"
 import Contact from "../schemas/contacts.js"
 import Error from "../schemas/errors.js";
 import Message from "../schemas/messages.js"
+import QuickMessage from "../schemas/quick_messages.js";
 
 /**
  * @author VAMPETA
@@ -20,4 +21,5 @@ export async function connect() {
 	this.Contact = Contact;
 	this.Error = Error;
 	this.Message = Message;
+	this.QuickMessage = QuickMessage;
 }

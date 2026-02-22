@@ -29,6 +29,7 @@ export default class Mongodb {
     Contacts = null;
     Error = null;
     Message = null;
+    QuickMessage = null;
 
     constructor() {
         this.connect = connect.bind(this);
