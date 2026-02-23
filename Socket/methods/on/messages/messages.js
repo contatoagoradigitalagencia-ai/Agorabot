@@ -44,7 +44,7 @@ export async function quickMessages(socket, data, callback) {
 
 setTimeout(() => {
 		callback(messages.map(({ message }) => (message)));
-}, 1000);
+}, 3000);
 	} catch (error) {
 		await mongodb.saveError(idPhone, `Error no metodo "quickMessages": ${error}`);
 	}

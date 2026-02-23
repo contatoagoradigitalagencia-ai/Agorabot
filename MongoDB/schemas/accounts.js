@@ -48,11 +48,11 @@ const account = new mongoose.Schema({
 		type: String,
 		required: true
 	},
-	// password: {		// SENHA USADA PARA ACESSAR O CHAT DO FRONT END
-	// 	type: String,
-	// 	required: true
-	// },
 	idPhone: {
+		type: String,
+		required: true
+	},
+	password: {
 		type: String,
 		required: true
 	},
