@@ -1,5 +1,16 @@
 import mongoose from "mongoose";
 
+const login = new mongoose.Schema({
+	password: {
+		type: String,
+		default: "123"
+	},
+	token: {
+		type: String,
+		default: ""
+	}
+});
+
 const bot = new mongoose.Schema({
 	messageNotSupported: {
 		type: String,
@@ -52,10 +63,7 @@ const account = new mongoose.Schema({
 		type: String,
 		required: true
 	},
-	password: {
-		type: String,
-		required: true
-	},
+	login: login,
 	accessToken: {
 		type: String,
 		required: true

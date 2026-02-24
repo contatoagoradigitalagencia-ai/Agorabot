@@ -13,7 +13,7 @@ export default async function fieldMessages(change) {
 
 	try {
 		if (!idPhone) throw (null);
-		const account = await mongodb.Account.findOne({ idPhone: idPhone }).select("-_id -password");
+		const account = await mongodb.Account.findOne({ idPhone: idPhone }).select("-_id -login");
 
 		if (!account) throw (null);
 		// if (change.value.messaging_product) {}

@@ -16,8 +16,8 @@ export default async function login(req, res) {
 
 	if (!req.body) return (res.sendStatus(400));
 	if (!phone || typeof phone !== "string" || phone.length !== 13 || typeof password !== "string" || !password) return (res.sendStatus(400));
-	const account = await mongodb.Account.findOne({ phone: phone, password: password }).select("-_id -password -accessToken");
+	const account = await mongodb.Account.findOne({ phone: phone, "login.password": password }).select("-_id idPhone");
 console.log("aki:", account)
 	if (!account) return (res.sendStatus(401));
-	res.status(200).json(account);
+	res.status(200).json({ idPhone: account.idPhone, token: "123" });
 }
