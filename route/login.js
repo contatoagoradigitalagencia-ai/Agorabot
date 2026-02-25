@@ -1,4 +1,6 @@
 import mongodb from "../MongoDB/Mongodb.js";
+import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 
 /**
  * @author VAMPETA
@@ -16,8 +18,9 @@ export default async function login(req, res) {
 
 	if (!req.body) return (res.sendStatus(400));
 	if (!phone || typeof phone !== "string" || phone.length !== 13 || typeof password !== "string" || !password) return (res.sendStatus(400));
-	const account = await mongodb.Account.findOne({ phone: phone, "login.password": password }).select("-_id idPhone");
-console.log("aki:", account)
-	if (!account) return (res.sendStatus(401));
-	res.status(200).json({ idPhone: account.idPhone, token: "123" });
+	const account = await mongodb.Account.findOne({ phone: phone }).select("-_id idPhone login.password");
+	if (!account || !(await bcrypt.compare(password, account.login.password))) return (res.sendStatus(401));
+	const token = jwt.sign({ idPhone: account.idPhone }, "teste", { expiresIn: "7d" });
+// SALVAR NO BANCO DE DADOS? ACHO Q NAO VOU FAZER SISTEMA DE REVOGACAO DE TOKEN POR ENQUANTO
+	res.status(200).json({ idPhone: account.idPhone, token: token });
 }
