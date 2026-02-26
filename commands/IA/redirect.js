@@ -19,8 +19,7 @@ export default async function redirect(account, message) {
 		// history.reverse();
 		// const chat = "Histórico da conversa:\n" + history.map((msg) => (`\`${(msg.direction === "inbound") ? "Cliente" : "Bot"}:\` ${msg.data.text.body}\n\n`)).join("");
 		// await send.text(account, contact, { text: { body: chat } });
-		await send.text(account, contact, { text: { body: `Link do hitórico de conversa: https://chat-whats-app-eight.vercel.app/chat/${account.idPhone}/${message.from}` } });
-		// await send.text(account, contact, { text: { body: `Link do hitórico de conversa: http://192.168.137.1:5173/chat/${account.idPhone}/${message.from}` } });
+		await send.text(account, contact, { text: { body: `Link do hitórico de conversa: ${process.env.URL_FRONT_END}/chat/${account.idPhone}/${message.from}` } });
 	} catch (error) {
 		await mongodb.saveError(account.idPhone, `Error na funcao "redirect": ${error}`);
 	}
