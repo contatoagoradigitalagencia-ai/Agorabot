@@ -4,10 +4,6 @@ const login = new mongoose.Schema({
 	password: {
 		type: String,
 		default: "123"
-	},
-	token: {
-		type: [String],
-		default: []
 	}
 });
 
