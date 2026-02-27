@@ -4,10 +4,10 @@
  * @param {Object} socket OBJETO SOCKET DO CLIENTE
 */
 export function updateSockets(socket) {
-	const { idPhone, phone } = socket.handshake.auth;
+	const { idPhone, phone } = socket.account;
 
-	if (!this.sockets.has(idPhone + phone)) this.sockets.set(idPhone + phone, new Set());
-	this.sockets.get(idPhone + phone).add(socket.id);
+	if (!this.sockets.has(idPhone)) this.sockets.set(idPhone, new Set());
+	this.sockets.get(idPhone).add(socket.id);
 console.log("Chat conectado   ", "\x1b[34m==>\x1b[0m", "id:", socket.id, "idPhone:", idPhone, "phone:", phone);
 }
 
@@ -17,11 +17,11 @@ console.log("Chat conectado   ", "\x1b[34m==>\x1b[0m", "id:", socket.id, "idPhon
  * @param {Object} socket OBJETO SOCKET DO CLIENTE
 */
 export function disconnect(socket) {
-	const { idPhone, phone } = socket.handshake.auth;
+	const { idPhone, phone } = socket.account;
 
-	if (!this.sockets.get(idPhone + phone)) return ;
-	this.sockets.get(idPhone + phone).delete(socket.id);
-	if (this.sockets.get(idPhone + phone).size === 0) this.sockets.delete(idPhone + phone);
+	if (!this.sockets.get(idPhone)) return ;
+	this.sockets.get(idPhone).delete(socket.id);
+	if (this.sockets.get(idPhone).size === 0) this.sockets.delete(idPhone);
 console.log("Chat desconectado", "\x1b[33m==>\x1b[0m", "id:", socket.id, "idPhone:", idPhone, "phone:", phone);
 }
 

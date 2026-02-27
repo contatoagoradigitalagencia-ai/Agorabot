@@ -8,10 +8,11 @@ import mongodb from "../../../../MongoDB/Mongodb.js";
  * @param {Object} callback FUNCAO DE RESPOSTA
 */
 export async function loadMessages(socket, data, callback) {
-	const { idPhone, phone } = socket.handshake.auth;
-	const { beforeId } = data;
+	const { idPhone } = socket.account;
+	const { phone, beforeId } = data;
 
 	try {
+		if (!phone || typeof phone !== "string") return ;
 		const query = { idPhone: idPhone, phone: phone };
 		if (beforeId) query._id = { $lt: beforeId };
 		const messages = await mongodb.Message.find(query).sort({ _id: -1 }).limit(15).select("-__v");
@@ -37,7 +38,7 @@ setTimeout(() => {
  * @param {Object} callback FUNCAO DE RESPOSTA
 */
 export async function quickMessages(socket, data, callback) {
-	const { idPhone, phone } = socket.handshake.auth;
+	const { idPhone } = socket.account;
 
 	try {
 		const messages = await mongodb.QuickMessage.find({ idPhone: idPhone }).sort({ _id: -1 }).select("-_id -idPhone");

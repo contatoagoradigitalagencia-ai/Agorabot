@@ -8,9 +8,11 @@ import mongodb from "../../../../MongoDB/Mongodb.js";
  * @param {Object} callback FUNCAO DE RESPOSTA
 */
 export async function replyWindow(socket, data, callback) {
-	const { idPhone, phone } = socket.handshake.auth;
+	const { idPhone } = socket.account;
+	const { phone } = data;
 
 	try {
+		if (!phone || typeof phone !== "string") return ;
 		const { timestamp } = await mongodb.Message.findOne({ idPhone: idPhone, phone: phone, direction: "inbound" }).sort({ _id: -1 }).select("timestamp -_id");
 		const lastDate = new Date(timestamp);
 		const expirationDate = new Date(lastDate.getTime() + 24 * 60 * 60 * 1000);

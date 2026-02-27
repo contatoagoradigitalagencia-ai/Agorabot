@@ -9,10 +9,11 @@ import send from "../../../../Send/Send.js";
  * @param {Object} callback FUNCAO DE RESPOSTA
 */
 export async function sendText(socket, data, callback) {
-	const { idPhone, phone } = socket.handshake.auth;
-	const { text } = data;
+	const { idPhone } = socket.account;
+	const { phone, text } = data;
 
 	try {
+		if (!phone || typeof phone !== "string") return ;
 		if (!text || typeof text !== "string") return ;
 		await send.text(socket.account, phone, {
 			text: {
@@ -32,10 +33,11 @@ export async function sendText(socket, data, callback) {
  * @param {Object} callback FUNCAO DE RESPOSTA
 */
 export async function sendLocation(socket, data, callback) {
-	const { idPhone, phone } = socket.handshake.auth;
-	const { latitude, longitude, name, address } = data;
+	const { idPhone } = socket.account;
+	const { phone, latitude, longitude, name, address } = data;
 
 	try {
+		if (!phone || typeof phone !== "string") return ;
 		if (typeof latitude !== "number" || !Number.isFinite(latitude) || latitude < -90 || latitude > 90) return ;
 		if (typeof longitude !== "number" || !Number.isFinite(longitude) || longitude < -180 || longitude > 180) return ;
 		if (name !== undefined && typeof name !== "string") return ;

@@ -8,10 +8,11 @@ import mongodb from "../../../../../MongoDB/Mongodb.js";
  * @param {Object} callback FUNCAO DE RESPOSTA
 */
 export async function botOnOff(socket, data, callback) {
-	const { idPhone, phone } = socket.handshake.auth;
-	const { stateBot } = data;
+	const { idPhone } = socket.account;
+	const { phone, stateBot } = data;
 
 	try {
+		if (!phone || typeof phone !== "string") return ;
 		if (typeof stateBot === "undefined") {
 			const { stateBot } = await mongodb.Chat.findOne({ idPhone: idPhone, phone: phone }).select("stateBot");
 			callback(stateBot);

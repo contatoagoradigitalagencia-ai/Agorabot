@@ -9,8 +9,8 @@ import mongodb from "../../../../MongoDB/Mongodb.js";
 */
 export async function newMessage(idPhone, phone, message) {
 	try {
-		const socket = this.sockets.get(idPhone + phone);
-
+		const socket = this.sockets.get(idPhone);
+// console.log(phone, message.phone)						// PQ ESTOU PEDINDO phone?????
 		if (!socket) return ;
 		for (const id of socket) await this.io.to(id).emit("messages:new_message", message);
 	} catch (error) {
@@ -28,10 +28,10 @@ export async function newMessage(idPhone, phone, message) {
 */
 export async function updateView(idPhone, phone, wamid, status) {
 	try {
-		const socket = this.sockets.get(idPhone + phone);
+		const socket = this.sockets.get(idPhone);
 
 		if (!socket) return ;
-		for (const id of socket) await this.io.to(id).emit("messages:update_view", { wamid: wamid, status: status });
+		for (const id of socket) await this.io.to(id).emit("messages:update_view", { phone: phone, wamid: wamid, status: status });
 	} catch (error) {
 		await mongodb.saveError(idPhone, `Error no metodo "updateView": ${error}`);
 	}
@@ -47,10 +47,10 @@ export async function updateView(idPhone, phone, wamid, status) {
 */
 export async function newReact(idPhone, phone, wamid, react) {
 	try {
-		const socket = this.sockets.get(idPhone + phone);
+		const socket = this.sockets.get(idPhone);
 
 		if (!socket) return ;
-		for (const id of socket) await this.io.to(id).emit("messages:new_react", { wamid: wamid, react: react });
+		for (const id of socket) await this.io.to(id).emit("messages:new_react", { phone: phone, wamid: wamid, react: react });
 	} catch (error) {
 		await mongodb.saveError(idPhone, `Error no metodo "newReact": ${error}`);
 	}
