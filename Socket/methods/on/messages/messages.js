@@ -2,7 +2,7 @@ import mongodb from "../../../../MongoDB/Mongodb.js";
 
 /**
  * @author VAMPETA
- * @brief METODO CRIADO ENVIAR O CHAT DE ACORDO COM O RANGE MENCIONADO
+ * @brief METODO CRIADO ENVIAR AS MENSAGENS DE ACORDO COM O RANGE MENCIONADO
  * @param {Object} socket OBJETO SOCKET DO CLIENTE
  * @param {Object} data DADOS ENVIADO PELO CLIENTE
  * @param {Object} callback FUNCAO DE RESPOSTA

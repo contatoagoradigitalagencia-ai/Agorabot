@@ -1,5 +1,6 @@
 import { init } from "./methods/init.js";
 import { updateSockets, disconnect, configEvents } from "./methods/sockets.js";
+import { loadChats } from "./methods/on/chats/chats.js";
 import { loadMessages, quickMessages } from "./methods/on/messages/messages.js";
 import { replyWindow } from "./methods/on/messages/reply.js";
 import { sendText, sendLocation } from "./methods/on/messages/send.js";
@@ -14,6 +15,7 @@ export default class Socket {
 	sockets = new Map();
 	io = null;
 	on = {
+		chats: {},
 		messages: {},
 		config: {
 			bot: {}
@@ -28,6 +30,7 @@ export default class Socket {
 		this.updateSockets = updateSockets.bind(this);
 		this.disconnect = disconnect.bind(this);
 		this.configEvents = configEvents.bind(this);
+		this.on.chats.loadChats = loadChats.bind(this);
 		this.on.messages.loadMessages = loadMessages.bind(this);
 		this.on.messages.replyWindow = replyWindow.bind(this);
 		this.on.messages.quickMessages = quickMessages.bind(this);
