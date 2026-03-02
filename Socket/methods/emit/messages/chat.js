@@ -12,7 +12,7 @@ export async function newMessage(idPhone, phone, message) {
 		const socket = this.sockets.get(idPhone);
 // console.log(phone, message.phone)						// PQ ESTOU PEDINDO phone?????
 		if (!socket) return ;
-		for (const id of socket) await this.io.to(id).emit("messages:new_message", message);
+		for (const id of socket) await this.io.to(id).emit("chat:new_message", message);
 	} catch (error) {
 		await mongodb.saveError(idPhone, `Error no metodo "newMessage": ${error}`);
 	}
@@ -31,7 +31,7 @@ export async function updateView(idPhone, phone, wamid, status) {
 		const socket = this.sockets.get(idPhone);
 
 		if (!socket) return ;
-		for (const id of socket) await this.io.to(id).emit("messages:update_view", { phone: phone, wamid: wamid, status: status });
+		for (const id of socket) await this.io.to(id).emit("chat:update_view", { phone: phone, wamid: wamid, status: status });
 	} catch (error) {
 		await mongodb.saveError(idPhone, `Error no metodo "updateView": ${error}`);
 	}
@@ -50,7 +50,7 @@ export async function newReact(idPhone, phone, wamid, react) {
 		const socket = this.sockets.get(idPhone);
 
 		if (!socket) return ;
-		for (const id of socket) await this.io.to(id).emit("messages:new_react", { phone: phone, wamid: wamid, react: react });
+		for (const id of socket) await this.io.to(id).emit("chat:new_react", { phone: phone, wamid: wamid, react: react });
 	} catch (error) {
 		await mongodb.saveError(idPhone, `Error no metodo "newReact": ${error}`);
 	}
