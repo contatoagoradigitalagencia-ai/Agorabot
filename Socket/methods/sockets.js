@@ -33,12 +33,12 @@ export async function configEvents() {
 	this.io.on("connection", async (socket) => {
 		this.updateSockets(socket);
 		socket.on("chats:load_chats", (data, callback) => this.on.chats.loadChats(socket, data, callback));
-		socket.on("chat:load_messages", (data, callback) => this.on.messages.loadMessages(socket, data, callback));
-		socket.on("chat:reply_window", (data, callback) => this.on.messages.replyWindow(socket, data, callback));
-		socket.on("chat:quick_messages", (data, callback) => this.on.messages.quickMessages(socket, data, callback));
-		socket.on("chat:send:text", (data, callback) => this.on.messages.sendText(socket, data, callback));
-		socket.on("chat:send:location", (data, callback) => this.on.messages.sendLocation(socket, data, callback));
-		socket.on("chat:bot:on_off", (data, callback) => this.on.config.bot.botOnOff(socket, data, callback));
+		socket.on("chat:load_messages", (data, callback) => this.on.chat.loadMessages(socket, data, callback));
+		socket.on("chat:reply_window", (data, callback) => this.on.chat.replyWindow(socket, data, callback));
+		socket.on("chat:quick_messages", (data, callback) => this.on.chat.quickMessages(socket, data, callback));
+		socket.on("chat:send:text", (data, callback) => this.on.chat.sendText(socket, data, callback));
+		socket.on("chat:send:location", (data, callback) => this.on.chat.sendLocation(socket, data, callback));
+		socket.on("chat:bot:on_off", (data, callback) => this.on.chat.bot.botOnOff(socket, data, callback));
 		socket.on("disconnect", () => this.disconnect(socket));
 	});
 }

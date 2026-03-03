@@ -38,7 +38,7 @@ export async function saveVisualization(idPhone, wamid, phone, status) {
 		await this.saveError(idPhone, `Error no metodo "saveVisualization": ${error}`);
 	}
 	try {
-		await socket.emit.messages.updateView(idPhone, phone, wamid, status);
+		await socket.emit.chat.updateView(idPhone, phone, wamid, status);
 	} catch (error) {
 		await this.saveError(idPhone, `Error no metodo "saveVisualization": ${error}`);
 	}

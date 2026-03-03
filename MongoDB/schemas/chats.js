@@ -12,7 +12,8 @@ const lastMessage = new mongoose.Schema(
 		},
 		timestamp: {
 			type: Date,
-			default: Date.now
+			default: Date.now,
+			index: true
 		},
 		humanViewed: {
 			type: Boolean,
@@ -43,5 +44,6 @@ const chats = new mongoose.Schema({
 });
 
 chats.index({ idPhone: 1, phone: 1 }, { unique: true });
+chats.index({ idPhone: 1, "lastMessage.timestamp": -1 });
 
 export default mongoose.model("chat", chats);

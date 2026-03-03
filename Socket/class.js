@@ -1,11 +1,11 @@
 import { init } from "./methods/init.js";
 import { updateSockets, disconnect, configEvents } from "./methods/sockets.js";
 import { loadChats } from "./methods/on/chats/chats.js";
-import { loadMessages, quickMessages } from "./methods/on/messages/messages.js";
-import { replyWindow } from "./methods/on/messages/reply.js";
-import { sendText, sendLocation } from "./methods/on/messages/send.js";
-import { botOnOff } from "./methods/on/config/bot/configs.js";
-import { newMessage, updateView, newReact } from "./methods/emit/messages/chat.js";
+import { loadMessages, quickMessages } from "./methods/on/chat/messages.js";
+import { replyWindow } from "./methods/on/chat/reply.js";
+import { sendText, sendLocation } from "./methods/on/chat/send.js";
+import { botOnOff } from "./methods/on/chat/config/configs.js";
+import { newMessage, updateView, newReact } from "./methods/emit/chat/chat.js";
 
 /**
  * @author VAMPETA
@@ -16,13 +16,12 @@ export default class Socket {
 	io = null;
 	on = {
 		chats: {},
-		messages: {},
-		config: {
+		chat: {
 			bot: {}
 		}
 	};
 	emit = {
-		messages: {}
+		chat: {}
 	};
 
 	constructor() {
@@ -31,14 +30,14 @@ export default class Socket {
 		this.disconnect = disconnect.bind(this);
 		this.configEvents = configEvents.bind(this);
 		this.on.chats.loadChats = loadChats.bind(this);
-		this.on.messages.loadMessages = loadMessages.bind(this);
-		this.on.messages.replyWindow = replyWindow.bind(this);
-		this.on.messages.quickMessages = quickMessages.bind(this);
-		this.on.messages.sendText = sendText.bind(this);
-		this.on.messages.sendLocation = sendLocation.bind(this);
-		this.on.config.bot.botOnOff = botOnOff.bind(this);
-		this.emit.messages.newMessage = newMessage.bind(this);
-		this.emit.messages.updateView = updateView.bind(this);
-		this.emit.messages.newReact = newReact.bind(this);
+		this.on.chat.loadMessages = loadMessages.bind(this);
+		this.on.chat.replyWindow = replyWindow.bind(this);
+		this.on.chat.quickMessages = quickMessages.bind(this);
+		this.on.chat.sendText = sendText.bind(this);
+		this.on.chat.sendLocation = sendLocation.bind(this);
+		this.on.chat.bot.botOnOff = botOnOff.bind(this);
+		this.emit.chat.newMessage = newMessage.bind(this);
+		this.emit.chat.updateView = updateView.bind(this);
+		this.emit.chat.newReact = newReact.bind(this);
 	}
 };
