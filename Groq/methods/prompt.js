@@ -70,8 +70,8 @@ Dados disponíveis:
 export async function prompt(account) {
 	try {
 		let textPrompt = "";
-		// const spreadsheets = await this.googleSheets.getPageJsonText(account);
-		const spreadsheets = await googleSheets.getPageJsonText(account);
+		// const spreadsheets = await this.googleSheets.getPageJsonText(account);	// BUG RELACIONADO A NAO TER PLANNILHA // DEVO TRATAR AKI?
+		const spreadsheets = (account.googleSheets) ? await googleSheets.getPageJsonText(account) : undefined;
 
 		textPrompt += schema;
 		textPrompt += rules;

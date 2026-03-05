@@ -13,8 +13,7 @@ export default function webhookAuth(req, res) {
 	const mode = req.query["hub.mode"];
     const token = req.query["hub.verify_token"];
     const challenge = req.query["hub.challenge"];
-	const verify_token = process.env.VERIFY_TOKEN;
 
-	if (mode === "subscribe" && token === verify_token) return (res.status(200).send(challenge));
+	if (mode === "subscribe" && token === process.env.VERIFY_TOKEN) return (res.status(200).send(challenge));
 	return (res.sendStatus(403));
 }

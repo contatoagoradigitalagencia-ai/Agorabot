@@ -12,9 +12,6 @@ import login from "./login.js";
 */
 export default function configRoutes(app) {
 	app.get("/webhook", webhookAuth);
-	app.post("/webhook", (req, res, next) => {
-console.log("veio aki")
-next()
-	}, verifySignature, response, verifyProductIndicator, webhookMessage);
+	app.post("/webhook", verifySignature, response, verifyProductIndicator, webhookMessage);
 	app.post("/login", login);
 }

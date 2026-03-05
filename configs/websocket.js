@@ -12,8 +12,9 @@ import mongodb from "../MongoDB/Mongodb.js";
 */
 async function authentication(socket, next) {
 	const { token } = socket.handshake.auth;
-	if (typeof token !== "string") return (next(new Error("Credenciais inválidas")));
 	let idPhone, phone;
+
+	if (typeof token !== "string") return (next(new Error("Credenciais inválidas")));
 	try {
 		const encoded = jwt.verify(token, process.env.JWT_SECRET);
 		idPhone = encoded.idPhone;
