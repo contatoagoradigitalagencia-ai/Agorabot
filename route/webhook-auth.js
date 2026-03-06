@@ -6,7 +6,7 @@
  * @param {String} query.hub.mode TIPO DA OPERACAO
  * @param {String} query.hub.verify_token TOKEN DE VALIDACAO (CRIADO POR MIM TIPO UMA "SENHA")
  * @param {String} query.hub.challenge UM TIPO DE "SENHA" QUE DEVE SER REENVIADO COMO RESPOSTA
- * @returns 200 - AUTENTICACAO BEM SUCESSEDIDA
+ * @returns 200 - AUTENTICACAO BEM SUCEDIDA
  * @returns 403 - TIPO DE OPERACAO INESPERADO OU TOKEN INVALIDO
 */
 export default function webhookAuth(req, res) {
