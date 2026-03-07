@@ -84,13 +84,11 @@ export async function prompt(account) {
 		textPrompt += fallback;
 		textPrompt += `${identity}${account.bot.prompt}\n`;
 		if (spreadsheets) textPrompt += `${data}${spreadsheets}`;
-// console.log(textPrompt)
 		return ({
 			role: "system",
 			content: textPrompt
 		});
 	} catch (error) {
-		// await this.mongodb.saveError(account.idPhone, `Error na funcao "prompt": ${error}`);
 		await mongodb.saveError(account.idPhone, `Error na funcao "prompt": ${error}`);
 		return ({ role: "system", content: "" });
 	}

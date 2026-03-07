@@ -57,11 +57,9 @@ export default async function list(account, phone, options = {}) {
 		if (!wamid) throw ("Wamid não retornado pela API da Meta");
 		delete data.messaging_product;
 		delete data.to;
-		// if (wamid) await this.mongodb.saveListSent(account.idPhone, wamid, phone, data);
 		if (wamid) await mongodb.saveListSent(account.idPhone, wamid, phone, data);
 		return (wamid);
 	} catch (error) {
-		// await this.mongodb.saveError(account.idPhone, `Erro na função "list": ${error}`);
 		await mongodb.saveError(account.idPhone, `Erro na função "list": ${error}`);
 		return (null);
 	}

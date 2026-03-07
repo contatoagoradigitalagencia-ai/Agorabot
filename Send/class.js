@@ -14,11 +14,7 @@ import template from "./methods/template.js";
  * @brief CLASSE CRIADA PARA GERENCIAR METODOS DE ENVIO DE MENSAGENS
 */
 export default class Send {
-	// mongodb = null;
-
-	// constructor(mongodb) {
 	constructor() {
-		// this.mongodb = mongodb;
 		this.read = read.bind(this);
 		this.reaction = reaction.bind(this);
 		this.text = text.bind(this);

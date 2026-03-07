@@ -43,11 +43,9 @@ export default async function location(account, phone, options = {}) {
 		if (!wamid) throw ("Wamid não retornado pela API da Meta");
 		delete data.messaging_product;
 		delete data.to;
-		// await this.mongodb.saveLocationSent(account.idPhone, wamid, phone, data);
 		await mongodb.saveLocationSent(account.idPhone, wamid, phone, data);
 		return (wamid);
 	} catch (error) {
-		// await this.mongodb.saveError(account.idPhone, `Erro na função "location": ${error}`);
 		await mongodb.saveError(account.idPhone, `Erro na função "location": ${error}`);
 		return (null);
 	}

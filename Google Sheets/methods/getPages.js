@@ -15,7 +15,6 @@ export async function getPages(account) {
 
 		return (res.data.sheets.map((sheet) => (sheet.properties.title)));
 	} catch (error) {
-		// await this.mongodb.saveError(account.idPhone, `Error na funcao "getPages": ${error}`);
 		await mongodb.saveError(account.idPhone, `Error na funcao "getPages": ${error}`);
 		return ([]);
 	}
