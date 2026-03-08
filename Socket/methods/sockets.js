@@ -35,6 +35,7 @@ export async function configEvents() {
 
 		// /chat
 		socket.on("chats:load_chats", (data, callback) => this.on.chats.loadChats(socket, data, callback));
+		socket.on("chats:update_human_viewed", (data, callback) => this.on.chats.updateHumanViewed(socket, data, callback));
 
 		// /chat/:phone
 		socket.on("chat:load_messages", (data, callback) => this.on.chat.loadMessages(socket, data, callback));

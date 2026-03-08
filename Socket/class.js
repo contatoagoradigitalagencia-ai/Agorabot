@@ -3,6 +3,7 @@ import { updateSockets, disconnect, configEvents } from "./methods/sockets.js";
 
 // on /chat
 import { loadChats } from "./methods/on/chats/chats.js";
+import { updateHumanViewed } from "./methods/on/chats/chats.js";
 
 // on /chat/:phone
 import { loadMessages, quickMessages } from "./methods/on/chat/messages.js";
@@ -38,6 +39,7 @@ export default class Socket {
 
 		// /chat
 		this.on.chats.loadChats = loadChats.bind(this);
+		this.on.chats.updateHumanViewed = updateHumanViewed.bind(this);
 
 		// /chat/:phone
 		this.on.chat.loadMessages = loadMessages.bind(this);

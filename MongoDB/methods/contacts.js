@@ -16,6 +16,7 @@ export async function saveContactsSent(idPhone, wamid, phone, data) {
 		wamid: wamid,
 		direction: "outbound",
 		status: "sending",
+		timestamp: (new Date()).toISOString().replace("Z", "+00:00"),
 		context: fullContext,
 		data: data
 	};

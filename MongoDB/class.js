@@ -16,6 +16,7 @@ import { saveButtonSent } from "./methods/button.js";
 import { saveListSent } from "./methods/list.js";
 import { updateRedirect, saveRedirect, removeRedirect } from "./methods/redirect.js";
 import { saveStateBot } from "./methods/configChat.js";
+import { saveHumanView } from "./methods/humanViewed.js";
 import { saveError } from "./methods/error.js";
 
 /**
@@ -56,6 +57,7 @@ export default class Mongodb {
         this.saveListSent = saveListSent.bind(this);
         this.updateRedirect = updateRedirect.bind(this);
         this.saveStateBot = saveStateBot.bind(this);
+        this.saveHumanView = saveHumanView.bind(this);
         this.saveError = saveError.bind(this);
     }
 };

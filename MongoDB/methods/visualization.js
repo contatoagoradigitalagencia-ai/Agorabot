@@ -7,7 +7,7 @@ import socket from "../../Socket/Socket.js";
  * @param phone NUMERO QUE VAI MUDAR O STATUS
  * @param status STATUS DA MENSAGEM
 */
-export async function saveVisualization(idPhone, wamid, phone, status) {
+export async function saveVisualization(idPhone, wamid, phone, status) {	// ESTA COM PROBLEMA CASO OS EVENTOS CHEGUEM FORA DE ORDEM E ELES SE SOBRESCREVEM (TBM FALTA IMPLEMENTAR ESQUEMA DE SALVAR QUANDO A MENSAGEM FOI ENTREGUE E LIDA)
 	try {
 		await this.Chat.updateOne(
 			{

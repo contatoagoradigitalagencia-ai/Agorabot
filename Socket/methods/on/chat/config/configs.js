@@ -14,8 +14,8 @@ export async function botOnOff(socket, data, callback) {
 	try {
 		if (!phone || typeof phone !== "string") return ;
 		if (typeof stateBot === "undefined") {
-			const { stateBot } = await mongodb.Chat.findOne({ idPhone: idPhone, phone: phone }).select("stateBot");
-			callback(stateBot);
+			const chat = await mongodb.Chat.findOne({ idPhone: idPhone, phone: phone }).select("stateBot");
+			callback(chat?.stateBot);
 		} else {
 			await mongodb.saveStateBot(idPhone, phone, stateBot);
 			callback(stateBot);

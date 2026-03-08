@@ -320,3 +320,9 @@ Emitido quando uma mensagem recebe uma reação.
     "react": "👍"
 }
 ```
+
+
+
+
+
+// FALTA DOCUMENTAR O EVENTO ***chats:update_human_viewed***
