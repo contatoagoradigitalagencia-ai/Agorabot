@@ -13,9 +13,7 @@ export async function saveHumanView(idPhone, phone) {
 			},
 			{
 				$set: {
-					lastMessage: {
-						humanViewed: true
-					}
+					"lastMessage.humanViewed": true
 				}
 			}
 		);

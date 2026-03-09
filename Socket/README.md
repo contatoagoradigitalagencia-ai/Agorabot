@@ -321,8 +321,22 @@ Emitido quando uma mensagem recebe uma reação.
 }
 ```
 
+---
 
+## ON chats:update_human_viewed
 
+Notifica o servidor que um humano visualizou o chat.
 
+### Payload
 
-// FALTA DOCUMENTAR O EVENTO ***chats:update_human_viewed***
+```json
+{
+    "phone": "5521999999999"
+}
+```
+
+### Campos
+
+| Campo      | Tipo      | Obrigatório | Descrição                                                                                                       |
+|------------|-----------|-------------|-----------------------------------------------------------------------------------------------------------------|
+| `phone`    | `string`  | Sim         | Número do chat.                                                                                                 |
