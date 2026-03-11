@@ -4,13 +4,12 @@ import mongodb from "../../../../MongoDB/Mongodb.js";
  * @author VAMPETA
  * @brief METODO CRIADO PARA ATUALIZAR CHAT DO FRONT END QUANDO OUVER UMA MENSAGEM NOVA (SERVE PARA MENSAGEM RECEBIDA E ENVIADA)
  * @param {String} idPhone IDENTIFICADOR DO NUMERO DE TELEFONE DO BOT
- * @param {String} phone NUMERO QUE VAI RECEBER A MENSAGEM
  * @param {Object} message OBJETO COM A MENSAGEM SALVO NO BANCO DE DADOS
 */
-export async function newMessage(idPhone, phone, message) {
+export async function newMessage(idPhone, message) {
 	try {
 		const socket = this.sockets.get(idPhone);
-// console.log(phone, message.phone)						// PQ ESTOU PEDINDO phone?????
+
 		if (!socket) return ;
 		for (const id of socket) await this.io.to(id).emit("chat:new_message", message);
 	} catch (error) {

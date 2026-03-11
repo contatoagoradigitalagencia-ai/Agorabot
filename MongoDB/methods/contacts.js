@@ -51,7 +51,7 @@ export async function saveContactsSent(idPhone, wamid, phone, data) {
 		await this.saveError(idPhone, `Error no metodo "saveContactsSent": ${error}`);
 	}
 	try {
-		await socket.emit.chat.newMessage(idPhone, phone, message);
+		await socket.emit.chat.newMessage(idPhone, message);
 	} catch (error) {
 		await this.saveError(idPhone, `Error no metodo "saveContactsSent": ${error}`);
 	}

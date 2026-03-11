@@ -51,7 +51,7 @@ export async function saveVideoSent(idPhone, wamid, phone, data) {
 		await this.saveError(idPhone, `Error no metodo "saveVideoSent": ${error}`);
 	}
 	try {
-		await socket.emit.chat.newMessage(idPhone, phone, message);
+		await socket.emit.chat.newMessage(idPhone, message);
 	} catch (error) {
 		await this.saveError(idPhone, `Error no metodo "saveVideoSent": ${error}`);
 	}

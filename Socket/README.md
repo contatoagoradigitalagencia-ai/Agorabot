@@ -80,6 +80,37 @@ Carrega a lista de chats do usuário com **paginação por cursor**.
 | `hasMore`    | `boolean`          | Indica se existem mais chats.                                                                                      |
 | `nextCursor` | `object` OU `null` | Cursor para carregar a próxima página.                                                                             |
 
+---
+
+## ON chats:update_human_viewed
+
+
+
+
+
+
+---
+
+## EMIT chat:new_message
+
+Emitido quando uma nova mensagem é enviada ou recebida.
+
+### Payload
+
+```json
+{
+    "idPhone": "65e1f4c3b9e8f12d4c0e9a11",
+    "phone": "5521999999999",
+    "timestamp": 1700000000,
+    "direction": "inbound",
+    "wamid": "wamid.HBgL...",
+    "data": {
+        "type": "...",
+        ...
+    }
+}
+```
+
 
 
 ---
@@ -135,6 +166,8 @@ Carrega as mensagens de um chat com **paginação por cursor**.
 | `nextCursor` | `string` OU `null`  | Cursor da próxima página.                                                                                         |
 ---
 
+---
+
 ## ON chat:reply_window
 
 Verifica se a janela de resposta do WhatsApp (24h) ainda está aberta.
@@ -174,8 +207,16 @@ Retorna mensagens rápidas pré-definidas.
 
 ```json
 [
-    "Olá, como posso ajudar?",
-    "Obrigado pelo contato"
+    {
+        "type": "text",
+        "text": "Olá, como posso ajudar?"
+    },
+    {
+        "type": "location",
+        "location": {
+            ...
+        }
+    }
 ]
 ```
 
@@ -189,7 +230,7 @@ Envia uma mensagem de texto.
 
 ```json
 {
-    "phone": "5511999999999",
+    "phone": "5521999999999",
     "text": "Olá"
 }
 ```
@@ -275,11 +316,15 @@ Emitido quando uma nova mensagem é enviada ou recebida.
 
 ```json
 {
-    "_id": "65e1f4c3b9e8f12d4c0e9a11",
-    "phone": "5511999999999",
-    "text": "Olá",
+    "idPhone": "65e1f4c3b9e8f12d4c0e9a11",
+    "phone": "5521999999999",
     "timestamp": 1700000000,
-    "direction": "inbound"
+    "direction": "inbound",
+    "wamid": "wamid.HBgL...",
+    "data": {
+        "type": "...",
+        ...
+    }
 }
 ```
 
@@ -293,7 +338,7 @@ Atualiza o status de visualização da mensagem.
 
 ```json
 {
-    "phone": "5511999999999",
+    "phone": "5521999999999",
     "wamid": "wamid.HBgL...",
     "status": "read"
 }

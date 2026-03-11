@@ -51,7 +51,7 @@ export async function saveTextReceived(idPhone, message) {
 		await this.saveError(idPhone, `Error no metodo "saveTextReceived": ${error}`);
 	}
 	try {
-		await socket.emit.chat.newMessage(idPhone, from, {
+		await socket.emit.chat.newMessage(idPhone, {
 			idPhone: idPhone,
 			phone: from,
 			wamid: id,
@@ -116,7 +116,7 @@ export async function saveTextSent(idPhone, wamid, phone, data) {
 		await this.saveError(idPhone, `Error no metodo "saveTextSent": ${error}`);
 	}
 	try {
-		await socket.emit.chat.newMessage(idPhone, phone, message);
+		await socket.emit.chat.newMessage(idPhone, message);
 	} catch (error) {
 		await this.saveError(idPhone, `Error no metodo "saveTextSent": ${error}`);
 	}
