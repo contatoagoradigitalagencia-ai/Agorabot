@@ -8,7 +8,7 @@ import { saveVisualization } from "./methods/visualization.js";
 import { saveWamid } from "./methods/wamid.js";
 import { saveReactionReceived, saveReactionSent } from "./methods/reaction.js";
 import { saveTextReceived, saveTextSent } from "./methods/text.js";
-import { saveImageSent } from "./methods/image.js";
+import { saveImageReceived, saveImageSent } from "./methods/image.js";
 import { saveVideoSent } from "./methods/video.js";
 import { saveLocationSent } from "./methods/location.js";
 import { saveContactsSent } from "./methods/contacts.js";
@@ -49,6 +49,7 @@ export default class Mongodb {
         this.saveReactionSent = saveReactionSent.bind(this);
         this.saveTextReceived = saveTextReceived.bind(this);
         this.saveTextSent = saveTextSent.bind(this);
+        this.saveImageReceived = saveImageReceived.bind(this);
         this.saveImageSent = saveImageSent.bind(this);
         this.saveVideoSent = saveVideoSent.bind(this);
         this.saveLocationSent = saveLocationSent.bind(this);

@@ -84,10 +84,23 @@ Carrega a lista de chats do usuário com **paginação por cursor**.
 
 ## ON chats:update_human_viewed
 
+Recebe a informação do front-end que o chat foi aberto por um humano
 
+### Payload
 
+```json
+{
+    "phone": "5521999999999"
+}
+```
 
+---
 
+### Campos
+
+| Campo   | Tipo     | Obrigatório | Descrição                                                                                                           |
+|---------|----------|-------------|---------------------------------------------------------------------------------------------------------------------|
+| `phone` | `string` | Sim         | Número do contato.                                                                                                  |
 
 ---
 
@@ -165,6 +178,28 @@ Carrega as mensagens de um chat com **paginação por cursor**.
 | `hasMore`    | `boolean`           | Indica se existem mais mensagens.                                                                                 |
 | `nextCursor` | `string` OU `null`  | Cursor da próxima página.                                                                                         |
 ---
+
+---
+
+## ON chats:update_human_viewed
+
+Recebe a informação do front-end que o chat foi aberto por um humano
+
+### Payload
+
+```json
+{
+    "phone": "5521999999999"
+}
+```
+
+---
+
+### Campos
+
+| Campo   | Tipo     | Obrigatório | Descrição                                                                                                           |
+|---------|----------|-------------|---------------------------------------------------------------------------------------------------------------------|
+| `phone` | `string` | Sim         | Número do contato.                                                                                                  |
 
 ---
 

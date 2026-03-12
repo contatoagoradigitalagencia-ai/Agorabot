@@ -52,7 +52,7 @@ setTimeout(() => {
 */
 export async function updateHumanViewed(socket, data, callback) {
 	const { idPhone } = socket.account;
-	const { phone } = data;	// AKI EU FACO UMA CONSULTA DESNECESSARIA SE O CAMPO phone ESTIVER VAZIO 
+	const { phone } = data;	// AKI EU FACO UMA CONSULTA DESNECESSARIA SE O CAMPO phone ESTIVER VAZIO
 
 	try {
 		await mongodb.saveHumanView(idPhone, phone);
