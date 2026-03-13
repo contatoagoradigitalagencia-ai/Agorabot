@@ -5,7 +5,7 @@ import { google } from "googleapis";
  * @brief INICIA A CONEXAO COM O GOOGLE SHEETS
 */
 export default async function connect() {
-	if (this.googleSheets) return;
+	if (this.googleSheets) return ;
 	const auth = new google.auth.GoogleAuth({
 		credentials: {
 			type: "service_account",
