@@ -18,7 +18,7 @@ export default async function image(account, message) {
 		// 	await mongodb.saveImageReceived(account.idPhone, message);
 		// }
 
-		await mongodb.saveImageReceived(account.idPhone, message);
+		await mongodb.saveImageReceived(account.idPhone, account.accessToken, message);
 		if (stateBot && account.bot.messageNotSupported) await send.text(account, message.from, { text: { body: account.bot.messageNotSupported } });
 	} catch (error) {
 		await mongodb.saveError(account.idPhone, `Error na funcao "image": ${error}`);

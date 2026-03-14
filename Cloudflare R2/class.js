@@ -1,4 +1,5 @@
 import connect from "./methods/connect.js";
+import { upload } from "./methods/upload.js";
 
 /**
  * @author VAMPETA
@@ -9,5 +10,6 @@ export default class CloudflareR2 {
 
 	constructor() {
 		this.connect = connect.bind(this);
+		this.upload = upload.bind(this);
 	}
 };

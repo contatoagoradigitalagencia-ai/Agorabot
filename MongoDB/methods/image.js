@@ -1,14 +1,17 @@
+import cloudflareR2 from "../../Cloudflare R2/CloudflareR2.js";
 import socket from "../../Socket/Socket.js";
 
 /**
  * @author VAMPETA
  * @brief METODO CRIADO PARA SALVAR MENSAGENS DE IMAGENS NO MONGODB
  * @param {String} idPhone IDENTIFICADOR DO NUMERO DE TELEFONE DO BOT
+ * @param {String} token TOKEN DE ACESSO USADO PARA BAIXAR A IMAGEM NA META
  * @param {Object} message UM UNICO ELEMENTO DE req.body.entry[n].changes[n].value.messages[n]
 */
-export async function saveImageReceived(idPhone, message) {
+export async function saveImageReceived(idPhone, token, message) {
 	const { id, from, timestamp, context, ...data } = message;
 	const fullContext = (context) ? await this.Message.findOne({ wamid: context.id }).select("-_id -__v") : undefined;
+const url = await cloudflareR2.upload(idPhone, token, message.image.url, "image");
 
 	try {
 		await this.Chat.updateOne(
