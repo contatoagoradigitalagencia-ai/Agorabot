@@ -1,4 +1,5 @@
 import mongodb from "../../../MongoDB/Mongodb.js";
+import cloudflareR2 from "../../../Cloudflare R2/CloudflareR2.js";
 import send from "../../../Send/Send.js";
 
 /**
@@ -18,7 +19,9 @@ export default async function image(account, message) {
 		// 	await mongodb.saveImageReceived(account.idPhone, message);
 		// }
 
-		await mongodb.saveImageReceived(account.idPhone, account.accessToken, message);
+
+		message.image.url = await cloudflareR2.upload(account.idPhone, account.accessToken, message.from, message.id, message.image.url, "image");
+		await mongodb.saveImageReceived(account.idPhone, message);
 		if (stateBot && account.bot.messageNotSupported) await send.text(account, message.from, { text: { body: account.bot.messageNotSupported } });
 	} catch (error) {
 		await mongodb.saveError(account.idPhone, `Error na funcao "image": ${error}`);
