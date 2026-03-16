@@ -14,11 +14,4 @@ export default function configRoutes(app) {
 	app.get("/webhook", webhookAuth);
 	app.post("/webhook", verifySignature, response, verifyProductIndicator, webhookMessage);
 	app.post("/login", login);
-
-
-	app.get("/", (req, res) => {
-
-
-		res.send("<p>oiiii</p>")
-	});
 }

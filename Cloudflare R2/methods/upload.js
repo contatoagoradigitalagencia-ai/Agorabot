@@ -1,5 +1,7 @@
+import mime from "mime-types";
 import axios from "axios";
-import { PutObjectCommand } from "@aws-sdk/client-s3"
+import { v4 } from "uuid";
+import { PutObjectCommand } from "@aws-sdk/client-s3";
 
 import mongodb from "../../MongoDB/Mongodb.js";
 
@@ -9,18 +11,9 @@ import mongodb from "../../MongoDB/Mongodb.js";
  * @param {String} contentType TIPO DO ARQUIVO INFORMADO NO CABECALHO DA REQUISICAO
 */
 function getExtension(contentType) {
-	const map = {
-		"image/jpeg": "jpg",
-		"image/png": "png",
-		"image/webp": "webp",
-		"image/gif": "gif",
-		"audio/ogg": "ogg",
-		"audio/mpeg": "mp3",
-		"video/mp4": "mp4",
-		"application/pdf": "pdf"
-	}
+	const type = contentType?.split(";")[0];
 
-	return (map[contentType] || "bin");
+	return (mime.extension(type) || "bin");
 }
 
 /**
@@ -33,7 +26,7 @@ function getExtension(contentType) {
  * @param {String} url URL DE DOWNLOAD QUE A META DISPONIBILIZA
  * @param {String} type TIPO DE ARQUIVO
 */
-export async function upload(idPhone, token, from, wamid, url, type) {
+export async function upload(idPhone, token, from, url, type) {
 	try {
 		const response = await axios.get(url, {
 			responseType: "stream",
@@ -44,9 +37,8 @@ export async function upload(idPhone, token, from, wamid, url, type) {
 		const now = new Date();
 		const year = now.getFullYear();
 		const month = now.getMonth() + 1;
-		const fileName = wamid.replace("wamid.", "");
 		const extension = getExtension(response.headers["content-type"]);
-		const path = `${idPhone}/${from}/${type}/${year}/${month}/${fileName}.${extension}`;
+		const path = `${idPhone}/${from}/${type}/${year}/${month}/${Date.now()}-${v4()}.${extension}`;
 		const command = new PutObjectCommand({
 			Bucket: process.env.CLOUDFLARE_R2_BUCKET,
 			Key: path,

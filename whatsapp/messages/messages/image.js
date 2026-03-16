@@ -20,7 +20,7 @@ export default async function image(account, message) {
 		// }
 
 
-		message.image.url = await cloudflareR2.upload(account.idPhone, account.accessToken, message.from, message.id, message.image.url, "image");
+		message.image.url = await cloudflareR2.upload(account.idPhone, account.accessToken, message.from, message.image.url, "image");
 		await mongodb.saveImageReceived(account.idPhone, message);
 		if (stateBot && account.bot.messageNotSupported) await send.text(account, message.from, { text: { body: account.bot.messageNotSupported } });
 	} catch (error) {

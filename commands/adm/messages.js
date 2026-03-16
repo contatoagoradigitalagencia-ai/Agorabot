@@ -1,5 +1,6 @@
 import send from "../../Send/Send.js";
 import mongodb from "../../MongoDB/Mongodb.js";
+import cloudflareR2 from "../../Cloudflare R2/CloudflareR2.js";
 
 /**
  * @author VAMPETA
@@ -60,9 +61,10 @@ export async function text(account, message) {
 */
 export async function image(account, message) {
 	try {
-		await send.image(account, message.from, { image: { link: "https://i.ytimg.com/vi/h_D3VFfhvs4/hq720.jpg" } });
-		await send.image(account, message.from, { context: { message_id: message.id }, image: { link: "https://i.ytimg.com/vi/h_D3VFfhvs4/hq720.jpg" } });
-		await send.image(account, message.from, { image: { link: "https://i.ytimg.com/vi/h_D3VFfhvs4/hq720.jpg", caption: "descricao" } });
+		const url = await cloudflareR2.upload(account.idPhone, account.accessToken, message.from, "https://i.ytimg.com/vi/h_D3VFfhvs4/hq720.jpg", "image");
+		await send.image(account, message.from, { image: { link: url } });
+		await send.image(account, message.from, { context: { message_id: message.id }, image: { link: url } });
+		await send.image(account, message.from, { image: { link: url, caption: "descricao" } });
 	} catch (error) {
 		await mongodb.saveError(account.idPhone, `Error na funcao "image": ${error}`);
 	}

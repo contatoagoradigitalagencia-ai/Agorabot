@@ -2,6 +2,7 @@ import mongodb from "../../../MongoDB/Mongodb.js";
 import send from "../../../Send/Send.js";
 
 import text from "./text.js";
+import audio from "./audio.js";
 import image from "./image.js";
 import interactive from "./interactive.js";
 import reaction from "./reaction.js";
@@ -22,6 +23,10 @@ export default async function messages(account, value) {
 			switch (message.type) {
 				case ("text"):
 					await text(account, message);
+					break;
+
+				case ("audio"):
+					await audio(account, message);
 					break;
 
 				case ("image"):
