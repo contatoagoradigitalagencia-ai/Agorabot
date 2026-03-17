@@ -28,7 +28,7 @@ function getExtension(contentType) {
 */
 export async function upload(idPhone, token, from, url, type) {
 	try {
-		const response = await axios.get(url, {
+		const res = await axios.get(url, {
 			responseType: "stream",
 			headers: {
 				Authorization: "Bearer " + token
@@ -37,16 +37,17 @@ export async function upload(idPhone, token, from, url, type) {
 		const now = new Date();
 		const year = now.getFullYear();
 		const month = now.getMonth() + 1;
-		const extension = getExtension(response.headers["content-type"]);
+		const extension = getExtension(res.headers["content-type"]);
 		const path = `${idPhone}/${from}/${type}/${year}/${month}/${Date.now()}-${v4()}.${extension}`;
 		const command = new PutObjectCommand({
 			Bucket: process.env.CLOUDFLARE_R2_BUCKET,
 			Key: path,
-			Body: response.data,
-			ContentType: response.headers["content-type"],
-			ContentLength: Number(response.headers["content-length"])
+			Body: res.data,
+			ContentType: res.headers["content-type"],
+			ContentLength: Number(res.headers["content-length"])
 		})
 
+		if (res.status !== 200) return ("");
 		await this.cloudflareR2.send(command);
 		return (process.env.CLOUDFLARE_R2_URL_PUBLIC + "/" + path);
 	} catch (error) {

@@ -55,6 +55,24 @@ export async function text(account, message) {
 
 /**
  * @author VAMPETA
+ * @brief FUNCAO RESPONSAVEL PELO COMANDO "/audio" (TESTA A MENSAGEM DO TIPO "audio")
+ * @param {Object} account DADOS DO NUMERO QUE RECEBEU ATUALIZACOES
+ * @param {Object} message UM UNICO ELEMENTO DE req.body.entry[n].changes[n].value.messages[n]
+*/
+export async function audio(account, message) {
+	try {
+		const url = await cloudflareR2.upload(account.idPhone, account.accessToken, message.from, "https://pub-b0f79765e62e42ba8ffa4539dfea5c2c.r2.dev/871876402681006/5521971178764/audio/2026/3/1773779330594-f41a33b2-6822-42a8-a145-bcd472cf5210.mpga", "audio");
+
+		await send.audio(account, message.from, { audio: { link: url, voice: true } });
+		await send.audio(account, message.from, { context: { message_id: message.id }, audio: { link: url, voice: true } });
+		await send.audio(account, message.from, { audio: { link: url, voice: false } });
+	} catch (error) {
+		await mongodb.saveError(account.idPhone, `Error na funcao "audio": ${error}`);
+	}
+}
+
+/**
+ * @author VAMPETA
  * @brief FUNCAO RESPONSAVEL PELO COMANDO "/image" (TESTA A MENSAGEM DO TIPO "image")
  * @param {Object} account DADOS DO NUMERO QUE RECEBEU ATUALIZACOES
  * @param {Object} message UM UNICO ELEMENTO DE req.body.entry[n].changes[n].value.messages[n]
@@ -62,6 +80,7 @@ export async function text(account, message) {
 export async function image(account, message) {
 	try {
 		const url = await cloudflareR2.upload(account.idPhone, account.accessToken, message.from, "https://i.ytimg.com/vi/h_D3VFfhvs4/hq720.jpg", "image");
+
 		await send.image(account, message.from, { image: { link: url } });
 		await send.image(account, message.from, { context: { message_id: message.id }, image: { link: url } });
 		await send.image(account, message.from, { image: { link: url, caption: "descricao" } });

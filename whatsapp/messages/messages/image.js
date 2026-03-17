@@ -12,14 +12,6 @@ export default async function image(account, message) {
 	try {
 		const { stateBot } = await mongodb.Chat.findOne({ idPhone: account.idPhone, phone: message.from }).select("stateBot");
 
-		// if (stateBot) {
-		// 	await mongodb.saveTextReceived(account.idPhone, { id: message.id, from: message.from, timestamp: message.timestamp, type: "text", text: { body: `Mensagem não suportada: ${message.type}` } });
-		// 	if (account.bot.messageNotSupported) await send.text(account, message.from, { text: { body: account.bot.messageNotSupported } });
-		// } else {
-		// 	await mongodb.saveImageReceived(account.idPhone, message);
-		// }
-
-
 		message.image.url = await cloudflareR2.upload(account.idPhone, account.accessToken, message.from, message.image.url, "image");
 		await mongodb.saveImageReceived(account.idPhone, message);
 		if (stateBot && account.bot.messageNotSupported) await send.text(account, message.from, { text: { body: account.bot.messageNotSupported } });

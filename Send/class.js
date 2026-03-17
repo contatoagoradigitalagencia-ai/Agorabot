@@ -1,6 +1,7 @@
 import read from "./methods/read.js";
 import reaction from "./methods/reaction.js";
 import text from "./methods/text.js";
+import audio from "./methods/audio.js";
 import image from "./methods/image.js";
 import video from "./methods/video.js";
 import location from "./methods/location.js";
@@ -18,6 +19,7 @@ export default class Send {
 		this.read = read.bind(this);
 		this.reaction = reaction.bind(this);
 		this.text = text.bind(this);
+		this.audio = audio.bind(this);
 		this.image = image.bind(this);
 		this.video = video.bind(this);
 		this.location = location.bind(this);
