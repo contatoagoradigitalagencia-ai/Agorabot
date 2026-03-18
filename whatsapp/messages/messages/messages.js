@@ -4,6 +4,7 @@ import send from "../../../Send/Send.js";
 import text from "./text.js";
 import audio from "./audio.js";
 import image from "./image.js";
+import video from "./video.js";
 import interactive from "./interactive.js";
 import reaction from "./reaction.js";
 // import sticker from "./sticker.js";
@@ -31,6 +32,10 @@ export default async function messages(account, value) {
 
 				case ("image"):
 					await image(account, message);
+					break;
+
+				case ("video"):
+					await video(account, message);
 					break;
 
 				case ("interactive"):

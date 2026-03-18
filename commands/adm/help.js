@@ -100,6 +100,9 @@ Testa mensagens de localização.
 \`/contacts\`
 Testa mensagens de envio de contato.
 
+\`/document\`
+Testa mensagens de envio de documentos.
+
 \`/button\`
 Testa mensagens com botões clicáveis.
 

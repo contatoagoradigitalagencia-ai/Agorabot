@@ -8,7 +8,7 @@ import { prompt, new_prompt } from "./prompt.js";
 import { spreadsheets, available_spreadsheets, view_spreadsheet, add_spreadsheets, remove_spreadsheets } from "./spreadsheets.js";
 import { redirect, add_redirect, remove_redirect } from "./redirect.js";
 import { contatos } from "./contatos.js";
-import { all_messages, reaction, text, audio, image, video, location, contacts, button, list /*, template */ } from "./messages.js";
+import { all_messages, reaction, text, audio, image, video, location, contacts, document, button, list /*, template */ } from "./messages.js";
 
 /**
  * @author VAMPETA
@@ -123,6 +123,10 @@ export default async function commandsAdm(account, message) {
 
 			case "/contacts":
 				await contacts(account, message);
+				break;
+
+			case "/document":
+				await document(account, message);
 				break;
 
 			case "/button":

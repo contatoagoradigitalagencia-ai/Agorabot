@@ -10,8 +10,9 @@ import commandsAdm from "../../../commands/adm/commands.js";
 */
 export default async function text(account, message) {
 	try {
-		await mongodb.saveTextReceived(account.idPhone, message);
 		const { stateBot } = await mongodb.Chat.findOne({ idPhone: account.idPhone, phone: message.from }).select("stateBot");
+
+		await mongodb.saveTextReceived(account.idPhone, message);
 		if (message.text.body[0] === "/" && account.adm.includes(message.from)) {
 			await commandsAdm(account, message);
 		} else {

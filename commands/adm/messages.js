@@ -61,7 +61,7 @@ export async function text(account, message) {
 */
 export async function audio(account, message) {
 	try {
-		const url = await cloudflareR2.upload(account.idPhone, account.accessToken, message.from, "https://pub-b0f79765e62e42ba8ffa4539dfea5c2c.r2.dev/871876402681006/5521971178764/audio/2026/3/1773779330594-f41a33b2-6822-42a8-a145-bcd472cf5210.mpga", "audio");
+		const url = await cloudflareR2.upload(account.idPhone, account.accessToken, message.from, process.env.CLOUDFLARE_R2_URL_PUBLIC + "/871876402681006/5521971178764/audio/2026/3/1773779330594-f41a33b2-6822-42a8-a145-bcd472cf5210.mpga", "audio");
 
 		await send.audio(account, message.from, { audio: { link: url, voice: true } });
 		await send.audio(account, message.from, { context: { message_id: message.id }, audio: { link: url, voice: true } });
@@ -79,7 +79,7 @@ export async function audio(account, message) {
 */
 export async function image(account, message) {
 	try {
-		const url = await cloudflareR2.upload(account.idPhone, account.accessToken, message.from, "https://i.ytimg.com/vi/h_D3VFfhvs4/hq720.jpg", "image");
+		const url = await cloudflareR2.upload(account.idPhone, account.accessToken, message.from, process.env.CLOUDFLARE_R2_URL_PUBLIC + "/871876402681006/5521971178764/image/2026/3/1773779116930-bba45ff0-4571-4508-a4f3-9adf4982aa78.jpg", "image");
 
 		await send.image(account, message.from, { image: { link: url } });
 		await send.image(account, message.from, { context: { message_id: message.id }, image: { link: url } });
@@ -97,9 +97,11 @@ export async function image(account, message) {
 */
 export async function video(account, message) {
 	try {
-		await send.video(account, message.from, { video: { link: "https://download.samplelib.com/mp4/sample-5s.mp4" } });
-		await send.video(account, message.from, { context: { message_id: message.id }, video: { link: "https://download.samplelib.com/mp4/sample-5s.mp4" } });
-		await send.video(account, message.from, { video: { link: "https://download.samplelib.com/mp4/sample-5s.mp4", caption: "descricao" } });
+		const url = await cloudflareR2.upload(account.idPhone, account.accessToken, message.from, process.env.CLOUDFLARE_R2_URL_PUBLIC + "/871876402681006/5521971178764/video/2026/3/1773870674570-ce6194d7-4530-45b8-a48f-33b965f47187.mp4", "video");
+
+		await send.video(account, message.from, { video: { link: url } });
+		await send.video(account, message.from, { context: { message_id: message.id }, video: { link: url } });
+		await send.video(account, message.from, { video: { link: url, caption: "descricao" } });
 	} catch (error) {
 		await mongodb.saveError(account.idPhone, `Error na funcao "video": ${error}`);
 	}
@@ -136,6 +138,24 @@ export async function contacts(account, message) {
 		await send.contacts(account, message.from, { contacts: { name: { formatted_name: "nome", first_name: "primeiro nome" }, phones: [{ phone: "(00) 0000-00000" }, { phone: "(00) 0000-00000" }], emails: [{ email: "email@dominio.com" }, { email: "email@dominio.com" }] } });
 	} catch (error) {
 		await mongodb.saveError(account.idPhone, `Error na funcao "contacts": ${error}`);
+	}
+}
+
+/**
+ * @author VAMPETA
+ * @brief FUNCAO RESPONSAVEL PELO COMANDO "/document" (TESTA A MENSAGEM DO TIPO "document")
+ * @param {Object} account DADOS DO NUMERO QUE RECEBEU ATUALIZACOES
+ * @param {Object} message UM UNICO ELEMENTO DE req.body.entry[n].changes[n].value.messages[n]
+*/
+export async function document(account, message) {
+	try {
+		const url = await cloudflareR2.upload(account.idPhone, account.accessToken, message.from, process.env.CLOUDFLARE_R2_URL_PUBLIC + "/871876402681006/5521971178764/audio/2026/3/1773779330594-f41a33b2-6822-42a8-a145-bcd472cf5210.mpga", "document");
+
+		await send.document(account, message.from, { document: { link: url, filename: "nome.mp3" } });
+		await send.document(account, message.from, { context: { message_id: message.id }, document: { link: url, filename: "nome.mp3" } });
+		await send.document(account, message.from, { document: { link: url, filename: "nome.mp3", caption: "descricao" } });
+	} catch (error) {
+		await mongodb.saveError(account.idPhone, `Error na funcao "video": ${error}`);
 	}
 }
 

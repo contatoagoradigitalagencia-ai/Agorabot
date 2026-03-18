@@ -10,7 +10,7 @@ import { saveReactionReceived, saveReactionSent } from "./methods/reaction.js";
 import { saveTextReceived, saveTextSent } from "./methods/text.js";
 import { saveAudioReceived, saveAudioSent } from "./methods/audio.js";
 import { saveImageReceived, saveImageSent } from "./methods/image.js";
-import { saveVideoSent } from "./methods/video.js";
+import { saveVideoReceived, saveVideoSent } from "./methods/video.js";
 import { saveLocationSent } from "./methods/location.js";
 import { saveContactsSent } from "./methods/contacts.js";
 import { saveButtonSent } from "./methods/button.js";
@@ -54,6 +54,7 @@ export default class Mongodb {
         this.saveTextSent = saveTextSent.bind(this);
         this.saveImageReceived = saveImageReceived.bind(this);
         this.saveImageSent = saveImageSent.bind(this);
+        this.saveVideoReceived = saveVideoReceived.bind(this);
         this.saveVideoSent = saveVideoSent.bind(this);
         this.saveLocationSent = saveLocationSent.bind(this);
         this.saveContactsSent = saveContactsSent.bind(this);
