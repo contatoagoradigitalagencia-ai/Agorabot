@@ -42,7 +42,7 @@ export default async function document(account, phone, options = {}) {
 		if (!wamid) throw ("Wamid não retornado pela API da Meta");
 		delete data.messaging_product;
 		delete data.to;
-		// if (wamid) await mongodb.saveDocumentSent(account.idPhone, wamid, phone, data);					// NAO EXISTE AINDA
+		if (wamid) await mongodb.saveDocumentSent(account.idPhone, wamid, phone, data);
 		return (wamid);
 	} catch (error) {
 		await mongodb.saveError(account.idPhone, `Erro na função "document": ${error}`);
