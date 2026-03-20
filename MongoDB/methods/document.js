@@ -19,7 +19,7 @@ export async function saveDocumentReceived(idPhone, message) {
 			{
 				$set: {
 					lastMessage: {
-						text: "Documento",
+						text: (data.document.filename) ? data.document.filename : "Documento",
 						type: "document",
 						timestamp: new Date(Number(timestamp) * 1000)
 					}
@@ -95,7 +95,7 @@ export async function saveDocumentSent(idPhone, wamid, phone, data) {
 			{
 				$set: {
 					lastMessage: {
-						text: "Documento",
+						text: (data.document.filename) ? data.document.filename : "Documento",
 						type: "document",
 						status: "sending"
 					}

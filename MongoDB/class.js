@@ -8,11 +8,12 @@ import { saveVisualization } from "./methods/visualization.js";
 import { saveWamid } from "./methods/wamid.js";
 import { saveReactionReceived, saveReactionSent } from "./methods/reaction.js";
 import { saveTextReceived, saveTextSent } from "./methods/text.js";
+import { saveStickerReceived } from "./methods/sticker.js";
 import { saveAudioReceived, saveAudioSent } from "./methods/audio.js";
 import { saveImageReceived, saveImageSent } from "./methods/image.js";
 import { saveVideoReceived, saveVideoSent } from "./methods/video.js";
-import { saveLocationSent } from "./methods/location.js";
-import { saveContactsSent } from "./methods/contacts.js";
+import { saveLocationReceived, saveLocationSent } from "./methods/location.js";
+import { saveContactsReceived, saveContactsSent } from "./methods/contacts.js";
 import { saveDocumentReceived, saveDocumentSent } from "./methods/document.js";
 import { saveButtonSent } from "./methods/button.js";
 import { saveListSent } from "./methods/list.js";
@@ -37,6 +38,7 @@ export default class Mongodb {
 	constructor() {
 		this.connect = connect.bind(this);
 		this.saveContact = saveContact.bind(this);
+
 		this.saveAdm = saveAdm.bind(this);
 		this.removeAdm = removeAdm.bind(this);
 		this.saveMessageNotSupported = saveMessageNotSupported.bind(this);
@@ -45,27 +47,33 @@ export default class Mongodb {
 		this.removeSpreadsheets = removeSpreadsheets.bind(this);
 		this.saveRedirect = saveRedirect.bind(this);
 		this.removeRedirect = removeRedirect.bind(this);
-		this.saveVisualization = saveVisualization.bind(this);
+		
 		this.saveWamid = saveWamid.bind(this);
+		this.saveVisualization = saveVisualization.bind(this);
 		this.saveReactionReceived = saveReactionReceived.bind(this);
 		this.saveReactionSent = saveReactionSent.bind(this);
 		this.saveTextReceived = saveTextReceived.bind(this);
+		this.saveTextSent = saveTextSent.bind(this);
+		this.saveStickerReceived = saveStickerReceived.bind(this);
 		this.saveAudioReceived = saveAudioReceived.bind(this);
 		this.saveAudioSent = saveAudioSent.bind(this);
-		this.saveTextSent = saveTextSent.bind(this);
 		this.saveImageReceived = saveImageReceived.bind(this);
 		this.saveImageSent = saveImageSent.bind(this);
 		this.saveVideoReceived = saveVideoReceived.bind(this);
 		this.saveVideoSent = saveVideoSent.bind(this);
+		this.saveLocationReceived = saveLocationReceived.bind(this);
 		this.saveLocationSent = saveLocationSent.bind(this);
+		this.saveContactsReceived = saveContactsReceived.bind(this);
 		this.saveContactsSent = saveContactsSent.bind(this);
 		this.saveDocumentReceived = saveDocumentReceived.bind(this);
 		this.saveDocumentSent = saveDocumentSent.bind(this);
 		this.saveButtonSent = saveButtonSent.bind(this);
 		this.saveListSent = saveListSent.bind(this);
+
 		this.updateRedirect = updateRedirect.bind(this);
 		this.saveStateBot = saveStateBot.bind(this);
 		this.saveHumanView = saveHumanView.bind(this);
+
 		this.saveError = saveError.bind(this);
 	}
 };

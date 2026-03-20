@@ -134,8 +134,8 @@ export async function contacts(account, message) {
 		await send.contacts(account, message.from, { contacts: { name: { formatted_name: "nome", first_name: "primeiro nome" }, phones: [{ phone: "(00) 0000-00000" }, { phone: "(00) 0000-00000" }] } });
 		await send.contacts(account, message.from, { contacts: { name: { formatted_name: "nome", first_name: "primeiro nome" }, emails: [{ email: "email@dominio.com" }, { email: "email@dominio.com" }] } });
 		await send.contacts(account, message.from, { context: { message_id: message.id }, contacts: { name: { formatted_name: "nome", first_name: "primeiro nome" }, phones: [{ phone: "(00) 0000-00000" }, { phone: "(00) 0000-00000" }] } });
-		await send.contacts(account, message.from, { contacts: { name: { formatted_name: "nome", first_name: "primeiro nome" }, phones: [{ phone: "(00) 0000-00000" }, { phone: "(00) 0000-00000" }], org: { company: "compania", title: "titulo" } } });
 		await send.contacts(account, message.from, { contacts: { name: { formatted_name: "nome", first_name: "primeiro nome" }, phones: [{ phone: "(00) 0000-00000" }, { phone: "(00) 0000-00000" }], emails: [{ email: "email@dominio.com" }, { email: "email@dominio.com" }] } });
+		await send.contacts(account, message.from, { contacts: { name: { formatted_name: "nome", first_name: "primeiro nome" }, phones: [{ phone: "(00) 0000-00000" }, { phone: "(00) 0000-00000" }], org: { company: "compania", title: "titulo" } } });
 	} catch (error) {
 		await mongodb.saveError(account.idPhone, `Error na funcao "contacts": ${error}`);
 	}
@@ -149,11 +149,19 @@ export async function contacts(account, message) {
 */
 export async function document(account, message) {
 	try {
-		const url = await cloudflareR2.upload(account.idPhone, account.accessToken, message.from, process.env.CLOUDFLARE_R2_URL_PUBLIC + "/871876402681006/5521971178764/audio/2026/3/1773779330594-f41a33b2-6822-42a8-a145-bcd472cf5210.mpga", "document");
+		const mpga = await cloudflareR2.upload(account.idPhone, account.accessToken, message.from, process.env.CLOUDFLARE_R2_URL_PUBLIC + "/871876402681006/5521971178764/audio/2026/3/1773779330594-f41a33b2-6822-42a8-a145-bcd472cf5210.mpga", "document");
+		const jpg = await cloudflareR2.upload(account.idPhone, account.accessToken, message.from, process.env.CLOUDFLARE_R2_URL_PUBLIC + "/871876402681006/5521971178764/image/2026/3/1773779116930-bba45ff0-4571-4508-a4f3-9adf4982aa78.jpg", "document");
+		const mp4 = await cloudflareR2.upload(account.idPhone, account.accessToken, message.from, process.env.CLOUDFLARE_R2_URL_PUBLIC + "/871876402681006/5521971178764/video/2026/3/1773870674570-ce6194d7-4530-45b8-a48f-33b965f47187.mp4", "document");
+		const pdf = await cloudflareR2.upload(account.idPhone, account.accessToken, message.from, process.env.CLOUDFLARE_R2_URL_PUBLIC + "/871876402681006/5521971178764/document/2026/3/1773961241179-a37e1132-c074-450b-b477-134e5ef21b9b.pdf", "document");
+		const zip = await cloudflareR2.upload(account.idPhone, account.accessToken, message.from, process.env.CLOUDFLARE_R2_URL_PUBLIC + "/871876402681006/5521971178764/document/2026/3/1774031267479-fe5b629e-b8ec-4681-90de-2b156511e402.zip", "document");
 
-		await send.document(account, message.from, { document: { link: url, filename: "nome.mp3" } });
-		await send.document(account, message.from, { context: { message_id: message.id }, document: { link: url, filename: "nome.mp3" } });
-		await send.document(account, message.from, { document: { link: url, filename: "nome.mp3", caption: "descricao" } });
+		await send.document(account, message.from, { document: { link: mpga, filename: "nome.mpga" } });
+		await send.document(account, message.from, { document: { link: jpg, filename: "nome.jpg" } });
+		await send.document(account, message.from, { document: { link: mp4, filename: "nome.mp4" } });
+		await send.document(account, message.from, { document: { link: zip, filename: "nome.zip" } });
+		await send.document(account, message.from, { document: { link: pdf, filename: "O pequeno príncipe.pdf" } });
+		await send.document(account, message.from, { context: { message_id: message.id }, document: { link: pdf, filename: "O pequeno príncipe.pdf" } });
+		await send.document(account, message.from, { document: { link: pdf, filename: "O pequeno príncipe.pdf", caption: "descricao" } });
 	} catch (error) {
 		await mongodb.saveError(account.idPhone, `Error na funcao "video": ${error}`);
 	}
