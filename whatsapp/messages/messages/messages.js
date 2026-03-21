@@ -3,6 +3,7 @@ import send from "../../../Send/Send.js";
 
 import reaction from "./reaction.js";
 import text from "./text.js";
+import sticker from "./sticker.js";
 import audio from "./audio.js";
 import image from "./image.js";
 import video from "./video.js";
@@ -10,7 +11,6 @@ import location from "./location.js";
 import contacts from "./contacts.js";
 import document from "./document.js";
 import interactive from "./interactive.js";
-import sticker from "./sticker.js";
 
 /**
  * @author VAMPETA

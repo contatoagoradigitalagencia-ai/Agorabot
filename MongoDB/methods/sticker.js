@@ -20,7 +20,7 @@ export async function saveStickerReceived(idPhone, message) {
 				$set: {
 					lastMessage: {
 						text: "Figurinha",
-						type: "Sticker",
+						type: "sticker",
 						timestamp: new Date(Number(timestamp) * 1000)
 					}
 				},
@@ -73,7 +73,7 @@ export async function saveStickerReceived(idPhone, message) {
  * @param {String} phone NUMERO QUE QUE RECEBEU A MENSAGEM
  * @param {String} data CAMPO data ENVIADO NA REQUISICAO (NAO CONTEM OS CAMPOS "messaging_product" E "to")
 */
-export async function saveStickerSent(idPhone, wamid, phone, data) {				// PAREI AKI E NAO TESTEI
+export async function saveStickerSent(idPhone, wamid, phone, data) {
 	const fullContext = (data.context) ? await this.Message.findOne({ wamid: data.context.message_id }).select("-_id -__v") : undefined;
 	const message = {
 		idPhone: idPhone,

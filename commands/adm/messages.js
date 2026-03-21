@@ -55,6 +55,26 @@ export async function text(account, message) {
 
 /**
  * @author VAMPETA
+ * @brief FUNCAO RESPONSAVEL PELO COMANDO "/sticker" (TESTA A MENSAGEM DO TIPO "audio")
+ * @param {Object} account DADOS DO NUMERO QUE RECEBEU ATUALIZACOES
+ * @param {Object} message UM UNICO ELEMENTO DE req.body.entry[n].changes[n].value.messages[n]
+*/
+export async function sticker(account, message) {
+	try {
+		// const staticSticker = await cloudflareR2.upload(account.idPhone, account.accessToken, message.from, process.env.CLOUDFLARE_R2_URL_PUBLIC + "/871876402681006/5521971178764/sticker/2026/3/1774116526886-772f438f-edcf-45b9-9e7a-11d1155a5bdb.webp", "sticker");
+		// const animatedSticker = await cloudflareR2.upload(account.idPhone, account.accessToken, message.from, process.env.CLOUDFLARE_R2_URL_PUBLIC + "", "sticker");
+
+		// await send.sticker(account, message.from, { sticker: { link: staticSticker } });
+		// await send.sticker(account, message.from, { context: { message_id: message.id }, sticker: { link: staticSticker } });
+		// await send.sticker(account, message.from, { sticker: { link: animatedSticker } });
+		await send.text(account, message.from, { text: { body: "Por enquanto este comando não está funcionando" } });
+	} catch (error) {
+		await mongodb.saveError(account.idPhone, `Error na funcao "sticker": ${error}`);
+	}
+}
+
+/**
+ * @author VAMPETA
  * @brief FUNCAO RESPONSAVEL PELO COMANDO "/audio" (TESTA A MENSAGEM DO TIPO "audio")
  * @param {Object} account DADOS DO NUMERO QUE RECEBEU ATUALIZACOES
  * @param {Object} message UM UNICO ELEMENTO DE req.body.entry[n].changes[n].value.messages[n]

@@ -85,6 +85,9 @@ Testa a reação do WhatsApp.
 \`/text\`
 Testa mensagens de texto.
 
+\`/sticker\`
+Testa mensagens de figurinha.
+
 \`/audio\`
 Testa mensagens com áudio.
 
