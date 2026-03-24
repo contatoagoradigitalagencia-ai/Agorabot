@@ -33,6 +33,9 @@ export async function configEvents() {
 	this.io.on("connection", async (socket) => {
 		this.updateSockets(socket);
 
+		// /dashboard
+		socket.on("dashboard:info", (data, callback) => this.on.dashboard.infoDashboard(socket, data, callback));
+
 		// /chat
 		socket.on("chats:load_chats", (data, callback) => this.on.chats.loadChats(socket, data, callback));
 		socket.on("chats:update_human_viewed", (data, callback) => this.on.chats.updateHumanViewed(socket, data, callback));

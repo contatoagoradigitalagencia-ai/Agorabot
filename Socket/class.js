@@ -1,6 +1,9 @@
 import { init } from "./methods/init.js";
 import { updateSockets, disconnect, configEvents } from "./methods/sockets.js";
 
+// on /dashboard
+import { infoDashboard } from "./methods/on/dashboard/info.js";
+
 // on /chat
 import { loadChats } from "./methods/on/chats/chats.js";
 import { updateHumanViewed } from "./methods/on/chats/chats.js";
@@ -22,6 +25,7 @@ export default class Socket {
 	sockets = new Map();
 	io = null;
 	on = {
+		dashboard: {},
 		chats: {},
 		chat: {
 			bot: {}
@@ -36,6 +40,9 @@ export default class Socket {
 		this.updateSockets = updateSockets.bind(this);
 		this.disconnect = disconnect.bind(this);
 		this.configEvents = configEvents.bind(this);
+
+		// /dashboard
+		this.on.dashboard.infoDashboard = infoDashboard.bind(this);
 
 		// /chat
 		this.on.chats.loadChats = loadChats.bind(this);
