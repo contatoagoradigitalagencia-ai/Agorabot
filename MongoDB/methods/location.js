@@ -63,6 +63,11 @@ export async function saveLocationReceived(idPhone, message) {
 	} catch (error) {
 		await this.saveError(idPhone, `Error no metodo "saveLocationReceived": ${error}`);
 	}
+	try {
+		await this.saveMetricMessage(idPhone, "received", "location");
+	} catch (error) {
+		await this.saveError(idPhone, `Error no metodo "saveLocationReceived": ${error}`);
+	}
 }
 
 /**
@@ -117,6 +122,11 @@ export async function saveLocationSent(idPhone, wamid, phone, data) {
 	}
 	try {
 		await socket.emit.chat.newMessage(idPhone, message);
+	} catch (error) {
+		await this.saveError(idPhone, `Error no metodo "saveLocationSent": ${error}`);
+	}
+	try {
+		await this.saveMetricMessage(idPhone, "sent", "location");
 	} catch (error) {
 		await this.saveError(idPhone, `Error no metodo "saveLocationSent": ${error}`);
 	}

@@ -63,6 +63,11 @@ export async function saveStickerReceived(idPhone, message) {
 	} catch (error) {
 		await this.saveError(idPhone, `Error no metodo "saveStickerReceived": ${error}`);
 	}
+	try {
+		await this.saveMetricMessage(idPhone, "received", "sticker");
+	} catch (error) {
+		await this.saveError(idPhone, `Error no metodo "saveStickerReceived": ${error}`);
+	}
 }
 
 /**
@@ -117,6 +122,11 @@ export async function saveStickerSent(idPhone, wamid, phone, data) {
 	}
 	try {
 		await socket.emit.chat.newMessage(idPhone, message);
+	} catch (error) {
+		await this.saveError(idPhone, `Error no metodo "saveStickerSent": ${error}`);
+	}
+	try {
+		await this.saveMetricMessage(idPhone, "sent", "sticker");
 	} catch (error) {
 		await this.saveError(idPhone, `Error no metodo "saveStickerSent": ${error}`);
 	}

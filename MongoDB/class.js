@@ -21,6 +21,7 @@ import { updateRedirect, saveRedirect, removeRedirect } from "./methods/redirect
 import { saveStateBot } from "./methods/configChat.js";
 import { saveHumanView } from "./methods/humanViewed.js";
 import { saveError } from "./methods/error.js";
+import { saveMetricMessage, saveMetricNewContact } from "./methods/metric.js";
 
 /**
  * @author VAMPETA
@@ -30,10 +31,11 @@ export default class Mongodb {
 	mongodb = null;
 	Account = null;
 	Chat = null;
-	Contacts = null;
+	Contact = null;
 	Error = null;
 	Message = null;
 	QuickMessage = null;
+	Metric = null;
 
 	constructor() {
 		this.connect = connect.bind(this);
@@ -76,5 +78,7 @@ export default class Mongodb {
 		this.saveHumanView = saveHumanView.bind(this);
 
 		this.saveError = saveError.bind(this);
+		this.saveMetricMessage = saveMetricMessage.bind(this);
+		this.saveMetricNewContact = saveMetricNewContact.bind(this);
 	}
 };

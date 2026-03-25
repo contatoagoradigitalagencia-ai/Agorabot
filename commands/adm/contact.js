@@ -7,7 +7,7 @@ import mongodb from "../../MongoDB/Mongodb.js";
  * @param {Object} account DADOS DO NUMERO QUE RECEBEU ATUALIZACOES
  * @param {Object} message UM UNICO ELEMENTO DE req.body.entry[n].changes[n].value.messages[n]
 */
-export async function contatos(account, message) {
+export async function contact(account, message) {
 	try {
 		const contacts = await mongodb.Contact.find({ idPhone: account.idPhone });
 

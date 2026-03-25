@@ -63,6 +63,11 @@ export async function saveDocumentReceived(idPhone, message) {
 	} catch (error) {
 		await this.saveError(idPhone, `Error no metodo "saveDocumentReceived": ${error}`);
 	}
+	try {
+		await this.saveMetricMessage(idPhone, "received", "document");
+	} catch (error) {
+		await this.saveError(idPhone, `Error no metodo "saveDocumentReceived": ${error}`);
+	}
 }
 
 /**
@@ -117,6 +122,11 @@ export async function saveDocumentSent(idPhone, wamid, phone, data) {
 	}
 	try {
 		await socket.emit.chat.newMessage(idPhone, message);
+	} catch (error) {
+		await this.saveError(idPhone, `Error no metodo "saveDocumentSent": ${error}`);
+	}
+	try {
+		await this.saveMetricMessage(idPhone, "sent", "document");
 	} catch (error) {
 		await this.saveError(idPhone, `Error no metodo "saveDocumentSent": ${error}`);
 	}

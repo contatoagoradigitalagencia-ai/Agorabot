@@ -63,6 +63,11 @@ export async function saveVideoReceived(idPhone, message) {
 	} catch (error) {
 		await this.saveError(idPhone, `Error no metodo "saveVideoReceived": ${error}`);
 	}
+	try {
+		await this.saveMetricMessage(idPhone, "received", "video");
+	} catch (error) {
+		await this.saveError(idPhone, `Error no metodo "saveVideoReceived": ${error}`);
+	}
 }
 
 /**
@@ -117,6 +122,11 @@ export async function saveVideoSent(idPhone, wamid, phone, data) {
 	}
 	try {
 		await socket.emit.chat.newMessage(idPhone, message);
+	} catch (error) {
+		await this.saveError(idPhone, `Error no metodo "saveVideoSent": ${error}`);
+	}
+	try {
+		await this.saveMetricMessage(idPhone, "sent", "video");
 	} catch (error) {
 		await this.saveError(idPhone, `Error no metodo "saveVideoSent": ${error}`);
 	}

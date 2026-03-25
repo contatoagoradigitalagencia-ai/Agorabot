@@ -6,6 +6,7 @@ import Contact from "../schemas/contacts.js"
 import Error from "../schemas/errors.js";
 import Message from "../schemas/messages.js"
 import QuickMessage from "../schemas/quick_messages.js";
+import Metric from "../schemas/metric.js";
 
 /**
  * @author VAMPETA
@@ -22,4 +23,5 @@ export async function connect() {
 	this.Error = Error;
 	this.Message = Message;
 	this.QuickMessage = QuickMessage;
+	this.Metric = Metric;
 }

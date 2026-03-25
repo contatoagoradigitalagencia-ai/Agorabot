@@ -37,5 +37,7 @@ const message = new mongoose.Schema({
 });
 
 message.index({ wamid: 1 }, { unique: true });
+message.index({ idPhone: 1, timestamp: 1 });
+message.index({ idPhone: 1, direction: 1, timestamp: 1 });
 
 export default mongoose.model("message", message);

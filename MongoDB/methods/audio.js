@@ -63,6 +63,11 @@ export async function saveAudioReceived(idPhone, message) {
 	} catch (error) {
 		await this.saveError(idPhone, `Error no metodo "saveAudioReceived": ${error}`);
 	}
+	try {
+		await this.saveMetricMessage(idPhone, "received", "audio");
+	} catch (error) {
+		await this.saveError(idPhone, `Error no metodo "saveAudioReceived": ${error}`);
+	}
 }
 
 /**
@@ -117,6 +122,11 @@ export async function saveAudioSent(idPhone, wamid, phone, data) {
 	}
 	try {
 		await socket.emit.chat.newMessage(idPhone, message);
+	} catch (error) {
+		await this.saveError(idPhone, `Error no metodo "saveAudioSent": ${error}`);
+	}
+	try {
+		await this.saveMetricMessage(idPhone, "sent", "audio");
 	} catch (error) {
 		await this.saveError(idPhone, `Error no metodo "saveAudioSent": ${error}`);
 	}

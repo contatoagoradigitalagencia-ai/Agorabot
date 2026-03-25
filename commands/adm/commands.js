@@ -7,7 +7,7 @@ import { message_not_supported, new_message_not_supported, remove_message_not_su
 import { prompt, new_prompt } from "./prompt.js";
 import { spreadsheets, available_spreadsheets, view_spreadsheet, add_spreadsheets, remove_spreadsheets } from "./spreadsheets.js";
 import { redirect, add_redirect, remove_redirect } from "./redirect.js";
-import { contatos } from "./contatos.js";
+import { contact } from "./contact.js";
 import { all_messages, reaction, text, sticker, audio, image, video, location, contacts, document, button, list /*, template */ } from "./messages.js";
 
 /**
@@ -90,7 +90,7 @@ export default async function commandsAdm(account, message) {
 				break;
 
 			case "/contatos":
-				await contatos(account, message);
+				await contact(account, message);
 				break;
 
 			case "/todas_mensagens":
