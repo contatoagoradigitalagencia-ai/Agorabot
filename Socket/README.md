@@ -22,6 +22,88 @@ const socket = io("https://api.exemplo.com");
 
 
 
+# Rota /dashboard
+
+## ON dashboard:info
+
+Carrega métricas de uma data mencionada pelo usuário.
+
+* Se **nenhuma data for enviada**, retorna **{ error: "Data ausente" }**.
+* Se `date` for enviado e inválido, retorna os **{ error: "Data inválida" }**.
+* Se a data mencionada não houver métricas, retorna métricas zeradas.
+
+### Payload
+
+```json
+{
+    "date": "2026-01-08"
+}
+```
+
+---
+
+### Campos
+
+| Campo                    | Tipo     | Obrigatório | Descrição                                                                                          |
+|--------------------------|----------|-------------|----------------------------------------------------------------------------------------------------|
+| `date`                   | `string` | Sim         | Data de consulta das métricas.                                                                     |
+
+---
+
+### Callback
+
+```json
+{
+    "timestamp": "2026-01-08",
+    "hourly": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        ...
+        "22": 0,
+        "23": 0,
+        "24": 0
+    },
+    "received": {
+        "text": 0,
+        "sticker": 0,
+        "audio": 0,
+        ...
+    },
+    "sent": {
+        "text": 0,
+        "sticker": 0,
+        "audio": 0,
+        ...
+    },
+    "newContacts": 0
+}
+```
+
+---
+
+### Retorno
+
+| Campo        | Tipo               | Descrição                                                                                                          |
+|--------------|--------------------|--------------------------------------------------------------------------------------------------------------------|
+| `timestamp`  | `string`           | Data de consulta das métricas.                                                                                     |
+| `hourly`     | `object`           | Horas e quantidades de mensagens recebidas naquela hora.                                                           |
+| `received`   | `object`           | Mensagens recebidas separadas por tipos.                                                                           |
+| `sent`       | `object`           | Mensagens enviadas separadas por tipos.                                                                            |
+| `newContact` | `number`           | Novos contatos que iniciaram conversa pela primeria vez.                                                           |
+
+---
+
+
+
+---
+---
+---
+---
+---
+
+
+
 # Rota /chat
 
 ## ON chats:load_chats

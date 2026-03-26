@@ -24,6 +24,11 @@ Este repositório documenta todas as rotas da API Agora Digital, incluindo exemp
 ### Rota `/chat` do front-end 
 | Evento                                                                    | Descrição                                                                  |
 |---------------------------------------------------------------------------|----------------------------------------------------------------------------|
+| [ON `dashboard:info`](./Socket/README.md)                                 | Solicita métricas do usuário com base na data enviada.                     |
+
+### Rota `/chat` do front-end 
+| Evento                                                                    | Descrição                                                                  |
+|---------------------------------------------------------------------------|----------------------------------------------------------------------------|
 | [ON `chats:load_chats`](./Socket/README.md)                               | Solicita a lista de chats do usuário com suporte a paginação.              |
 | [ON `chats:update_human_viewed`](./Socket/README.md)                      | Informa que o chat foi aberto por um humano.                               |
 | [EMIT `chat:new_message`](./Socket/README.md)                             | Atualiza o front-end quando uma nova mensagem é recebida ou enviada.       |
