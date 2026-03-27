@@ -20,6 +20,7 @@ export default async function redirect(account, message) {
 		// const chat = "Histórico da conversa:\n" + history.map((msg) => (`\`${(msg.direction === "inbound") ? "Cliente" : "Bot"}:\` ${msg.data.text.body}\n\n`)).join("");
 		// await send.text(account, contact, { text: { body: chat } });
 		await send.text(account, contact, { text: { body: `Link do hitórico de conversa: ${process.env.URL_FRONT_END}/chat/${message.from}` } });
+		await mongodb.saveMetricRedirect(account.idPhone);
 	} catch (error) {
 		await mongodb.saveError(account.idPhone, `Error na funcao "redirect": ${error}`);
 	}

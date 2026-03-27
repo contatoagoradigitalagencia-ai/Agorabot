@@ -62,6 +62,10 @@ const metric = new mongoose.Schema({
 		type: Map,
 		of: Number,
 		default: {}
+	},
+	redirects: {
+		type: Number,
+		default: 0
 	}
 });
 

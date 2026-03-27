@@ -57,3 +57,30 @@ export async function saveMetricNewContact(idPhone) {
 		await this.saveError(idPhone, `Error no metodo "saveMetricMessage": ${error}`);
 	}
 }
+
+/**
+ * @author VAMPETA
+ * @brief METODO CRIADO PARA SALVAR METRICAS DE REDIRECIONAMENTOS
+ * @param {String} idPhone IDENTIFICADOR DO NUMERO DE TELEFONE DO BOT
+*/
+export async function saveMetricRedirect(idPhone) {
+	try {
+		const now = DateTime.now().setZone("America/Sao_Paulo");
+		const today = now.startOf("day").toJSDate();
+
+		await this.Metric.updateOne(
+			{
+				idPhone: idPhone,
+				timestamp: today
+			},
+			{
+				$inc: {
+					redirects: 1
+				}
+			},
+			{ upsert: true }
+		);
+	} catch (error) {
+		await this.saveError(idPhone, `Error no metodo "saveMetricRedirect": ${error}`);
+	}
+}
