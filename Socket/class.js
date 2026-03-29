@@ -17,6 +17,9 @@ import { botOnOff } from "./methods/on/chat/config/configs.js";
 // emit /chat/:phone
 import { newMessage, updateView, newReact } from "./methods/emit/chat/chat.js";
 
+// on /contacts
+import { loadContacts } from "./methods/on/contacts/contacts.js";
+
 /**
  * @author VAMPETA
  * @brief CLASSE CRIADA PARA GERENCIAR ATUALIZACAO DE MENSAGENS DO FRONT END CONECTADO AO SOCKET
@@ -29,7 +32,8 @@ export default class Socket {
 		chats: {},
 		chat: {
 			bot: {}
-		}
+		},
+		contacts: {}
 	};
 	emit = {
 		chat: {}
@@ -60,5 +64,8 @@ export default class Socket {
 		this.emit.chat.newMessage = newMessage.bind(this);
 		this.emit.chat.updateView = updateView.bind(this);
 		this.emit.chat.newReact = newReact.bind(this);
+
+		// /contacts
+		this.on.contacts.loadContacts = loadContacts.bind(this);
 	}
 };

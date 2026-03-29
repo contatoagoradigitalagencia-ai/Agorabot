@@ -48,6 +48,9 @@ export async function configEvents() {
 		socket.on("chat:send:location", (data, callback) => this.on.chat.sendLocation(socket, data, callback));
 		socket.on("chat:bot:on_off", (data, callback) => this.on.chat.bot.botOnOff(socket, data, callback));
 
+		// /contacts
+		socket.on("contacts:load_contacts", (data, callback) => this.on.contacts.loadContacts(socket, data, callback));
+
 		socket.on("disconnect", () => this.disconnect(socket));
 	});
 }
