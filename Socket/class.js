@@ -18,7 +18,7 @@ import { botOnOff } from "./methods/on/chat/config/configs.js";
 import { newMessage, updateView, newReact } from "./methods/emit/chat/chat.js";
 
 // on /contacts
-import { loadContacts } from "./methods/on/contacts/contacts.js";
+import { loadContacts, saveComment } from "./methods/on/contacts/contacts.js";
 
 /**
  * @author VAMPETA
@@ -67,5 +67,6 @@ export default class Socket {
 
 		// /contacts
 		this.on.contacts.loadContacts = loadContacts.bind(this);
+		this.on.contacts.saveComment = saveComment.bind(this);
 	}
 };

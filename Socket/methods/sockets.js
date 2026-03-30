@@ -50,6 +50,7 @@ export async function configEvents() {
 
 		// /contacts
 		socket.on("contacts:load_contacts", (data, callback) => this.on.contacts.loadContacts(socket, data, callback));
+		socket.on("contacts:save_comment", (data, callback) => this.on.contacts.saveComment(socket, data, callback));
 
 		socket.on("disconnect", () => this.disconnect(socket));
 	});

@@ -10,7 +10,7 @@ export async function saveContact(idPhone, phone, contacts = []) {
 	try {
 		const contact = contacts.find((contact) => (contact.wa_id === phone));
 
-		const res = await this.Contact.updateOne(
+		const res = await this.Contact.findOneAndUpdate(
 			{
 				idPhone: idPhone,
 				phone: phone
@@ -19,12 +19,15 @@ export async function saveContact(idPhone, phone, contacts = []) {
 				$setOnInsert: {
 					idPhone: idPhone,
 					phone: phone,
-					name: contact?.profile?.name
+					name: contact?.profile?.name || "Sem nome"
+				},
+				$set: {
+					lastMessage: new Date()
 				}
 			},
-			{ upsert: true, new: true }
+			{ upsert: true, new: true, rawResult: true }
 		);
-		if (res.upsertedCount > 0) await this.saveMetricNewContact(idPhone);
+		if (res.lastErrorObject?.upserted) await this.saveMetricNewContact(idPhone);
 	} catch (error) {
 		await this.saveError(idPhone, `Error no metodo "saveContact": ${error}`);
 	}

@@ -22,6 +22,7 @@ import { saveStateBot } from "./methods/configChat.js";
 import { saveHumanView } from "./methods/humanViewed.js";
 import { saveError } from "./methods/error.js";
 import { saveMetricMessage, saveMetricNewContact, saveMetricRedirect } from "./methods/metric.js";
+import { saveComment } from "./methods/comment.js";
 
 /**
  * @author VAMPETA
@@ -81,5 +82,7 @@ export default class Mongodb {
 		this.saveMetricMessage = saveMetricMessage.bind(this);
 		this.saveMetricNewContact = saveMetricNewContact.bind(this);
 		this.saveMetricRedirect = saveMetricRedirect.bind(this);
+
+		this.saveComment = saveComment.bind(this);
 	}
 };

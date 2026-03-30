@@ -12,6 +12,14 @@ const contacts = new mongoose.Schema({
 	name: {
 		type: String,
 		default: ""
+	},
+	lastMessage: {
+		type: Date,
+		default: Date.now
+	},
+	comment: {
+		type: String,
+		default: ""
 	}
 });
 

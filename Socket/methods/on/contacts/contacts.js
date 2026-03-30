@@ -13,11 +13,32 @@ export async function loadContacts(socket, data, callback) {
 	try {
 		const contacts = await mongodb.Contact.find({ idPhone }).select("-_id -__v");
 
-console.log("veio aki:", contacts)
+// console.log(contacts)
 setTimeout(() => {
 		callback(contacts);
 }, 1000);
 	} catch (error) {
 		await mongodb.saveError(idPhone, `Error no metodo "loadContacts": ${error}`);
+	}
+}
+
+/**
+ * @author VAMPETA
+ * @brief METODO CRIADO EDITAR O COMENTARIO DO CONTATO
+ * @param {Object} socket OBJETO SOCKET DO CLIENTE
+ * @param {Object} data DADOS ENVIADO PELO CLIENTE
+ * @param {Object} callback FUNCAO DE RESPOSTA
+*/
+export async function saveComment(socket, data, callback) {
+	const { idPhone } = socket.account;
+	const { phone, comment } = data;
+
+	try {
+		if (!phone) return (callback({ error: "Número ausente" }));
+		if (!comment) return (callback({ error: "Comentário ausente" }));
+		const res = await mongodb.saveComment(idPhone, phone, comment);
+		callback((res.matchedCount === 1) ? 200 : 404);
+	} catch (error) {
+		await mongodb.saveError(idPhone, `Error no metodo "saveCommet": ${error}`);
 	}
 }
