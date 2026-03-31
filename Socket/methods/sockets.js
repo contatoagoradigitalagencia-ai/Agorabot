@@ -8,7 +8,7 @@ export function updateSockets(socket) {
 
 	if (!this.sockets.has(idPhone)) this.sockets.set(idPhone, new Set());
 	this.sockets.get(idPhone).add(socket.id);
-console.log("Chat conectado   ", "\x1b[34m==>\x1b[0m", "id:", socket.id, "idPhone:", idPhone, "phone:", phone);
+console.log("\x1b[32m•\x1b[0m", phone);
 }
 
 /**
@@ -22,7 +22,7 @@ export function disconnect(socket) {
 	if (!this.sockets.get(idPhone)) return ;
 	this.sockets.get(idPhone).delete(socket.id);
 	if (this.sockets.get(idPhone).size === 0) this.sockets.delete(idPhone);
-console.log("Chat desconectado", "\x1b[33m==>\x1b[0m", "id:", socket.id, "idPhone:", idPhone, "phone:", phone);
+console.log("\x1b[31m•\x1b[0m", phone);
 }
 
 /**

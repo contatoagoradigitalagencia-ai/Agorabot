@@ -2,6 +2,7 @@ import mongodb from "../../MongoDB/Mongodb.js";
 
 import location from "./location.js";
 import redirect from "./redirect.js";
+import products from "./products.js";
 
 /**
  * @author VAMPETA
@@ -22,6 +23,10 @@ export default async function commandsIA(account, message, commands) {
 
 				case "/redirect":
 					await redirect(account, message);
+					break;
+
+				case "/products":
+					await products(account, message);
 					break;
 
 				default:

@@ -297,6 +297,14 @@ Verifica se a janela de resposta do WhatsApp (24h) ainda está aberta.
 }
 ```
 
+---
+
+### Campos
+
+| Campo   | Tipo     | Obrigatório | Descrição                                                                                                           |
+|---------|----------|-------------|---------------------------------------------------------------------------------------------------------------------|
+| `phone` | `string` | Sim         | Número do contato.                                                                                                  |
+
 ### Callback
 
 ```json
@@ -502,3 +510,73 @@ Notifica o servidor que um humano visualizou o chat.
 | Campo      | Tipo      | Obrigatório | Descrição                                                                                                       |
 |------------|-----------|-------------|-----------------------------------------------------------------------------------------------------------------|
 | `phone`    | `string`  | Sim         | Número do chat.                                                                                                 |
+
+---
+
+## ON contatos:load_contacts
+
+Carrega os contatos da conta.
+
+### Payload
+
+```json
+{}
+```
+
+### Callback
+
+```json
+[
+    {
+        "idPhone": "999999999999999",
+        "phone": "5521999999999",
+        "name": "Ramon",
+        "lastMessage": 1970-01-01T00:00:0.000Z,
+        "comment": ""
+    },
+    {
+        "idPhone": "888888888888888",
+        "phone": "5521888888888",
+        "name": "José",
+        "lastMessage": 1998-01-08T00:00:00.000Z,
+        "comment": "Esse cara é o desenvolvedor deste site"
+    },
+    {
+        "idPhone": "777777777777777",
+        "phone": "5521777777777",
+        "name": "",
+        "lastMessage": 1952-12-21T00:00:00.000Z,
+        "comment": ""
+    }
+]
+```
+
+---
+
+## ON chats:save_comment
+
+Salva o comentário em um contato.
+
+### Payload
+
+```json
+{
+    "phone": "5521999999999",
+    "comment": "Comentário"
+}
+```
+
+---
+
+### Campos
+
+| Campo     | Tipo     | Obrigatório | Descrição                                                                                                         |
+|-----------|----------|-------------|-------------------------------------------------------------------------------------------------------------------|
+| `phone`   | `string` | Sim         | Número do contato.                                                                                                |
+| `comment` | `string` | Sim         | Novo comentário do contato.                                                                                       |
+
+### Callback
+
+```json
+200
+```

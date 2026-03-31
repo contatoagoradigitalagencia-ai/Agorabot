@@ -13,7 +13,6 @@ export async function loadContacts(socket, data, callback) {
 	try {
 		const contacts = await mongodb.Contact.find({ idPhone }).select("-_id -__v");
 
-// console.log(contacts)
 setTimeout(() => {
 		callback(contacts);
 }, 1000);

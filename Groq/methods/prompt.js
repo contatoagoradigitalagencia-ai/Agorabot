@@ -34,6 +34,13 @@ const redirect = `
   • houver risco ou decisão sensível.
 `;
 
+							// NOVO COMANDO DE TESTE
+const products = `
+- /products → usar somente se:
+  • o cliente perguntar sobre os produtos e serviços fornecidos por você.
+  • você precise consultar uma tabela de produtos e informar disponibilidade e preços.
+`;
+
 const dataRules = `
 Regras de dados:
 - Use APENAS as informações fornecidas em "Dados disponíveis".
@@ -78,12 +85,13 @@ export async function prompt(account) {
 		textPrompt += commands;
 		if (account.bot.location) textPrompt += location;
 		if (account.bot.redirect) textPrompt += redirect;
+		textPrompt += products;								// NOVO COMANDO DE TESTE
 		if (!account.bot.location && !account.bot.redirect) textPrompt += "Nenhum comando está disponível no momento."
 		textPrompt += dataRules;
 		textPrompt += ambiguityAndSecurity;
 		textPrompt += fallback;
 		textPrompt += `${identity}${account.bot.prompt}\n`;
-		if (spreadsheets) textPrompt += `${data}${spreadsheets}`;
+		// if (spreadsheets) textPrompt += `${data}${spreadsheets}`;
 		return ({
 			role: "system",
 			content: textPrompt
