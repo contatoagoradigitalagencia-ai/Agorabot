@@ -1,5 +1,5 @@
 import mongodb from "../../../MongoDB/Mongodb.js";
-import groq from "../../../Groq/Groq.js";
+import IA from "../../../IA/IA.js";
 import commandsAdm from "../../../commands/adm/commands.js";
 
 /**
@@ -17,7 +17,7 @@ export default async function text(account, message) {
 			await commandsAdm(account, message);
 		} else {
 			if (stateBot === false) return ;
-			await groq.bot(account, message);
+			await IA.groq.bot(account, message);
 		}
 	} catch (error) {
 		await mongodb.saveError(account.idPhone, `Error na funcao "text": ${error}`);

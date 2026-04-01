@@ -5,7 +5,7 @@ import configRoutes from "./route/routes.js";
 import connectMongoDB from "./configs/mongodb.js";
 import connectCloudflareR2 from "./configs/cloudflare r2.js";
 import connectGoogleSheets from "./configs/google sheets.js";
-import connectGroq from "./configs/groq.js";
+import connectIA from "./configs/IA.js";
 import configWebSocket from "./configs/websocket.js";
 import configSocket from "./configs/socket.js";
 
@@ -14,7 +14,7 @@ configAxios();
 await connectMongoDB();
 await connectCloudflareR2();
 await connectGoogleSheets();
-await connectGroq();
+await connectIA();
 const app = configExprees();
 configRoutes(app);
 const { server, io } = configWebSocket(app);

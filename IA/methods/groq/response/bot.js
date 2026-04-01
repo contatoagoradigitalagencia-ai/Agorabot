@@ -1,7 +1,9 @@
-import send from "../../Send/Send.js";
-import mongodb from "../../MongoDB/Mongodb.js";
+import send from "../../../../Send/Send.js";
+import mongodb from "../../../../MongoDB/Mongodb.js";
 
-import commandsIA from "../../commands/IA/commands.js";
+import commandsIA from "../../../../commands/IA/commands.js";
+
+import { promptSchema, promptRules, promptCommands, promptLocation, promptRedirect, promptProducts, promptAmbiguityAndSecurity, promptFallback, promptIdentity } from "../prompt/bot.js";
 
 const response_format = {
 	type: "json_schema",
@@ -31,6 +33,36 @@ const response_format = {
 
 /**
  * @author VAMPETA
+ * @brief MONTA O TEXTO DO PROMPT USADO PARA INSTRUIR A IA
+ * @param {Object} account DADOS DO NUMERO QUE RECEBEU ATUALIZACOES
+ * @return {Object} RETORNA UM OBJETO COM O PROMPT COMPLETO PARA INSTRUIR A IA
+*/
+async function prompt(account) {
+	try {
+		let textPrompt = "";
+
+		textPrompt += promptSchema;
+		textPrompt += promptRules;
+		textPrompt += promptCommands;
+		if (account.bot.location) textPrompt += promptLocation;
+		if (account.bot.redirect) textPrompt += promptRedirect;
+		if (account.googleSheets) textPrompt += promptProducts;
+		if (!account.bot.location && !account.bot.redirect && !account.googleSheets) textPrompt += "Nenhum comando está disponível no momento."
+		textPrompt += promptAmbiguityAndSecurity;
+		textPrompt += promptFallback;
+		textPrompt += `${promptIdentity}${account.bot.prompt}\n`;
+		return ({
+			role: "system",
+			content: textPrompt
+		});
+	} catch (error) {
+		await mongodb.saveError(account.idPhone, `Error na funcao "prompt": ${error}`);
+		return ({ role: "system", content: "" });
+	}
+}
+
+/**
+ * @author VAMPETA
  * @brief GERENCIA O COMPORTAMENTO DO BOT
  * @param {Object} account DADOS DO NUMERO QUE RECEBEU ATUALIZACOES
  * @param {Object} message UM UNICO ELEMENTO DE req.body.entry[n].changes[n].value.messages[n]
@@ -38,11 +70,11 @@ const response_format = {
 export async function bot(account, message) {
 	try {
 		let json = null;
-		const messages = [await this.prompt(account), ...(await this.chatHistory(account, message))];
+		const messages = [await prompt(account), ...(await this.groq.chatHistory(account, message))];
 
 		for (let retry = 0; retry < 4; retry++) {
 			try {
-				const res = await this.groq.chat.completions.create({
+				const res = await this.groq.groq.chat.completions.create({
 					model: account.bot.model,
 					messages: messages,
 					max_tokens: account.bot.maxTokens,

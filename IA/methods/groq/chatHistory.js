@@ -1,4 +1,4 @@
-import mongodb from "../../MongoDB/Mongodb.js";
+import mongodb from "../../../MongoDB/Mongodb.js";
 
 /**
  * @author VAMPETA
