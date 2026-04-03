@@ -47,6 +47,7 @@ export async function configEvents() {
 		socket.on("chat:send:text", (data, callback) => this.on.chat.sendText(socket, data, callback));
 		socket.on("chat:send:location", (data, callback) => this.on.chat.sendLocation(socket, data, callback));
 		socket.on("chat:bot:on_off", (data, callback) => this.on.chat.bot.botOnOff(socket, data, callback));
+		socket.on("chat:get_info", (data, callback) => this.on.chat.getInfo(socket, data, callback));
 
 		// /contacts
 		socket.on("contacts:load_contacts", (data, callback) => this.on.contacts.loadContacts(socket, data, callback));
