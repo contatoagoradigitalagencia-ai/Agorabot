@@ -433,6 +433,34 @@ true
 
 ---
 
+## ON chat:info_contact
+
+Consulta os dados de um contato.
+
+### Payload
+
+```json
+{
+    "phone": "5521999999999"
+}
+```
+
+---
+
+### Campos
+
+| Campo      | Tipo      | Obrigatório | Descrição                                                                                                       |
+|------------|-----------|-------------|-----------------------------------------------------------------------------------------------------------------|
+| `phone`    | `string`  | Sim         | Número do chat.                                                                                                 |
+
+---
+
+### Callback
+
+```json
+200
+```
+
 ## EMIT chat:new_message
 
 Emitido quando uma nova mensagem é enviada ou recebida.
@@ -574,6 +602,8 @@ Salva o comentário em um contato.
 |-----------|----------|-------------|-------------------------------------------------------------------------------------------------------------------|
 | `phone`   | `string` | Sim         | Número do contato.                                                                                                |
 | `comment` | `string` | Sim         | Novo comentário do contato.                                                                                       |
+
+---
 
 ### Callback
 

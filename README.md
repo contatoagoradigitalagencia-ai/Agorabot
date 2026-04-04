@@ -43,6 +43,7 @@ Este repositório documenta todas as rotas da API Agora Digital, incluindo exemp
 | [ON `chat:send:text`](./Socket/README.md)                                 | Envia uma mensagem de texto para um contato.                               |
 | [ON `chat:send:location`](./Socket/README.md)                             | Envia uma mensagem contendo localização geográfica.                        |
 | [ON `chat:bot:on_off`](./Socket/README.md)                                | Consulta ou altera o estado do bot automático de um chat.                  |
+| [ON `chat:info_contacts`](./Socket/README.md)                             | Consulta os dados de um contato.                                           |
 | [EMIT `chat:new_message`](./Socket/README.md)                             | Atualiza o front-end quando uma nova mensagem é recebida ou enviada.       |
 | [EMIT `chat:update_view`](./Socket/README.md)                             | Atualiza o status de visualização de uma mensagem (ex: enviada ou lida).   |
 | [EMIT `chat:new_react`](./Socket/README.md)                               | Notifica o front-end sobre uma nova reação em uma mensagem.                |

@@ -7,15 +7,17 @@ import mongodb from "../../../../../MongoDB/Mongodb.js";
  * @param {Object} data DADOS ENVIADO PELO CLIENTE
  * @param {Object} callback FUNCAO DE RESPOSTA
 */
-export async function getInfo(socket, data, callback) {
+export async function infoContact(socket, data, callback) {
 	const { idPhone } = socket.account;
 	const { phone } = data;
 
 	try {
 		if (!phone || typeof phone !== "string") return (callback({ error: "Número ausente" }));
-		const res = await mongodb.Contact.findOne({ phone }).select("-_id -__v");
+		const res = await mongodb.Contact.findOne({ idPhone: idPhone, phone: phone }).select("-_id -__v");
 
+setTimeout(() => {
 		callback(res);
+}, 1000);
 	} catch (error) {
 		await mongodb.saveError(idPhone, `Error no metodo "getinfo": ${error}`);
 	}

@@ -13,13 +13,16 @@ import { loadMessages, quickMessages } from "./methods/on/chat/messages.js";
 import { replyWindow } from "./methods/on/chat/reply.js";
 import { sendText, sendLocation } from "./methods/on/chat/send.js";
 import { botOnOff } from "./methods/on/chat/config/configs.js";
-import { getInfo } from "./methods/on/chat/config/contact.js";
+import { infoContact } from "./methods/on/chat/config/contact.js";
 
 // emit /chat/:phone
 import { newMessage, updateView, newReact } from "./methods/emit/chat/chat.js";
 
 // on /contacts
 import { loadContacts, saveComment } from "./methods/on/contacts/contacts.js";
+
+// on /settings
+import { getSpreadsheets } from "./methods/on/settings/spreadsheet.js";
 
 /**
  * @author VAMPETA
@@ -34,7 +37,10 @@ export default class Socket {
 		chat: {
 			bot: {}
 		},
-		contacts: {}
+		contacts: {},
+		settings: {
+			spreadsheets: {}
+		}
 	};
 	emit = {
 		chat: {}
@@ -60,7 +66,7 @@ export default class Socket {
 		this.on.chat.sendText = sendText.bind(this);
 		this.on.chat.sendLocation = sendLocation.bind(this);
 		this.on.chat.bot.botOnOff = botOnOff.bind(this);
-		this.on.chat.getInfo = getInfo.bind(this);
+		this.on.chat.infoContact = infoContact.bind(this);
 
 		// /chat/:phone
 		this.emit.chat.newMessage = newMessage.bind(this);
@@ -70,5 +76,8 @@ export default class Socket {
 		// /contacts
 		this.on.contacts.loadContacts = loadContacts.bind(this);
 		this.on.contacts.saveComment = saveComment.bind(this);
+
+		// /settings
+		this.on.settings.spreadsheets.getSpreadsheets = getSpreadsheets.bind(this);
 	}
 };
