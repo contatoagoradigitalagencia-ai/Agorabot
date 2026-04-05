@@ -13,10 +13,15 @@ export async function getSpreadsheets(socket, data, callback) {
 
 	try {
 		const pages = await googleSheets.getPages(socket.account);
+		const account = await mongodb.Account.findOne({ idPhone: idPhone }).select("googleSheets.pages -_id");
 
-console.log(pages)
 setTimeout(() => {
-		callback(pages);
+		callback(pages.map((page) => {
+			return ({
+				page: page,
+				selected: account.googleSheets.pages.includes(page)
+			});
+		}));
 }, 1000);
 	} catch (error) {
 		await mongodb.saveError(idPhone, `Error no metodo "infoDashboard": ${error}`);
