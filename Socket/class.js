@@ -22,7 +22,7 @@ import { newMessage, updateView, newReact } from "./methods/emit/chat/chat.js";
 import { loadContacts, saveComment } from "./methods/on/contacts/contacts.js";
 
 // on /settings
-import { getSpreadsheets } from "./methods/on/settings/spreadsheet.js";
+import { getSpreadsheets } from "./methods/on/spreadsheets/spreadsheet.js";
 
 /**
  * @author VAMPETA
@@ -38,9 +38,9 @@ export default class Socket {
 			bot: {}
 		},
 		contacts: {},
-		settings: {
-			spreadsheets: {}
-		}
+		bot: {},
+		spreadsheets: {},
+		settings: {}
 	};
 	emit = {
 		chat: {}
@@ -77,7 +77,11 @@ export default class Socket {
 		this.on.contacts.loadContacts = loadContacts.bind(this);
 		this.on.contacts.saveComment = saveComment.bind(this);
 
+		// /bot
+
+		// /spreadsheets
+		this.on.spreadsheets.getSpreadsheets = getSpreadsheets.bind(this);
+
 		// /settings
-		this.on.settings.spreadsheets.getSpreadsheets = getSpreadsheets.bind(this);
 	}
 };

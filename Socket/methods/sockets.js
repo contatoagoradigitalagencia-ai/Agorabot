@@ -54,7 +54,7 @@ export async function configEvents() {
 		socket.on("contacts:save_comment", (data, callback) => this.on.contacts.saveComment(socket, data, callback));
 
 		// /settings
-		socket.on("settings:spreadsheets:get_spreadsheets", (data, callback) => this.on.settings.spreadsheets.getSpreadsheets(socket, data, callback));
+		socket.on("spreadsheets:get_spreadsheets", (data, callback) => this.on.spreadsheets.getSpreadsheets(socket, data, callback));
 
 		socket.on("disconnect", () => this.disconnect(socket));
 	});
