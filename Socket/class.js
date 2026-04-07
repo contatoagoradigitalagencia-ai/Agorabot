@@ -21,7 +21,10 @@ import { newMessage, updateView, newReact } from "./methods/emit/chat/chat.js";
 // on /contacts
 import { loadContacts, saveComment } from "./methods/on/contacts/contacts.js";
 
-// on /settings
+// on /bot
+import { getInfoBot, updateStatusBot } from "./methods/on/bot/bot.js";
+
+// on /spreadsheets
 import { getSpreadsheets, updateUsedSpreadsheets } from "./methods/on/spreadsheets/spreadsheet.js";
 
 /**
@@ -78,6 +81,8 @@ export default class Socket {
 		this.on.contacts.saveComment = saveComment.bind(this);
 
 		// /bot
+		this.on.bot.getInfoBot = getInfoBot.bind(this);
+		this.on.bot.updateStatusBot = updateStatusBot.bind(this);
 
 		// /spreadsheets
 		this.on.spreadsheets.getSpreadsheets = getSpreadsheets.bind(this);

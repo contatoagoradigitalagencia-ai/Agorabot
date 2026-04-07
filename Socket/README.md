@@ -541,7 +541,19 @@ Notifica o servidor que um humano visualizou o chat.
 
 ---
 
-## ON contatos:load_contacts
+
+
+---
+---
+---
+---
+---
+
+
+
+# Rota /contacts
+
+## ON contacts:load_contacts
 
 Carrega os contatos da conta.
 
@@ -581,7 +593,7 @@ Carrega os contatos da conta.
 
 ---
 
-## ON chats:save_comment
+## ON contacts:save_comment
 
 Salva o comentário em um contato.
 
@@ -598,10 +610,10 @@ Salva o comentário em um contato.
 
 ### Campos
 
-| Campo     | Tipo     | Obrigatório | Descrição                                                                                                         |
-|-----------|----------|-------------|-------------------------------------------------------------------------------------------------------------------|
-| `phone`   | `string` | Sim         | Número do contato.                                                                                                |
-| `comment` | `string` | Sim         | Novo comentário do contato.                                                                                       |
+| Campo      | Tipo     | Obrigatório | Descrição                                                                                                         |
+|------------|----------|-------------|-------------------------------------------------------------------------------------------------------------------|
+| `phone`    | `string` | Sim         | Número do contato.                                                                                                |
+| `comment`  | `string` | Sim         | Novo comentário do contato.                                                                                       |
 
 ---
 
@@ -610,3 +622,95 @@ Salva o comentário em um contato.
 ```json
 200
 ```
+
+
+
+---
+---
+---
+---
+---
+
+
+
+# Rota /spreadsheets
+
+## ON spreadsheets:get_spreadsheets
+
+Carrega as páginas existentes e quais estão alimentando a IA.
+
+### Payload
+
+```json
+{}
+```
+
+---
+
+### Callback
+
+```json
+[
+    {
+        "page": "Página1",
+        "active": false
+    },
+    {
+        "page": "dev",
+        "active": true
+    },
+    {
+        "page": "teste",
+        "active": false
+    },
+]
+```
+
+
+
+
+
+
+## ON spreadsheets:update_used_spreadsheets
+
+Informa ao servidor que uma página da planilha começou ou deixou de alimentar a IA.
+
+### Payload
+
+```json
+{
+    "add" OU "remove": "Página2"
+}
+```
+
+---
+
+### Campos
+
+| Campo     | Tipo     | Obrigatório | Descrição                                                                                                         |
+|-----------|----------|-------------|-------------------------------------------------------------------------------------------------------------------|
+| `add`     | `string` | Não         | Nome da página a ser adicionada na alimentada da produção de resposta de IA.                                      |
+| `remove`  | `string` | Não         | Nome da página a ser removida na alimentada da produção de resposta de IA.                                        |
+
+---
+
+### Callback
+
+```json
+[
+    {
+        "page": "Página1",
+        "active": false
+    },
+    {
+        "page": "dev",
+        "active": true
+    },
+    {
+        "page": "teste",
+        "active": false
+    },
+]
+```
+
+---

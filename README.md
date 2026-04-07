@@ -21,19 +21,19 @@ Este repositório documenta todas as rotas da API Agora Digital, incluindo exemp
 | [ON `connection`](./Socket/README.md)                                     | Disparado quando um cliente estabelece conexão com o servidor WebSocket.   |
 | [ON `disconnect`](./Socket/README.md)                                     | Disparado quando um cliente se desconecta do servidor.                     |
 
-### Rota `/dashboard` do front-end 
+### Rota `/dashboard` do front-end
 | Evento                                                                    | Descrição                                                                  |
 |---------------------------------------------------------------------------|----------------------------------------------------------------------------|
 | [ON `dashboard:info`](./Socket/README.md)                                 | Solicita métricas do usuário com base na data enviada.                     |
 
-### Rota `/chat` do front-end 
+### Rota `/chat` do front-end
 | Evento                                                                    | Descrição                                                                  |
 |---------------------------------------------------------------------------|----------------------------------------------------------------------------|
 | [ON `chats:load_chats`](./Socket/README.md)                               | Solicita a lista de chats do usuário com suporte a paginação.              |
 | [ON `chats:update_human_viewed`](./Socket/README.md)                      | Informa que o chat foi aberto por um humano.                               |
 | [EMIT `chat:new_message`](./Socket/README.md)                             | Atualiza o front-end quando uma nova mensagem é recebida ou enviada.       |
 
-### Rota `/chat/:phone` do front-end 
+### Rota `/chat/:phone` do front-end
 | Evento                                                                    | Descrição                                                                  |
 |---------------------------------------------------------------------------|----------------------------------------------------------------------------|
 | [ON `chat:load_messages`](./Socket/README.md)                             | Solicita o histórico de mensagens de um chat específico.                   |
@@ -48,8 +48,14 @@ Este repositório documenta todas as rotas da API Agora Digital, incluindo exemp
 | [EMIT `chat:update_view`](./Socket/README.md)                             | Atualiza o status de visualização de uma mensagem (ex: enviada ou lida).   |
 | [EMIT `chat:new_react`](./Socket/README.md)                               | Notifica o front-end sobre uma nova reação em uma mensagem.                |
 
-### Rota `/contacts` do front-end 
+### Rota `/contacts` do front-end
 | Evento                                                                    | Descrição                                                                  |
 |---------------------------------------------------------------------------|----------------------------------------------------------------------------|
 | [ON `contacts:load_contacts`](./Socket/README.md)                         | Carrega os contatos para serem exibidos na página.                         |
 | [ON `contacts:save_comment`](./Socket/README.md)                          | Salva o comentário em um contato.                                          |
+
+### Rota `/spreadsheets` do front-end
+| Evento                                                                    | Descrição                                                                  |
+|---------------------------------------------------------------------------|----------------------------------------------------------------------------|
+| [ON `spreadsheets:get_spreadsheets`](./Socket/README.md)                  | Carrega as páginas existentes e quais estão alimentando a IA.              |
+| [ON `spreadsheets:update_used_spreadsheets`](./Socket/README.md)          | Informa mudança no uso da página do Google Sheets pela IA.                 |

@@ -8,6 +8,10 @@ const login = new mongoose.Schema({
 });
 
 const bot = new mongoose.Schema({
+	activated: {
+		type: Boolean,
+		default: true
+	},
 	messageNotSupported: {
 		type: String,
 		default: ""

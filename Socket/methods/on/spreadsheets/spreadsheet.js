@@ -19,7 +19,7 @@ setTimeout(() => {
 		callback(pages.map((page) => {
 			return ({
 				page: page,
-				selected: account.googleSheets.pages.includes(page)
+				active: account.googleSheets.pages.includes(page)
 			});
 		}));
 }, 1000);
@@ -40,8 +40,7 @@ export async function updateUsedSpreadsheets(socket, data, callback) {
 	const { add, remove } = data;
 
 	try {
-		if (!add && !remove) return (callback("Deve haver uma ação de adicionar ou remover planilha"));
-		if (add && remove) return (callback("Deve haver uma ação de adicionar ou remover planilha"));
+		if ((add && remove) || (!add && !remove)) return (callback({ error: "Deve haver uma ação de adicionar ou remover planilha" }));
 		if (add) await mongodb.addSpreadsheets(idPhone, add);
 		if (remove) await mongodb.removeSpreadsheets(idPhone, remove);
 setTimeout(() => {
