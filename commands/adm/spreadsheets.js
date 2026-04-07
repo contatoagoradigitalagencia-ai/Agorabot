@@ -82,7 +82,7 @@ export async function add_spreadsheets(account, message) {
 			await send.text(account, message.from, { text: { body: `Planilha *${page}* não existe` } });
 			return ;
 		}
-		await mongodb.saveSpreadsheets(account.idPhone, page);
+		await mongodb.addSpreadsheets(account.idPhone, page);
 		await send.text(account, message.from, { text: { body: "Planilha adicionada com sucesso" } });
 	} catch (error) {
 		await mongodb.saveError(account.idPhone, `Error na funcao "add_spreadsheets": ${error}`);

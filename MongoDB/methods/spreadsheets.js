@@ -4,7 +4,7 @@
  * @param {String} idPhone IDENTIFICADOR DO NUMERO DE TELEFONE DO BOT
  * @param {String} spreadsheets NOME DA PLANILHA
 */
-export async function saveSpreadsheets(idPhone, spreadsheets) {
+export async function addSpreadsheets(idPhone, spreadsheets) {
 	try {
 		await this.Account.updateOne(
 			{
@@ -17,7 +17,7 @@ export async function saveSpreadsheets(idPhone, spreadsheets) {
 			}
 		);
 	} catch (error) {
-		await this.saveError(idPhone, `Error no metodo "saveAdm": ${error}`);
+		await this.saveError(idPhone, `Error no metodo "saveSpreadsheets": ${error}`);
 	}
 }
 

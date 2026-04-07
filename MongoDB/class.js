@@ -3,7 +3,7 @@ import { saveAdm, removeAdm } from "./methods/adm.js";
 import { saveContact } from "./methods/contact.js";
 import { saveMessageNotSupported } from "./methods/messageNotSupported.js";
 import { savePrompt } from "./methods/prompt.js";
-import { saveSpreadsheets, removeSpreadsheets } from "./methods/spreadsheets.js";
+import { addSpreadsheets, removeSpreadsheets } from "./methods/spreadsheets.js";
 import { saveVisualization } from "./methods/visualization.js";
 import { saveWamid } from "./methods/wamid.js";
 import { saveReactionReceived, saveReactionSent } from "./methods/reaction.js";
@@ -46,7 +46,7 @@ export default class Mongodb {
 		this.removeAdm = removeAdm.bind(this);
 		this.saveMessageNotSupported = saveMessageNotSupported.bind(this);
 		this.savePrompt = savePrompt.bind(this);
-		this.saveSpreadsheets = saveSpreadsheets.bind(this);
+		this.addSpreadsheets = addSpreadsheets.bind(this);
 		this.removeSpreadsheets = removeSpreadsheets.bind(this);
 		this.saveRedirect = saveRedirect.bind(this);
 		this.removeRedirect = removeRedirect.bind(this);

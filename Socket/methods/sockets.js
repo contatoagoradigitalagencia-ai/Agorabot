@@ -55,6 +55,7 @@ export async function configEvents() {
 
 		// /settings
 		socket.on("spreadsheets:get_spreadsheets", (data, callback) => this.on.spreadsheets.getSpreadsheets(socket, data, callback));
+		socket.on("spreadsheets:update_used_spreadsheets", (data, callback) => this.on.spreadsheets.updateUsedSpreadsheets(socket, data, callback));
 
 		socket.on("disconnect", () => this.disconnect(socket));
 	});
