@@ -666,10 +666,7 @@ Carrega as páginas existentes e quais estão alimentando a IA.
 ]
 ```
 
-
-
-
-
+---
 
 ## ON spreadsheets:update_used_spreadsheets
 

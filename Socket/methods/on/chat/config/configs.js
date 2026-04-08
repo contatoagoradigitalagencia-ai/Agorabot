@@ -12,14 +12,13 @@ export async function botOnOff(socket, data, callback) {
 	const { phone, stateBot } = data;
 
 	try {
-		if (!phone || typeof phone !== "string") return ;
+		if (!phone || typeof phone !== "string") return (callback({ error: "Um número de contato deve ser enviado" }));
 		if (typeof stateBot === "undefined") {
 			const chat = await mongodb.Chat.findOne({ idPhone: idPhone, phone: phone }).select("stateBot");
-			callback(chat?.stateBot);
-		} else {
-			await mongodb.saveStateBot(idPhone, phone, stateBot);
-			callback(stateBot);
+			return (callback({ stateBot: chat?.stateBot }));
 		}
+		await mongodb.saveStateBot(idPhone, phone, stateBot);
+		callback({ stateBot: stateBot });
 	} catch (error) {
 		await mongodb.saveError(idPhone, `Error no metodo "botOnOff": ${error}`);
 	}

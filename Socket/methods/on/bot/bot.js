@@ -8,14 +8,15 @@ import mongodb from "../../../../MongoDB/Mongodb.js";
  * @param {Object} callback FUNCAO DE RESPOSTA
 */
 export async function getInfoBot(socket, data, callback) {
-	const { idPhone, phone } = socket.account;
+	const { idPhone } = socket.account;
 
 	try {
-		const account = await mongodb.Account.findOne({ idPhone: idPhone, phone: phone }).select("bot -_id");
+		const account = await mongodb.Account.findOne({ idPhone: idPhone }).select("bot -_id");
 
 setTimeout(() => {
 		callback({
-			activated: account.bot.activated
+			activated: account.bot.activated,
+			prompt: account.bot.prompt
 		});
 }, 1000);
 	} catch (error) {
@@ -31,15 +32,38 @@ setTimeout(() => {
  * @param {Object} callback FUNCAO DE RESPOSTA
 */
 export async function updateStatusBot(socket, data, callback) {
-	const { idPhone, phone } = socket.account;
+	const { idPhone } = socket.account;
+	const { status } = data;
 
 	try {
-		// const account = await mongodb.Account.findOne({ idPhone: idPhone, phone: phone }).select("bot -_id");
-
+		if (typeof status !== "boolean") return (callback({ error: 'Deve existir um campo "status" do tipo boolean' }));
+		await mongodb.updateStateBot(idPhone, status);
 setTimeout(() => {
-		callback(200);				// ACHO Q DEVERIA CONFIRMAR O NOVO STATUS COM UMA RESPOSTA MAIS EXPLICITA
+		callback({ status: status });
 }, 1000);
 	} catch (error) {
 		await mongodb.saveError(idPhone, `Error no metodo "updateStatusBot": ${error}`);
+	}
+}
+
+/**
+ * @author VAMPETA
+ * @brief MUDA O STATUS DO BOT DE ATIVADO PARA DESATIVADO E VICE VERSA
+ * @param {Object} socket OBJETO SOCKET DO CLIENTE
+ * @param {Object} data DADOS ENVIADO PELO CLIENTE
+ * @param {Object} callback FUNCAO DE RESPOSTA
+*/
+export async function updatePrompt(socket, data, callback) {
+	const { idPhone } = socket.account;
+	const { prompt } = data;
+
+	try {
+		if (typeof prompt !== "string") return (callback({ error: 'O campo "prompt" deve ser do tipo string' }));
+		await mongodb.savePrompt(idPhone, prompt);
+setTimeout(() => {
+		callback(204);
+}, 1000);
+	} catch (error) {
+		await mongodb.saveError(idPhone, `Error no metodo "updatePrompt": ${error}`);
 	}
 }

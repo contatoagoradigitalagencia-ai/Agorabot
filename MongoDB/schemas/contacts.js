@@ -20,6 +20,10 @@ const contacts = new mongoose.Schema({
 	comment: {
 		type: String,
 		default: ""
+	},
+	bot: {
+		type: Boolean,
+		default: true
 	}
 });
 

@@ -18,7 +18,7 @@ import { saveDocumentReceived, saveDocumentSent } from "./methods/document.js";
 import { saveButtonSent } from "./methods/button.js";
 import { saveListSent } from "./methods/list.js";
 import { updateRedirect, saveRedirect, removeRedirect } from "./methods/redirect.js";
-import { saveStateBot } from "./methods/configChat.js";
+import { saveStateBot, updateStateBot } from "./methods/configChat.js";
 import { saveHumanView } from "./methods/humanViewed.js";
 import { saveError } from "./methods/error.js";
 import { saveMetricMessage, saveMetricNewContact, saveMetricRedirect } from "./methods/metric.js";
@@ -76,6 +76,7 @@ export default class Mongodb {
 
 		this.updateRedirect = updateRedirect.bind(this);
 		this.saveStateBot = saveStateBot.bind(this);
+		this.updateStateBot = updateStateBot.bind(this);
 		this.saveHumanView = saveHumanView.bind(this);
 
 		this.saveError = saveError.bind(this);

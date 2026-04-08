@@ -22,3 +22,26 @@ export async function saveStateBot(idPhone, phone, stateBot) {
 		await this.saveError(idPhone, `Error no metodo "saveStateBot": ${error}`);
 	}
 }
+
+/**
+ * @author VAMPETA
+ * @brief METODO CRIADO PARA SALVAR O ESTADO SE O BOT ESTA LIGADO PARA TODOS OS CONTATOS
+ * @param {String} idPhone IDENTIFICADOR DO NUMERO DE TELEFONE DO BOT
+ * @param {Boolean} stateBot NOVO ESTADO DO BOT SE ELE ESTA LIGADO OU NAO
+*/
+export async function updateStateBot(idPhone, stateBot) {
+	try {
+		await this.Account.updateOne(
+			{
+				idPhone: idPhone
+			},
+			{
+				$set: {
+					"bot.activated": stateBot
+				}
+			}
+		);
+	} catch (error) {
+		await this.saveError(idPhone, `Error no metodo "updateStateBot": ${error}`);
+	}
+}

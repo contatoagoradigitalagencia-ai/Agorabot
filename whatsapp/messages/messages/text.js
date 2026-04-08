@@ -16,7 +16,7 @@ export default async function text(account, message) {
 		if (message.text.body[0] === "/" && account.adm.includes(message.from)) {
 			await commandsAdm(account, message);
 		} else {
-			if (stateBot === false) return ;
+			if (account.bot.activated === false || stateBot === false) return ;
 			await IA.groq.bot(account, message);
 		}
 	} catch (error) {
