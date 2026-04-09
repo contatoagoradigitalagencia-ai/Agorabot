@@ -15,8 +15,7 @@ export default async function text(account, message) {
 		await mongodb.saveTextReceived(account.idPhone, message);
 		if (message.text.body[0] === "/" && account.adm.includes(message.from)) {
 			await commandsAdm(account, message);
-		} else {
-			if (account.bot.activated === false || stateBot === false) return ;
+		} else if (account.bot.activated === true && stateBot === true) {
 			await IA.groq.bot(account, message);
 		}
 	} catch (error) {

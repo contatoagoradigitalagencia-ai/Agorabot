@@ -1,4 +1,5 @@
 import mongodb from "../../../../MongoDB/Mongodb.js";
+import IA from "../../../../IA/IA.js";
 
 /**
  * @author VAMPETA
@@ -62,6 +63,39 @@ export async function updatePrompt(socket, data, callback) {
 		await mongodb.savePrompt(idPhone, prompt);
 setTimeout(() => {
 		callback(204);
+}, 1000);
+	} catch (error) {
+		await mongodb.saveError(idPhone, `Error no metodo "updatePrompt": ${error}`);
+	}
+}
+
+/**
+ * @author VAMPETA
+ * @brief USAR IA PARA SUGERIR MELHORIA NO ATUAL PROMPT
+ * @param {Object} socket OBJETO SOCKET DO CLIENTE
+ * @param {Object} data DADOS ENVIADO PELO CLIENTE
+ * @param {Object} callback FUNCAO DE RESPOSTA
+*/
+export async function promptSuggestion(socket, data, callback) {
+	const { idPhone } = socket.account;
+
+	try {
+const res = await IA.groq.groq.chat.completions.create({
+	model: "moonshotai/kimi-k2-instruct",
+	messages: [
+		{
+			role: "user",
+			content: "oi",
+		},
+	],
+});
+// console.log(res)
+console.log(res.choices[0].message.content)
+
+
+
+setTimeout(() => {
+		callback("teste");
 }, 1000);
 	} catch (error) {
 		await mongodb.saveError(idPhone, `Error no metodo "updatePrompt": ${error}`);
