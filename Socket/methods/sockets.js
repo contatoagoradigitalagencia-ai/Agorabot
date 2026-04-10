@@ -58,6 +58,7 @@ export async function configEvents() {
 		socket.on("bot:update_status_bot", (data, callback) => this.on.bot.updateStatusBot(socket, data, callback));
 		socket.on("bot:update_prompt", (data, callback) => this.on.bot.updatePrompt(socket, data, callback));
 		socket.on("bot:prompt_suggestion", (data, callback) => this.on.bot.promptSuggestion(socket, data, callback));
+		socket.on("bot:update_message_not_supported", (data, callback) => this.on.bot.updateMessageNotSupported(socket, data, callback));
 
 		// /settings
 		socket.on("spreadsheets:get_spreadsheets", (data, callback) => this.on.spreadsheets.getSpreadsheets(socket, data, callback));

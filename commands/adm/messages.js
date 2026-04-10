@@ -137,6 +137,7 @@ export async function location(account, message) {
 	try {
 		await send.location(account, message.from, { location: { latitude: account.bot.location.latitude, longitude: account.bot.location.longitude } });
 		await send.location(account, message.from, { context: { message_id: message.id }, location: { latitude: account.bot.location.latitude, longitude: account.bot.location.longitude } });
+		await send.location(account, message.from, { location: { latitude: account.bot.location.latitude, longitude: account.bot.location.longitude, name: account.bot.location.name } });
 		await send.location(account, message.from, { location: { latitude: account.bot.location.latitude, longitude: account.bot.location.longitude, name: account.bot.location.name, address: account.bot.location.address } });
 	} catch (error) {
 		await mongodb.saveError(account.idPhone, `Error na funcao "location": ${error}`);

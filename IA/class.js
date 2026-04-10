@@ -2,6 +2,7 @@ import connect from "./methods/groq/connect.js";
 import { chatHistory } from "./methods/groq/chatHistory.js";
 import { bot } from "./methods/groq/response/bot.js";
 import { products } from "./methods/groq/response/products.js";
+import { promptSuggestion } from "./methods/groq/response/promptSuggestion.js";
 
 /**
  * @author VAMPETA
@@ -19,5 +20,7 @@ export default class IA {
 
 		this.groq.bot = bot.bind(this);
 		this.groq.products = products.bind(this);
+
+		this.groq.promptSuggestion = promptSuggestion.bind(this);
 	}
 };

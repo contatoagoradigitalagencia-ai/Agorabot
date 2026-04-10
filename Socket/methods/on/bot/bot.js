@@ -15,10 +15,7 @@ export async function getInfoBot(socket, data, callback) {
 		const account = await mongodb.Account.findOne({ idPhone: idPhone }).select("bot -_id");
 
 setTimeout(() => {
-		callback({
-			activated: account.bot.activated,
-			prompt: account.bot.prompt
-		});
+		callback(account.bot);
 }, 1000);
 	} catch (error) {
 		await mongodb.saveError(idPhone, `Error no metodo "getInfoBot": ${error}`);
@@ -78,24 +75,38 @@ setTimeout(() => {
 */
 export async function promptSuggestion(socket, data, callback) {
 	const { idPhone } = socket.account;
+	const { prompt, input } = data;
 
 	try {
-const res = await IA.groq.groq.chat.completions.create({
-	model: "moonshotai/kimi-k2-instruct",
-	messages: [
-		{
-			role: "user",
-			content: "oi",
-		},
-	],
-});
-// console.log(res)
-console.log(res.choices[0].message.content)
-
-
+		if (typeof prompt !== "string") return (callback({ error: 'O campo "prompt" deve ser do tipo string' }));
+		if (!input || typeof input !== "string") return (callback({ error: 'O campo "input" deve ser do tipo string e não deve estar vazio' }));
+		const res = await IA.groq.promptSuggestion(socket.account, prompt, input);
 
 setTimeout(() => {
-		callback("teste");
+		callback(res);
+}, 1000);
+	} catch (error) {
+		await mongodb.saveError(idPhone, `Error no metodo "updatePrompt": ${error}`);
+	}
+}
+
+/**
+ * @author VAMPETA
+ * @brief USAR IA PARA SUGERIR MELHORIA NO ATUAL PROMPT
+ * @param {Object} socket OBJETO SOCKET DO CLIENTE
+ * @param {Object} data DADOS ENVIADO PELO CLIENTE
+ * @param {Object} callback FUNCAO DE RESPOSTA
+*/
+export async function updateMessageNotSupported(socket, data, callback) {
+	const { idPhone } = socket.account;
+	const { newMessage } = data;
+
+	try {
+		if (!newMessage || typeof newMessage !== "string") return (callback({ error: 'O campo "newMessage" deve ser do tipo string e não deve estar vazio' }));
+		await mongodb.saveMessageNotSupported(idPhone, newMessage);
+
+setTimeout(() => {
+		callback(204);
 }, 1000);
 	} catch (error) {
 		await mongodb.saveError(idPhone, `Error no metodo "updatePrompt": ${error}`);
