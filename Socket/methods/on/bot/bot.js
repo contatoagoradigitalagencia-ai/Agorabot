@@ -68,7 +68,7 @@ setTimeout(() => {
 
 /**
  * @author VAMPETA
- * @brief USAR IA PARA SUGERIR MELHORIA NO ATUAL PROMPT
+ * @brief USA IA PARA SUGERIR MELHORIA NO ATUAL PROMPT
  * @param {Object} socket OBJETO SOCKET DO CLIENTE
  * @param {Object} data DADOS ENVIADO PELO CLIENTE
  * @param {Object} callback FUNCAO DE RESPOSTA
@@ -81,7 +81,6 @@ export async function promptSuggestion(socket, data, callback) {
 		if (typeof prompt !== "string") return (callback({ error: 'O campo "prompt" deve ser do tipo string' }));
 		if (!input || typeof input !== "string") return (callback({ error: 'O campo "input" deve ser do tipo string e não deve estar vazio' }));
 		const res = await IA.groq.promptSuggestion(socket.account, prompt, input);
-
 setTimeout(() => {
 		callback(res);
 }, 1000);
@@ -92,19 +91,43 @@ setTimeout(() => {
 
 /**
  * @author VAMPETA
- * @brief USAR IA PARA SUGERIR MELHORIA NO ATUAL PROMPT
+ * @brief ATUALIZA A NOVA MENSAGEM DE MENSAGEM NAO SUPORTADA
  * @param {Object} socket OBJETO SOCKET DO CLIENTE
  * @param {Object} data DADOS ENVIADO PELO CLIENTE
  * @param {Object} callback FUNCAO DE RESPOSTA
 */
 export async function updateMessageNotSupported(socket, data, callback) {
 	const { idPhone } = socket.account;
-	const { newMessage } = data;
+	const { message } = data;
 
 	try {
-		if (!newMessage || typeof newMessage !== "string") return (callback({ error: 'O campo "newMessage" deve ser do tipo string e não deve estar vazio' }));
-		await mongodb.saveMessageNotSupported(idPhone, newMessage);
+		if (!message || typeof message !== "string") return (callback({ error: 'O campo "message" deve ser do tipo string e não deve estar vazio' }));
+		await mongodb.saveMessageNotSupported(idPhone, message);
+setTimeout(() => {
+		callback(204);
+}, 1000);
+	} catch (error) {
+		await mongodb.saveError(idPhone, `Error no metodo "updatePrompt": ${error}`);
+	}
+}
 
+/**
+ * @author VAMPETA
+ * @brief ATUALIZA A MENSAGEM DE LOCALIZACAO
+ * @param {Object} socket OBJETO SOCKET DO CLIENTE
+ * @param {Object} data DADOS ENVIADO PELO CLIENTE
+ * @param {Object} callback FUNCAO DE RESPOSTA
+*/
+export async function updateLocation(socket, data, callback) {
+	const { idPhone } = socket.account;
+	const { name, address, latitude, longitude } = data;
+
+	try {
+		if (!name || typeof name !== "string") return (callback({ error: 'O campo "name" deve ser do tipo string e não deve estar vazio' }));
+		if (!address || typeof address !== "string") return (callback({ error: 'O campo "address" deve ser do tipo string e não deve estar vazio' }));
+		if (!latitude || typeof latitude !== "number") return (callback({ error: 'O campo "latitude" deve ser do tipo number e não deve estar vazio' }));
+		if (!longitude || typeof longitude !== "number") return (callback({ error: 'O campo "longitude" deve ser do tipo number e não deve estar vazio' }));
+		await mongodb.saveLocation(idPhone, name, address, latitude, longitude);
 setTimeout(() => {
 		callback(204);
 }, 1000);
