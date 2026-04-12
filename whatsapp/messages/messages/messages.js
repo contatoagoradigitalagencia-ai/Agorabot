@@ -22,7 +22,11 @@ export default async function messages(account, value) {
 	for (const message of value.messages) {
 		try {
 			if (!(await mongodb.saveWamid(account.idPhone, message))) continue;
-			await mongodb.saveContact(account.idPhone, message.from, value.contacts);
+			const newContact = await mongodb.saveContact(account, message.from, value.contacts);
+			if (newContact) {
+				await mongodb.saveMetricNewContact(account.idPhone);
+				await send.text(account, message.from, { text: { body: account.bot.messageNewContact } });
+			}
 			await send.read(account, message.id, message.from);
 			switch (message.type) {
 				case ("reaction"):

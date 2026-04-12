@@ -16,6 +16,10 @@ const bot = new mongoose.Schema({
 		type: String,
 		default: ""
 	},
+	messageNewContact: {
+		type: String,
+		default: ""
+	},
 	model: {
 		type: String,
 		required: true

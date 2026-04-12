@@ -38,6 +38,7 @@ export async function updateStatusBot(socket, data, callback) {
 		await mongodb.updateStateBot(idPhone, status);
 setTimeout(() => {
 		callback({ status: status });
+		// callback(204);
 }, 1000);
 	} catch (error) {
 		await mongodb.saveError(idPhone, `Error no metodo "updateStatusBot": ${error}`);
@@ -128,6 +129,28 @@ export async function updateLocation(socket, data, callback) {
 		if (!latitude || typeof latitude !== "number") return (callback({ error: 'O campo "latitude" deve ser do tipo number e não deve estar vazio' }));
 		if (!longitude || typeof longitude !== "number") return (callback({ error: 'O campo "longitude" deve ser do tipo number e não deve estar vazio' }));
 		await mongodb.saveLocation(idPhone, name, address, latitude, longitude);
+setTimeout(() => {
+		callback(204);
+}, 1000);
+	} catch (error) {
+		await mongodb.saveError(idPhone, `Error no metodo "updatePrompt": ${error}`);
+	}
+}
+
+/**
+ * @author VAMPETA
+ * @brief ATUALIZA A NOVA MENSAGEM DE MENSAGEM PARA NOVOS CONTATOS
+ * @param {Object} socket OBJETO SOCKET DO CLIENTE
+ * @param {Object} data DADOS ENVIADO PELO CLIENTE
+ * @param {Object} callback FUNCAO DE RESPOSTA
+*/
+export async function updateMessageNewContact(socket, data, callback) {
+	const { idPhone } = socket.account;
+	const { message } = data;
+
+	try {
+		if (!message || typeof message !== "string") return (callback({ error: 'O campo "message" deve ser do tipo string e não deve estar vazio' }));
+		await mongodb.saveMessageNewContact(idPhone, message);
 setTimeout(() => {
 		callback(204);
 }, 1000);

@@ -2,6 +2,7 @@ import { connect } from "./methods/connect.js";
 import { saveAdm, removeAdm } from "./methods/adm.js";
 import { saveContact } from "./methods/contact.js";
 import { saveMessageNotSupported } from "./methods/updateMessageNotSupported.js";
+import { saveMessageNewContact } from "./methods/updateMessageNewContact.js";
 import { savePrompt } from "./methods/prompt.js";
 import { addSpreadsheets, removeSpreadsheets } from "./methods/spreadsheets.js";
 import { saveLocation } from "./methods/updateLocation.js";
@@ -46,6 +47,7 @@ export default class Mongodb {
 		this.saveAdm = saveAdm.bind(this);
 		this.removeAdm = removeAdm.bind(this);
 		this.saveMessageNotSupported = saveMessageNotSupported.bind(this);
+		this.saveMessageNewContact = saveMessageNewContact.bind(this);
 		this.savePrompt = savePrompt.bind(this);
 		this.addSpreadsheets = addSpreadsheets.bind(this);
 		this.removeSpreadsheets = removeSpreadsheets.bind(this);
