@@ -19,7 +19,7 @@ import { saveContactsReceived, saveContactsSent } from "./methods/contacts.js";
 import { saveDocumentReceived, saveDocumentSent } from "./methods/document.js";
 import { saveButtonSent } from "./methods/button.js";
 import { saveListSent } from "./methods/list.js";
-import { updateRedirect, saveRedirect, removeRedirect } from "./methods/redirect.js";
+import { updateRedirect, saveRedirect, removeRedirect, newRedirect } from "./methods/redirect.js";
 import { saveStateBot, updateStateBot } from "./methods/configChat.js";
 import { saveHumanView } from "./methods/humanViewed.js";
 import { saveError } from "./methods/error.js";
@@ -54,6 +54,7 @@ export default class Mongodb {
 		this.saveLocation = saveLocation.bind(this);
 		this.saveRedirect = saveRedirect.bind(this);
 		this.removeRedirect = removeRedirect.bind(this);
+		this.newRedirect = newRedirect.bind(this);
 		
 		this.saveWamid = saveWamid.bind(this);
 		this.saveVisualization = saveVisualization.bind(this);

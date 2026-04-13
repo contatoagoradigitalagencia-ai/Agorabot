@@ -12,24 +12,24 @@ export async function updateRedirect(idPhone) {
 			[
 				{
 					$set: {
-						"bot.redirect": {
+						"bot.redirect.numbers": {
 							$cond: {
 								if: {
-									$gt: [{ $size: "$bot.redirect" }, 1]
+									$gt: [{ $size: "$bot.redirect.numbers" }, 1]
 								},
 								then: {
 									$concatArrays: [
 										{
-											$slice: ["$bot.redirect", 1, { $size: "$bot.redirect" }]
+											$slice: ["$bot.redirect.numbers", 1, { $size: "$bot.redirect.numbers" }]
 										},
 										[
 											{
-												$arrayElemAt: ["$bot.redirect", 0]
+												$arrayElemAt: ["$bot.redirect.numbers", 0]
 											}
 										]
 									]
 								},
-								else: "$bot.redirect"
+								else: "$bot.redirect.numbers"
 							}
 						}
 					}
@@ -56,7 +56,7 @@ export async function saveRedirect(idPhone, phone) {
 			},
 			{
 				$addToSet: {
-					"bot.redirect": phone
+					"bot.redirect.numbers": phone
 				}
 			}
 		);
@@ -79,11 +79,34 @@ export async function removeRedirect(idPhone, phone) {
 			},
 			{
 				$pull: {
-					"bot.redirect": phone
+					"bot.redirect.numbers": phone
 				}
 			}
 		);
 	} catch (error) {
 		await this.saveError(idPhone, `Error no metodo "removeRedirect": ${error}`);
+	}
+}
+
+/**
+ * @author VAMPETA
+ * @brief METODO CRIADO PARA REMOVER ATENDENTE DA LISTA DE ATENDENTES
+ * @param {String} idPhone IDENTIFICADOR DO NUMERO DE TELEFONE DO BOT
+ * @param {Number<String>} numbers ARRAY COM NUMEROS DE REDIRECIONAMENTO
+*/
+export async function newRedirect(idPhone, numbers) {
+	try {
+		await this.Account.updateOne(
+			{
+				idPhone: idPhone
+			},
+			{
+				$set: {
+					"bot.redirect.numbers": numbers
+				}
+			}
+		);
+	} catch (error) {
+		await this.saveError(idPhone, `Error no metodo "newRedirect": ${error}`);
 	}
 }

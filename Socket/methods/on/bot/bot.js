@@ -37,8 +37,8 @@ export async function updateStatusBot(socket, data, callback) {
 		if (typeof status !== "boolean") return (callback({ error: 'Deve existir um campo "status" do tipo boolean' }));
 		await mongodb.updateStateBot(idPhone, status);
 setTimeout(() => {
-		callback({ status: status });
-		// callback(204);
+		// callback({ status: status });
+		callback(204);
 }, 1000);
 	} catch (error) {
 		await mongodb.saveError(idPhone, `Error no metodo "updateStatusBot": ${error}`);
@@ -86,7 +86,7 @@ setTimeout(() => {
 		callback(res);
 }, 1000);
 	} catch (error) {
-		await mongodb.saveError(idPhone, `Error no metodo "updatePrompt": ${error}`);
+		await mongodb.saveError(idPhone, `Error no metodo "promptSuggestion": ${error}`);
 	}
 }
 
@@ -108,7 +108,7 @@ setTimeout(() => {
 		callback(204);
 }, 1000);
 	} catch (error) {
-		await mongodb.saveError(idPhone, `Error no metodo "updatePrompt": ${error}`);
+		await mongodb.saveError(idPhone, `Error no metodo "updateMessageNotSupported": ${error}`);
 	}
 }
 
@@ -133,7 +133,7 @@ setTimeout(() => {
 		callback(204);
 }, 1000);
 	} catch (error) {
-		await mongodb.saveError(idPhone, `Error no metodo "updatePrompt": ${error}`);
+		await mongodb.saveError(idPhone, `Error no metodo "updateLocation": ${error}`);
 	}
 }
 
@@ -155,6 +155,50 @@ setTimeout(() => {
 		callback(204);
 }, 1000);
 	} catch (error) {
-		await mongodb.saveError(idPhone, `Error no metodo "updatePrompt": ${error}`);
+		await mongodb.saveError(idPhone, `Error no metodo "updateMessageNewContact": ${error}`);
+	}
+}
+
+/**
+ * @author VAMPETA
+ * @brief ATUALIZA A LISTA DE CONTATOS DE REDIRECIONAMENTO
+ * @param {Object} socket OBJETO SOCKET DO CLIENTE
+ * @param {Object} data DADOS ENVIADO PELO CLIENTE
+ * @param {Object} callback FUNCAO DE RESPOSTA
+*/
+export async function updateRedirect(socket, data, callback) {
+	const { idPhone } = socket.account;
+	const { numbers } = data;
+
+	try {
+		if (!numbers) return (callback(""));					// ADICIONAR ERRO
+		await mongodb.newRedirect(idPhone, numbers);
+setTimeout(() => {
+		callback(204);
+}, 1000);
+	} catch (error) {
+		await mongodb.saveError(idPhone, `Error no metodo "updateRedirect": ${error}`);
+	}
+}
+
+/**
+ * @author VAMPETA
+ * @brief ATUALIZA A MENSAGEM DE REDIRECIONAMENTO
+ * @param {Object} socket OBJETO SOCKET DO CLIENTE
+ * @param {Object} data DADOS ENVIADO PELO CLIENTE
+ * @param {Object} callback FUNCAO DE RESPOSTA
+*/
+export async function updateMessageRedirect(socket, data, callback) {				// AINDA NAO IMPLEMENTADO	
+	const { idPhone } = socket.account;
+	const { message } = data;
+
+	try {
+		if (!message || typeof message !== "string") return (callback({ error: 'O campo "message" deve ser do tipo string e não deve estar vazio' }));
+		// await mongodb.saveMessageRedirect(idPhone, message);
+setTimeout(() => {
+		callback(204);
+}, 1000);
+	} catch (error) {
+		await mongodb.saveError(idPhone, `Error no metodo "updateMessageRedirect": ${error}`);
 	}
 }

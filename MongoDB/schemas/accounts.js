@@ -43,7 +43,9 @@ const bot = new mongoose.Schema({
 		address: String
 	},
 	redirect: {
-		type: [String]
+		activated: Boolean,
+		numbers: [String],
+		message: String
 	}
 });
 

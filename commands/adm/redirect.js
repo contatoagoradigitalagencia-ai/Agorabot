@@ -9,11 +9,11 @@ import mongodb from "../../MongoDB/Mongodb.js";
 */
 export async function redirect(account, message) {
 	try {
-		await send.text(account, message.from, { text: { body: `Atuais atendentes:${account.bot.redirect.map((contact) => (`\n\`${contact}\``)).join("")}` } });
-		if (account.bot.redirect.length > 1 && account.bot.redirect[0] === message.from) {
+		await send.text(account, message.from, { text: { body: `Atuais atendentes:${account.bot.redirect.numbers.map((contact) => (`\n\`${contact}\``)).join("")}` } });
+		if (account.bot.redirect.numbers.length > 1 && account.bot.redirect.numbers[0] === message.from) {
 			await send.text(account, message.from, { text: { body: "⚠️ VOCÊ É O PRÓXIMO ATENDENTE ⚠️" } });
-		} else if (account.bot.redirect.length > 1) {
-			await send.text(account, message.from, { text: { body: `Próximo atendente: ${account.bot.redirect[0]}` } });
+		} else if (account.bot.redirect.numbers.length > 1) {
+			await send.text(account, message.from, { text: { body: `Próximo atendente: ${account.bot.redirect.numbers[0]}` } });
 		}
 	} catch (error) {
 		await mongodb.saveError(account.idPhone, `Error na funcao "redirect": ${error}`);
