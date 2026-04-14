@@ -1,5 +1,28 @@
 /**
  * @author VAMPETA
+ * @brief METODO CRIADO PARA SALVAR O ESTADO SE O REDIRECIONAMENTO DO BOT ESTA LIGADO OU DESLIGADO
+ * @param {String} idPhone IDENTIFICADOR DO NUMERO DE TELEFONE DO BOT
+ * @param {Boolean} status NOVO ESTADO DE REDIRECIONAMENTO DO BOT SE LIGADO OU NAO
+*/
+export async function updateStateRedirect(idPhone, status) {
+	try {
+		await this.Account.updateOne(
+			{
+				idPhone: idPhone
+			},
+			{
+				$set: {
+					"bot.redirect.activated": status
+				}
+			}
+		);
+	} catch (error) {
+		await this.saveError(idPhone, `Error no metodo "updateStateRedirect": ${error}`);
+	}
+}
+
+/**
+ * @author VAMPETA
  * @brief METODO CRIADO PARA ATUALIZAR A ORDEM DOS CONTATOS (USADO PARA DEFINIR QUAL O PROCIMO NUMERO A SER ENCAMINHADO PARA ATENDIMENTO HUMANO)
  * @param {String} idPhone IDENTIFICADOR DO NUMERO DE TELEFONE DO BOT
 */
@@ -108,5 +131,28 @@ export async function newRedirect(idPhone, numbers) {
 		);
 	} catch (error) {
 		await this.saveError(idPhone, `Error no metodo "newRedirect": ${error}`);
+	}
+}
+
+/**
+ * @author VAMPETA
+ * @brief METODO CRIADO PARA SALVAR MENSAGEM DE REDIRECIONAMENTO
+ * @param {String} idPhone IDENTIFICADOR DO NUMERO DE TELEFONE DO BOT
+ * @param {String} messsage MENSAGEM DE REDIRECIONAMENTO
+*/
+export async function saveMessageRedirect(idPhone, messsage) {
+	try {
+		await this.Account.updateOne(
+			{
+				idPhone: idPhone
+			},
+			{
+				$set: {
+					"bot.redirect.message": messsage
+				}
+			}
+		);
+	} catch (error) {
+		await this.saveError(idPhone, `Error no metodo "saveMessageRedirect": ${error}`);
 	}
 }

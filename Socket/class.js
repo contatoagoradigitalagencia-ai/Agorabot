@@ -22,7 +22,7 @@ import { newMessage, updateView, newReact } from "./methods/emit/chat/chat.js";
 import { loadContacts, saveComment } from "./methods/on/contacts/contacts.js";
 
 // on /bot
-import { getInfoBot, updateStatusBot, updatePrompt, promptSuggestion, updateMessageNotSupported, updateLocation, updateMessageNewContact, updateRedirect } from "./methods/on/bot/bot.js";
+import { getInfoBot, updateStatusBot, updateVisualization, updatePrompt, promptSuggestion, updateMessageNotSupported, updateLocation, updateMessageNewContact, updateStatusRedirect, updateNumbersRedirect, updateMessageRedirect } from "./methods/on/bot/bot.js";
 
 // on /spreadsheets
 import { getSpreadsheets, updateUsedSpreadsheets } from "./methods/on/spreadsheets/spreadsheet.js";
@@ -83,12 +83,15 @@ export default class Socket {
 		// /bot
 		this.on.bot.getInfoBot = getInfoBot.bind(this);
 		this.on.bot.updateStatusBot = updateStatusBot.bind(this);
+		this.on.bot.updateVisualization = updateVisualization.bind(this);
 		this.on.bot.updatePrompt = updatePrompt.bind(this);
 		this.on.bot.promptSuggestion = promptSuggestion.bind(this);
 		this.on.bot.updateMessageNotSupported = updateMessageNotSupported.bind(this);
 		this.on.bot.updateLocation = updateLocation.bind(this);
 		this.on.bot.updateMessageNewContact = updateMessageNewContact.bind(this);
-		this.on.bot.updateRedirect = updateRedirect.bind(this);
+		this.on.bot.updateStatusRedirect = updateStatusRedirect.bind(this);
+		this.on.bot.updateNumbersRedirect = updateNumbersRedirect.bind(this);
+		this.on.bot.updateMessageRedirect = updateMessageRedirect.bind(this);
 
 		// /spreadsheets
 		this.on.spreadsheets.getSpreadsheets = getSpreadsheets.bind(this);

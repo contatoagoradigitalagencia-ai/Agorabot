@@ -44,8 +44,8 @@ async function prompt(account) {
 		textPrompt += promptSchema;
 		textPrompt += promptRules;
 		textPrompt += promptCommands;
-		if (account.bot.location) textPrompt += promptLocation;
-		if (account.bot.redirect) textPrompt += promptRedirect;
+		if (account.bot.location.latitude && account.bot.location.longitude) textPrompt += promptLocation;
+		if (account.bot.redirect.activated) textPrompt += promptRedirect;
 		if (account.googleSheets) textPrompt += promptProducts;
 		if (!account.bot.location && !account.bot.redirect && !account.googleSheets) textPrompt += "Nenhum comando está disponível no momento."
 		textPrompt += promptAmbiguityAndSecurity;

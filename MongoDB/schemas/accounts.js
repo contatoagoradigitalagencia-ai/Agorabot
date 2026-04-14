@@ -12,6 +12,10 @@ const bot = new mongoose.Schema({
 		type: Boolean,
 		default: true
 	},
+	visualization: {
+		type: Boolean,
+		default: true
+	},
 	messageNotSupported: {
 		type: String,
 		default: ""
@@ -90,7 +94,6 @@ const account = new mongoose.Schema({
 
 account.index({ phone: 1 }, { unique: true });
 account.index({ idPhone: 1 }, { unique: true });
-account.index({ accessToken: 1 }, { unique: true });
 account.index({ "googleSheets.spreadsheet": 1 }, { unique: true, sparse: true });
 
 export default mongoose.model("account", account);

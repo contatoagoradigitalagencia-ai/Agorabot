@@ -9,11 +9,12 @@ import send from "../../Send/Send.js";
 */
 export default async function redirect(account, message) {
 	try {
-		const contact = account.bot.redirect?.[0];
+		const contact = account.bot.redirect?.numbers[0];
 
 		if (!contact) return ;
-		if (account.bot.redirect.length > 1) await mongodb.updateRedirect(account.idPhone);
+		if (account.bot.redirect.numbers.length > 1) await mongodb.updateRedirect(account.idPhone);
 		await send.text(account, message.from, { text: { body: `Em breve um atendente vai entrar em contato com você.\nLink do contato: https://wa.me/${contact}?text=Gostaria%20de%20continuar%20o%20atendimento` } });
+		if (account.bot.redirect.message) await send.text(account, message.from, { text: { body: account.bot.redirect.message } });
 		await send.text(account, contact, { text: { body: `Um cliente deseja atendimento humano.\nContato: ${message.from}\nLink do contato: https://wa.me/${message.from}` } });
 		// const history = await mongodb.Message.find({ idPhone: account.idPhone, phone: message.from, "data.type": "text" }).sort({ _id: -1 }).limit(10);
 		// history.reverse();

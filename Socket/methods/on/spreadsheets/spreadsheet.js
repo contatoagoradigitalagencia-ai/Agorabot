@@ -48,7 +48,7 @@ export async function updateUsedSpreadsheets(socket, data, callback) {
 		if (add) await mongodb.addSpreadsheets(idPhone, add);
 		if (remove) await mongodb.removeSpreadsheets(idPhone, remove);
 setTimeout(() => {
-		callback((add) ? { add: add } : { remove: remove });
+		callback(204);
 }, 1000);
 	} catch (error) {
 		await mongodb.saveError(idPhone, `Error no metodo "updateUsedSpreadsheets": ${error}`);

@@ -25,9 +25,9 @@ export default async function messages(account, value) {
 			const newContact = await mongodb.saveContact(account, message.from, value.contacts);
 			if (newContact) {
 				await mongodb.saveMetricNewContact(account.idPhone);
-				await send.text(account, message.from, { text: { body: account.bot.messageNewContact } });
+				if (account.bot.messageNewContact) await send.text(account, message.from, { text: { body: account.bot.messageNewContact } });
 			}
-			await send.read(account, message.id, message.from);
+			if (account.bot.visualization) await send.read(account, message.id, message.from);
 			switch (message.type) {
 				case ("reaction"):
 					await reaction(account, message);

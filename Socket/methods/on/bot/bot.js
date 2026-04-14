@@ -37,11 +37,32 @@ export async function updateStatusBot(socket, data, callback) {
 		if (typeof status !== "boolean") return (callback({ error: 'Deve existir um campo "status" do tipo boolean' }));
 		await mongodb.updateStateBot(idPhone, status);
 setTimeout(() => {
-		// callback({ status: status });
 		callback(204);
 }, 1000);
 	} catch (error) {
 		await mongodb.saveError(idPhone, `Error no metodo "updateStatusBot": ${error}`);
+	}
+}
+
+/**
+ * @author VAMPETA
+ * @brief MUDA O STATUS DE VISUALIZACAO DE MENSAGEM DO BOT DE ATIVADO PARA DESATIVADO E VICE VERSA
+ * @param {Object} socket OBJETO SOCKET DO CLIENTE
+ * @param {Object} data DADOS ENVIADO PELO CLIENTE
+ * @param {Object} callback FUNCAO DE RESPOSTA
+*/
+export async function updateVisualization(socket, data, callback) {
+	const { idPhone } = socket.account;
+	const { visualization } = data;
+
+	try {
+		if (typeof visualization !== "boolean") return (callback({ error: 'Deve existir um campo "visualization" do tipo boolean' }));
+		await mongodb.updateVisualization(idPhone, visualization);
+setTimeout(() => {
+		callback(204);
+}, 1000);
+	} catch (error) {
+		await mongodb.saveError(idPhone, `Error no metodo "updateVisualization": ${error}`);
 	}
 }
 
@@ -102,7 +123,7 @@ export async function updateMessageNotSupported(socket, data, callback) {
 	const { message } = data;
 
 	try {
-		if (!message || typeof message !== "string") return (callback({ error: 'O campo "message" deve ser do tipo string e não deve estar vazio' }));
+		if (typeof message !== "string") return (callback({ error: 'O campo "message" deve ser do tipo string e não deve estar vazio' }));
 		await mongodb.saveMessageNotSupported(idPhone, message);
 setTimeout(() => {
 		callback(204);
@@ -149,7 +170,7 @@ export async function updateMessageNewContact(socket, data, callback) {
 	const { message } = data;
 
 	try {
-		if (!message || typeof message !== "string") return (callback({ error: 'O campo "message" deve ser do tipo string e não deve estar vazio' }));
+		if (typeof message !== "string") return (callback({ error: 'O campo "message" deve ser do tipo string' }));
 		await mongodb.saveMessageNewContact(idPhone, message);
 setTimeout(() => {
 		callback(204);
@@ -166,18 +187,40 @@ setTimeout(() => {
  * @param {Object} data DADOS ENVIADO PELO CLIENTE
  * @param {Object} callback FUNCAO DE RESPOSTA
 */
-export async function updateRedirect(socket, data, callback) {
+export async function updateStatusRedirect(socket, data, callback) {
+	const { idPhone } = socket.account;
+	const { status } = data;
+
+	try {
+		if (typeof status !== "boolean") return (callback({ error: 'Deve existir um campo "status" do tipo boolean' }));
+		await mongodb.updateStateRedirect(idPhone, status);
+setTimeout(() => {
+		callback(204);
+}, 1000);
+	} catch (error) {
+		await mongodb.saveError(idPhone, `Error no metodo "updateStatusRedirect": ${error}`);
+	}
+}
+
+/**
+ * @author VAMPETA
+ * @brief ATUALIZA A LISTA DE CONTATOS DE REDIRECIONAMENTO
+ * @param {Object} socket OBJETO SOCKET DO CLIENTE
+ * @param {Object} data DADOS ENVIADO PELO CLIENTE
+ * @param {Object} callback FUNCAO DE RESPOSTA
+*/
+export async function updateNumbersRedirect(socket, data, callback) {
 	const { idPhone } = socket.account;
 	const { numbers } = data;
 
 	try {
-		if (!numbers) return (callback(""));					// ADICIONAR ERRO
+		if (!Array.isArray(numbers) || !numbers.every((item) => (typeof item === "string"))) return (callback('O campo "numbers" deve ser um array de strings'));
 		await mongodb.newRedirect(idPhone, numbers);
 setTimeout(() => {
 		callback(204);
 }, 1000);
 	} catch (error) {
-		await mongodb.saveError(idPhone, `Error no metodo "updateRedirect": ${error}`);
+		await mongodb.saveError(idPhone, `Error no metodo "updateNumbersRedirect": ${error}`);
 	}
 }
 
@@ -188,13 +231,13 @@ setTimeout(() => {
  * @param {Object} data DADOS ENVIADO PELO CLIENTE
  * @param {Object} callback FUNCAO DE RESPOSTA
 */
-export async function updateMessageRedirect(socket, data, callback) {				// AINDA NAO IMPLEMENTADO	
+export async function updateMessageRedirect(socket, data, callback) {
 	const { idPhone } = socket.account;
 	const { message } = data;
 
 	try {
-		if (!message || typeof message !== "string") return (callback({ error: 'O campo "message" deve ser do tipo string e não deve estar vazio' }));
-		// await mongodb.saveMessageRedirect(idPhone, message);
+		if (typeof message !== "string") return (callback({ error: 'O campo "message" deve ser do tipo string' }));
+		await mongodb.saveMessageRedirect(idPhone, message);
 setTimeout(() => {
 		callback(204);
 }, 1000);
