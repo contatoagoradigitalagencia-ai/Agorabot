@@ -66,9 +66,12 @@ export async function configEvents() {
 		socket.on("bot:update_numbers_redirect", (data, callback) => this.on.bot.updateNumbersRedirect(socket, data, callback));
 		socket.on("bot:update_message_redirect", (data, callback) => this.on.bot.updateMessageRedirect(socket, data, callback));
 
-		// /settings
+		// /spreadsheets
 		socket.on("spreadsheets:get_spreadsheets", (data, callback) => this.on.spreadsheets.getSpreadsheets(socket, data, callback));
 		socket.on("spreadsheets:update_used_spreadsheets", (data, callback) => this.on.spreadsheets.updateUsedSpreadsheets(socket, data, callback));
+
+		// /settings
+		socket.on("settings:update_password", (data, callback) => this.on.settings.updatePassword(socket, data, callback));
 
 		socket.on("disconnect", () => this.disconnect(socket));
 	});

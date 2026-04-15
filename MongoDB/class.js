@@ -6,6 +6,7 @@ import { saveMessageNewContact } from "./methods/updateMessageNewContact.js";
 import { savePrompt } from "./methods/prompt.js";
 import { addSpreadsheets, removeSpreadsheets } from "./methods/spreadsheets.js";
 import { saveLocation } from "./methods/updateLocation.js";
+import { saveNewPassword } from "./methods/updatePassword.js";
 import { saveVisualization } from "./methods/visualization.js";
 import { saveWamid } from "./methods/wamid.js";
 import { saveReactionReceived, saveReactionSent } from "./methods/reaction.js";
@@ -57,6 +58,7 @@ export default class Mongodb {
 		this.removeRedirect = removeRedirect.bind(this);
 		this.newRedirect = newRedirect.bind(this);
 		this.saveMessageRedirect = saveMessageRedirect.bind(this);
+		this.saveNewPassword = saveNewPassword.bind(this);
 
 		this.saveWamid = saveWamid.bind(this);
 		this.saveVisualization = saveVisualization.bind(this);

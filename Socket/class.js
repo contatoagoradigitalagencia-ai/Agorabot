@@ -27,6 +27,9 @@ import { getInfoBot, updateStatusBot, updateVisualization, updatePrompt, promptS
 // on /spreadsheets
 import { getSpreadsheets, updateUsedSpreadsheets } from "./methods/on/spreadsheets/spreadsheet.js";
 
+// on /settings
+import { updatePassword } from "./methods/on/settings/password.js";
+
 /**
  * @author VAMPETA
  * @brief CLASSE CRIADA PARA GERENCIAR ATUALIZACAO DE MENSAGENS DO FRONT END CONECTADO AO SOCKET
@@ -98,5 +101,6 @@ export default class Socket {
 		this.on.spreadsheets.updateUsedSpreadsheets = updateUsedSpreadsheets.bind(this);
 
 		// /settings
+		this.on.settings.updatePassword = updatePassword.bind(this);
 	}
 };
