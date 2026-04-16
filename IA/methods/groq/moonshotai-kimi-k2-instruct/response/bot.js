@@ -1,7 +1,7 @@
-import send from "../../../../Send/Send.js";
-import mongodb from "../../../../MongoDB/Mongodb.js";
+import send from "../../../../../Send/Send.js";
+import mongodb from "../../../../../MongoDB/Mongodb.js";
 
-import commandsIA from "../../../../commands/IA/commands.js";
+import commandsIA from "../../../../../commands/IA/commands.js";
 
 import { promptSchema, promptRules, promptCommands, promptLocation, promptRedirect, promptProducts, promptAmbiguityAndSecurity, promptFallback, promptIdentity } from "../prompt/bot.js";
 
@@ -75,9 +75,9 @@ export async function bot(account, message) {
 		for (let retry = 0; retry < 4; retry++) {
 			try {
 				const res = await this.groq.groq.chat.completions.create({
-					model: account.bot.model,
+					model: "moonshotai/kimi-k2-instruct",
 					messages: messages,
-					max_tokens: account.bot.maxTokens,
+					max_tokens: 200,
 					response_format: response_format,
 					temperature: 0,
 					top_p: 0.9

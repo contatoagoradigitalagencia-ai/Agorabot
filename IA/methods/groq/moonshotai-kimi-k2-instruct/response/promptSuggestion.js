@@ -1,4 +1,4 @@
-import mongodb from "../../../../MongoDB/Mongodb.js";
+import mongodb from "../../../../../MongoDB/Mongodb.js";
 
 import { promptSuggestionSystem } from "../prompt/promptSuggestion.js";
 
@@ -22,7 +22,7 @@ export async function promptSuggestion(account, prompt, input) {
 			}
 		];
 		const res = await this.groq.groq.chat.completions.create({
-			model: account.bot.model,
+			model: "moonshotai/kimi-k2-instruct",
 			messages: messages,
 			max_tokens: 500,
 			response_format: { type: "text" },

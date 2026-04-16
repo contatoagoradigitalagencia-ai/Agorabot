@@ -102,7 +102,8 @@ export async function promptSuggestion(socket, data, callback) {
 	try {
 		if (typeof prompt !== "string") return (callback({ error: 'O campo "prompt" deve ser do tipo string' }));
 		if (!input || typeof input !== "string") return (callback({ error: 'O campo "input" deve ser do tipo string e não deve estar vazio' }));
-		const res = await IA.groq.promptSuggestion(socket.account, prompt, input);
+		// const res = await IA.groq["moonshotai/kimi-k2-instruct"].promptSuggestion(socket.account, prompt, input);
+		const res = await IA.groq["llama-3.3-70b-versatile"].promptSuggestion(socket.account, prompt, input);
 setTimeout(() => {
 		callback(res);
 }, 1000);

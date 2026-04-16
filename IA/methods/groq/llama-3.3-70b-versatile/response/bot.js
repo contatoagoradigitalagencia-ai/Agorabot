@@ -1,0 +1,82 @@
+import send from "../../../../../Send/Send.js";
+import mongodb from "../../../../../MongoDB/Mongodb.js";
+
+import commandsIA from "../../../../../commands/IA/commands.js";
+
+import { promptSchema, promptRules, promptCommands, promptLocation, promptRedirect, promptProducts, promptAmbiguityAndSecurity, promptFallback, promptIdentity } from "../prompt/bot.js";
+
+/**
+ * @author VAMPETA
+ * @brief MONTA O TEXTO DO PROMPT USADO PARA INSTRUIR A IA
+ * @param {Object} account DADOS DO NUMERO QUE RECEBEU ATUALIZACOES
+ * @return {Object} RETORNA UM OBJETO COM O PROMPT COMPLETO PARA INSTRUIR A IA
+*/
+async function prompt(account) {
+	try {
+		let textPrompt = "";
+
+		textPrompt += promptSchema;
+		textPrompt += promptRules;
+		textPrompt += promptCommands;
+		if (account.bot.location.latitude && account.bot.location.longitude) textPrompt += promptLocation;
+		if (account.bot.redirect.activated) textPrompt += promptRedirect;
+		if (account.googleSheets) textPrompt += promptProducts;
+		if (!account.bot.location && !account.bot.redirect && !account.googleSheets) textPrompt += "Nenhum comando está disponível no momento."
+		textPrompt += promptAmbiguityAndSecurity;
+		textPrompt += promptFallback;
+		textPrompt += `${promptIdentity}${account.bot.prompt}\n`;
+		return ({
+			role: "system",
+			content: textPrompt
+		});
+	} catch (error) {
+		await mongodb.saveError(account.idPhone, `Error na funcao "prompt": ${error}`);
+		return ({ role: "system", content: "" });
+	}
+}
+
+/**
+ * @author VAMPETA
+ * @brief GERENCIA O COMPORTAMENTO DO BOT
+ * @param {Object} account DADOS DO NUMERO QUE RECEBEU ATUALIZACOES
+ * @param {Object} message UM UNICO ELEMENTO DE req.body.entry[n].changes[n].value.messages[n]
+*/
+export async function bot(account, message) {
+	try {
+		let json = null;
+		const messages = [await prompt(account), ...(await this.groq.chatHistory(account, message))];
+
+		for (let retry = 0; retry < 4; retry++) {
+			try {
+				const res = await this.groq.groq.chat.completions.create({
+					model: "llama-3.3-70b-versatile",
+					messages: messages,
+					max_tokens: 200,
+					response_format: { "type": "json_object" },
+					temperature: 0,
+					top_p: 0.9
+				});
+				json = JSON.parse(res.choices[0].message.content);
+console.log(json)
+				break;
+			} catch (error) {
+				await mongodb.saveError(account.idPhone, `Falha na resposta da IA: ${error}`);
+			}
+		}
+		if (json === null) {
+			await mongodb.saveError(account.idPhone, "Não foi possível gerar uma resposta satisfatória com a IA.");
+			await send.text(account, message.from, { text: { body: "Tive um problema ao processar sua mensagem. Pode reescrever sua dúvida?" } });
+			return ;
+		}
+		if (json.text.length) {
+			for (const text of json.text) {
+				await send.text(account, message.from, { text: { body: text } });
+			}
+		}
+		if (json.command.length) {
+			await commandsIA(account, message, json.command);
+		}
+	} catch (error) {
+		await mongodb.saveError(account.idPhone, `Error na funcao "bot": ${error}`);
+	}
+}

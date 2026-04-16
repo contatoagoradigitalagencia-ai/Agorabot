@@ -10,7 +10,8 @@ import send from "../../Send/Send.js";
 */
 export default async function products(account, message) {
 	try {
-		const res = await IA.groq.products(account, message);
+		// const res = await IA.groq["moonshotai/kimi-k2-instruct"].products(account, message);
+		const res = await IA.groq["llama-3.3-70b-versatile"].products(account, message);
 
 		if (res) await send.text(account, message.from, { text: { body: res } });
 	} catch (error) {

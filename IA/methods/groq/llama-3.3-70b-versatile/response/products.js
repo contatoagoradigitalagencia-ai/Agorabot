@@ -1,5 +1,5 @@
-import mongodb from "../../../../MongoDB/Mongodb.js";
-import googleSheets from "../../../../Google Sheets/GoogleSheets.js";
+import mongodb from "../../../../../MongoDB/Mongodb.js";
+import googleSheets from "../../../../../Google Sheets/GoogleSheets.js";
 
 import { promptProducts } from "../prompt/products.js";
 
@@ -20,7 +20,7 @@ export async function products(account, message) {
 			...(await this.groq.chatHistory(account, message))
 		];
 		const res = await this.groq.groq.chat.completions.create({
-			model: account.bot.model,
+			model: "llama-3.3-70b-versatile",
 			messages: messages,
 			max_tokens: 500,
 			response_format: { type: "text" },

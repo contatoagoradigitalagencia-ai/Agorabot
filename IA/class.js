@@ -1,8 +1,11 @@
 import connect from "./methods/groq/connect.js";
 import { chatHistory } from "./methods/groq/chatHistory.js";
-import { bot } from "./methods/groq/response/bot.js";
-import { products } from "./methods/groq/response/products.js";
-import { promptSuggestion } from "./methods/groq/response/promptSuggestion.js";
+// import { bot } from "./methods/groq/moonshotai-kimi-k2-instruct/response/bot.js";
+// import { products } from "./methods/groq/moonshotai-kimi-k2-instruct/response/products.js";
+// import { promptSuggestion } from "./methods/groq/moonshotai-kimi-k2-instruct/response/promptSuggestion.js";
+import { bot } from "./methods/groq/llama-3.3-70b-versatile/response/bot.js";
+import { products } from "./methods/groq/llama-3.3-70b-versatile/response/products.js";
+import { promptSuggestion } from "./methods/groq/llama-3.3-70b-versatile/response/promptSuggestion.js";
 
 /**
  * @author VAMPETA
@@ -10,7 +13,9 @@ import { promptSuggestion } from "./methods/groq/response/promptSuggestion.js";
 */
 export default class IA {
 	groq = {
-		groq: null
+		groq: null,
+		"moonshotai/kimi-k2-instruct": {},
+		"llama-3.3-70b-versatile": {}
 	};
 
 	constructor() {
@@ -18,9 +23,12 @@ export default class IA {
 
 		this.groq.chatHistory = chatHistory.bind(this);
 
-		this.groq.bot = bot.bind(this);
-		this.groq.products = products.bind(this);
+		// this.groq["moonshotai/kimi-k2-instruct"].bot = bot.bind(this);
+		// this.groq["moonshotai/kimi-k2-instruct"].products = products.bind(this);
+		// this.groq["moonshotai/kimi-k2-instruct"].promptSuggestion = promptSuggestion.bind(this);
 
-		this.groq.promptSuggestion = promptSuggestion.bind(this);
+		this.groq["llama-3.3-70b-versatile"].bot = bot.bind(this);
+		this.groq["llama-3.3-70b-versatile"].products = products.bind(this);
+		this.groq["llama-3.3-70b-versatile"].promptSuggestion = promptSuggestion.bind(this);
 	}
 };
