@@ -21,6 +21,9 @@ import { newMessage, updateView, newReact } from "./methods/emit/chat/chat.js";
 // on /contacts
 import { loadContacts, saveComment } from "./methods/on/contacts/contacts.js";
 
+// on /quick-messages
+import { getQuickMessages } from "./methods/on/quick messages/quick-messages.js";
+
 // on /bot
 import { getInfoBot, updateStatusBot, updateVisualization, updatePrompt, promptSuggestion, updateMessageNotSupported, updateLocation, updateMessageNewContact, updateStatusRedirect, updateNumbersRedirect, updateMessageRedirect } from "./methods/on/bot/bot.js";
 
@@ -44,6 +47,7 @@ export default class Socket {
 			bot: {}
 		},
 		contacts: {},
+		quickMessages: {},
 		bot: {},
 		spreadsheets: {},
 		settings: {}
@@ -82,6 +86,9 @@ export default class Socket {
 		// /contacts
 		this.on.contacts.loadContacts = loadContacts.bind(this);
 		this.on.contacts.saveComment = saveComment.bind(this);
+
+		// /quick-messages
+		this.on.quickMessages.getQuickMessages = getQuickMessages.bind(this);
 
 		// /bot
 		this.on.bot.getInfoBot = getInfoBot.bind(this);

@@ -53,6 +53,9 @@ export async function configEvents() {
 		socket.on("contacts:load_contacts", (data, callback) => this.on.contacts.loadContacts(socket, data, callback));
 		socket.on("contacts:save_comment", (data, callback) => this.on.contacts.saveComment(socket, data, callback));
 
+		// /quick-messages
+		socket.on("quick-messages:get_quick_messages", (data, callback) => this.on.quickMessages.getQuickMessages(socket, data, callback));
+
 		// /bot
 		socket.on("bot:get_info_bot", (data, callback) => this.on.bot.getInfoBot(socket, data, callback));
 		socket.on("bot:update_status_bot", (data, callback) => this.on.bot.updateStatusBot(socket, data, callback));
