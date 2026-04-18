@@ -6,7 +6,7 @@ const message = new mongoose.Schema(
 			type: String,
 			required: true
 		},
-		text: String,
+		text: Object,
 		location: Object
 	},
 	{ _id: false }
@@ -14,6 +14,14 @@ const message = new mongoose.Schema(
 
 const quickMessages = new mongoose.Schema({
 	idPhone: {
+		type: String,
+		required: true
+	},
+	timestamp: {
+		type: Date,
+		required: true
+	},
+	name: {
 		type: String,
 		required: true
 	},

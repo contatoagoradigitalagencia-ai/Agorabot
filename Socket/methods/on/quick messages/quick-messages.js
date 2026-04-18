@@ -9,14 +9,16 @@ import mongodb from "../../../../MongoDB/Mongodb.js";
 */
 export async function getQuickMessages(socket, data, callback) {
 	const { idPhone } = socket.account;
-	
-	try {
-// console.log("foi")
-		const messages = await mongodb.QuickMessage.find({ idPhone: idPhone }).select("-_id -idPhone");
+	const { type } = data;
 
-console.log(messages)
+	try {
+		if (!type || typeof type !== "string") return (callback({ error: 'O campo "type" deve ser do tipo string e não deve estar vazio' }));
+		if (type !== "text" && type !== "location") return (callback({ error: `Tipo de mensagem "${type}" não existe` }));
+		const messages = await mongodb.QuickMessage.find({ idPhone: idPhone, "message.type": type }).select("-_id -idPhone");
+
+// console.log(messages)
 setTimeout(() => {
-		// callback(account.bot);
+		callback(messages);
 }, 1000);
 	} catch (error) {
 		await mongodb.saveError(idPhone, `Error no metodo "getQuickMessages": ${error}`);
