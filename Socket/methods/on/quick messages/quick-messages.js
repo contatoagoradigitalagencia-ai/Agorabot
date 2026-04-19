@@ -14,11 +14,11 @@ export async function getQuickMessages(socket, data, callback) {
 	try {
 		if (!type || typeof type !== "string") return (callback({ error: 'O campo "type" deve ser do tipo string e não deve estar vazio' }));
 		if (type !== "text" && type !== "location") return (callback({ error: `Tipo de mensagem "${type}" não existe` }));
-		const messages = await mongodb.QuickMessage.find({ idPhone: idPhone, "message.type": type }).select("-_id -idPhone");
-
-// console.log(messages)
+		const messages = await mongodb.QuickMessage.find({ idPhone: idPhone, "message.type": type }).select("-idPhone").lean();;
+		const res = messages.map(({ _id, ...rest }) => ({ id: _id, ...rest }));
+// console.log(res)
 setTimeout(() => {
-		callback(messages);
+		callback(res);
 }, 1000);
 	} catch (error) {
 		await mongodb.saveError(idPhone, `Error no metodo "getQuickMessages": ${error}`);
