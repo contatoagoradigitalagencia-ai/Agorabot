@@ -17,13 +17,13 @@ const quickMessages = new mongoose.Schema({
 		type: String,
 		required: true
 	},
-	timestamp: {
-		type: Date,
-		default: Date.now
-	},
 	name: {
 		type: String,
 		required: true
+	},
+	timestamp: {
+		type: Date,
+		default: Date.now
 	},
 	message: message
 });

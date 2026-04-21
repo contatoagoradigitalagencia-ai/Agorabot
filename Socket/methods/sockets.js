@@ -55,6 +55,7 @@ export async function configEvents() {
 
 		// /quick-messages
 		socket.on("quick-messages:get_quick_messages", (data, callback) => this.on.quickMessages.getQuickMessages(socket, data, callback));
+		socket.on("quick-messages:save_text", (data, callback) => this.on.quickMessages.saveQuickMessageText(socket, data, callback));
 
 		// /bot
 		socket.on("bot:get_info_bot", (data, callback) => this.on.bot.getInfoBot(socket, data, callback));

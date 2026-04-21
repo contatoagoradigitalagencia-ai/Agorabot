@@ -26,6 +26,7 @@ import { updateVisualization } from "./methods/updateVisualization.js";
 import { saveHumanView } from "./methods/humanViewed.js";
 import { saveError } from "./methods/error.js";
 import { saveMetricMessage, saveMetricNewContact, saveMetricRedirect } from "./methods/metric.js";
+import { saveQuickMessageText } from "./methods/quickMessage.js";
 import { saveComment } from "./methods/comment.js";
 
 /**
@@ -94,6 +95,8 @@ export default class Mongodb {
 		this.saveMetricMessage = saveMetricMessage.bind(this);
 		this.saveMetricNewContact = saveMetricNewContact.bind(this);
 		this.saveMetricRedirect = saveMetricRedirect.bind(this);
+
+		this.saveQuickMessageText = saveQuickMessageText.bind(this);
 
 		this.saveComment = saveComment.bind(this);
 	}
