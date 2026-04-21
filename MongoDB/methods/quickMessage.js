@@ -1,10 +1,10 @@
 /**
  * @author VAMPETA
- * @brief METODO CRIADO PARA SALVAR MENSAGENS RAPIDAS DE TEXTO NO MONGODB
+ * @brief METODO CRIADO PARA SALVAR MENSAGENS RAPIDAS NO MONGODB
  * @param {String} idPhone IDENTIFICADOR DO NUMERO DE TELEFONE DO BOT
  * @param {Object} message INFORMACOES DA MENSAGEM QUE SERA SALVA
 */
-export async function saveQuickMessageText(idPhone, id, name, message) {
+export async function saveQuickMessage(idPhone, id, name, message) {
 	try {
 		if (id) {
 			await this.QuickMessage.updateOne(
@@ -30,7 +30,7 @@ export async function saveQuickMessageText(idPhone, id, name, message) {
 			return (res._id);
 		}
 	} catch (error) {
-		await this.saveError(idPhone, `Error no metodo "saveQuickMessageText": ${error}`);
+		await this.saveError(idPhone, `Error no metodo "saveQuickMessage": ${error}`);
 		return ("");
 	}
 }

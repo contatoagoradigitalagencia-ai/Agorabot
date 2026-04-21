@@ -1,3 +1,5 @@
+import { ObjectId } from "mongodb";
+
 import mongodb from "../../../../MongoDB/Mongodb.js";
 import messages from "../../../../MongoDB/schemas/messages.js";
 
@@ -28,25 +30,68 @@ setTimeout(() => {
 
 /**
  * @author VAMPETA
- * @brief SALVA OU ATUALIZA UMA MENSAGEM RAPIDA DO TIPO TEXTO
+ * @brief VERIFICA SE OS DADOS ESTAO EM CONFORMIDADE COM A REQUISICAO
+ * @param {String} name NOME DA MENSAGEM
+ * @param {Object} message INFORMACOES DA MENSAGEM
+*/
+function validateData(name, message) {
+	if (!name || typeof name !== "string") return ('O campo "name" deve ser do tipo string e não deve estar vazio');
+	if (!message || typeof message !== "object") return ('O campo "message" deve ser do tipo string e não deve estar vazio');
+	switch (message.type) {
+		case "text":
+			if (!message.text) return ('O campo "message.text" não deve estar vazio');
+			if (!message.text.body || typeof message.text.body !== "string") return ('O campo "message.text.body" deve ser do tipo string e não deve estar vazio');
+			break;
+		case "location":
+			break;
+	}
+	return (null);
+}
+
+/**
+ * @author VAMPETA
+ * @brief SALVA OU ATUALIZA UMA MENSAGEM RAPIDA
  * @param {Object} socket OBJETO SOCKET DO CLIENTE
  * @param {Object} data DADOS ENVIADO PELO CLIENTE
  * @param {Object} callback FUNCAO DE RESPOSTA
 */
-export async function saveQuickMessageText(socket, data, callback) {		// SERA Q DEVO FAZER UMA UNICA FUNCAO PARA TODOS OS TIPOS DE MENSAGENS?
+export async function saveQuickMessage(socket, data, callback) {
 	const { idPhone } = socket.account;
-	const { id, name, message } = data;			// AKI TENHO Q VERIFICAR CAMPOS Q NAO DEVERIAM EXISTIR?
+	const { id, name, message } = data;
 
 	try {
-		if (!name || typeof name !== "string") return (callback({ error: 'O campo "name" deve ser do tipo string e não deve estar vazio' }));
-		if (!message || typeof message !== "object") return (callback({ error: 'O campo "message" deve ser do tipo string e não deve estar vazio' }));
-		const _id = await mongodb.saveQuickMessageText(idPhone, id, name, message);
+		const error = validateData(name, message);
+		if (error) return (callback({ error: error }));
+		const _id = await mongodb.saveQuickMessage(idPhone, id, name, message);
 
-// console.log(_id)
 setTimeout(() => {
 		callback({ id: _id });
 }, 1000);
 	} catch (error) {
-		await mongodb.saveError(idPhone, `Error no metodo "saveQuickMessageText": ${error}`);
+		await mongodb.saveError(idPhone, `Error no metodo "saveQuickMessage": ${error}`);
+	}
+}
+
+/**
+ * @author VAMPETA
+ * @brief DELETA UMA MENSAGEM RAPIDA
+ * @param {Object} socket OBJETO SOCKET DO CLIENTE
+ * @param {Object} data DADOS ENVIADO PELO CLIENTE
+ * @param {Object} callback FUNCAO DE RESPOSTA
+*/
+export async function deleteQuickMessage(socket, data, callback) {
+	const { idPhone } = socket.account;
+	const { id } = data;
+
+	try {
+		// const _id = await mongodb.saveQuickMessage(idPhone, id, name, message);
+		await mongodb.QuickMessage.deleteOne({ _id: new ObjectId(id) })
+console.log(id)
+
+setTimeout(() => {
+		callback(204);
+}, 1000);
+	} catch (error) {
+		await mongodb.saveError(idPhone, `Error no metodo "deleteQuickMessage": ${error}`);
 	}
 }
