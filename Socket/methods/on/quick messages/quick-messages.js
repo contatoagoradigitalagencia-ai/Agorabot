@@ -1,5 +1,3 @@
-import { ObjectId } from "mongodb";
-
 import mongodb from "../../../../MongoDB/Mongodb.js";
 import messages from "../../../../MongoDB/schemas/messages.js";
 
@@ -84,10 +82,7 @@ export async function deleteQuickMessage(socket, data, callback) {
 	const { id } = data;
 
 	try {
-		// const _id = await mongodb.saveQuickMessage(idPhone, id, name, message);
-		await mongodb.QuickMessage.deleteOne({ _id: new ObjectId(id) })
-console.log(id)
-
+		await mongodb.deleteQuickMessage(idPhone, id);
 setTimeout(() => {
 		callback(204);
 }, 1000);
