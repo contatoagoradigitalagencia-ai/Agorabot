@@ -17,7 +17,7 @@ export async function getQuickMessages(socket, data, callback) {
 		if (type !== "text" && type !== "location") return (callback({ error: `Tipo de mensagem "${type}" não existe` }));
 		const messages = await mongodb.QuickMessage.find({ idPhone: idPhone, "message.type": type }).select("-idPhone").lean();;
 		const res = messages.map(({ _id, ...rest }) => ({ id: _id, ...rest }));
-// console.log(res)
+
 setTimeout(() => {
 		callback(res);
 }, 1000);
@@ -41,6 +41,10 @@ function validateData(name, message) {
 			if (!message.text.body || typeof message.text.body !== "string") return ('O campo "message.text.body" deve ser do tipo string e não deve estar vazio');
 			break;
 		case "location":
+			if (typeof message.location.name !== "string") return ('O campo "message.location.name" deve ser do tipo string');
+			if (typeof message.location.address !== "string") return ('O campo "message.location.address" deve ser do tipo string');
+			if (!message.location.latitude || typeof message.location.latitude !== "string") return ('O campo "message.location.latitude" deve ser do tipo string e não deve estar vazio');
+			if (!message.location.longitude || typeof message.location.longitude !== "string") return ('O campo "message.location.longitude" deve ser do tipo string e não deve estar vazio');
 			break;
 	}
 	return (null);
@@ -82,6 +86,7 @@ export async function deleteQuickMessage(socket, data, callback) {
 	const { id } = data;
 
 	try {
+		if (!id || typeof id !== "string") return (callback({ error: 'O campo "id" deve ser do tipo string e não deve estar vazio' }));
 		await mongodb.deleteQuickMessage(idPhone, id);
 setTimeout(() => {
 		callback(204);
