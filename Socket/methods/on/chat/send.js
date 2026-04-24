@@ -44,10 +44,10 @@ export async function sendLocation(socket, data, callback) {
 		if (address !== undefined && typeof address !== "string") return ;
 		await send.location(socket.account, phone, {
 			location: {
-				latitude: latitude,
-				longitude: longitude,
 				name: name,
-				address: address
+				address: address,
+				latitude: latitude,
+				longitude: longitude
 			}
 		});
 	} catch (error) {
