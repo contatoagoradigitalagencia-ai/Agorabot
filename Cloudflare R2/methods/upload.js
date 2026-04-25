@@ -45,13 +45,43 @@ export async function upload(idPhone, token, from, url, type) {
 			Body: res.data,
 			ContentType: res.headers["content-type"],
 			ContentLength: Number(res.headers["content-length"])
-		})
+		});
 
 		if (res.status !== 200) return ("");
 		await this.cloudflareR2.send(command);
 		return (process.env.CLOUDFLARE_R2_URL_PUBLIC + "/" + path);
 	} catch (error) {
-		await mongodb.saveError("idPhone", `Error na funcao "upload": ${error}`);
+		await mongodb.saveError(idPhone, `Error na funcao "upload": ${error}`);
+		return ("");
+	}
+}
+
+
+
+
+
+
+/**
+ * @author VAMPETA
+ * @brief METODO QUE BAIXAR O ARQUIVO ENVIADO PELO CLIENTE NA ROTA /quick-messages/:type E ENVIAR PARA O CLOUDFLARE R2
+ * @param {String} idPhone IDENTIFICADOR DO NUMERO DE TELEFONE DO BOT
+ * @param {Buffer} buffer BUFFER DO ARQUIVO
+ * @param {String} mimetype TIPO DO ARQUIVO
+*/
+export async function uploadQuickMessage(idPhone, buffer, mimetype) {
+	try {
+		const extension = getExtension(mimetype);
+		const path = `${idPhone}/quick-messages/${Date.now()}-${v4()}.${extension}`;
+		const command = new PutObjectCommand({
+			Bucket: process.env.CLOUDFLARE_R2_BUCKET,
+			Key: path,
+			Body: buffer,
+			ContentType: mimetype
+		})
+		await this.cloudflareR2.send(command);
+		return (process.env.CLOUDFLARE_R2_URL_PUBLIC + "/" + path);
+	} catch (error) {
+		await mongodb.saveError(idPhone, `Error na funcao "uploadQuickMessage": ${error}`);
 		return ("");
 	}
 }

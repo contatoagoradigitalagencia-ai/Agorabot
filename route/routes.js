@@ -4,6 +4,9 @@ import response from "../middleware/response.js";
 import verifyProductIndicator from "../middleware/verify-product-indicator.js";
 import webhookMessage from "../route/webhook-message.js";
 import login from "./login.js";
+import uploadAuthentication from "../middleware/upload-authentication.js";
+import uploadFile from "../middleware/upload-file.js";
+import upload from "./upload.js";
 
 /**
  * @author VAMPETA
@@ -14,4 +17,5 @@ export default function configRoutes(app) {
 	app.get("/webhook", webhookAuth);
 	app.post("/webhook", verifySignature, response, verifyProductIndicator, webhookMessage);
 	app.post("/login", login);
+	app.post("/upload", uploadAuthentication, uploadFile, upload);
 }
