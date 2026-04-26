@@ -8,7 +8,7 @@ import cloudflareR2 from "../Cloudflare R2/CloudflareR2.js";
  * @param {Object} req.file ARQUIVO ENVIADO PARA SER SALVO
  * @returns 200 - ARQUIVO SALVO COM SUCESSO
  * @returns 400 - ARQUIVO NAO ENVIADO
- * @returns 403 - TIPO DE OPERACAO INESPERADO OU TOKEN INVALIDO
+ * @returns 500 - ERRO INTERNO AO SALVAR O ARQUIVO NO CLOUDFLARE R2
 */
 export default async function upload(req, res) {
 	if (!req.file || !req.file.buffer || !req.file.mimetype) return (res.sendStatus(400));

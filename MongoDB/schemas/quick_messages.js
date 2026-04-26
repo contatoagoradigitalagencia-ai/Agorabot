@@ -1,5 +1,9 @@
 import mongoose from "mongoose";
 
+// const text = new mongoose.Schema();
+// const image = new mongoose.Schema();
+// const location = new mongoose.Schema();
+
 const message = new mongoose.Schema(
 	{
 		type: {
@@ -7,6 +11,7 @@ const message = new mongoose.Schema(
 			required: true
 		},
 		text: Object,
+		image: Object,
 		location: Object
 	},
 	{ _id: false }

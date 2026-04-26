@@ -56,11 +56,6 @@ export async function upload(idPhone, token, from, url, type) {
 	}
 }
 
-
-
-
-
-
 /**
  * @author VAMPETA
  * @brief METODO QUE BAIXAR O ARQUIVO ENVIADO PELO CLIENTE NA ROTA /quick-messages/:type E ENVIAR PARA O CLOUDFLARE R2

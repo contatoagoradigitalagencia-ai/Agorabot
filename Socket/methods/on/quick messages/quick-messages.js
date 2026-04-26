@@ -41,8 +41,11 @@ function validateData(name, message) {
 				if (!message.text) return ('O campo "message.text" não deve estar vazio');
 				if (!message.text.body || typeof message.text.body !== "string") return ('O campo "message.text.body" deve ser do tipo string e não deve estar vazio');
 				break;
-			// case "image":
-			// 	break;
+			case "image":
+				if (!message.image) return ('O campo "message.image" não deve estar vazio');
+				if (!message.image.link || typeof message.image.link !== "string") return ('O campo "message.image.link" deve ser do tipo string e não deve estar vazio');
+				if (message.image.caption && typeof message.image.caption !== "string") return ('O campo "message.image.caption" deve ser do tipo string');
+				break;
 			case "location":
 				if (message.location.name && typeof message.location.name !== "string") return ('O campo "message.location.name" deve ser do tipo string');
 				if (message.location.address && typeof message.location.address !== "string") return ('O campo "message.location.address" deve ser do tipo string');
@@ -51,26 +54,6 @@ function validateData(name, message) {
 				if (!message.location.longitude || typeof message.location.longitude !== "number") return ('O campo "message.location.longitude" deve ser do tipo number e não deve estar vazio');
 				if (message.location.longitude < -180 || message.location.longitude > 180) return ("Longitude fora do intervalo (-180 a 180)");
 				break;
-			default:
-				return (null);
-		}
-	} catch (error) {
-		return (error);
-	}
-}
-
-/**
- * @author VAMPETA
- * @brief TRATA A MENSAGEM CASO NESSARIO E FAZ ALGUMAS VERIFICACOES EXTRAS (EXEMPLO: TRANFORMA LATITUDE EM NUMBER E HOSPEDA IMAGEM)
- * @param {Object} message INFORMACOES DA MENSAGEM
-*/
-function processMessage(message) {	
-	try {
-		switch (message.type) {
-			case "text":
-				return (null);
-			case "location":
-				return (null);
 			default:
 				return (null);
 		}
@@ -93,9 +76,7 @@ export async function saveQuickMessage(socket, data, callback) {
 	try {
 		const error = validateData(name, message);
 		if (error) return (callback({ error: error }));
-		const processedMessage = processMessage(message);
-		if (processedMessage?.error) return (callback({ error: processedMessage.error }));
-		const _id = await mongodb.saveQuickMessage(idPhone, id, name, (processedMessage) ? processedMessage : message);
+		const _id = await mongodb.saveQuickMessage(idPhone, id, name, message);
 
 setTimeout(() => {
 		callback({ id: _id });
@@ -118,7 +99,7 @@ export async function deleteQuickMessage(socket, data, callback) {
 
 	try {
 		if (!id || typeof id !== "string") return (callback({ error: 'O campo "id" deve ser do tipo string e não deve estar vazio' }));
-		await mongodb.deleteQuickMessage(idPhone, id);
+		await mongodb.deleteQuickMessage(idPhone, id);		// E SE TIVER UM ARQUIVO NO CLOUDFLARE R2??
 setTimeout(() => {
 		callback(204);
 }, 1000);

@@ -11,7 +11,8 @@ import { updateHumanViewed } from "./methods/on/chats/chats.js";
 // on /chat/:phone
 import { loadMessages, quickMessages } from "./methods/on/chat/messages.js";
 import { replyWindow } from "./methods/on/chat/reply.js";
-import { sendText, sendLocation } from "./methods/on/chat/send.js";
+// import { sendText, sendLocation, sendMessage } from "./methods/on/chat/send.js";
+import { sendMessage } from "./methods/on/chat/send.js";
 import { botOnOff } from "./methods/on/chat/config/configs.js";
 import { infoContact } from "./methods/on/chat/config/contact.js";
 
@@ -73,8 +74,9 @@ export default class Socket {
 		this.on.chat.loadMessages = loadMessages.bind(this);
 		this.on.chat.replyWindow = replyWindow.bind(this);
 		this.on.chat.quickMessages = quickMessages.bind(this);
-		this.on.chat.sendText = sendText.bind(this);
-		this.on.chat.sendLocation = sendLocation.bind(this);
+		// this.on.chat.sendText = sendText.bind(this);
+		// this.on.chat.sendLocation = sendLocation.bind(this);
+this.on.chat.sendMessage = sendMessage.bind(this);
 		this.on.chat.bot.botOnOff = botOnOff.bind(this);			// REFATORAR DEPOIS
 		this.on.chat.infoContact = infoContact.bind(this);
 

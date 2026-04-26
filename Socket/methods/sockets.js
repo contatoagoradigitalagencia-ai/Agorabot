@@ -44,8 +44,9 @@ export async function configEvents() {
 		socket.on("chat:load_messages", (data, callback) => this.on.chat.loadMessages(socket, data, callback));
 		socket.on("chat:reply_window", (data, callback) => this.on.chat.replyWindow(socket, data, callback));
 		socket.on("chat:quick_messages", (data, callback) => this.on.chat.quickMessages(socket, data, callback));
-		socket.on("chat:send:text", (data, callback) => this.on.chat.sendText(socket, data, callback));
-		socket.on("chat:send:location", (data, callback) => this.on.chat.sendLocation(socket, data, callback));
+		// socket.on("chat:send:text", (data, callback) => this.on.chat.sendText(socket, data, callback));
+		// socket.on("chat:send:location", (data, callback) => this.on.chat.sendLocation(socket, data, callback));
+socket.on("chat:send_message", (data, callback) => this.on.chat.sendMessage(socket, data, callback));
 		socket.on("chat:bot:on_off", (data, callback) => this.on.chat.bot.botOnOff(socket, data, callback));
 		socket.on("chat:info_contact", (data, callback) => this.on.chat.infoContact(socket, data, callback));
 
