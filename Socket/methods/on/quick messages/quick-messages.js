@@ -1,5 +1,6 @@
 import mongodb from "../../../../MongoDB/Mongodb.js";
 import messages from "../../../../MongoDB/schemas/messages.js";
+import cloudflareR2 from "../../../../Cloudflare R2/CloudflareR2.js";
 
 /**
  * @author VAMPETA
@@ -13,9 +14,10 @@ export async function getQuickMessages(socket, data, callback) {
 	const { type } = data;
 
 	try {
-		if (!type || typeof type !== "string") return (callback({ error: 'O campo "type" deve ser do tipo string e não deve estar vazio' }));
-		if (type !== "text" && type !== "image" && type !== "location") return (callback({ error: `Tipo de mensagem "${type}" não existe` }));
-		const messages = await mongodb.QuickMessage.find({ idPhone: idPhone, "message.type": type }).select("-idPhone").lean();;
+		if (type && typeof type !== "string") return (callback({ error: 'O campo "type" deve ser do tipo string' }));
+		if (type && !["text", "audio", "image", "location"].includes(type)) return (callback({ error: `Tipo de mensagem "${type}" não existe` }));
+		const query = { idPhone: idPhone, ...(type && { "message.type": type }) };
+		const messages = await mongodb.QuickMessage.find(query).select("-idPhone").lean();
 		const res = messages.map(({ _id, ...rest }) => ({ id: _id, ...rest }));
 
 setTimeout(() => {
@@ -99,7 +101,10 @@ export async function deleteQuickMessage(socket, data, callback) {
 
 	try {
 		if (!id || typeof id !== "string") return (callback({ error: 'O campo "id" deve ser do tipo string e não deve estar vazio' }));
-		await mongodb.deleteQuickMessage(idPhone, id);		// E SE TIVER UM ARQUIVO NO CLOUDFLARE R2??
+		const message = await mongodb.QuickMessage.findById(id).lean();
+		if (!message) return (callback({ error: "Mensagem não encontrada pelo id" }));
+		if (["audio", "video", "image", "document"].includes(message.message?.type)) await cloudflareR2.deleteFile(idPhone, message.message?.[message.message.type]?.link);
+		await mongodb.deleteQuickMessage(idPhone, id);
 setTimeout(() => {
 		callback(204);
 }, 1000);
