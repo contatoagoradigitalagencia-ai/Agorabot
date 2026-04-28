@@ -29,24 +29,3 @@ export async function loadMessages(socket, data, callback) {
 		await mongodb.saveError(idPhone, `Error no metodo "loadMessages": ${error}`);
 	}
 }
-
-/**
- * @author VAMPETA
- * @brief METODO CRIADO ENVIAR MENSAGENS RAPIDAS PREDEFINIDAS PARA O FRONT END
- * @param {Object} socket OBJETO SOCKET DO CLIENTE
- * @param {Object} data DADOS ENVIADO PELO CLIENTE
- * @param {Object} callback FUNCAO DE RESPOSTA
-*/
-export async function quickMessages(socket, data, callback) {
-	const { idPhone } = socket.account;
-
-	try {
-		const messages = await mongodb.QuickMessage.find({ idPhone: idPhone }).sort({ _id: -1 }).select("-_id -idPhone");
-
-// setTimeout(() => {			// REMOVENDO DELAY
-		callback(messages.map(({ message }) => (message)));
-// }, 3000);
-	} catch (error) {
-		await mongodb.saveError(idPhone, `Error no metodo "quickMessages": ${error}`);
-	}
-}
