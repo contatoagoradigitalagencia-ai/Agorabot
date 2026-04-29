@@ -11,6 +11,7 @@ const message = new mongoose.Schema(
 			required: true
 		},
 		text: Object,
+		audio: Object,
 		image: Object,
 		location: Object
 	},

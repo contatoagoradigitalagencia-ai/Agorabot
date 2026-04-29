@@ -11,18 +11,21 @@ function validateMessage(phone, message) {
 	try {
 		if (!phone || typeof phone !== "string") return ('O campo "phone" deve ser do tipo string e não deve estar vazio');
 		if (!message || typeof message !== "object") return ('O campo "message" deve ser do tipo object e não deve estar vazio');
+		if (typeof message.type !== "string") return ('O campo "message.type" deve ser do tipo string e não deve estar vazio');
+		if (!message[message.type]) return (`o campo "${message.type}" não deve estar vazio`);
 		switch (message.type) {
 			case "text":
-				if (!message.text) return ('O campo "message.text" não deve estar vazio');
 				if (!message.text.body || typeof message.text.body !== "string") return ('O campo "message.text.body" deve ser do tipo string e não deve estar vazio');
 				break;
+			case "audio":
+				if (!message.audio.link || typeof message.audio.link !== "string") return ('O campo "message.audio.link" deve ser do tipo string e não deve estar vazio');
+				if (message.audio.voice && typeof message.audio.voice !== "boolean") return ('O campo "message.audio.voice" deve ser do tipo boolean');
+				break;
 			case "image":
-				if (!message.image) return ('O campo "message.image" não deve estar vazio');
-				if (!message.image.link || typeof message.image.link !== "string") return ('O campo "message.text.link" deve ser do tipo string e não deve estar vazio');
-				if (message.image.caption && typeof message.image.caption !== "string") return ('O campo "message.text.caption" deve ser do tipo string');
+				if (!message.image.link || typeof message.image.link !== "string") return ('O campo "message.image.link" deve ser do tipo string e não deve estar vazio');
+				if (message.image.caption && typeof message.image.caption !== "string") return ('O campo "message.image.caption" deve ser do tipo string');
 				break;
 			case "location":
-				if (!message.location) return ('O campo "message.location" não deve estar vazio');
 				if (message.location.name && typeof message.location.name !== "string") return ('O campo "message.location.name" deve ser do tipo string');
 				if (message.location.address && typeof message.location.address !== "string") return ('O campo "message.location.address" deve ser do tipo string');
 				if (typeof message.location.latitude !== "number" || !Number.isFinite(message.location.latitude) || message.location.latitude < -90 || message.location.latitude > 90) return ('Campo "message.location.latitude" inválido');
@@ -56,6 +59,9 @@ export async function sendMessage(socket, data, callback) {
 		switch (message.type) {
 			case "text":
 				wamid = await send.text(socket.account, phone, message);
+				break;
+			case "audio":
+				wamid = await send.audio(socket.account, phone, message);
 				break;
 			case "image":
 				wamid = await send.image(socket.account, phone, message);

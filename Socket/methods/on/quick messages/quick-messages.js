@@ -37,14 +37,18 @@ setTimeout(() => {
 function validateData(name, message) {
 	try {
 		if (!name || typeof name !== "string") return ('O campo "name" deve ser do tipo string e não deve estar vazio');
-		if (!message || typeof message !== "object") return ('O campo "message" deve ser do tipo string e não deve estar vazio');
+		if (!message || typeof message !== "object") return ('O campo "message" deve ser do tipo object e não deve estar vazio');
+		if (typeof message.type !== "string") return ('O campo "message.type" dever se do tipo string e não deve esta vazio');
+		if (!message[message.type]) return (`o campo "${message.type}" não deve estar vazio`);
 		switch (message.type) {
 			case "text":
-				if (!message.text) return ('O campo "message.text" não deve estar vazio');
 				if (!message.text.body || typeof message.text.body !== "string") return ('O campo "message.text.body" deve ser do tipo string e não deve estar vazio');
 				break;
+			case "audio":
+				if (!message.audio.link || typeof message.audio.link !== "string") return ('O campo "message.audio.link" deve ser do tipo string e não deve estar vazio');
+				if (typeof message.audio.voice !== "boolean") return ('O campo "message.audio.voice" deve ser do tipo boolean');
+				break;
 			case "image":
-				if (!message.image) return ('O campo "message.image" não deve estar vazio');
 				if (!message.image.link || typeof message.image.link !== "string") return ('O campo "message.image.link" deve ser do tipo string e não deve estar vazio');
 				if (message.image.caption && typeof message.image.caption !== "string") return ('O campo "message.image.caption" deve ser do tipo string');
 				break;
@@ -103,7 +107,7 @@ export async function deleteQuickMessage(socket, data, callback) {
 		if (!id || typeof id !== "string") return (callback({ error: 'O campo "id" deve ser do tipo string e não deve estar vazio' }));
 		const message = await mongodb.QuickMessage.findById(id).lean();
 		if (!message) return (callback({ error: "Mensagem não encontrada pelo id" }));
-		if (["audio", "video", "image", "document"].includes(message.message?.type)) await cloudflareR2.deleteFile(idPhone, message.message?.[message.message.type]?.link);
+		if (["audio", "image", "video", "document"].includes(message.message?.type)) await cloudflareR2.deleteFile(idPhone, message.message?.[message.message.type]?.link);
 		await mongodb.deleteQuickMessage(idPhone, id);
 setTimeout(() => {
 		callback(204);
