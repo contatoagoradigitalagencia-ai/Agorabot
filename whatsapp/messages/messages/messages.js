@@ -85,9 +85,9 @@ export default async function messages(account, value) {
 // audio				messages[n].audio
 // image				messages[n].image
 // video				messages[n].video
-// document				messages[n].document
 // location				messages[n].location
 // contacts				messages[n].contacts[]
+// document				messages[n].document
 // interactive			messages[n].interactive
 // button				messages[n].button
 // ephemeral			messages[n].ephemeral

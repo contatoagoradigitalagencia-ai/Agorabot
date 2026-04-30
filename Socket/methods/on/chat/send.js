@@ -19,17 +19,22 @@ function validateMessage(phone, message) {
 				break;
 			case "audio":
 				if (!message.audio.link || typeof message.audio.link !== "string") return ('O campo "message.audio.link" deve ser do tipo string e não deve estar vazio');
-				if (message.audio.voice && typeof message.audio.voice !== "boolean") return ('O campo "message.audio.voice" deve ser do tipo boolean');
+				if (typeof message.audio.voice !== "boolean") return ('O campo "message.audio.voice" deve ser do tipo boolean');
 				break;
 			case "image":
 				if (!message.image.link || typeof message.image.link !== "string") return ('O campo "message.image.link" deve ser do tipo string e não deve estar vazio');
-				if (message.image.caption && typeof message.image.caption !== "string") return ('O campo "message.image.caption" deve ser do tipo string');
+				if (typeof message.image.caption !== "string") return ('O campo "message.image.caption" deve ser do tipo string');
 				break;
 			case "location":
-				if (message.location.name && typeof message.location.name !== "string") return ('O campo "message.location.name" deve ser do tipo string');
-				if (message.location.address && typeof message.location.address !== "string") return ('O campo "message.location.address" deve ser do tipo string');
+				if (typeof message.location.name !== "string") return ('O campo "message.location.name" deve ser do tipo string');
+				if (typeof message.location.address !== "string") return ('O campo "message.location.address" deve ser do tipo string');
 				if (typeof message.location.latitude !== "number" || !Number.isFinite(message.location.latitude) || message.location.latitude < -90 || message.location.latitude > 90) return ('Campo "message.location.latitude" inválido');
 				if (typeof message.location.longitude !== "number" || !Number.isFinite(message.location.longitude) || message.location.longitude < -180 || message.location.longitude > 180) return ('Campo "message.location.longitude" inválido');
+				break;
+			case "document":
+				if (!message.document.link || typeof message.document.link !== "string") return ('O campo "message.document.link" deve ser do tipo string e não deve estar vazio');
+				if (!message.document.filename || typeof message.document.filename !== "string") return ('O campo "message.document.filename" deve ser do tipo string e não deve estar vazio');
+				if (typeof message.document.caption !== "string") return ('O campo "message.document.caption" deve ser do tipo string');
 				break;
 			default:
 				return (`Mensagem do tipo ${message.type} não existente`);
@@ -68,6 +73,9 @@ export async function sendMessage(socket, data, callback) {
 				break;
 			case "location":
 				wamid = await send.location(socket.account, phone, message);
+				break;
+			case "document":
+				wamid = await send.document(socket.account, phone, message);
 				break;
 		}
 		if (!wamid) return (callback({ error: "Erro interno" }));

@@ -15,9 +15,9 @@ export async function getQuickMessages(socket, data, callback) {
 
 	try {
 		if (type && typeof type !== "string") return (callback({ error: 'O campo "type" deve ser do tipo string' }));
-		if (type && !["text", "audio", "image", "location"].includes(type)) return (callback({ error: `Tipo de mensagem "${type}" não existe` }));
+		if (type && !["text", "audio", "image", "location", "document"].includes(type)) return (callback({ error: `Tipo de mensagem "${type}" não existe` }));
 		const query = { idPhone: idPhone, ...(type && { "message.type": type }) };
-		const messages = await mongodb.QuickMessage.find(query).select("-idPhone").lean();
+		const messages = await mongodb.QuickMessage.find(query).select("-idPhone").sort({ timestamp: -1 }).lean();
 		const res = messages.map(({ _id, ...rest }) => ({ id: _id, ...rest }));
 
 setTimeout(() => {
@@ -59,6 +59,11 @@ function validateData(name, message) {
 				if (message.location.latitude < -90 || message.location.latitude > 90) return ("Latitude fora do intervalo (-90 a 90)");
 				if (!message.location.longitude || typeof message.location.longitude !== "number") return ('O campo "message.location.longitude" deve ser do tipo number e não deve estar vazio');
 				if (message.location.longitude < -180 || message.location.longitude > 180) return ("Longitude fora do intervalo (-180 a 180)");
+				break;
+			case "document":
+				if (!message.document.link || typeof message.document.link !== "string") return ('O campo "message.document.link" deve ser do tipo string e não deve estar vazio');
+				if (!message.document.filename || typeof message.document.filename !== "string") return ('O campo "message.document.filename" deve ser do tipo string e não deve estar vazio');
+				if (message.document.caption && typeof message.document.caption !== "string") return ('O campo "message.document.caption" deve ser do tipo string');
 				break;
 			default:
 				return (null);
