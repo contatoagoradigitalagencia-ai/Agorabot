@@ -38,6 +38,20 @@ const image = new mongoose.Schema(
 	{ _id: false }
 );
 
+const video = new mongoose.Schema(
+	{
+		link: {
+			type: String,
+			required: true
+		},
+		caption: {
+			type: String,
+			required: false
+		}
+	},
+	{ _id: false }
+);
+
 const location = new mongoose.Schema(
 	{
 		name: {
@@ -83,7 +97,7 @@ const message = new mongoose.Schema(
 		type: {
 			type: String,
 			required: true,
-			enum: ["text", "audio", "image", "document", "location"]
+			enum: ["text", "audio", "video", "image", "document", "location"]
 		},
 		text: {
 			type: text,
@@ -101,6 +115,12 @@ const message = new mongoose.Schema(
 			type: image,
 			required: function () {
 				return (this.type === "image");
+			}
+		},
+		video: {
+			type: video,
+			required: function () {
+				return (this.type === "video");
 			}
 		},
 		location: {

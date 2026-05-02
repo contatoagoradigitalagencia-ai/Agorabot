@@ -25,6 +25,10 @@ function validateMessage(phone, message) {
 				if (!message.image.link || typeof message.image.link !== "string") return ('O campo "message.image.link" deve ser do tipo string e não deve estar vazio');
 				if (typeof message.image.caption !== "string") return ('O campo "message.image.caption" deve ser do tipo string');
 				break;
+			case "video":
+				if (!message.video.link || typeof message.video.link !== "string") return ('O campo "message.video.link" deve ser do tipo string e não deve estar vazio');
+				if (typeof message.video.caption !== "string") return ('O campo "message.video.caption" deve ser do tipo string');
+				break;
 			case "location":
 				if (typeof message.location.name !== "string") return ('O campo "message.location.name" deve ser do tipo string');
 				if (typeof message.location.address !== "string") return ('O campo "message.location.address" deve ser do tipo string');
@@ -70,6 +74,9 @@ export async function sendMessage(socket, data, callback) {
 				break;
 			case "image":
 				wamid = await send.image(socket.account, phone, message);
+				break;
+			case "video":
+				wamid = await send.video(socket.account, phone, message);
 				break;
 			case "location":
 				wamid = await send.location(socket.account, phone, message);

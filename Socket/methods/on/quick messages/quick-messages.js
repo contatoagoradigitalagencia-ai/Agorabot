@@ -15,7 +15,7 @@ export async function getQuickMessages(socket, data, callback) {
 
 	try {
 		if (type && typeof type !== "string") return (callback({ error: 'O campo "type" deve ser do tipo string' }));
-		if (type && !["text", "audio", "image", "location", "document"].includes(type)) return (callback({ error: `Tipo de mensagem "${type}" não existe` }));
+		if (type && !["text", "audio", "image", "video", "location", "document"].includes(type)) return (callback({ error: `Tipo de mensagem "${type}" não existe` }));
 		const query = { idPhone: idPhone, ...(type && { "message.type": type }) };
 		const messages = await mongodb.QuickMessage.find(query).select("-idPhone").sort({ timestamp: -1 }).lean();
 		const res = messages.map(({ _id, ...rest }) => ({ id: _id, ...rest }));
@@ -51,6 +51,10 @@ function validateData(name, message) {
 			case "image":
 				if (!message.image.link || typeof message.image.link !== "string") return ('O campo "message.image.link" deve ser do tipo string e não deve estar vazio');
 				if (message.image.caption && typeof message.image.caption !== "string") return ('O campo "message.image.caption" deve ser do tipo string');
+				break;
+			case "video":
+				if (!message.video.link || typeof message.video.link !== "string") return ('O campo "message.video.link" deve ser do tipo string e não deve estar vazio');
+				if (message.video.caption && typeof message.video.caption !== "string") return ('O campo "message.video.caption" deve ser do tipo string');
 				break;
 			case "location":
 				if (message.location.name && typeof message.location.name !== "string") return ('O campo "message.location.name" deve ser do tipo string');
