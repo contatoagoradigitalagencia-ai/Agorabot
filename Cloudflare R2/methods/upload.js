@@ -28,12 +28,14 @@ function getExtension(contentType) {
 */
 export async function upload(idPhone, token, from, url, type) {
 	try {
-		const res = await axios.get(url, {
+		const res = await axios({
+			method: "GET",
+			url: url,
 			responseType: "stream",
 			headers: {
 				Authorization: "Bearer " + token
 			}
-		})
+		});
 		const now = new Date();
 		const year = now.getFullYear();
 		const month = now.getMonth() + 1;

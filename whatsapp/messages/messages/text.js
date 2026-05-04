@@ -15,7 +15,6 @@ export default async function text(account, message) {
 		if (message.text.body[0] === "/" && account.adm.includes(message.from)) {
 			await commandsAdm(account, message);
 		} else if (account.bot.activated === true && stateBot === true) {
-			// await IA.groq["moonshotai/kimi-k2-instruct"].bot(account, message);
 			await IA.groq["llama-3.3-70b-versatile"].bot(account, message);
 		}
 	} catch (error) {

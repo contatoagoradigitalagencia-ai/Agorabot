@@ -6,6 +6,7 @@ import { chatHistory } from "./methods/groq/chatHistory.js";
 import { bot } from "./methods/groq/llama-3.3-70b-versatile/response/bot.js";
 import { products } from "./methods/groq/llama-3.3-70b-versatile/response/products.js";
 import { promptSuggestion } from "./methods/groq/llama-3.3-70b-versatile/response/promptSuggestion.js";
+import { transcribeFileMeta } from "./methods/groq/whisper-large-v3-turbo/transcribeFileMeta.js";
 
 /**
  * @author VAMPETA
@@ -15,7 +16,8 @@ export default class IA {
 	groq = {
 		groq: null,
 		"moonshotai/kimi-k2-instruct": {},
-		"llama-3.3-70b-versatile": {}
+		"llama-3.3-70b-versatile": {},
+		"whisper-large-v3-turbo": {}
 	};
 
 	constructor() {
@@ -30,5 +32,7 @@ export default class IA {
 		this.groq["llama-3.3-70b-versatile"].bot = bot.bind(this);
 		this.groq["llama-3.3-70b-versatile"].products = products.bind(this);
 		this.groq["llama-3.3-70b-versatile"].promptSuggestion = promptSuggestion.bind(this);
+
+		this.groq["whisper-large-v3-turbo"].transcribeFileMeta = transcribeFileMeta.bind(this);
 	}
 };
