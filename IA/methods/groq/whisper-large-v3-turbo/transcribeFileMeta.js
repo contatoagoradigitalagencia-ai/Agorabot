@@ -12,23 +12,6 @@ import mongodb from "../../../../MongoDB/Mongodb.js";
 */
 export async function transcribeFileMeta(idPhone, url, token) {
 	try {
-		// 		const res = await axios({
-		// 			method: "GET",
-		// 			url: url,
-		// 			responseType: "stream",
-		// 			headers: {
-		// 				Authorization: "Bearer " + token
-		// 			}
-		// 		});
-		// const transcription = await this.groq.groq.audio.transcriptions.create({
-		// 	file: res.data,
-		// 	model: "whisper-large-v3-turbo",
-		// });
-
-		// console.log(transcription.text);
-
-
-
 		const res = await axios({
 			method: "GET",
 			url: url,
@@ -37,17 +20,13 @@ export async function transcribeFileMeta(idPhone, url, token) {
 				Authorization: "Bearer " + token
 			}
 		});
-
-		const file = new File([res.data], "audio.ogg");
-
+		if (res.status !== 200) return ("");
 		const transcription = await this.groq.groq.audio.transcriptions.create({
-			file: file,
+			file: new File([res.data], "audio.ogg"),
 			model: "whisper-large-v3-turbo",
 		});
 
-		console.log(transcription.text);
-
-		return ("text");
+		return (transcription.text);
 	} catch (error) {
 		await mongodb.saveError(idPhone, `Error na funcao "transcribeFileMeta": ${error}`);
 		return ("");

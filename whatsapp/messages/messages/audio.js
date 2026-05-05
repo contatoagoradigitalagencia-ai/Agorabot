@@ -15,9 +15,8 @@ export default async function audio(account, message) {
 
 		message.audio.url = await cloudflareR2.upload(account.idPhone, account.accessToken, message.from, message.audio.url, "audio");
 		await mongodb.saveAudioReceived(account.idPhone, message);
-const transcribe = await IA.groq["whisper-large-v3-turbo"].transcribeFileMeta(account.idPhone, message.audio.url, account.accessToken);
-
 		// if (stateBot && account.bot.messageNotSupported) await send.text(account, message.from, { text: { body: account.bot.messageNotSupported } });
+		const transcribe = await IA.groq["whisper-large-v3-turbo"].transcribeFileMeta(account.idPhone, message.audio.url, account.accessToken);
 console.log(transcribe)
 	} catch (error) {
 		await mongodb.saveError(account.idPhone, `Error na funcao "audio": ${error}`);
