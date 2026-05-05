@@ -5,8 +5,9 @@ import socket from "../../Socket/Socket.js";
  * @brief METODO CRIADO PARA SALVAR MENSAGENS DE AUDIOS NO MONGODB
  * @param {String} idPhone IDENTIFICADOR DO NUMERO DE TELEFONE DO BOT
  * @param {Object} message UM UNICO ELEMENTO DE req.body.entry[n].changes[n].value.messages[n]
+ * @param {String} transcribe MENSAGEM TRANSCRIBE
 */
-export async function saveAudioReceived(idPhone, message) {
+export async function saveAudioReceived(idPhone, message, transcribe) {
 	const { id, from, timestamp, context, ...data } = message;
 	const fullContext = (context) ? await this.Message.findOne({ wamid: context.id }).select("-_id -__v") : undefined;
 
@@ -43,6 +44,7 @@ export async function saveAudioReceived(idPhone, message) {
 				$set: {
 					timestamp: new Date(Number(timestamp) * 1000),
 					context: fullContext,
+					transcribe: transcribe,			// DEVO POR AKI?
 					data: data
 				}
 			}

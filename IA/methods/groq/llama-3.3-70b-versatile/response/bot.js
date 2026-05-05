@@ -39,12 +39,12 @@ async function prompt(account) {
  * @author VAMPETA
  * @brief GERENCIA O COMPORTAMENTO DO BOT
  * @param {Object} account DADOS DO NUMERO QUE RECEBEU ATUALIZACOES
- * @param {Object} message UM UNICO ELEMENTO DE req.body.entry[n].changes[n].value.messages[n]
+ * @param {String} phone NUMERO QUE ENVIO A MENSAGEM
 */
-export async function bot(account, message) {
+export async function bot(account, phone) {
 	try {
 		let json = null;
-		const messages = [await prompt(account), ...(await this.groq.chatHistory(account, message))];
+		const messages = [await prompt(account), ...(await this.groq.chatHistory(account, phone, 5))];
 
 		for (let retry = 0; retry < 4; retry++) {
 			try {
@@ -65,16 +65,16 @@ console.log(json)
 		}
 		if (json === null) {
 			await mongodb.saveError(account.idPhone, "Não foi possível gerar uma resposta satisfatória com a IA.");
-			await send.text(account, message.from, { text: { body: "Tive um problema ao processar sua mensagem. Pode reescrever sua dúvida?" } });
+			await send.text(account, phone, { text: { body: "Tive um problema ao processar sua mensagem. Pode reescrever sua dúvida?" } });
 			return ;
 		}
 		if (json.text.length) {
 			for (const text of json.text) {
-				await send.text(account, message.from, { text: { body: text } });
+				await send.text(account, phone, { text: { body: text } });
 			}
 		}
 		if (json.command.length) {
-			await commandsIA(account, message, json.command);
+			await commandsIA(account, phone, json.command);
 		}
 	} catch (error) {
 		await mongodb.saveError(account.idPhone, `Error na funcao "bot": ${error}`);

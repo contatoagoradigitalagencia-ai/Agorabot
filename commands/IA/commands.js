@@ -8,25 +8,25 @@ import products from "./products.js";
  * @author VAMPETA
  * @brief GERENCIA A ATIVACAO DOS COMANDOS DA IA
  * @param {Object} account DADOS DO NUMERO QUE RECEBEU ATUALIZACOES
- * @param {Object} message UM UNICO ELEMENTO DE req.body.entry[n].changes[n].value.messages[n]
+ * @param {String} phone NUMERO QUE ENVIO A MENSAGEM
  * @param {Array<String>} commands ARRAY DE COMANDOS A SEREM EXECUTADOS
 */
-export default async function commandsIA(account, message, commands) {
+export default async function commandsIA(account, phone, commands) {
 	try {
 		for (const commandArg of commands) {
 			const command = commandArg.split(" ");
 
 			switch (command[0]) {
 				case "/location":
-					await location(account, message);
+					await location(account, phone);
 					break;
 
 				case "/redirect":
-					await redirect(account, message);
+					await redirect(account, phone);
 					break;
 
 				case "/products":
-					await products(account, message);
+					await products(account, phone);
 					break;
 
 				default:

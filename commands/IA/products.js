@@ -6,14 +6,13 @@ import send from "../../Send/Send.js";
  * @author VAMPETA
  * @brief INTERPRETA A MENSAGEM E GERA UMA RESPOSTA COM OS PRECOS
  * @param {Object} account DADOS DO NUMERO QUE RECEBEU ATUALIZACOES
- * @param {Object} message UM UNICO ELEMENTO DE req.body.entry[n].changes[n].value.messages[n]
+ * @param {String} phone NUMERO QUE ENVIO A MENSAGEM
 */
-export default async function products(account, message) {
+export default async function products(account, phone) {
 	try {
-		// const res = await IA.groq["moonshotai/kimi-k2-instruct"].products(account, message);
-		const res = await IA.groq["llama-3.3-70b-versatile"].products(account, message);
+		const res = await IA.groq["llama-3.3-70b-versatile"].products(account, phone);
 
-		if (res) await send.text(account, message.from, { text: { body: res } });
+		if (res) await send.text(account, phone, { text: { body: res } });
 	} catch (error) {
 		await mongodb.saveError(account.idPhone, `Error na funcao "products": ${error}`);
 	}

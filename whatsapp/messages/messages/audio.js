@@ -14,10 +14,10 @@ export default async function audio(account, message) {
 		const { stateBot } = await mongodb.Chat.findOne({ idPhone: account.idPhone, phone: message.from }).select("stateBot");
 
 		message.audio.url = await cloudflareR2.upload(account.idPhone, account.accessToken, message.from, message.audio.url, "audio");
-		await mongodb.saveAudioReceived(account.idPhone, message);
-		// if (stateBot && account.bot.messageNotSupported) await send.text(account, message.from, { text: { body: account.bot.messageNotSupported } });
 		const transcribe = await IA.groq["whisper-large-v3-turbo"].transcribeFileMeta(account.idPhone, message.audio.url, account.accessToken);
-console.log(transcribe)
+		await mongodb.saveAudioReceived(account.idPhone, message, transcribe);
+		// if (stateBot && account.bot.messageNotSupported) await send.text(account, message.from, { text: { body: account.bot.messageNotSupported } });
+// console.log(transcribe)
 	} catch (error) {
 		await mongodb.saveError(account.idPhone, `Error na funcao "audio": ${error}`);
 	}
