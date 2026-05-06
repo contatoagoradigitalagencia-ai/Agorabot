@@ -29,7 +29,6 @@ export async function infoDashboard(socket, data, callback) {
 			}
 		).select("-_id -__v -idPhone");
 
-setTimeout(() => {
 		if (metric) return (callback(metric));
 		callback({
 			timestamp: start,
@@ -38,7 +37,6 @@ setTimeout(() => {
 			sent: {},
 			newContacts: 0
 		});
-}, 1000);
 	} catch (error) {
 		await mongodb.saveError(idPhone, `Error no metodo "infoDashboard": ${error}`);
 	}

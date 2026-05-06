@@ -28,7 +28,6 @@ export async function loadChats(socket, data, callback) {
 		}
 		const chats = await mongodb.Chat.find(query).sort({ "lastMessage.timestamp": -1, _id: -1 }).limit(15).select("-__v");
 
-setTimeout(() => {			// REMOVENDO DELAY
 		callback({
 			chats,
 			hasMore: chats.length === 15,
@@ -37,7 +36,6 @@ setTimeout(() => {			// REMOVENDO DELAY
 				_id: chats[chats.length - 1]._id
 			} : null
 		});
-}, 1000);
 	} catch (error) {
 		await mongodb.saveError(idPhone, `Error no metodo "loadChats": ${error}`);
 	}

@@ -31,10 +31,6 @@ const message = new mongoose.Schema({
 	context: {
 		type: Object
 	},
-	transcribe: {			// DEVO POR AKI?
-		type: String,
-		require: false
-	},
 	data: {
 		type: Object
 	}

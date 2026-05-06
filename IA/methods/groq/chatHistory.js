@@ -10,9 +10,9 @@ import mongodb from "../../../MongoDB/Mongodb.js";
 */
 export async function chatHistory(account, phone, numberMessages) {
 	try {
-		const history = await mongodb.Message.find({ idPhone: account.idPhone, phone: phone, "data.type": "text" }).sort({ _id: -1 }).limit(numberMessages);
+		const history = await mongodb.Message.find({ idPhone: account.idPhone, phone: phone, "data.type": { $in: ["text", "audio"] } }).sort({ _id: -1 }).limit(numberMessages);
 
-		return (history.map((message) => ({ role: (message.direction === "inbound") ? "user" : "assistant", content: message.data.text.body })).reverse());
+		return (history.map((message) => ({ role: (message.direction === "inbound") ? "user" : "assistant", content: message.data.text?.body || message.data.audio?.transcribe || "" })).reverse());
 	} catch (error) {
 		await mongodb.saveError(account.idPhone, `Error na funcao "chatHistory": ${error}`);
 		return ([]);

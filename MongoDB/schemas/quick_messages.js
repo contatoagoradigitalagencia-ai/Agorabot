@@ -19,6 +19,10 @@ const audio = new mongoose.Schema(
 		voice: {
 			type: Boolean,
 			required: true
+		},
+		transcribe: {
+			type: String,
+			required: false
 		}
 	},
 	{ _id: false }

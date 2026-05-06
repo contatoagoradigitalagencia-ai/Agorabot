@@ -19,9 +19,7 @@ export async function updatePassword(socket, data, callback) {
 		if (!(await bcrypt.compare(password, hashPassword.login.password))) return (callback({ error: "Senha antiga incorreta!" }));
 		const hashNewPassword = await bcrypt.hash(newPassword, 10);
 		await mongodb.saveNewPassword(idPhone, hashNewPassword);
-setTimeout(() => {
 		callback(204);
-}, 1000);
 	} catch (error) {
 		await mongodb.saveError(idPhone, `Error no metodo "updatePassword": ${error}`);
 	}

@@ -13,9 +13,7 @@ export async function loadContacts(socket, data, callback) {
 	try {
 		const contacts = await mongodb.Contact.find({ idPhone: idPhone }).select("-_id -__v");
 
-setTimeout(() => {
 		callback(contacts);
-}, 1000);
 	} catch (error) {
 		await mongodb.saveError(idPhone, `Error no metodo "loadContacts": ${error}`);
 	}

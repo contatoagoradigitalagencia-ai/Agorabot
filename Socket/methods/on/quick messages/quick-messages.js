@@ -1,6 +1,7 @@
 import mongodb from "../../../../MongoDB/Mongodb.js";
 import messages from "../../../../MongoDB/schemas/messages.js";
 import cloudflareR2 from "../../../../Cloudflare R2/CloudflareR2.js";
+import IA from "../../../../IA/IA.js";
 
 /**
  * @author VAMPETA
@@ -20,9 +21,7 @@ export async function getQuickMessages(socket, data, callback) {
 		const messages = await mongodb.QuickMessage.find(query).select("-idPhone").sort({ timestamp: -1 }).lean();
 		const res = messages.map(({ _id, ...rest }) => ({ id: _id, ...rest }));
 
-setTimeout(() => {
 		callback(res);
-}, 1000);
 	} catch (error) {
 		await mongodb.saveError(idPhone, `Error no metodo "getQuickMessages": ${error}`);
 	}
@@ -91,11 +90,10 @@ export async function saveQuickMessage(socket, data, callback) {
 	try {
 		const error = validateData(name, message);
 		if (error) return (callback({ error: error }));
+		if (message.type === "audio") message.audio.transcribe = await IA.groq["whisper-large-v3-turbo"].transcribeFileMeta(id, message.audio.link);
 		const _id = await mongodb.saveQuickMessage(idPhone, id, name, message);
 
-setTimeout(() => {
 		callback({ id: _id });
-}, 1000);
 	} catch (error) {
 		await mongodb.saveError(idPhone, `Error no metodo "saveQuickMessage": ${error}`);
 	}
@@ -118,9 +116,7 @@ export async function deleteQuickMessage(socket, data, callback) {
 		if (!message) return (callback({ error: "Mensagem não encontrada pelo id" }));
 		if (["audio", "image", "video", "document"].includes(message.message?.type)) await cloudflareR2.deleteFile(idPhone, message.message?.[message.message.type]?.link);
 		await mongodb.deleteQuickMessage(idPhone, id);
-setTimeout(() => {
 		callback(204);
-}, 1000);
 	} catch (error) {
 		await mongodb.saveError(idPhone, `Error no metodo "deleteQuickMessage": ${error}`);
 	}

@@ -15,9 +15,7 @@ export async function infoContact(socket, data, callback) {
 		if (!phone || typeof phone !== "string") return (callback({ error: "Número ausente" }));
 		const res = await mongodb.Contact.findOne({ idPhone: idPhone, phone: phone }).select("-_id -__v");
 
-setTimeout(() => {
 		callback(res);
-}, 1000);
 	} catch (error) {
 		await mongodb.saveError(idPhone, `Error no metodo "getinfo": ${error}`);
 	}

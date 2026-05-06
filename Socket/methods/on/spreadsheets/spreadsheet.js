@@ -15,7 +15,6 @@ export async function getSpreadsheets(socket, data, callback) {
 		const pages = await googleSheets.getPages(socket.account);
 		const account = await mongodb.Account.findOne({ idPhone: idPhone }).select("googleSheets -_id");
 
-setTimeout(() => {
 		callback({
 			url: account.googleSheets.spreadsheet,
 			pages: pages.map((page) => {
@@ -25,7 +24,6 @@ setTimeout(() => {
 				});
 			})
 		});
-}, 1000);
 	} catch (error) {
 		await mongodb.saveError(idPhone, `Error no metodo "getSpreadsheets": ${error}`);
 	}
@@ -47,9 +45,7 @@ export async function updateUsedSpreadsheets(socket, data, callback) {
 		if ((add && typeof add !== "string") || (remove && typeof remove !== "string")) return (callback({ error: 'O campo "add" ou "remove" deve ser do tipo string' }));
 		if (add) await mongodb.addSpreadsheets(idPhone, add);
 		if (remove) await mongodb.removeSpreadsheets(idPhone, remove);
-setTimeout(() => {
 		callback(204);
-}, 1000);
 	} catch (error) {
 		await mongodb.saveError(idPhone, `Error no metodo "updateUsedSpreadsheets": ${error}`);
 	}

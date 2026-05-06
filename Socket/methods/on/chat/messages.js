@@ -18,13 +18,11 @@ export async function loadMessages(socket, data, callback) {
 		const messages = await mongodb.Message.find(query).sort({ _id: -1 }).limit(15).select("-__v");
 		const ordered = messages.reverse();
 
-// setTimeout(() => {			// REMOVENDO DELAY
 		callback({
 			messages: ordered,
 			hasMore: messages.length === 15,
 			nextCursor: (ordered.length) ? ordered[0]._id : null
 		});
-// }, 1000);
 	} catch (error) {
 		await mongodb.saveError(idPhone, `Error no metodo "loadMessages": ${error}`);
 	}
