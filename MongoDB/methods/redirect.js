@@ -156,3 +156,32 @@ export async function saveMessageRedirect(idPhone, messsage) {
 		await this.saveError(idPhone, `Error no metodo "saveMessageRedirect": ${error}`);
 	}
 }
+
+/**
+ * @author VAMPETA
+ * @brief METODO QUE MARCA NO CONTATO QUE ELE DESEJA ATENDIMENTO HUMANO
+ * @param {String} idPhone IDENTIFICADOR DO NUMERO DE TELEFONE DO BOT
+ * @param {String} phone NUMERO QUE PEDIU ATENDIMENTO HUMANO
+*/
+export async function saveHumaneService(idPhone, phone) {			// NAO TA FUNCIONANDO
+	try {
+console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaa")
+		await this.Contact.updateOne(
+			{
+				idPhone: idPhone,
+				phone: phone
+			},
+			{
+				$set: {
+					bot: false,
+					"humanSupport.waiting": true
+				},
+				$inc: {
+					"humanSupport.requestCount": 1
+				}
+			}
+		);
+	} catch (error) {
+		await this.saveError(idPhone, `Error no metodo "saveHumaneService": ${error}`);
+	}
+}

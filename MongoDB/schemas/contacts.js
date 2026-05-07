@@ -1,5 +1,23 @@
 import mongoose from "mongoose";
 
+const humaneService = new mongoose.Schema(
+	{
+		waiting: {
+			type: Boolean,
+			default: false
+		},
+		timestamp: {
+			type: Date,
+			default: Date.now
+		},
+		requestCount: {
+			type: Number,
+			default: 0
+		}
+	},
+	{ _id: false }
+);
+
 const contacts = new mongoose.Schema({
 	idPhone: {
 		type: String,
@@ -24,6 +42,10 @@ const contacts = new mongoose.Schema({
 	bot: {
 		type: Boolean,
 		default: true
+	},
+	humaneService: {
+		type: humaneService,
+		default: () => ({})
 	}
 });
 
