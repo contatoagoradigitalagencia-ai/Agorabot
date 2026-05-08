@@ -20,7 +20,7 @@ import { saveContactsReceived, saveContactsSent } from "./methods/contacts.js";
 import { saveDocumentReceived, saveDocumentSent } from "./methods/document.js";
 import { saveButtonSent } from "./methods/button.js";
 import { saveListSent } from "./methods/list.js";
-import { updateStateRedirect, updateRedirect, saveRedirect, removeRedirect, newRedirect, saveMessageRedirect, saveHumaneService } from "./methods/redirect.js";
+import { updateStateRedirect, updateRedirect, saveRedirect, removeRedirect, newRedirect, saveMessageRedirect, saveHumanService } from "./methods/redirect.js";
 import { saveStateBot, updateStateBot } from "./methods/configChat.js";
 import { updateVisualization } from "./methods/updateVisualization.js";
 import { saveHumanView } from "./methods/humanViewed.js";
@@ -59,7 +59,7 @@ export default class Mongodb {
 		this.removeRedirect = removeRedirect.bind(this);
 		this.newRedirect = newRedirect.bind(this);
 		this.saveMessageRedirect = saveMessageRedirect.bind(this);
-		this.saveHumaneService = saveHumaneService.bind(this);
+		this.saveHumanService = saveHumanService.bind(this);
 		this.saveNewPassword = saveNewPassword.bind(this);
 
 		this.saveWamid = saveWamid.bind(this);

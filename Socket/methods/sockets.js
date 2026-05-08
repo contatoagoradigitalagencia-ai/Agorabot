@@ -47,6 +47,9 @@ export async function configEvents() {
 		socket.on("chat:bot:on_off", (data, callback) => this.on.chat.bot.botOnOff(socket, data, callback));
 		socket.on("chat:info_contact", (data, callback) => this.on.chat.infoContact(socket, data, callback));
 
+		// /human-service
+		socket.on("human-service:get_messages_waiting_service", (data, callback) => this.on.humanService.getMessagesWaitingService(socket, data, callback));
+
 		// /contacts
 		socket.on("contacts:load_contacts", (data, callback) => this.on.contacts.loadContacts(socket, data, callback));
 		socket.on("contacts:save_comment", (data, callback) => this.on.contacts.saveComment(socket, data, callback));

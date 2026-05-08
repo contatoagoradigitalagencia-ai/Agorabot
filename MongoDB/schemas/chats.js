@@ -36,11 +36,7 @@ const chats = new mongoose.Schema({
 		type: String,
 		required: true
 	},
-	lastMessage: lastMessage,
-	stateBot: {
-		type: Boolean,
-		default: true
-	}
+	lastMessage: lastMessage
 });
 
 chats.index({ idPhone: 1, phone: 1 }, { unique: true });

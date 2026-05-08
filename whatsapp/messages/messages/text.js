@@ -11,10 +11,10 @@ import commandsAdm from "../../../commands/adm/commands.js";
 export default async function text(account, message) {
 	try {
 		await mongodb.saveTextReceived(account.idPhone, message);
-		const { stateBot } = await mongodb.Chat.findOne({ idPhone: account.idPhone, phone: message.from }).select("stateBot");
+		const { bot } = await mongodb.Contact.findOne({ idPhone: account.idPhone, phone: message.from }).select("-_id bot").lean();
 		if (message.text.body[0] === "/" && account.adm.includes(message.from)) {
 			await commandsAdm(account, message);
-		} else if (account.bot.activated === true && stateBot === true) {
+		} else if (account.bot.activated === true && bot === true) {
 			await IA.groq["llama-3.3-70b-versatile"].bot(account, message.from);
 		}
 	} catch (error) {

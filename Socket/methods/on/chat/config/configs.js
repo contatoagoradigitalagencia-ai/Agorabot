@@ -13,12 +13,9 @@ export async function botOnOff(socket, data, callback) {
 
 	try {
 		if (!phone || typeof phone !== "string") return (callback({ error: "Um número de contato deve ser enviado" }));
-		if (typeof stateBot === "undefined") {
-			const chat = await mongodb.Chat.findOne({ idPhone: idPhone, phone: phone }).select("stateBot");
-			return (callback({ stateBot: chat?.stateBot }));
-		}
+		if (typeof stateBot === "undefined") return (callback({ error: "Novo estado do bot não enviado" }));
 		await mongodb.saveStateBot(idPhone, phone, stateBot);
-		callback({ stateBot: stateBot });
+		callback(204);
 	} catch (error) {
 		await mongodb.saveError(idPhone, `Error no metodo "botOnOff": ${error}`);
 	}

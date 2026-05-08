@@ -11,12 +11,11 @@ import send from "../../../Send/Send.js";
 */
 export default async function audio(account, message) {
 	try {
-		const { stateBot } = await mongodb.Chat.findOne({ idPhone: account.idPhone, phone: message.from }).select("stateBot");
-
 		message.audio.url = await cloudflareR2.upload(account.idPhone, account.accessToken, message.from, message.audio.url, "audio");
 		message.audio.transcribe = await IA.groq["whisper-large-v3-turbo"].transcribeFileMeta(account.idPhone, message.audio.url, account.accessToken);
 		await mongodb.saveAudioReceived(account.idPhone, message);
-		if (account.bot.activated === true && stateBot === true) await IA.groq["llama-3.3-70b-versatile"].bot(account, message.from);
+		const { bot } = await mongodb.Contact.findOne({ idPhone: account.idPhone, phone: message.from }).select("-_id bot").lean();
+		if (account.bot.activated === true && bot === true) await IA.groq["llama-3.3-70b-versatile"].bot(account, message.from);
 	} catch (error) {
 		await mongodb.saveError(account.idPhone, `Error na funcao "audio": ${error}`);
 	}

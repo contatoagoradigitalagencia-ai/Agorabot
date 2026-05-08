@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const humaneService = new mongoose.Schema(
+const humanService = new mongoose.Schema(
 	{
 		waiting: {
 			type: Boolean,
@@ -43,12 +43,13 @@ const contacts = new mongoose.Schema({
 		type: Boolean,
 		default: true
 	},
-	humaneService: {
-		type: humaneService,
+	humanService: {
+		type: humanService,
 		default: () => ({})
 	}
 });
 
 contacts.index({ idPhone: 1, phone: 1 }, { unique: true });
+contacts.index({ idPhone: 1, "humanService.waiting": 1, "humanService.timestamp": -1 });
 
 export default mongoose.model("contact", contacts);

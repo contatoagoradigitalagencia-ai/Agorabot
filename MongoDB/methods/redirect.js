@@ -163,9 +163,8 @@ export async function saveMessageRedirect(idPhone, messsage) {
  * @param {String} idPhone IDENTIFICADOR DO NUMERO DE TELEFONE DO BOT
  * @param {String} phone NUMERO QUE PEDIU ATENDIMENTO HUMANO
 */
-export async function saveHumaneService(idPhone, phone) {			// NAO TA FUNCIONANDO
+export async function saveHumanService(idPhone, phone) {
 	try {
-console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaa")
 		await this.Contact.updateOne(
 			{
 				idPhone: idPhone,
@@ -174,14 +173,15 @@ console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaa")
 			{
 				$set: {
 					bot: false,
-					"humanSupport.waiting": true
+					"humanService.waiting": true,
+					"humanService.timestamp": new Date()
 				},
 				$inc: {
-					"humanSupport.requestCount": 1
+					"humanService.requestCount": 1
 				}
 			}
 		);
 	} catch (error) {
-		await this.saveError(idPhone, `Error no metodo "saveHumaneService": ${error}`);
+		await this.saveError(idPhone, `Error no metodo "saveHumanService": ${error}`);
 	}
 }

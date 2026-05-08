@@ -18,6 +18,9 @@ import { infoContact } from "./methods/on/chat/config/contact.js";
 // emit /chat/:phone
 import { newMessage, updateView, newReact } from "./methods/emit/chat/chat.js";
 
+// /human-service
+import { getMessagesWaitingService } from "./methods/on/human service/messages.js";
+
 // on /contacts
 import { loadContacts, saveComment } from "./methods/on/contacts/contacts.js";
 
@@ -46,6 +49,7 @@ export default class Socket {
 		chat: {
 			bot: {}
 		},
+		humanService: {},
 		contacts: {},
 		quickMessages: {},
 		bot: {},
@@ -73,13 +77,16 @@ export default class Socket {
 		this.on.chat.loadMessages = loadMessages.bind(this);
 		this.on.chat.replyWindow = replyWindow.bind(this);
 		this.on.chat.sendMessage = sendMessage.bind(this);
-		this.on.chat.bot.botOnOff = botOnOff.bind(this);			// REFATORAR DEPOIS
+		this.on.chat.bot.botOnOff = botOnOff.bind(this);			// REFATOREI MAS FALTA REMOVER O .bot
 		this.on.chat.infoContact = infoContact.bind(this);
 
 		// /chat/:phone
 		this.emit.chat.newMessage = newMessage.bind(this);
 		this.emit.chat.updateView = updateView.bind(this);
 		this.emit.chat.newReact = newReact.bind(this);
+
+		// /human-service
+		this.on.humanService.getMessagesWaitingService = getMessagesWaitingService.bind(this);
 
 		// /contacts
 		this.on.contacts.loadContacts = loadContacts.bind(this);

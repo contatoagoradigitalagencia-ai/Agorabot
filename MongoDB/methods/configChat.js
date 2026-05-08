@@ -7,14 +7,14 @@
 */
 export async function saveStateBot(idPhone, phone, stateBot) {
 	try {
-		await this.Chat.updateOne(
+		await this.Contact.updateOne(
 			{
 				idPhone: idPhone,
 				phone: phone
 			},
 			{
 				$set: {
-					stateBot: stateBot
+					bot: stateBot
 				}
 			}
 		);
