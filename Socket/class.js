@@ -19,7 +19,7 @@ import { infoContact } from "./methods/on/chat/config/contact.js";
 import { newMessage, updateView, newReact } from "./methods/emit/chat/chat.js";
 
 // /human-service
-import { getMessagesWaitingService } from "./methods/on/human service/messages.js";
+import { getMessagesWaitingService, removeWaitingService } from "./methods/on/human service/messages.js";
 
 // on /contacts
 import { loadContacts, saveComment } from "./methods/on/contacts/contacts.js";
@@ -87,6 +87,7 @@ export default class Socket {
 
 		// /human-service
 		this.on.humanService.getMessagesWaitingService = getMessagesWaitingService.bind(this);
+		this.on.humanService.removeWaitingService = removeWaitingService.bind(this);
 
 		// /contacts
 		this.on.contacts.loadContacts = loadContacts.bind(this);

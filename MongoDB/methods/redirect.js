@@ -185,3 +185,28 @@ export async function saveHumanService(idPhone, phone) {
 		await this.saveError(idPhone, `Error no metodo "saveHumanService": ${error}`);
 	}
 }
+
+/**
+ * @author VAMPETA
+ * @brief METODO QUE DESMARCA NO CONTATO QUE ELE DESEJA ATENDIMENTO HUMANO
+ * @param {String} idPhone IDENTIFICADOR DO NUMERO DE TELEFONE DO BOT
+ * @param {String} phone NUMERO QUE PEDIU ATENDIMENTO HUMANO
+*/
+export async function removeHumanService(idPhone, phone) {
+	try {
+		await this.Contact.updateOne(
+			{
+				idPhone: idPhone,
+				phone: phone
+			},
+			{
+				$set: {
+					bot: true,
+					"humanService.waiting": false
+				}
+			}
+		);
+	} catch (error) {
+		await this.saveError(idPhone, `Error no metodo "removeHumanService": ${error}`);
+	}
+}

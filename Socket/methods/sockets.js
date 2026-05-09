@@ -49,6 +49,7 @@ export async function configEvents() {
 
 		// /human-service
 		socket.on("human-service:get_messages_waiting_service", (data, callback) => this.on.humanService.getMessagesWaitingService(socket, data, callback));
+		socket.on("human-service:remove_waiting_service", (data, callback) => this.on.humanService.removeWaitingService(socket, data, callback));
 
 		// /contacts
 		socket.on("contacts:load_contacts", (data, callback) => this.on.contacts.loadContacts(socket, data, callback));
