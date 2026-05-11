@@ -7,7 +7,7 @@ import send from "../../Send/Send.js";
  * @param {Object} account DADOS DO NUMERO QUE RECEBEU ATUALIZACOES
  * @param {String} phone NUMERO QUE ENVIO A MENSAGEM
 */
-export default async function location(account, phone) {
+export async function location(account, phone) {
 	try {
 		if (!account.bot.location.latitude || !account.bot.location.longitude || !account.bot.location.name || !account.bot.location.address) return ;
 		await send.location(account, phone, { location: { latitude: account.bot.location.latitude, longitude: account.bot.location.longitude, name: account.bot.location.name, address: account.bot.location.address } });

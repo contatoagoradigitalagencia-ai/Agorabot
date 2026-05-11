@@ -1,8 +1,8 @@
 import mongodb from "../../MongoDB/Mongodb.js";
 
-import location from "./location.js";
-import redirect from "./redirect.js";
-import products from "./products.js";
+import { location } from "./location.js";
+import { redirect } from "./redirect.js";
+import { products } from "./products.js";
 
 /**
  * @author VAMPETA

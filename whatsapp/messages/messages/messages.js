@@ -32,43 +32,33 @@ export default async function messages(account, value) {
 				case ("reaction"):
 					await reaction(account, message);
 					break;
-
 				case ("text"):
 					await text(account, message);
 					break;
-
 				case ("sticker"):
 					await sticker(account, message);
 					break;
-
 				case ("audio"):
 					await audio(account, message);
 					break;
-
 				case ("image"):
 					await image(account, message);
 					break;
-
 				case ("video"):
 					await video(account, message);
 					break;
-
 				case ("location"):
 					await location(account, message);
 					break;
-
 				case ("contacts"):
 					await contacts(account, message);
 					break;
-
 				case ("document"):
 					await document(account, message);
 					break;
-
 				case ("interactive"):
 					await interactive(account, message);
 					break;
-	
 				default:
 					await mongodb.saveTextReceived(account.idPhone, { id: message.id, from: message.from, timestamp: message.timestamp, type: "text", text: { body: `Mensagem não suportada: ${message.type}` } });
 					if (account.bot.messageNotSupported) await send.text(account, message.from, { text: { body: account.bot.messageNotSupported } });

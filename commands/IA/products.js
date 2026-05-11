@@ -8,7 +8,7 @@ import send from "../../Send/Send.js";
  * @param {Object} account DADOS DO NUMERO QUE RECEBEU ATUALIZACOES
  * @param {String} phone NUMERO QUE ENVIO A MENSAGEM
 */
-export default async function products(account, phone) {
+export async function products(account, phone) {
 	try {
 		const res = await IA.groq["llama-3.3-70b-versatile"].products(account, phone);
 

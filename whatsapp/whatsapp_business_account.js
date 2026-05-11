@@ -17,7 +17,6 @@ export default async function whatsapp_business_account(entries) {
 						case ("messages"):
 							await fieldMessages(change);
 							break;
-
 						default:
 							throw (`Evento não suportado ==> ${change.field}`);
 					}
