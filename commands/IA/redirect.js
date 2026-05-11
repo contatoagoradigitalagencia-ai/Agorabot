@@ -17,7 +17,7 @@ export async function redirect(account, phone) {
 		// 	await send.text(account, account.bot.redirect?.numbers[0], { text: { body: `Link do hitórico de conversa: ${process.env.URL_FRONT_END}/chat/${phone}` } });
 		// }
 		// if (account.bot.redirect.message) await send.text(account, phone, { text: { body: account.bot.redirect.message } });
-		// await mongodb.saveMetricRedirect(account.idPhone);
+		// await mongodb.saveMetricRedirect(account.idPhone);;
 
 
 
