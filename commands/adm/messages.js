@@ -216,9 +216,9 @@ export async function button(account, message) {
 		await send.button(account, message.from, { body: { text: "texto do body" }, action: { buttons: buttons } });
 		await send.button(account, message.from, { context: { message_id: message.id }, body: { text: "texto do body" }, action: { buttons: buttons } });
 		await send.button(account, message.from, { header: { text: "texto do header" }, body: { text: "texto do body" }, footer: { text: "texto do footer" }, action: { buttons: buttons } });
-		await send.button(account, message.from, { header: { image: { link: "https://cloudfront-us-east-1.images.arcpublishing.com/bloomberglinea/D4G26SQFRNHRHBVURTB5HJSIFI.png" } }, body: { text: "texto do body" }, action: { buttons: buttons } });
-		await send.button(account, message.from, { header: { video: { link: "https://download.samplelib.com/mp4/sample-5s.mp4" } }, body: { text: "texto do body" }, action: { buttons: buttons } });
-		await send.button(account, message.from, { header: { document: { link: "https://equilead.org/assets/eventagendadocument/sample.pdf", filename: "pdf teste" } }, body: { text: "texto do body" }, action: { buttons: buttons } });
+		await send.button(account, message.from, { header: { image: { link: process.env.CLOUDFLARE_R2_URL_PUBLIC + "/871876402681006/5521971178764/image/2026/3/1773779116930-bba45ff0-4571-4508-a4f3-9adf4982aa78.jpg" } }, body: { text: "texto do body" }, action: { buttons: buttons } });
+		await send.button(account, message.from, { header: { video: { link: process.env.CLOUDFLARE_R2_URL_PUBLIC + "/871876402681006/5521971178764/video/2026/3/1773870674570-ce6194d7-4530-45b8-a48f-33b965f47187.mp4" } }, body: { text: "texto do body" }, action: { buttons: buttons } });
+		await send.button(account, message.from, { header: { document: { link: process.env.CLOUDFLARE_R2_URL_PUBLIC + "/871876402681006/5521971178764/document/2026/3/1773961241179-a37e1132-c074-450b-b477-134e5ef21b9b.pdf", filename: "pdf teste" } }, body: { text: "texto do body" }, action: { buttons: buttons } });
 	} catch (error) {
 		await mongodb.saveError(account.idPhone, `Error na funcao "button": ${error}`);
 	}
