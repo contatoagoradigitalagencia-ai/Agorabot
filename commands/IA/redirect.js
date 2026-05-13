@@ -9,18 +9,6 @@ import send from "../../Send/Send.js";
 */
 export async function redirect(account, phone) {
 	try {
-		// await mongodb.saveHumanService(account.idPhone, phone);	// AGORA O REDIRECIONAMENTO ESTA SENDO FEITO ATRAVEZ DE UMA RESPOSTA DE UMA MENSAGEM TIPO BUTTON
-		// if (account.bot.redirect.numbers.length > 0) {
-		// 	if (account.bot.redirect.numbers.length > 1) await mongodb.updateRedirect(account.idPhone);
-		// 	await send.text(account, phone, { text: { body: `Em breve um atendente vai entrar em contato com você.\nLink do contato: https://wa.me/${account.bot.redirect?.numbers[0]}?text=Gostaria%20de%20continuar%20o%20atendimento` } });
-		// 	await send.text(account, account.bot.redirect?.numbers[0], { text: { body: `Um cliente deseja atendimento humano.\nContato: ${phone}\nLink do contato: https://wa.me/${phone}` } });
-		// 	await send.text(account, account.bot.redirect?.numbers[0], { text: { body: `Link do hitórico de conversa: ${process.env.URL_FRONT_END}/chat/${phone}` } });
-		// }
-		// if (account.bot.redirect.message) await send.text(account, phone, { text: { body: account.bot.redirect.message } });
-		// await mongodb.saveMetricRedirect(account.idPhone);
-
-
-
 		const buttons = [
 			{
 				type: "reply",

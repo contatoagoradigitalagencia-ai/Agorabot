@@ -37,6 +37,10 @@ const messageTypes = new mongoose.Schema(
 		document: {
 			type: Number,
 			default: 0
+		},
+		button: {
+			type: Number,
+			default: 0
 		}
 	},
 	{ _id: false }
