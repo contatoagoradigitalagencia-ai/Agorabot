@@ -44,7 +44,7 @@ export default async function interactive(account, message) {
 				await button_reply(account, message);
 				break;
 			case ("list_reply"):
-				console.log("chegou resposta de lista");
+				// console.log("chegou resposta de lista");
 				break;
 			default:
 				await mongodb.saveTextReceived(account.idPhone, { id: message.id, from: message.from, timestamp: message.timestamp, type: "text", text: { body: `Mensagem interactive não suportada: ${message.interactive.type}` } });
