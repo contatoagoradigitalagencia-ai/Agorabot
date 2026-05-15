@@ -12,10 +12,10 @@ export async function loadMessages(socket, data, callback) {
 	const { phone, beforeId } = data;
 
 	try {
-		if (!phone || typeof phone !== "string") return ;
+		if (!phone || typeof phone !== "string") return ({ error:'O campo "phone" deve ser do tipo string e não deve estar vazio' });
 		const query = { idPhone: idPhone, phone: phone };
 		if (beforeId) query._id = { $lt: beforeId };
-		const messages = await mongodb.Message.find(query).sort({ _id: -1 }).limit(15).select("-__v");
+		const messages = await mongodb.Message.find(query).sort({ _id: -1 }).limit(15).select("-__v").lean();
 		const ordered = messages.reverse();
 
 		callback({
@@ -23,6 +23,7 @@ export async function loadMessages(socket, data, callback) {
 			hasMore: messages.length === 15,
 			nextCursor: (ordered.length) ? ordered[0]._id : null
 		});
+		await mongodb.saveHumanView(idPhone, phone);
 	} catch (error) {
 		await mongodb.saveError(idPhone, `Error no metodo "loadMessages": ${error}`);
 	}
