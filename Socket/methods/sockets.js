@@ -80,6 +80,9 @@ export async function configEvents() {
 		// /settings
 		socket.on("settings:update_password", (data, callback) => this.on.settings.updatePassword(socket, data, callback));
 
+		// /support
+		socket.on("support:get_info_support", (data, callback) => this.on.support.getInfoSupport(socket, data, callback));
+
 		socket.on("disconnect", () => this.disconnect(socket));
 	});
 }

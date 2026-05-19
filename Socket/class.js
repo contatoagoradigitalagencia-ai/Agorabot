@@ -35,6 +35,10 @@ import { getSpreadsheets, updateUsedSpreadsheets } from "./methods/on/spreadshee
 // on /settings
 import { updatePassword } from "./methods/on/settings/password.js";
 
+// on /sepport
+import { getInfoSupport } from "./methods/on/support/support.js";
+
+
 /**
  * @author VAMPETA
  * @brief CLASSE CRIADA PARA GERENCIAR ATUALIZACAO DE MENSAGENS DO FRONT END CONECTADO AO SOCKET
@@ -51,7 +55,8 @@ export default class Socket {
 		quickMessages: {},
 		bot: {},
 		spreadsheets: {},
-		settings: {}
+		settings: {},
+		support: {}
 	};
 	emit = {
 		chat: {}
@@ -114,5 +119,8 @@ export default class Socket {
 
 		// /settings
 		this.on.settings.updatePassword = updatePassword.bind(this);
+
+		// /support
+		this.on.support.getInfoSupport = getInfoSupport.bind(this);
 	}
 };
