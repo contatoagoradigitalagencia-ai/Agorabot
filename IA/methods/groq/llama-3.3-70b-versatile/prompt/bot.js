@@ -29,8 +29,8 @@ const promptLocation = `
 
 const promptRedirect = `
 - /redirect → Regras de uso:
-  • a solicitação estiver fora do escopo,
-  • a informação não existir nos dados fornecidos,
+  • a solicitação estiver fora do escopo.
+  • a informação não existir nos dados fornecidos.
   • houver risco ou decisão sensível.
 `;
 
