@@ -67,7 +67,7 @@ export default async function commandsIA(account, phone, commands, json) {
 					await products(account, phone);
 					break;
 
-case "/getConstructions":				// GAMBIARRA 
+case "/getConstructions":				// GAMBIARRA
 	await getConstructions(account, phone);
 	break;
 case "/saveConstructions":				// GAMBIARRA
