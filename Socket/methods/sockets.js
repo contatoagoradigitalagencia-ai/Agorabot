@@ -46,6 +46,7 @@ export async function configEvents() {
 		socket.on("chat:send_message", (data, callback) => this.on.chat.sendMessage(socket, data, callback));
 		socket.on("chat:on_off", (data, callback) => this.on.chat.botOnOff(socket, data, callback));
 		socket.on("chat:info_contact", (data, callback) => this.on.chat.infoContact(socket, data, callback));
+		socket.on("chat:response_suggestion", (data, callback) => this.on.chat.responseSuggestion(socket, data, callback));
 
 		// /human-service
 		socket.on("human-service:get_messages_waiting_service", (data, callback) => this.on.humanService.getMessagesWaitingService(socket, data, callback));

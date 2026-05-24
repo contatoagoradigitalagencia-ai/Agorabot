@@ -13,6 +13,7 @@ import { loadMessages } from "./methods/on/chat/messages.js";
 import { replyWindow } from "./methods/on/chat/reply.js";
 import { sendMessage } from "./methods/on/chat/send.js";
 import { infoContact, botOnOff } from "./methods/on/chat/contact.js";
+import { responseSuggestion } from "./methods/on/chat/responseSuggestion.js";
 
 // emit /chat/:phone
 import { newMessage, updateView, newReact } from "./methods/emit/chat/chat.js";
@@ -81,6 +82,7 @@ export default class Socket {
 		this.on.chat.sendMessage = sendMessage.bind(this);
 		this.on.chat.infoContact = infoContact.bind(this);
 		this.on.chat.botOnOff = botOnOff.bind(this);
+		this.on.chat.responseSuggestion = responseSuggestion.bind(this);
 
 		// /chat/:phone
 		this.emit.chat.newMessage = newMessage.bind(this);
