@@ -5,42 +5,42 @@ import { redirect } from "./redirect.js";
 import { products } from "./products.js";
 
 
-			import googleSheets from "../../Google Sheets/GoogleSheets.js";				// GAMBIARRA
-			import send from "../../Send/Send.js";				// GAMBIARRA
+// 			import googleSheets from "../../Google Sheets/GoogleSheets.js";				// GAMBIARRA
+// 			import send from "../../Send/Send.js";				// GAMBIARRA
 
-async function getConstructions(account, phone) {				// GAMBIARRA
-	try {
-		const constructions = await googleSheets.getPageJson(account, "Construção");
+// async function getConstructions(account, phone) {				// GAMBIARRA
+// 	try {
+// 		const constructions = await googleSheets.getPageJson(account, "Construção");
 
-		for (let construction of constructions) {
-			await send.text(account, phone, { text: { body: `Nome da obra: ${construction["Nome"]}\nEndereço: ${construction["Endereço"]}\nContato: ${construction["Contato"]}` } });
-		}
-	} catch (error) {
-		await mongodb.saveError(account.idPhone, `Error na funcao "getConstructions": ${error}`);
-	}
-}
+// 		for (let construction of constructions) {
+// 			await send.text(account, phone, { text: { body: `Nome da obra: ${construction["Nome"]}\nEndereço: ${construction["Endereço"]}\nContato: ${construction["Contato"]}` } });
+// 		}
+// 	} catch (error) {
+// 		await mongodb.saveError(account.idPhone, `Error na funcao "getConstructions": ${error}`);
+// 	}
+// }
 
-async function saveConstructions(account, phone, json) {				// GAMBIARRA
-	try {
-		await googleSheets.googleSheets.spreadsheets.values.append({
-			spreadsheetId: "1sVxc7O8P0swUNFbk8UP_xw3Jv2uequWWu4JGFJVASKQ",
-			range: "Construção!A:C",
-			valueInputOption: "USER_ENTERED",
-			insertDataOption: "INSERT_ROWS",
-			requestBody: {
-				values: [
-					[
-						json.payload.name,
-						json.payload.address,
-						json.payload.contact
-					]
-				]
-			}
-		});
-	} catch (error) {
-		await mongodb.saveError(account.idPhone, `Error na funcao "saveConstructions": ${error}`);
-	}
-}
+// async function saveConstructions(account, phone, json) {				// GAMBIARRA
+// 	try {
+// 		await googleSheets.googleSheets.spreadsheets.values.append({
+// 			spreadsheetId: "1sVxc7O8P0swUNFbk8UP_xw3Jv2uequWWu4JGFJVASKQ",
+// 			range: "Construção!A:C",
+// 			valueInputOption: "USER_ENTERED",
+// 			insertDataOption: "INSERT_ROWS",
+// 			requestBody: {
+// 				values: [
+// 					[
+// 						json.payload.name,
+// 						json.payload.address,
+// 						json.payload.contact
+// 					]
+// 				]
+// 			}
+// 		});
+// 	} catch (error) {
+// 		await mongodb.saveError(account.idPhone, `Error na funcao "saveConstructions": ${error}`);
+// 	}
+// }
 
 /**
  * @author VAMPETA
@@ -49,7 +49,7 @@ async function saveConstructions(account, phone, json) {				// GAMBIARRA
  * @param {String} phone NUMERO QUE ENVIO A MENSAGEM
  * @param {Array<String>} commands ARRAY DE COMANDOS A SEREM EXECUTADOS
 */
-export default async function commandsIA(account, phone, commands, json) {
+export default async function commandsIA(account, phone, commands, json) {		// ESSE json SO FOI ADICIONADO PARA FAZER A GAMBIARRA
 	try {
 		for (const commandArg of commands) {
 			const command = commandArg.split(" ");
@@ -67,12 +67,12 @@ export default async function commandsIA(account, phone, commands, json) {
 					await products(account, phone);
 					break;
 
-case "/getConstructions":				// GAMBIARRA
-	await getConstructions(account, phone);
-	break;
-case "/saveConstructions":				// GAMBIARRA
-	await saveConstructions(account, phone, json);
-	break;
+// case "/getConstructions":				// GAMBIARRA
+// 	await getConstructions(account, phone);
+// 	break;
+// case "/saveConstructions":				// GAMBIARRA
+// 	await saveConstructions(account, phone, json);
+// 	break;
 
 				default:
 					await mongodb.saveError(account.idPhone, `A IA envio um comando não existente: ${commandArg}`);

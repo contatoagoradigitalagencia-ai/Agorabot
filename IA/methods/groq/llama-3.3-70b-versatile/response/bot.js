@@ -5,34 +5,34 @@ import commandsIA from "../../../../../commands/IA/commands.js";
 
 import { promptSchema, promptRules, promptCommands, promptLocation, promptRedirect, promptProducts, promptAmbiguityAndSecurity, promptFallback, promptIdentity } from "../prompt/bot.js";
 
-				// GAMBIARRA
-const promptGetConstructions = `
-- /getConstructions → Regras de uso:
-  • usar quando o cliente pedir informações sobre obras, construções, empreendimentos ou serviços em andamento.
-`;
+// 				// GAMBIARRA
+// const promptGetConstructions = `
+// - /getConstructions → Regras de uso:
+//   • usar quando o cliente pedir informações sobre obras, construções, empreendimentos ou serviços em andamento.
+// `;
 
-				// GAMBIARRA
-const promptSaveConstructions = `
-- /saveConstructions → Regras de uso:
-  • usar somente quando o cliente solicitar cadastrar, registrar ou informar uma nova obra.
-  • nunca executar o comando com informações incompletas.
-  • dados mínimos obrigatórios:
-	• nome da obra
-	• endereço ou localização
-	• número de contato
-  • informar claramente caso não tenha sido possível concluir.
+// 				// GAMBIARRA
+// const promptSaveConstructions = `
+// - /saveConstructions → Regras de uso:
+//   • usar somente quando o cliente solicitar cadastrar, registrar ou informar uma nova obra.
+//   • nunca executar o comando com informações incompletas.
+//   • dados mínimos obrigatórios:
+// 	• nome da obra
+// 	• endereço ou localização
+// 	• número de contato
+//   • informar claramente caso não tenha sido possível concluir.
 
-  • este comando deve ser respondido com o seguinte modelo:
-  {
-    "command": ["/saveConstructions"],
-	"payload": {
-	  "name": String,
-	  "address": String,
-	  "contact": String
-	},
-	"text": [String]
-  }
-`;
+//   • este comando deve ser respondido com o seguinte modelo:
+//   {
+//     "command": ["/saveConstructions"],
+// 	"payload": {
+// 	  "name": String,
+// 	  "address": String,
+// 	  "contact": String
+// 	},
+// 	"text": [String]
+//   }
+// `;
 
 /**
  * @author VAMPETA
@@ -50,8 +50,8 @@ async function prompt(account) {
 		if (account.bot.location.latitude && account.bot.location.longitude) textPrompt += promptLocation;
 		if (account.bot.redirect.activated) textPrompt += promptRedirect;
 		if (account.googleSheets) textPrompt += promptProducts;
-textPrompt += promptGetConstructions;				// GAMBIARRA
-textPrompt += promptSaveConstructions;				// GAMBIARRA
+// textPrompt += promptGetConstructions;				// GAMBIARRA
+// textPrompt += promptSaveConstructions;				// GAMBIARRA
 		if (!account.bot.location && !account.bot.redirect && !account.googleSheets) textPrompt += "Nenhum comando está disponível no momento."
 		textPrompt += promptAmbiguityAndSecurity;
 		textPrompt += promptFallback;
@@ -105,7 +105,7 @@ console.log(json)
 			}
 		}
 		if (json.command.length) {
-			await commandsIA(account, phone, json.command, json);				// GAMBIARRA
+			await commandsIA(account, phone, json.command, json);				// ESSE json SO FOI ADICIONADO PARA FAZER A GAMBIARRA
 		}
 	} catch (error) {
 		await mongodb.saveError(account.idPhone, `Error na funcao "bot": ${error}`);
