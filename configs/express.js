@@ -1,6 +1,8 @@
 import express from "express";
 import cors from "cors";
 
+import configRoutes from "../route/routes.js";
+
 /**
  * @author VAMPETA
  * @brief CONFIGURA EXPRESS
@@ -16,5 +18,6 @@ export default function configExpress() {
 		})
 	);
 	app.use(cors());
+	configRoutes(app);
 	return (app);
 }
