@@ -14,9 +14,9 @@ import jwt from "jsonwebtoken";
  * @returns 401 - MENSAGEM DE ERRO AO TENTAR LOGAR COM LOGIN OU SENHA ERRADA
 */
 export default async function login(req, res) {
+	if (!req.body) return (res.sendStatus(400));
 	const { phone, password } = req?.body;
 
-	if (!req.body) return (res.sendStatus(400));
 	if (!phone || typeof phone !== "string" || phone.length !== 13 || typeof password !== "string" || !password) return (res.sendStatus(400));
 	const account = await mongodb.Account.findOne({ phone: phone }).select("-_id idPhone phone login.password");
 	if (!account || !(await bcrypt.compare(password, account.login.password))) return (res.sendStatus(401));

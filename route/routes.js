@@ -18,9 +18,4 @@ export default function configRoutes(app) {
 	app.post("/webhook", verifySignature, response, verifyProductIndicator, webhookMessage);
 	app.post("/login", login);
 	app.post("/upload", uploadAuthentication, uploadFile, upload);
-
-
-	app.get("/testeee", (req, res) => {
-		res.status(200).send("aaaaaaaaaa");
-	});
 }

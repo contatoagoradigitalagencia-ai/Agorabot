@@ -7,7 +7,9 @@
     "start": "node index.js",
     "dev": "nodemon index.js",
     "tunnel": "ngrok http 3000",
-    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js"
+    "test": "node --no-warnings=ExperimentalWarning --experimental-vm-modules node_modules/jest/bin/jest.js --verbose --coverage",
+    "test/http/login": "node --no-warnings=ExperimentalWarning --experimental-vm-modules node_modules/jest/bin/jest.js test/http/login.test.js --verbose",
+    "test/ws/auth": "node --no-warnings=ExperimentalWarning --experimental-vm-modules node_modules/jest/bin/jest.js test/ws/auth.test.js --verbose"
   },
   "keywords": [],
   "author": "",
@@ -27,12 +29,13 @@
     "mime-types": "^3.0.2",
     "mongoose": "^9.0.2",
     "multer": "^2.1.1",
-    "nodemon": "^3.1.11",
     "socket.io": "^4.8.3",
     "uuid": "^13.0.0"
   },
   "devDependencies": {
     "jest": "^30.4.2",
+    "nodemon": "^3.1.14",
+    "socket.io-client": "^4.8.3",
     "supertest": "^7.2.2"
   }
 }
