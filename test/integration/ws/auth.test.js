@@ -3,8 +3,8 @@ import jwt from "jsonwebtoken";
 import express from "express";
 import { io as Client } from "socket.io-client";
 
-import configWebSocket from "../../configs/websocket.js";
-import mongodb from "../../MongoDB/Mongodb.js";
+import configWebSocket from "../../../configs/websocket.js";
+import mongodb from "../../../MongoDB/Mongodb.js";
 
 /**
  * @author VAMPETA

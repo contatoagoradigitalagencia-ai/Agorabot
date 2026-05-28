@@ -3,8 +3,8 @@ import request from "supertest";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
-import configExpress from "../../configs/express.js";
-import mongodb from "../../MongoDB/Mongodb.js";
+import configExpress from "../../../configs/express.js";
+import mongodb from "../../../MongoDB/Mongodb.js";
 
 /**
  * @author VAMPETA

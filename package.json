@@ -8,8 +8,10 @@
     "dev": "nodemon index.js",
     "tunnel": "ngrok http 3000",
     "test": "node --no-warnings=ExperimentalWarning --experimental-vm-modules node_modules/jest/bin/jest.js --verbose --coverage",
-    "test/http/login": "node --no-warnings=ExperimentalWarning --experimental-vm-modules node_modules/jest/bin/jest.js test/http/login.test.js --verbose",
-    "test/ws/auth": "node --no-warnings=ExperimentalWarning --experimental-vm-modules node_modules/jest/bin/jest.js test/ws/auth.test.js --verbose"
+    "test/integration/http/login": "node --no-warnings=ExperimentalWarning --experimental-vm-modules node_modules/jest/bin/jest.js test/integration/http/login.test.js --verbose",
+    "test/integration/ws/auth": "node --no-warnings=ExperimentalWarning --experimental-vm-modules node_modules/jest/bin/jest.js test/integration/ws/auth.test.js --verbose",
+
+    "test/e2e/http/login": "node --no-warnings=ExperimentalWarning --experimental-vm-modules node_modules/jest/bin/jest.js test/e2e/http/login.test.js --verbose"
   },
   "keywords": [],
   "author": "",
