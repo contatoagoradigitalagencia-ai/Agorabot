@@ -1,8 +1,6 @@
 import axios from "axios";
-import bcrypt from "bcrypt";
 
-import mainTest from "../mainTest.js";
-import mongodb from "../../../MongoDB/Mongodb.js";
+import Server from "../serverTest.js";
 
 /**
  * @author VAMPETA
@@ -11,84 +9,205 @@ import mongodb from "../../../MongoDB/Mongodb.js";
  * @route /login
 */
 describe("POST /login", () => {
-	let server;
-	let io;
+	const server = new Server({ mongoDB: true });
 
 	beforeAll(async () => {
-		const config = await mainTest({ mongoDB: true });
-
-		io = config.io;
-		server = config.server.listen(3001);
-
-await mongodb.Account.create({
-	phone: "5521999999999",
-	login: {
-		password: await bcrypt.hash("123", 10)
-	}
-});
+		await server.start();
+	    if (!process.env.PHONE_TEST) throw (new Error("PHONE_TEST não configurado"));
+    	if (!process.env.PASSWORD_TEST)  throw (new Error("PASSWORD_TEST não configurado"));
 	});
 
 	afterAll(async () => {
-// await mongodb.Account.deleteOne({
-// 	phone: "5521999999999"
-// });
-
-		io.close();
-		await mongodb.mongodb.connection.close();
-		await new Promise((resolve) => {
-			server.close(resolve);
-		});
+		await server.stop();
 	});
 
-	test("200 - login feito corretamente", async () => {
-		// const response = await request(app).post("/login").send({
-		// 	phone: "5521998869425",
-		// 	password: "123"
-		// });
-
-		// expect(response.status).toBe(200);
-		// expect(response.body).toEqual({
-		// 	idPhone: "1",
-		// 	token: "token fake"
-		// });
-		const response = await axios({
+	test("200 - 'login' feito corretamente", async () => {
+		const res = await axios({
 			method: "POST",
-			url: "http://localhost:3001/login",
-			headers: {
-				"Content-Type": "application/json"
-			},
+			url: `${server.url}/login`,
 			data: {
-				phone: "5521999999999",
-				password: "123"
+				phone: process.env.PHONE_TEST,
+				password: process.env.PASSWORD_TEST
 			}
 		});
 
-		expect(response.status).toBe(200);
-
-		expect(response.data).toHaveProperty("token");
+		expect(res.status).toBe(200);
+		expect(res.data).toMatchObject({
+			idPhone: expect.any(String),
+			token: expect.any(String)
+		});
 	});
 
-	test("400 - phone e password não enviados", async () => {
-		// const response = await request(app).post("/login").send({});
+	test("400 - body não enviado", async () => {
+		const res = await axios({
+			method: "POST",
+			url: `${server.url}/login`
+		});
 
-		// expect(response.status).toBe(400);
+		expect(res.status).toBe(400);
+		expect(res.data).toBe("Bad Request");
 	});
 
-	test("401 - usuário não encontrado", async () => {
-		// const response = await request(app).post("/login").send({
-		// 	phone: "5521999999999",
-		// 	password: "123"
-		// });
+	test("400 - 'phone' e 'password' nulos", async () => {
+		const res = await axios({
+			method: "POST",
+			url: `${server.url}/login`,
+			data: {
+				phone: null,
+				password: null
+			}
+		});
 
-		// expect(response.status).toBe(401);
+		expect(res.status).toBe(400);
+		expect(res.data).toBe("Bad Request");
 	});
 
-	test("401 - senha incorreta", async () => {
-		// const response = await request(app).post("/login").send({
-		// 	phone: "5521998869425",
-		// 	password: "password invalid"
-		// });
+	test("400 - 'phone' e 'password' não enviados", async () => {
+		const res = await axios({
+			method: "POST",
+			url: `${server.url}/login`,
+			data: {}
+		});
 
-		// expect(response.status).toBe(401);
+		expect(res.status).toBe(400);
+		expect(res.data).toBe("Bad Request");
+	});
+
+	test("400 - 'phone' não enviado", async () => {
+		const res = await axios({
+			method: "POST",
+			url: `${server.url}/login`,
+			data: {
+				password: process.env.PASSWORD_TEST
+			}
+		});
+
+		expect(res.status).toBe(400);
+		expect(res.data).toBe("Bad Request");
+	});
+
+	test("400 - 'password' não enviado", async () => {
+		const res = await axios({
+			method: "POST",
+			url: `${server.url}/login`,
+			data: {
+				phone: process.env.PHONE_TEST
+			}
+		});
+
+		expect(res.status).toBe(400);
+		expect(res.data).toBe("Bad Request");
+	});
+
+	test("400 - 'phone' vazio", async () => {
+		const res = await axios({
+			method: "POST",
+			url: `${server.url}/login`,
+			data: {
+				phone: "",
+				password: process.env.PASSWORD_TEST
+			}
+		});
+
+		expect(res.status).toBe(400);
+		expect(res.data).toBe("Bad Request");
+	});
+
+	test("400 - 'password' vazio", async () => {
+		const res = await axios({
+			method: "POST",
+			url: `${server.url}/login`,
+			data: {
+				phone: process.env.PHONE_TEST,
+				password: ""
+			}
+		});
+
+		expect(res.status).toBe(400);
+		expect(res.data).toBe("Bad Request");
+	});
+
+	test("400 - 'phone' contendo apenas espaços", async () => {
+		const res = await axios({
+			method: "POST",
+			url: `${server.url}/login`,
+			data: {
+				phone: "     ",
+				password: process.env.PASSWORD_TEST
+			}
+		});
+
+		expect(res.status).toBe(400);
+		expect(res.data).toBe("Bad Request");
+	});
+
+	test("400 - 'phone' com tipo inválido", async () => {
+		const res = await axios({
+			method: "POST",
+			url: `${server.url}/login`,
+			data: {
+				phone: 123456,
+				password: process.env.PASSWORD_TEST
+			}
+		});
+
+		expect(res.status).toBe(400);
+		expect(res.data).toBe("Bad Request");
+	});
+
+	test("400 - 'password' com tipo inválido", async () => {
+		const res = await axios({
+			method: "POST",
+			url: `${server.url}/login`,
+			data: {
+				phone: process.env.PHONE_TEST,
+				password: true
+			}
+		});
+
+		expect(res.status).toBe(400);
+		expect(res.data).toBe("Bad Request");
+	});
+
+	test("401 - 'login' incorreto", async () => {
+		const res = await axios({
+			method: "POST",
+			url: `${server.url}/login`,
+			data: {
+				phone: "5521999999999",
+				password: process.env.PASSWORD_TEST
+			}
+		});
+
+		expect(res.status).toBe(401);
+		expect(res.data).toBe("Unauthorized");
+	});
+
+	test("401 - 'password' contendo apenas espaços", async () => {
+		const res = await axios({
+			method: "POST",
+			url: `${server.url}/login`,
+			data: {
+				phone: process.env.PHONE_TEST,
+				password: "     "
+			}
+		});
+
+		expect(res.status).toBe(401);
+		expect(res.data).toBe("Unauthorized");
+	});
+
+	test("401 - 'password' incorreta", async () => {
+		const res = await axios({
+			method: "POST",
+			url: `${server.url}/login`,
+			data: {
+				phone: process.env.PHONE_TEST,
+				password: "incorrect password"
+			}
+		});
+
+		expect(res.status).toBe(401);
+		expect(res.data).toBe("Unauthorized");
 	});
 });
