@@ -12,7 +12,7 @@ export default async function authentication(socket, next) {
 	const { token } = socket.handshake.auth;
 	let encoded;
 
-	if (typeof token !== "string") return (next(new Error("Credenciais inválidas")));
+	if (typeof token !== "string") return (next(new Error("Token inválido")));
 	try {
 		encoded = jwt.verify(token, process.env.JWT_SECRET);
 	} catch (error) {

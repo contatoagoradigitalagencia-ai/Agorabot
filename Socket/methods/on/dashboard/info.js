@@ -11,7 +11,7 @@ import mongodb from "../../../../MongoDB/Mongodb.js";
 */
 export async function infoDashboard(socket, data, callback) {
 	const { idPhone } = socket.account;
-	const { date } = data;
+	const { date } = data || {};
 
 	try {
 		if (!date) return (callback({ error: "Data ausente" }));
@@ -35,7 +35,8 @@ export async function infoDashboard(socket, data, callback) {
 			hourly: {},
 			received: {},
 			sent: {},
-			newContacts: 0
+			newContacts: 0,
+			redirects: 0
 		});
 	} catch (error) {
 		await mongodb.saveError(idPhone, `Error no metodo "infoDashboard": ${error}`);
