@@ -21,7 +21,7 @@ describe("POST /login", () => {
 		await server.stop();
 	});
 
-	test("200 - 'login' feito corretamente", async () => {
+	test("200 - login feito corretamente", async () => {
 		const res = await axios({
 			method: "POST",
 			url: `${server.url}/login`,

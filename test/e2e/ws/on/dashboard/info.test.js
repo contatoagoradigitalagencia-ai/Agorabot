@@ -1,4 +1,4 @@
-import Server from "../../serverTest.js";
+import Server from "../../../serverTest.js";
 
 /**
  * @author VAMPETA
@@ -20,7 +20,7 @@ describe("ON - dashboard:info", () => {
 		await server.stop();
 	});
 
-	test("busca informações da rota /dashboard do front end", async () => {
+	test("requisição feita corretamente", async () => {
 		const res = await server.emit("dashboard:info", { date: new Date().toISOString().split('T')[0] });
 
 		expect(res).toMatchObject({
@@ -33,7 +33,7 @@ describe("ON - dashboard:info", () => {
 		});
 	});
 
-	test("'não é passado um objeto e sim null", async () => {
+	test("não é passado um objeto e sim null", async () => {
 		const res = await server.emit("dashboard:info", null);
 
 		expect(res).toEqual({ error: "Data ausente" });

@@ -13,7 +13,8 @@
 
     "test/e2e/http/login": "node --no-warnings=ExperimentalWarning --experimental-vm-modules node_modules/jest/bin/jest.js test/e2e/http/login.test.js --verbose",
     "test/e2e/ws/connect": "node --no-warnings=ExperimentalWarning --experimental-vm-modules node_modules/jest/bin/jest.js test/e2e/ws/connect.test.js --verbose",
-    "test/e2e/ws/on/dashboard_info": "node --no-warnings=ExperimentalWarning --experimental-vm-modules node_modules/jest/bin/jest.js test/e2e/ws/on/dashboard_info.test.js --verbose"
+    "test/e2e/ws/on/dashboard:info": "node --no-warnings=ExperimentalWarning --experimental-vm-modules node_modules/jest/bin/jest.js test/e2e/ws/on/dashboard/info.test.js --verbose",
+    "test/e2e/ws/on/chats:load_chats": "node --no-warnings=ExperimentalWarning --experimental-vm-modules node_modules/jest/bin/jest.js test/e2e/ws/on/chats/load_chats.test.js --verbose"
   },
   "keywords": [],
   "author": "",
