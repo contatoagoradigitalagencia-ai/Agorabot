@@ -33,26 +33,32 @@ describe("ON - dashboard:info", () => {
 		});
 	});
 
-	test("não é passado um objeto e sim null", async () => {
+	test("requisição feita sem payload", async () => {
+		const res = await server.emit("dashboard:info");
+
+		expect(res).toEqual({ error: "Data ausente" });
+	});
+
+	test("requisição passando um null", async () => {
 		const res = await server.emit("dashboard:info", null);
 
 		expect(res).toEqual({ error: "Data ausente" });
 	});
 
-	test("'não é passado um objeto e sim uma string", async () => {
+	test("requisição passando uma string", async () => {
 		const res = await server.emit("dashboard:info", "abc");
 
 		expect(res).toEqual({ error: "Data ausente" });
 	});
 
-	test("'não é passado um objeto e sim um number", async () => {
-		const res = await server.emit("dashboard:info", 123);
+	test("requisição passando um array", async () => {
+		const res = await server.emit("dashboard:info", []);
 
 		expect(res).toEqual({ error: "Data ausente" });
 	});
 
-	test("'date' não enviada", async () => {
-		const res = await server.emit("dashboard:info", {});
+	test("requisição passando um number", async () => {
+		const res = await server.emit("dashboard:info", 123);
 
 		expect(res).toEqual({ error: "Data ausente" });
 	});
