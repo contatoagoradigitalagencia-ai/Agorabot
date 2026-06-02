@@ -29,4 +29,12 @@ describe("ON - chats:load_chats", () => {
 			nextCursor: expect.any(Object)
 		});
 	});
+
+// test("deve carregar próxima página usando nextCursor", async () => {
+// 	const firstPage = await server.emit("chats:load_chats", {});
+// 	const secondPage = await server.emit("chats:load_chats", { dateLastChat: firstPage.nextCursor });
+
+// 	expect(secondPage.chats).toEqual(expect.any(Array));
+// 	expect(firstPage.chats[0]._id).not.toBe(secondPage.chats[0]._id);
+// });
 });
