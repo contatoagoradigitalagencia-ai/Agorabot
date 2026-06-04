@@ -9,19 +9,23 @@ import mongodb from "../../../../MongoDB/Mongodb.js";
 */
 export async function loadChats(socket, data, callback) {
 	const { idPhone } = socket.account;
-	const { dateLastChat } = data;
+	const { dateLastChat } = data || {};
 
 	try {
+		if (data !== undefined && data !== null && (typeof data !== "object" || Array.isArray(data))) return (callback({ error: "'dateLastChat' é opcional, mas quando informado deve ser um objeto válido no formato { timestamp, _id }" }));
 		const query = { idPhone };
-		if (dateLastChat) {
-			const { timestamp, _id } = dateLastChat;
-			const cursorDate = new Date(timestamp);
+		if (dateLastChat !== undefined) {
+		if (dateLastChat === null || typeof dateLastChat !== "object" || Array.isArray(dateLastChat)) return (callback({ error: "'dateLastChat' é opcional, mas quando informado deve ser um objeto válido no formato { timestamp, _id }" }));
+			if (!("timestamp" in dateLastChat) || !("_id" in dateLastChat)) return (callback({ error: "'dateLastChat' é opcional, mas quando informado deve ser um objeto válido no formato { timestamp, _id }" }));
+			const cursorDate = new Date(dateLastChat.timestamp);
 			if (!isNaN(cursorDate.getTime())) {
 				query.$or = [
-					{ "lastMessage.timestamp": { $lt: cursorDate } },
+					{
+						"lastMessage.timestamp": { $lt: cursorDate }
+					},
 					{
 						"lastMessage.timestamp": cursorDate,
-						_id: { $lt: _id }
+						_id: { $lt: dateLastChat._id }
 					}
 				];
 			}
@@ -29,7 +33,7 @@ export async function loadChats(socket, data, callback) {
 		const chats = await mongodb.Chat.find(query).sort({ "lastMessage.timestamp": -1, _id: -1 }).limit(15).select("-__v");
 
 		callback({
-			chats,
+			chats: chats,
 			hasMore: chats.length === 15,
 			nextCursor: (chats.length) ? {
 				timestamp: chats[chats.length - 1].lastMessage.timestamp,
@@ -53,7 +57,7 @@ export async function updateHumanViewed(socket, data, callback) {
 	const { phone } = data;
 
 	try {
-		if (!phone) return ;
+		if (!phone) return;
 		await mongodb.saveHumanView(idPhone, phone);
 	} catch (error) {
 		await mongodb.saveError(idPhone, `Error no metodo "updateHumanViewed": ${error}`);
