@@ -12,11 +12,11 @@ export async function loadChats(socket, data, callback) {
 	const { dateLastChat } = data || {};
 
 	try {
-		if (data !== undefined && data !== null && (typeof data !== "object" || Array.isArray(data))) return (callback({ error: "'dateLastChat' é opcional, mas quando informado deve ser um objeto válido no formato { timestamp, _id }" }));
+		if (data !== undefined && data !== null && (typeof data !== "object" || Array.isArray(data))) return (callback({ error: '"dateLastChat" é opcional, mas quando informado deve ser um objeto válido no formato { timestamp, _id }' }));
 		const query = { idPhone };
 		if (dateLastChat !== undefined) {
-		if (dateLastChat === null || typeof dateLastChat !== "object" || Array.isArray(dateLastChat)) return (callback({ error: "'dateLastChat' é opcional, mas quando informado deve ser um objeto válido no formato { timestamp, _id }" }));
-			if (!("timestamp" in dateLastChat) || !("_id" in dateLastChat)) return (callback({ error: "'dateLastChat' é opcional, mas quando informado deve ser um objeto válido no formato { timestamp, _id }" }));
+		if (dateLastChat === null || typeof dateLastChat !== "object" || Array.isArray(dateLastChat)) return (callback({ error: '"dateLastChat" é opcional, mas quando informado deve ser um objeto válido no formato { timestamp, _id }' }));
+			if (!("timestamp" in dateLastChat) || !("_id" in dateLastChat)) return (callback({ error: '"dateLastChat" é opcional, mas quando informado deve ser um objeto válido no formato { timestamp, _id }' }));
 			const cursorDate = new Date(dateLastChat.timestamp);
 			if (!isNaN(cursorDate.getTime())) {
 				query.$or = [
@@ -42,24 +42,5 @@ export async function loadChats(socket, data, callback) {
 		});
 	} catch (error) {
 		await mongodb.saveError(idPhone, `Error no metodo "loadChats": ${error}`);
-	}
-}
-
-/**
- * @author VAMPETA
- * @brief METODO QUE ATUALIZA O ESTADO DE VISUALIZADO POR UM HUMANO NO BANCO DE DADOS
- * @param {Object} socket OBJETO SOCKET DO CLIENTE
- * @param {Object} data DADOS ENVIADO PELO CLIENTE
- * @param {Object} callback FUNCAO DE RESPOSTA
-*/
-export async function updateHumanViewed(socket, data, callback) {
-	const { idPhone } = socket.account;
-	const { phone } = data;
-
-	try {
-		if (!phone) return;
-		await mongodb.saveHumanView(idPhone, phone);
-	} catch (error) {
-		await mongodb.saveError(idPhone, `Error no metodo "updateHumanViewed": ${error}`);
 	}
 }

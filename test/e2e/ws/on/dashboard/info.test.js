@@ -36,37 +36,43 @@ describe("ON - dashboard:info", () => {
 	test("requisição feita sem payload", async () => {
 		const res = await server.emit("dashboard:info");
 
-		expect(res).toEqual({ error: "Data ausente" });
+		expect(res).toEqual({ error: "O payload deve ser um objeto" });
 	});
 
 	test("requisição passando um null", async () => {
 		const res = await server.emit("dashboard:info", null);
 
-		expect(res).toEqual({ error: "Data ausente" });
+		expect(res).toEqual({ error: "O payload deve ser um objeto" });
 	});
 
 	test("requisição passando uma string", async () => {
 		const res = await server.emit("dashboard:info", "abc");
 
-		expect(res).toEqual({ error: "Data ausente" });
-	});
-
-	test("requisição passando um array", async () => {
-		const res = await server.emit("dashboard:info", []);
-
-		expect(res).toEqual({ error: "Data ausente" });
+		expect(res).toEqual({ error: "O payload deve ser um objeto" });
 	});
 
 	test("requisição passando um number", async () => {
 		const res = await server.emit("dashboard:info", 123);
 
-		expect(res).toEqual({ error: "Data ausente" });
+		expect(res).toEqual({ error: "O payload deve ser um objeto" });
+	});
+
+	test("requisição passando um array", async () => {
+		const res = await server.emit("dashboard:info", []);
+
+		expect(res).toEqual({ error: "O payload deve ser um objeto" });
+	});
+
+	test("requisição passando um objeto vazio", async () => {
+		const res = await server.emit("dashboard:info", {});
+
+		expect(res).toEqual({ error: '"date" ausente' });
 	});
 
 	test("'date' inválida", async () => {
 		const res = await server.emit("dashboard:info", { date: "abc" });
 
-		expect(res).toEqual({ error: "Data inválida" });
+		expect(res).toEqual({ error: '"date" inválido' });
 	});
 
 	test("não existe métrica para 'date'", async () => {

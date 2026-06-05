@@ -14,9 +14,10 @@ export async function infoDashboard(socket, data, callback) {
 	const { date } = data || {};
 
 	try {
-		if (!date) return (callback({ error: "Data ausente" }));
+		if (data == null || typeof data !== "object" || Array.isArray(data)) return (callback({ error: "O payload deve ser um objeto" }));
+		if (!date) return (callback({ error: '"date" ausente' }));
 		const dataFormatted = (date) ? DateTime.fromISO(date, { zone: "America/Sao_Paulo" }) : DateTime.now().setZone("America/Sao_Paulo");
-		if (!dataFormatted.isValid) return (callback({ error: "Data inválida" }));
+		if (!dataFormatted.isValid) return (callback({ error: '"date" inválido' }));
 		const start = dataFormatted.startOf("day").toJSDate();
 		const end = dataFormatted.endOf("day").toJSDate();
 		const metric = await mongodb.Metric.findOne(

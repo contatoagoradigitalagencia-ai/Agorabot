@@ -55,9 +55,18 @@ const metric = new mongoose.Schema({
 		type: Date,
 		required: true
 	},
-	sent: messageTypes,
-	received: messageTypes,
-	failed: messageTypes,
+	sent: {
+		type: messageTypes,
+		default: () => ({})
+	},
+	received: {
+		type: messageTypes,
+		default: () => ({})
+	},
+	failed: {
+		type: messageTypes,
+		default: () => ({})
+	},
 	newContacts: {
 		type: Number,
 		default: 0

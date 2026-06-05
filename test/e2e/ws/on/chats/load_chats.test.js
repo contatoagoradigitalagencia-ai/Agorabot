@@ -61,48 +61,48 @@ describe("ON - chats:load_chats", () => {
 	test("requisição feita passando um array", async () => {
 		const res = await server.emit("chats:load_chats", []);
 
-		expect(res.error).toBe("'dateLastChat' é opcional, mas quando informado deve ser um objeto válido no formato { timestamp, _id }");
+		expect(res.error).toBe('"dateLastChat" é opcional, mas quando informado deve ser um objeto válido no formato { timestamp, _id }');
 	});
 
 	test("requisição feita passando uma string", async () => {
 		const res = await server.emit("chats:load_chats", "string");
 
-		expect(res.error).toBe("'dateLastChat' é opcional, mas quando informado deve ser um objeto válido no formato { timestamp, _id }");
+		expect(res.error).toBe('"dateLastChat" é opcional, mas quando informado deve ser um objeto válido no formato { timestamp, _id }');
 	});
 
 	test("requisição feita passando um number", async () => {
 		const res = await server.emit("chats:load_chats", 42);
 
-		expect(res.error).toBe("'dateLastChat' é opcional, mas quando informado deve ser um objeto válido no formato { timestamp, _id }");
+		expect(res.error).toBe('"dateLastChat" é opcional, mas quando informado deve ser um objeto válido no formato { timestamp, _id }');
 	});
 
 	test("requisição feita passando 'dateLastChat' como null", async () => {
 		const res = await server.emit("chats:load_chats", { dateLastChat: null });
 
-		expect(res.error).toBe("'dateLastChat' é opcional, mas quando informado deve ser um objeto válido no formato { timestamp, _id }");
+		expect(res.error).toBe('"dateLastChat" é opcional, mas quando informado deve ser um objeto válido no formato { timestamp, _id }');
 	});
 
 	test("requisição feita passando 'dateLastChat' como objeto", async () => {
 		const res = await server.emit("chats:load_chats", { dateLastChat: {} });
 
-		expect(res.error).toBe("'dateLastChat' é opcional, mas quando informado deve ser um objeto válido no formato { timestamp, _id }");
+		expect(res.error).toBe('"dateLastChat" é opcional, mas quando informado deve ser um objeto válido no formato { timestamp, _id }');
 	});
 
 	test("requisição feita passando 'dateLastChat' como array", async () => {
 		const res = await server.emit("chats:load_chats", { dateLastChat: [] });
 
-		expect(res.error).toBe("'dateLastChat' é opcional, mas quando informado deve ser um objeto válido no formato { timestamp, _id }");
+		expect(res.error).toBe('"dateLastChat" é opcional, mas quando informado deve ser um objeto válido no formato { timestamp, _id }');
 	});
 
 	test("requisição feita passando 'dateLastChat' como string", async () => {
 		const res = await server.emit("chats:load_chats", { dateLastChat: "string" });
 
-		expect(res.error).toBe("'dateLastChat' é opcional, mas quando informado deve ser um objeto válido no formato { timestamp, _id }");
+		expect(res.error).toBe('"dateLastChat" é opcional, mas quando informado deve ser um objeto válido no formato { timestamp, _id }');
 	});
 
 	test("requisição feita passando 'dateLastChat' como number", async () => {
 		const res = await server.emit("chats:load_chats", { dateLastChat: 42 });
 
-		expect(res.error).toBe("'dateLastChat' é opcional, mas quando informado deve ser um objeto válido no formato { timestamp, _id }");
+		expect(res.error).toBe('"dateLastChat" é opcional, mas quando informado deve ser um objeto válido no formato { timestamp, _id }');
 	});
 });

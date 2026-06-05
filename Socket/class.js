@@ -6,10 +6,10 @@ import { infoDashboard } from "./methods/on/dashboard/info.js";
 
 // on /chat
 import { loadChats } from "./methods/on/chats/chats.js";
-import { updateHumanViewed } from "./methods/on/chats/chats.js";
 
 // on /chat/:phone
 import { loadMessages } from "./methods/on/chat/messages.js"; 
+import { updateHumanViewed } from "./methods/on/chat/updateHumanViewed.js";
 import { replyWindow } from "./methods/on/chat/reply.js";
 import { sendMessage } from "./methods/on/chat/send.js";
 import { infoContact, botOnOff } from "./methods/on/chat/contact.js";
@@ -74,10 +74,10 @@ export default class Socket {
 
 		// /chat
 		this.on.chats.loadChats = loadChats.bind(this);
-		this.on.chats.updateHumanViewed = updateHumanViewed.bind(this);
 
 		// /chat/:phone
 		this.on.chat.loadMessages = loadMessages.bind(this);
+		this.on.chat.updateHumanViewed = updateHumanViewed.bind(this);
 		this.on.chat.replyWindow = replyWindow.bind(this);
 		this.on.chat.sendMessage = sendMessage.bind(this);
 		this.on.chat.infoContact = infoContact.bind(this);

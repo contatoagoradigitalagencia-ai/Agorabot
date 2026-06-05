@@ -41,7 +41,7 @@ export async function configEvents() {
 		
 		// /chat/:phone
 		socket.on("chat:load_messages", (data, callback) => this.on.chat.loadMessages(socket, data, callback));
-		socket.on("chats:update_human_viewed", (data, callback) => this.on.chats.updateHumanViewed(socket, data, callback));	// PQ TA AKI?
+		socket.on("chat:update_human_viewed", (data, callback) => this.on.chat.updateHumanViewed(socket, data, callback));
 		socket.on("chat:reply_window", (data, callback) => this.on.chat.replyWindow(socket, data, callback));
 		socket.on("chat:send_message", (data, callback) => this.on.chat.sendMessage(socket, data, callback));
 		socket.on("chat:on_off", (data, callback) => this.on.chat.botOnOff(socket, data, callback));

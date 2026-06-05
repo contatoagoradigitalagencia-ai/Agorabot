@@ -1,3 +1,5 @@
+import mongoose from "mongoose";
+
 import mongodb from "../../../../MongoDB/Mongodb.js";
 
 /**
@@ -9,10 +11,12 @@ import mongodb from "../../../../MongoDB/Mongodb.js";
 */
 export async function loadMessages(socket, data, callback) {
 	const { idPhone } = socket.account;
-	const { phone, beforeId } = data;
+	const { phone, beforeId } = data || {};
 
 	try {
-		if (!phone || typeof phone !== "string") return ({ error:'O campo "phone" deve ser do tipo string e não deve estar vazio' });
+		if (data == null || typeof data !== "object" || Array.isArray(data)) return (callback({ error: "O payload deve ser um objeto" }));
+		if (!phone || typeof phone !== "string") return (callback({ error: 'O campo "phone" deve ser do tipo string e não deve estar vazio' }));
+		if (beforeId !== undefined && !mongoose.Types.ObjectId.isValid(beforeId)) return (callback({ error: 'O campo "beforeId" é opcional, mas quando informado deve ser uma string ObjectId do MongoDB válido' }));
 		const query = { idPhone: idPhone, phone: phone };
 		if (beforeId) query._id = { $lt: beforeId };
 		const messages = await mongodb.Message.find(query).sort({ _id: -1 }).limit(15).select("-__v").lean();
