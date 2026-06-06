@@ -1,3 +1,5 @@
+import mongoose from "mongoose";
+
 import mongodb from "../../../../MongoDB/Mongodb.js";
 
 /**
@@ -12,27 +14,28 @@ export async function loadChats(socket, data, callback) {
 	const { dateLastChat } = data || {};
 
 	try {
-		if (data !== undefined && data !== null && (typeof data !== "object" || Array.isArray(data))) return (callback({ error: '"dateLastChat" é opcional, mas quando informado deve ser um objeto válido no formato { timestamp, _id }' }));
+		if (data !== undefined && data !== null && (typeof data !== "object" || Array.isArray(data))) return (callback({ code: 400, error: '"dateLastChat" é opcional, mas quando informado deve ser um objeto válido no formato { timestamp: string, _id:string }' }));
 		const query = { idPhone };
 		if (dateLastChat !== undefined) {
-		if (dateLastChat === null || typeof dateLastChat !== "object" || Array.isArray(dateLastChat)) return (callback({ error: '"dateLastChat" é opcional, mas quando informado deve ser um objeto válido no formato { timestamp, _id }' }));
-			if (!("timestamp" in dateLastChat) || !("_id" in dateLastChat)) return (callback({ error: '"dateLastChat" é opcional, mas quando informado deve ser um objeto válido no formato { timestamp, _id }' }));
+			if (dateLastChat === null || typeof dateLastChat !== "object" || Array.isArray(dateLastChat)) return (callback({ code: 400, error: '"dateLastChat" é opcional, mas quando informado deve ser um objeto válido no formato { timestamp: string, _id:string }' }));
+			if (!("timestamp" in dateLastChat) || typeof dateLastChat.timestamp !== "string" || !("_id" in dateLastChat) || typeof dateLastChat._id !== "string") return (callback({ code: 400, error: '"dateLastChat" é opcional, mas quando informado deve ser um objeto válido no formato { timestamp: string, _id:string }' }));
 			const cursorDate = new Date(dateLastChat.timestamp);
-			if (!isNaN(cursorDate.getTime())) {
-				query.$or = [
-					{
-						"lastMessage.timestamp": { $lt: cursorDate }
-					},
-					{
-						"lastMessage.timestamp": cursorDate,
-						_id: { $lt: dateLastChat._id }
-					}
-				];
-			}
+			if (isNaN(new Date(dateLastChat.timestamp))) return (callback({ code: 422, error: '"dateLastChat.timestamp" inválido' }));
+			if (!mongoose.Types.ObjectId.isValid(dateLastChat._id)) return (callback({ code: 422, error: '"dateLastChat._id" inválido' }));
+			query.$or = [
+				{
+					"lastMessage.timestamp": { $lt: cursorDate }
+				},
+				{
+					"lastMessage.timestamp": cursorDate,
+					_id: { $lt: dateLastChat._id }
+				}
+			];
 		}
-		const chats = await mongodb.Chat.find(query).sort({ "lastMessage.timestamp": -1, _id: -1 }).limit(15).select("-__v");
+		const chats = await mongodb.Chat.find(query).sort({ "lastMessage.timestamp": -1, _id: -1 }).limit(15).select("-__v").lean();
 
 		callback({
+			code: 200,
 			chats: chats,
 			hasMore: chats.length === 15,
 			nextCursor: (chats.length) ? {
@@ -42,5 +45,6 @@ export async function loadChats(socket, data, callback) {
 		});
 	} catch (error) {
 		await mongodb.saveError(idPhone, `Error no metodo "loadChats": ${error}`);
+		callback({ code: 500, error: "Erro interno do servidor" });
 	}
 }

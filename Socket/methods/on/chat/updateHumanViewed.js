@@ -9,11 +9,13 @@ import mongodb from "../../../../MongoDB/Mongodb.js";
 */
 export async function updateHumanViewed(socket, data, callback) {
 	const { idPhone } = socket.account;
-	const { phone } = data;
+	const { phone } = data || {};
 
 	try {
-		if (!phone) return ;
+		if (data == null || typeof data !== "object" || Array.isArray(data)) return (callback({ code: 400, error: "O payload deve ser um objeto" }));
+		if (!phone || typeof phone !== "string") return (callback({ code: 400, error: 'O campo "phone" deve ser do tipo string e não deve estar vazio' }));
 		await mongodb.saveHumanView(idPhone, phone);
+		callback({ code: 204 });
 	} catch (error) {
 		await mongodb.saveError(idPhone, `Error no metodo "updateHumanViewed": ${error}`);
 	}

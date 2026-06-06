@@ -38,51 +38,51 @@ export async function configEvents() {
 
 		// /chat
 		socket.on("chats:load_chats", (data, callback) => this.on.chats.loadChats(socket, data, callback));
-		
+
 		// /chat/:phone
-		socket.on("chat:load_messages", (data, callback) => this.on.chat.loadMessages(socket, data, callback));
-		socket.on("chat:update_human_viewed", (data, callback) => this.on.chat.updateHumanViewed(socket, data, callback));
-		socket.on("chat:reply_window", (data, callback) => this.on.chat.replyWindow(socket, data, callback));
-		socket.on("chat:send_message", (data, callback) => this.on.chat.sendMessage(socket, data, callback));
-		socket.on("chat:on_off", (data, callback) => this.on.chat.botOnOff(socket, data, callback));
-		socket.on("chat:info_contact", (data, callback) => this.on.chat.infoContact(socket, data, callback));
-		socket.on("chat:response_suggestion", (data, callback) => this.on.chat.responseSuggestion(socket, data, callback));
+socket.on("chat:load_messages", (data, callback) => this.on.chat.loadMessages(socket, data, callback));
+socket.on("chat:update_human_viewed", (data, callback) => this.on.chat.updateHumanViewed(socket, data, callback));
+socket.on("chat:reply_window", (data, callback) => this.on.chat.replyWindow(socket, data, callback));
+socket.on("chat:send_message", (data, callback) => this.on.chat.sendMessage(socket, data, callback));
+socket.on("chat:on_off", (data, callback) => this.on.chat.botOnOff(socket, data, callback));
+socket.on("chat:info_contact", (data, callback) => this.on.chat.infoContact(socket, data, callback));
+socket.on("chat:response_suggestion", (data, callback) => this.on.chat.responseSuggestion(socket, data, callback));
 
 		// /human-service
-		socket.on("human-service:get_messages_waiting_service", (data, callback) => this.on.humanService.getMessagesWaitingService(socket, data, callback));
-		socket.on("human-service:remove_waiting_service", (data, callback) => this.on.humanService.removeWaitingService(socket, data, callback));
+socket.on("human-service:get_messages_waiting_service", (data, callback) => this.on.humanService.getMessagesWaitingService(socket, data, callback));
+socket.on("human-service:remove_waiting_service", (data, callback) => this.on.humanService.removeWaitingService(socket, data, callback));
 
 		// /contacts
-		socket.on("contacts:load_contacts", (data, callback) => this.on.contacts.loadContacts(socket, data, callback));
-		socket.on("contacts:save_comment", (data, callback) => this.on.contacts.saveComment(socket, data, callback));
+socket.on("contacts:load_contacts", (data, callback) => this.on.contacts.loadContacts(socket, data, callback));
+socket.on("contacts:save_comment", (data, callback) => this.on.contacts.saveComment(socket, data, callback));
 
 		// /quick-messages
-		socket.on("quick-messages:get_quick_messages", (data, callback) => this.on.quickMessages.getQuickMessages(socket, data, callback));
-		socket.on("quick-messages:save_quick_message", (data, callback) => this.on.quickMessages.saveQuickMessage(socket, data, callback));
-		socket.on("quick-messages:delete_quick_message", (data, callback) => this.on.quickMessages.deleteQuickMessage(socket, data, callback));
+socket.on("quick-messages:get_quick_messages", (data, callback) => this.on.quickMessages.getQuickMessages(socket, data, callback));
+socket.on("quick-messages:save_quick_message", (data, callback) => this.on.quickMessages.saveQuickMessage(socket, data, callback));
+socket.on("quick-messages:delete_quick_message", (data, callback) => this.on.quickMessages.deleteQuickMessage(socket, data, callback));
 
 		// /bot
-		socket.on("bot:get_info_bot", (data, callback) => this.on.bot.getInfoBot(socket, data, callback));
-		socket.on("bot:update_status_bot", (data, callback) => this.on.bot.updateStatusBot(socket, data, callback));
-		socket.on("bot:update_status_visualization", (data, callback) => this.on.bot.updateVisualization(socket, data, callback));
-		socket.on("bot:update_prompt", (data, callback) => this.on.bot.updatePrompt(socket, data, callback));
-		socket.on("bot:prompt_suggestion", (data, callback) => this.on.bot.promptSuggestion(socket, data, callback));
-		socket.on("bot:update_message_not_supported", (data, callback) => this.on.bot.updateMessageNotSupported(socket, data, callback));
-		socket.on("bot:update_location", (data, callback) => this.on.bot.updateLocation(socket, data, callback));
-		socket.on("bot:update_message_new_contact", (data, callback) => this.on.bot.updateMessageNewContact(socket, data, callback));
-		socket.on("bot:update_status_redirect", (data, callback) => this.on.bot.updateStatusRedirect(socket, data, callback));
-		socket.on("bot:update_numbers_redirect", (data, callback) => this.on.bot.updateNumbersRedirect(socket, data, callback));
-		socket.on("bot:update_message_redirect", (data, callback) => this.on.bot.updateMessageRedirect(socket, data, callback));
+socket.on("bot:get_info_bot", (data, callback) => this.on.bot.getInfoBot(socket, data, callback));
+socket.on("bot:update_status_bot", (data, callback) => this.on.bot.updateStatusBot(socket, data, callback));
+socket.on("bot:update_status_visualization", (data, callback) => this.on.bot.updateVisualization(socket, data, callback));
+socket.on("bot:update_prompt", (data, callback) => this.on.bot.updatePrompt(socket, data, callback));
+socket.on("bot:prompt_suggestion", (data, callback) => this.on.bot.promptSuggestion(socket, data, callback));
+socket.on("bot:update_message_not_supported", (data, callback) => this.on.bot.updateMessageNotSupported(socket, data, callback));
+socket.on("bot:update_location", (data, callback) => this.on.bot.updateLocation(socket, data, callback));
+socket.on("bot:update_message_new_contact", (data, callback) => this.on.bot.updateMessageNewContact(socket, data, callback));
+socket.on("bot:update_status_redirect", (data, callback) => this.on.bot.updateStatusRedirect(socket, data, callback));
+socket.on("bot:update_numbers_redirect", (data, callback) => this.on.bot.updateNumbersRedirect(socket, data, callback));
+socket.on("bot:update_message_redirect", (data, callback) => this.on.bot.updateMessageRedirect(socket, data, callback));
 
 		// /spreadsheets
-		socket.on("spreadsheets:get_spreadsheets", (data, callback) => this.on.spreadsheets.getSpreadsheets(socket, data, callback));
-		socket.on("spreadsheets:update_used_spreadsheets", (data, callback) => this.on.spreadsheets.updateUsedSpreadsheets(socket, data, callback));
+socket.on("spreadsheets:get_spreadsheets", (data, callback) => this.on.spreadsheets.getSpreadsheets(socket, data, callback));
+socket.on("spreadsheets:update_used_spreadsheets", (data, callback) => this.on.spreadsheets.updateUsedSpreadsheets(socket, data, callback));
 
 		// /settings
-		socket.on("settings:update_password", (data, callback) => this.on.settings.updatePassword(socket, data, callback));
+socket.on("settings:update_password", (data, callback) => this.on.settings.updatePassword(socket, data, callback));
 
 		// /support
-		socket.on("support:get_info_support", (data, callback) => this.on.support.getInfoSupport(socket, data, callback));
+socket.on("support:get_info_support", (data, callback) => this.on.support.getInfoSupport(socket, data, callback));
 
 		socket.on("disconnect", () => this.disconnect(socket));
 	});

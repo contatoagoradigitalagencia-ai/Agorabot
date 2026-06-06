@@ -7,7 +7,9 @@
     "start": "node index.js",
     "dev": "nodemon index.js",
     "tunnel": "ngrok http 3000",
-    "test": "node --no-warnings=ExperimentalWarning --experimental-vm-modules node_modules/jest/bin/jest.js --verbose --coverage",
+
+    "test": "node --no-warnings=ExperimentalWarning --experimental-vm-modules node_modules/jest/bin/jest.js --verbose",
+
     "test/integration/http/login": "node --no-warnings=ExperimentalWarning --experimental-vm-modules node_modules/jest/bin/jest.js test/integration/http/login.test.js --verbose",
     "test/integration/ws/auth": "node --no-warnings=ExperimentalWarning --experimental-vm-modules node_modules/jest/bin/jest.js test/integration/ws/auth.test.js --verbose",
 
@@ -16,6 +18,7 @@
     "test/e2e/ws/on/dashboard:info": "node --no-warnings=ExperimentalWarning --experimental-vm-modules node_modules/jest/bin/jest.js test/e2e/ws/on/dashboard/info.test.js --verbose",
     "test/e2e/ws/on/chats:load_chats": "node --no-warnings=ExperimentalWarning --experimental-vm-modules node_modules/jest/bin/jest.js test/e2e/ws/on/chats/load_chats.test.js --verbose",
     "test/e2e/ws/on/chat:load_messages": "node --no-warnings=ExperimentalWarning --experimental-vm-modules node_modules/jest/bin/jest.js test/e2e/ws/on/chat/load_messages.test.js --verbose",
+    "test/e2e/ws/on/chat:update_human_viewed": "node --no-warnings=ExperimentalWarning --experimental-vm-modules node_modules/jest/bin/jest.js test/e2e/ws/on/chat/update_human_viewed.test.js --verbose",
     "test/e2e/ws/on/contacts:load_contacts": "node --no-warnings=ExperimentalWarning --experimental-vm-modules node_modules/jest/bin/jest.js test/e2e/ws/on/contacts/load_contacts.test.js --verbose",
     "test/e2e/ws/on/support:get_info_support": "node --no-warnings=ExperimentalWarning --experimental-vm-modules node_modules/jest/bin/jest.js test/e2e/ws/on/support/get_info_support.test.js --verbose"
   },

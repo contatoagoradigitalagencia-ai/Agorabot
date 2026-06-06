@@ -23,7 +23,9 @@ describe("ON - dashboard:info", () => {
 	test("requisição feita corretamente", async () => {
 		const res = await server.emit("dashboard:info", { date: new Date().toISOString().split('T')[0] });
 
+		expect(res.code).toEqual(200);
 		expect(res).toMatchObject({
+			code: expect.any(Number),
 			timestamp: expect.any(String),
 			hourly: expect.any(Object),
 			received: expect.any(Object),
@@ -36,49 +38,50 @@ describe("ON - dashboard:info", () => {
 	test("requisição feita sem payload", async () => {
 		const res = await server.emit("dashboard:info");
 
-		expect(res).toEqual({ error: "O payload deve ser um objeto" });
+		expect(res).toEqual({ code: 400, error: "O payload deve ser um objeto" });
 	});
 
 	test("requisição passando um null", async () => {
 		const res = await server.emit("dashboard:info", null);
 
-		expect(res).toEqual({ error: "O payload deve ser um objeto" });
+		expect(res).toEqual({ code: 400, error: "O payload deve ser um objeto" });
 	});
 
 	test("requisição passando uma string", async () => {
 		const res = await server.emit("dashboard:info", "abc");
 
-		expect(res).toEqual({ error: "O payload deve ser um objeto" });
+		expect(res).toEqual({ code: 400, error: "O payload deve ser um objeto" });
 	});
 
 	test("requisição passando um number", async () => {
 		const res = await server.emit("dashboard:info", 123);
 
-		expect(res).toEqual({ error: "O payload deve ser um objeto" });
+		expect(res).toEqual({ code: 400, error: "O payload deve ser um objeto" });
 	});
 
 	test("requisição passando um array", async () => {
 		const res = await server.emit("dashboard:info", []);
 
-		expect(res).toEqual({ error: "O payload deve ser um objeto" });
+		expect(res).toEqual({ code: 400, error: "O payload deve ser um objeto" });
 	});
 
 	test("requisição passando um objeto vazio", async () => {
 		const res = await server.emit("dashboard:info", {});
 
-		expect(res).toEqual({ error: '"date" ausente' });
+		expect(res).toEqual({ code: 400, error: '"date" ausente' });
 	});
 
 	test("'date' inválida", async () => {
 		const res = await server.emit("dashboard:info", { date: "abc" });
 
-		expect(res).toEqual({ error: '"date" inválido' });
+		expect(res).toEqual({ code: 422, error: '"date" inválido' });
 	});
 
 	test("não existe métrica para 'date'", async () => {
 		const res = await server.emit("dashboard:info", { date: "2099-01-01" });
 
 		expect(res).toMatchObject({
+			code: 200,
 			hourly: {},
 			received: {},
 			sent: {},

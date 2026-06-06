@@ -30,5 +30,6 @@ export async function loadMessages(socket, data, callback) {
 		await mongodb.saveHumanView(idPhone, phone);
 	} catch (error) {
 		await mongodb.saveError(idPhone, `Error no metodo "loadMessages": ${error}`);
+		callback({ code: 500, error: "Erro interno do servidor" });
 	}
 }
