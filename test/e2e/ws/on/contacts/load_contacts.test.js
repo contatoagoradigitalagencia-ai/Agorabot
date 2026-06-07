@@ -23,42 +23,54 @@ describe("ON - contacts:load_contacts", () => {
 	test("requisição feita corretamente sem payload", async () => {
 		const res = await server.emit("contacts:load_contacts");
 
-		expect(res).toEqual(expect.any(Array));
-		for (const contact of res) expect(contact).toEqual(expect.any(Object));
+		expect(res).toMatchObject({
+			code: 200,
+			contacts: expect.any(Array)
+		});
 	});
 
 	test("requisição feita passando null", async () => {
 		const res = await server.emit("contacts:load_contacts", null);
 
-		expect(res).toEqual(expect.any(Array));
-		for (const contact of res) expect(contact).toEqual(expect.any(Object));
+		expect(res).toMatchObject({
+			code: 200,
+			contacts: expect.any(Array)
+		});
 	});
 
 	test("requisição feita passando um objeto", async () => {
 		const res = await server.emit("contacts:load_contacts", {});
 
-		expect(res).toEqual(expect.any(Array));
-		for (const contact of res) expect(contact).toEqual(expect.any(Object));
+		expect(res).toMatchObject({
+			code: 200,
+			contacts: expect.any(Array)
+		});
 	});
 
 	test("requisição feita passando um array", async () => {
 		const res = await server.emit("contacts:load_contacts", []);
 
-		expect(res).toEqual(expect.any(Array));
-		for (const contact of res) expect(contact).toEqual(expect.any(Object));
+		expect(res).toMatchObject({
+			code: 200,
+			contacts: expect.any(Array)
+		});
 	});
 
 	test("requisição feita passando uma string", async () => {
 		const res = await server.emit("contacts:load_contacts", "string");
 
-		expect(res).toEqual(expect.any(Array));
-		for (const contact of res) expect(contact).toEqual(expect.any(Object));
+		expect(res).toMatchObject({
+			code: 200,
+			contacts: expect.any(Array)
+		});
 	});
 
 	test("requisição feita passando um number", async () => {
 		const res = await server.emit("contacts:load_contacts", 42);
 
-		expect(res).toEqual(expect.any(Array));
-		for (const contact of res) expect(contact).toEqual(expect.any(Object));
+		expect(res).toMatchObject({
+			code: 200,
+			contacts: expect.any(Array)
+		});
 	});
 });

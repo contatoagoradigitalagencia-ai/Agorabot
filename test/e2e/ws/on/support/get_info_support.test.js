@@ -24,6 +24,7 @@ describe("ON - support:get_info_support", () => {
 		const res = await server.emit("support:get_info_support");
 
 		expect(res).toMatchObject({
+			code: 200,
 			countContact: expect.any(Number),
 			countSpreadsheet: expect.any(Number),
 			system: expect.any(Boolean)
@@ -34,6 +35,7 @@ describe("ON - support:get_info_support", () => {
 		const res = await server.emit("support:get_info_support", null);
 
 		expect(res).toMatchObject({
+			code: 200,
 			countContact: expect.any(Number),
 			countSpreadsheet: expect.any(Number),
 			system: expect.any(Boolean)
@@ -44,6 +46,7 @@ describe("ON - support:get_info_support", () => {
 		const res = await server.emit("support:get_info_support", {});
 
 		expect(res).toMatchObject({
+			code: 200,
 			countContact: expect.any(Number),
 			countSpreadsheet: expect.any(Number),
 			system: expect.any(Boolean)
@@ -54,6 +57,7 @@ describe("ON - support:get_info_support", () => {
 		const res = await server.emit("support:get_info_support", []);
 
 		expect(res).toMatchObject({
+			code: 200,
 			countContact: expect.any(Number),
 			countSpreadsheet: expect.any(Number),
 			system: expect.any(Boolean)
@@ -64,6 +68,7 @@ describe("ON - support:get_info_support", () => {
 		const res = await server.emit("support:get_info_support", "string");
 
 		expect(res).toMatchObject({
+			code: 200,
 			countContact: expect.any(Number),
 			countSpreadsheet: expect.any(Number),
 			system: expect.any(Boolean)
@@ -74,6 +79,7 @@ describe("ON - support:get_info_support", () => {
 		const res = await server.emit("support:get_info_support", 42);
 
 		expect(res).toMatchObject({
+			code: 200,
 			countContact: expect.any(Number),
 			countSpreadsheet: expect.any(Number),
 			system: expect.any(Boolean)

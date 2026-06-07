@@ -15,11 +15,13 @@ export async function getInfoSupport(socket, data, callback) {
 		const pages = await mongodb.Account.findOne({ idPhone }, { "googleSheets.pages": 1 }).lean();
 
 		callback({
+			code: 200,
 			countContact: countContact,
 			countSpreadsheet: pages?.googleSheets?.pages?.length || 0,
 			system: true
 		});
 	} catch (error) {
 		await mongodb.saveError(idPhone, `Error no metodo "getInfoSupport": ${error}`);
+		callback({ code: 500, error: "Erro interno do servidor" });
 	}
 }

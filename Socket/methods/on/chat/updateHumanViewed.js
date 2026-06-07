@@ -18,5 +18,6 @@ export async function updateHumanViewed(socket, data, callback) {
 		callback({ code: 204 });
 	} catch (error) {
 		await mongodb.saveError(idPhone, `Error no metodo "updateHumanViewed": ${error}`);
+		callback({ code: 500, error: "Erro interno do servidor" });
 	}
 }

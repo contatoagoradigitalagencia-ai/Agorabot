@@ -40,9 +40,9 @@ export async function configEvents() {
 		socket.on("chats:load_chats", (data, callback) => this.on.chats.loadChats(socket, data, callback));
 
 		// /chat/:phone
-socket.on("chat:load_messages", (data, callback) => this.on.chat.loadMessages(socket, data, callback));
-socket.on("chat:update_human_viewed", (data, callback) => this.on.chat.updateHumanViewed(socket, data, callback));
-socket.on("chat:reply_window", (data, callback) => this.on.chat.replyWindow(socket, data, callback));
+		socket.on("chat:load_messages", (data, callback) => this.on.chat.loadMessages(socket, data, callback));
+		socket.on("chat:update_human_viewed", (data, callback) => this.on.chat.updateHumanViewed(socket, data, callback));
+		socket.on("chat:reply_window", (data, callback) => this.on.chat.replyWindow(socket, data, callback));
 socket.on("chat:send_message", (data, callback) => this.on.chat.sendMessage(socket, data, callback));
 socket.on("chat:on_off", (data, callback) => this.on.chat.botOnOff(socket, data, callback));
 socket.on("chat:info_contact", (data, callback) => this.on.chat.infoContact(socket, data, callback));
@@ -53,7 +53,7 @@ socket.on("human-service:get_messages_waiting_service", (data, callback) => this
 socket.on("human-service:remove_waiting_service", (data, callback) => this.on.humanService.removeWaitingService(socket, data, callback));
 
 		// /contacts
-socket.on("contacts:load_contacts", (data, callback) => this.on.contacts.loadContacts(socket, data, callback));
+		socket.on("contacts:load_contacts", (data, callback) => this.on.contacts.loadContacts(socket, data, callback));
 socket.on("contacts:save_comment", (data, callback) => this.on.contacts.saveComment(socket, data, callback));
 
 		// /quick-messages
@@ -82,7 +82,7 @@ socket.on("spreadsheets:update_used_spreadsheets", (data, callback) => this.on.s
 socket.on("settings:update_password", (data, callback) => this.on.settings.updatePassword(socket, data, callback));
 
 		// /support
-socket.on("support:get_info_support", (data, callback) => this.on.support.getInfoSupport(socket, data, callback));
+		socket.on("support:get_info_support", (data, callback) => this.on.support.getInfoSupport(socket, data, callback));
 
 		socket.on("disconnect", () => this.disconnect(socket));
 	});

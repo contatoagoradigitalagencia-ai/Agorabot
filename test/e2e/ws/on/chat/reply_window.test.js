@@ -2,9 +2,9 @@ import Server from "../../../serverTest.js";
 
 /**
  * @author VAMPETA
- * @brief TESTA O EVENTO 'chat:update_human_viewed' DO WEBSOCKET
+ * @brief TESTA O EVENTO 'chat:reply_window' DO WEBSOCKET
 */
-describe("ON - chat:update_human_viewed", () => {
+describe("ON - chat:reply_window", () => {
 	const server = new Server({ mongoDB: true });
 
 	beforeAll(async () => {
@@ -22,9 +22,12 @@ describe("ON - chat:update_human_viewed", () => {
 	});
 
 	test("requisição feita corretamente", async () => {
-		const res = await server.emit("chat:update_human_viewed", { phone: process.env.PHONE_DESTINY_TEST });
+		const res = await server.emit("chat:reply_window", { phone: process.env.PHONE_DESTINY_TEST });
 
-		expect(res.code).toBe(204);
+		expect(res).toMatchObject({
+			code: 200,
+			expiration: expect.any(Boolean)
+		});
 	});
 
 	test("requisição feita passando null", async () => {
