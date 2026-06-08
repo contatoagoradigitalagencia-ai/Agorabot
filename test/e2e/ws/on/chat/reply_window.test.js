@@ -31,7 +31,7 @@ describe("ON - chat:reply_window", () => {
 	});
 
 	test("requisição feita passando null", async () => {
-		const res = await server.emit("chat:update_human_viewed", null);
+		const res = await server.emit("chat:reply_window", null);
 
 		expect(res).toEqual({
 			code: 400,
@@ -40,7 +40,7 @@ describe("ON - chat:reply_window", () => {
 	});
 
 	test("requisição feita passando um objeto", async () => {
-		const res = await server.emit("chat:update_human_viewed", {});
+		const res = await server.emit("chat:reply_window", {});
 
 		expect(res).toEqual({
 			code: 400,
@@ -49,7 +49,7 @@ describe("ON - chat:reply_window", () => {
 	});
 
 	test("requisição feita passando um array", async () => {
-		const res = await server.emit("chat:update_human_viewed", []);
+		const res = await server.emit("chat:reply_window", []);
 
 		expect(res).toEqual({
 			code: 400,
@@ -58,7 +58,7 @@ describe("ON - chat:reply_window", () => {
 	});
 
 	test("requisição feita passando uma string", async () => {
-		const res = await server.emit("chat:update_human_viewed", "string");
+		const res = await server.emit("chat:reply_window", "string");
 
 		expect(res).toEqual({
 			code: 400,
@@ -67,7 +67,7 @@ describe("ON - chat:reply_window", () => {
 	});
 
 	test("requisição feita passando um number", async () => {
-		const res = await server.emit("chat:update_human_viewed", 42);
+		const res = await server.emit("chat:reply_window", 42);
 
 		expect(res).toEqual({
 			code: 400,
@@ -76,7 +76,7 @@ describe("ON - chat:reply_window", () => {
 	});
 
 	test("requisição feita passando null dentro de 'phone'", async () => {
-		const res = await server.emit("chat:update_human_viewed", { phone: null });
+		const res = await server.emit("chat:reply_window", { phone: null });
 
 		expect(res).toEqual({
 			code: 400,
@@ -85,7 +85,7 @@ describe("ON - chat:reply_window", () => {
 	});
 
 	test("requisição feita passando um objeto dentro de 'phone'", async () => {
-		const res = await server.emit("chat:update_human_viewed", { phone: {} });
+		const res = await server.emit("chat:reply_window", { phone: {} });
 
 		expect(res).toEqual({
 			code: 400,
@@ -94,7 +94,7 @@ describe("ON - chat:reply_window", () => {
 	});
 
 	test("requisição feita passando um array dentro de 'phone'", async () => {
-		const res = await server.emit("chat:update_human_viewed", { phone: [] });
+		const res = await server.emit("chat:reply_window", { phone: [] });
 
 		expect(res).toEqual({
 			code: 400,
@@ -103,7 +103,7 @@ describe("ON - chat:reply_window", () => {
 	});
 
 	test("requisição feita passando um number dentro de 'phone'", async () => {
-		const res = await server.emit("chat:update_human_viewed", { phone: 42 });
+		const res = await server.emit("chat:reply_window", { phone: 42 });
 
 		expect(res).toEqual({
 			code: 400,
@@ -112,7 +112,7 @@ describe("ON - chat:reply_window", () => {
 	});
 
 	test("'phone' inválido", async () => {
-		const res = await server.emit("chat:update_human_viewed", { phone: "string" });
+		const res = await server.emit("chat:reply_window", { phone: "string" });
 
 		expect(res).toEqual({
 			code: 404,
@@ -121,7 +121,7 @@ describe("ON - chat:reply_window", () => {
 	});
 
 	test("'phone' inexistente", async () => {
-		const res = await server.emit("chat:update_human_viewed", { phone: "5521999999999" });
+		const res = await server.emit("chat:reply_window", { phone: "5521999999999" });
 
 		expect(res).toEqual({
 			code: 404,

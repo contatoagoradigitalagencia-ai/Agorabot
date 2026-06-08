@@ -9,43 +9,43 @@ import send from "../../../../Send/Send.js";
 */
 function validateMessage(phone, message) {
 	try {
-		if (!phone || typeof phone !== "string") return ('O campo "phone" deve ser do tipo string e não deve estar vazio');
-		if (!message || typeof message !== "object") return ('O campo "message" deve ser do tipo object e não deve estar vazio');
-		if (typeof message.type !== "string") return ('O campo "message.type" deve ser do tipo string e não deve estar vazio');
-		if (!message[message.type]) return (`o campo "${message.type}" não deve estar vazio`);
+		if (!phone || typeof phone !== "string") return ({ code: 400, error: 'O campo "phone" deve ser do tipo string e não deve estar vazio' });
+		if (!message || typeof message !== "object") return ({ code: 400, error: 'O campo "message" deve ser do tipo object e não deve estar vazio' });
+		if (typeof message.type !== "string") return ({ code: 400, error: 'O campo "message.type" deve ser do tipo string e não deve estar vazio' });
+		if (!message[message.type]) return ({ code: 422, error: `o campo "${message.type}" não deve estar vazio` });
 		switch (message.type) {
 			case "text":
-				if (!message.text.body || typeof message.text.body !== "string") return ('O campo "message.text.body" deve ser do tipo string e não deve estar vazio');
+				if (!message.text.body || typeof message.text.body !== "string") return ({ code: 400, error: 'O campo "message.text.body" deve ser do tipo string e não deve estar vazio' });
 				break;
 			case "audio":
-				if (!message.audio.link || typeof message.audio.link !== "string") return ('O campo "message.audio.link" deve ser do tipo string e não deve estar vazio');
-				if (typeof message.audio.voice !== "boolean") return ('O campo "message.audio.voice" deve ser do tipo boolean');
+				if (!message.audio.link || typeof message.audio.link !== "string") return ({ code: 400, error: 'O campo "message.audio.link" deve ser do tipo string e não deve estar vazio' });
+				if (typeof message.audio.voice !== "boolean") return ({ code: 400, error: 'O campo "message.audio.voice" deve ser do tipo boolean' });
 				break;
 			case "image":
-				if (!message.image.link || typeof message.image.link !== "string") return ('O campo "message.image.link" deve ser do tipo string e não deve estar vazio');
-				if (typeof message.image.caption !== "string") return ('O campo "message.image.caption" deve ser do tipo string');
+				if (!message.image.link || typeof message.image.link !== "string") return ({ code: 400, error: 'O campo "message.image.link" deve ser do tipo string e não deve estar vazio' });
+				if (typeof message.image.caption !== "string") return ({ code: 400, error: 'O campo "message.image.caption" deve ser do tipo string' });
 				break;
 			case "video":
-				if (!message.video.link || typeof message.video.link !== "string") return ('O campo "message.video.link" deve ser do tipo string e não deve estar vazio');
-				if (typeof message.video.caption !== "string") return ('O campo "message.video.caption" deve ser do tipo string');
+				if (!message.video.link || typeof message.video.link !== "string") return ({ code: 400, error: 'O campo "message.video.link" deve ser do tipo string e não deve estar vazio' });
+				if (typeof message.video.caption !== "string") return ({ code: 400, error: 'O campo "message.video.caption" deve ser do tipo string' });
 				break;
 			case "location":
-				if (typeof message.location.name !== "string") return ('O campo "message.location.name" deve ser do tipo string');
-				if (typeof message.location.address !== "string") return ('O campo "message.location.address" deve ser do tipo string');
-				if (typeof message.location.latitude !== "number" || !Number.isFinite(message.location.latitude) || message.location.latitude < -90 || message.location.latitude > 90) return ('Campo "message.location.latitude" inválido');
-				if (typeof message.location.longitude !== "number" || !Number.isFinite(message.location.longitude) || message.location.longitude < -180 || message.location.longitude > 180) return ('Campo "message.location.longitude" inválido');
+				if (typeof message.location.name !== "string") return ({ code: 400, error: 'O campo "message.location.name" deve ser do tipo string' });
+				if (typeof message.location.address !== "string") return ({ code: 400, error: 'O campo "message.location.address" deve ser do tipo string' });
+				if (typeof message.location.latitude !== "number" || !Number.isFinite(message.location.latitude) || message.location.latitude < -90 || message.location.latitude > 90) return ({ code: 400, error: 'Campo "message.location.latitude" inválido' });
+				if (typeof message.location.longitude !== "number" || !Number.isFinite(message.location.longitude) || message.location.longitude < -180 || message.location.longitude > 180) return ({ code: 400, error: 'Campo "message.location.longitude" inválido' });
 				break;
 			case "document":
-				if (!message.document.link || typeof message.document.link !== "string") return ('O campo "message.document.link" deve ser do tipo string e não deve estar vazio');
-				if (!message.document.filename || typeof message.document.filename !== "string") return ('O campo "message.document.filename" deve ser do tipo string e não deve estar vazio');
-				if (typeof message.document.caption !== "string") return ('O campo "message.document.caption" deve ser do tipo string');
+				if (!message.document.link || typeof message.document.link !== "string") return ({ code: 400, error: 'O campo "message.document.link" deve ser do tipo string e não deve estar vazio' });
+				if (!message.document.filename || typeof message.document.filename !== "string") return ({ code: 400, error: 'O campo "message.document.filename" deve ser do tipo string e não deve estar vazio' });
+				if (typeof message.document.caption !== "string") return ({ code: 400, error: 'O campo "message.document.caption" deve ser do tipo string' });
 				break;
 			default:
-				return (`Mensagem do tipo ${message.type} não existente`);
+				return ({ code: 404, error: `Mensagem do tipo ${message.type} não existente` });
 		}
 		return (null);
 	} catch (error) {
-		return (error);
+		return ({ code: 500, error: "Erro interno do servidor" });
 	}
 }
 
@@ -58,12 +58,16 @@ function validateMessage(phone, message) {
 */
 export async function sendMessage(socket, data, callback) {
 	const { idPhone } = socket.account;
-	const { phone, message } = data;
+	const { phone, message } = data || {};
 
 	try {
+		if (data == null || typeof data !== "object" || Array.isArray(data)) return (callback({ code: 400, error: "O payload deve ser um objeto" }));
 		const error = validateMessage(phone, message);
 
-		if (error) return (callback({ error: error }));
+		if (error) {
+			await mongodb.saveError(idPhone, `Error no metodo "sendText": ${error}`);
+			return (callback(error));
+		}
 		let wamid = null;
 		switch (message.type) {
 			case "text":
@@ -85,9 +89,10 @@ export async function sendMessage(socket, data, callback) {
 				wamid = await send.document(socket.account, phone, message);
 				break;
 		}
-		if (!wamid) return (callback({ error: "Erro interno" }));
-		callback(204);
+		if (!wamid) return (callback({ code: 500, error: "Erro interno (mensagem não enviada)" }));
+		callback({ code: 204 });
 	} catch (error) {
 		await mongodb.saveError(idPhone, `Error no metodo "sendText": ${error}`);
+		callback({ code: 500, error: "Erro interno do servidor" });
 	}
 }

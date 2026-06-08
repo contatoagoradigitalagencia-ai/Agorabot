@@ -88,7 +88,7 @@ export async function bot(account, phone) {
 					top_p: 0.9
 				});
 				json = JSON.parse(res.choices[0].message.content);
-console.log(json)
+console.log(json);
 				break;
 			} catch (error) {
 				await mongodb.saveError(account.idPhone, `Falha na resposta da IA: ${error}`);
