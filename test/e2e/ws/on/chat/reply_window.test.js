@@ -120,7 +120,7 @@ describe("ON - chat:reply_window", () => {
 		});
 	});
 
-	test("'phone' inexistente", async () => {
+	test("'phone' válido mas não existe no banco de dados", async () => {
 		const res = await server.emit("chat:reply_window", { phone: "5521999999999" });
 
 		expect(res).toEqual({

@@ -10,9 +10,9 @@ import send from "../../../../Send/Send.js";
 function validateMessage(phone, message) {
 	try {
 		if (!phone || typeof phone !== "string") return ({ code: 400, error: 'O campo "phone" deve ser do tipo string e não deve estar vazio' });
-		if (!message || typeof message !== "object") return ({ code: 400, error: 'O campo "message" deve ser do tipo object e não deve estar vazio' });
-		if (typeof message.type !== "string") return ({ code: 400, error: 'O campo "message.type" deve ser do tipo string e não deve estar vazio' });
-		if (!message[message.type]) return ({ code: 422, error: `o campo "${message.type}" não deve estar vazio` });
+		if (!message || typeof message !== "object" || Array.isArray(message)) return ({ code: 400, error: 'O campo "message" deve ser do tipo object e não deve estar vazio' });
+		if (!message.type || typeof message.type !== "string" || Array.isArray(message)) return ({ code: 400, error: 'O campo "message.type" deve ser do tipo string e não deve estar vazio' });
+		if (!message[message.type]) return ({ code: 400, error: `o campo "${message.type}" não deve estar vazio` });
 		switch (message.type) {
 			case "text":
 				if (!message.text.body || typeof message.text.body !== "string") return ({ code: 400, error: 'O campo "message.text.body" deve ser do tipo string e não deve estar vazio' });
@@ -30,10 +30,12 @@ function validateMessage(phone, message) {
 				if (typeof message.video.caption !== "string") return ({ code: 400, error: 'O campo "message.video.caption" deve ser do tipo string' });
 				break;
 			case "location":
+				if (typeof message.location.latitude !== "number" || Number.isNaN(message.location.latitude)) return ({ code: 400, error: 'O campo "message.location.latitude" deve ser do tipo number' });
+				if (message.location.latitude < -90 || message.location.latitude > 90) return ({ code: 422, error: 'Campo "message.location.latitude" inválido' });
+				if (typeof message.location.longitude !== "number" || Number.isNaN(message.location.longitude)) return ({ code: 400, error: 'O campo "message.location.longitude" deve ser do tipo number' });
+				if (message.location.longitude < -180 || message.location.longitude > 180) return ({ code: 422, error: 'Campo "message.location.longitude" inválido' });
 				if (typeof message.location.name !== "string") return ({ code: 400, error: 'O campo "message.location.name" deve ser do tipo string' });
 				if (typeof message.location.address !== "string") return ({ code: 400, error: 'O campo "message.location.address" deve ser do tipo string' });
-				if (typeof message.location.latitude !== "number" || !Number.isFinite(message.location.latitude) || message.location.latitude < -90 || message.location.latitude > 90) return ({ code: 400, error: 'Campo "message.location.latitude" inválido' });
-				if (typeof message.location.longitude !== "number" || !Number.isFinite(message.location.longitude) || message.location.longitude < -180 || message.location.longitude > 180) return ({ code: 400, error: 'Campo "message.location.longitude" inválido' });
 				break;
 			case "document":
 				if (!message.document.link || typeof message.document.link !== "string") return ({ code: 400, error: 'O campo "message.document.link" deve ser do tipo string e não deve estar vazio' });
@@ -64,10 +66,7 @@ export async function sendMessage(socket, data, callback) {
 		if (data == null || typeof data !== "object" || Array.isArray(data)) return (callback({ code: 400, error: "O payload deve ser um objeto" }));
 		const error = validateMessage(phone, message);
 
-		if (error) {
-			await mongodb.saveError(idPhone, `Error no metodo "sendText": ${error}`);
-			return (callback(error));
-		}
+		if (error) return (callback(error));
 		let wamid = null;
 		switch (message.type) {
 			case "text":
@@ -92,7 +91,7 @@ export async function sendMessage(socket, data, callback) {
 		if (!wamid) return (callback({ code: 500, error: "Erro interno (mensagem não enviada)" }));
 		callback({ code: 204 });
 	} catch (error) {
-		await mongodb.saveError(idPhone, `Error no metodo "sendText": ${error}`);
+		await mongodb.saveError(idPhone, `Error no metodo "sendMessage": ${error}`);
 		callback({ code: 500, error: "Erro interno do servidor" });
 	}
 }

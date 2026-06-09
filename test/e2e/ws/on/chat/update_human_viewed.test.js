@@ -117,7 +117,7 @@ describe("ON - chat:update_human_viewed", () => {
 		});
 	});
 
-	test("'phone' inexistente", async () => {
+	test("'phone' válido mas não existe no banco de dados", async () => {
 		const res = await server.emit("chat:update_human_viewed", { phone: "5521999999999" });
 
 		expect(res).toEqual({

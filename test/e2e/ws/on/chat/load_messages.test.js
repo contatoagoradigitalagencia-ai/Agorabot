@@ -143,7 +143,7 @@ describe("ON - chat:load_messages", () => {
 		});
 	});
 
-	test("'phone' inexistente (deve se comportar da mesma forma com um número sem mensagens)", async () => {
+	test("'phone' válido mas não existe no banco de dados (deve se comportar da mesma forma com um número sem mensagens)", async () => {
 		const res = await server.emit("chat:load_messages", { phone: "5521999999999" });
 
 		expect(res).toEqual({
@@ -190,7 +190,7 @@ describe("ON - chat:load_messages", () => {
 		});
 	});
 
-	test("'beforeId' inexistente (deve se comportar da mesma forma com um número sem mensagens)", async () => {
+	test("'beforeId' válido mas não existe no banco de dados (deve se comportar da mesma forma com um número sem mensagens)", async () => {
 		const res = await server.emit("chat:load_messages", { phone: process.env.PHONE_DESTINY_TEST, beforeId: "123" });
 
 		expect(res).toEqual({
