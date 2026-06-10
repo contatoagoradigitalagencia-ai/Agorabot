@@ -12,7 +12,7 @@ function validateMessage(phone, message) {
 		if (!phone || typeof phone !== "string") return ({ code: 400, error: 'O campo "phone" deve ser do tipo string e não deve estar vazio' });
 		if (!message || typeof message !== "object" || Array.isArray(message)) return ({ code: 400, error: 'O campo "message" deve ser do tipo object e não deve estar vazio' });
 		if (!message.type || typeof message.type !== "string" || Array.isArray(message)) return ({ code: 400, error: 'O campo "message.type" deve ser do tipo string e não deve estar vazio' });
-		if (!message[message.type]) return ({ code: 400, error: `o campo "${message.type}" não deve estar vazio` });
+		if (!message[message.type] || typeof message[message.type] !== "object" || Array.isArray(message[message.type])) return ({ code: 400, error: `O campo "message.${message.type}" deve conter um objeto válido` });
 		switch (message.type) {
 			case "text":
 				if (!message.text.body || typeof message.text.body !== "string") return ({ code: 400, error: 'O campo "message.text.body" deve ser do tipo string e não deve estar vazio' });

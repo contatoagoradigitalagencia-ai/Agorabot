@@ -177,6 +177,38 @@ describe("ON - chat:send_message", () => {
 	// 	expect(res.code).toBe(204);
 	// });
 
+	// test("requisição do tipo document feita corretamente com link e filename", async () => {
+	// 	const res = await server.emit("chat:send_message", {
+	// 		phone: process.env.PHONE_DESTINY_TEST,
+	// 		message: {
+	// 			type: "document",
+	// 			document: {
+	// 				link: process.env.CLOUDFLARE_R2_URL_PUBLIC + "/871876402681006/5521971178764/document/2026/3/1773961241179-a37e1132-c074-450b-b477-134e5ef21b9b.pdf",
+	// 				filename: "nome.pdf",
+	// 				caption: ""
+	// 			}
+	// 		}
+	// 	});
+
+	// 	expect(res.code).toBe(204);
+	// });
+
+	// test("requisição do tipo document feita corretamente com link, filename e caption", async () => {
+	// 	const res = await server.emit("chat:send_message", {
+	// 		phone: process.env.PHONE_DESTINY_TEST,
+	// 		message: {
+	// 			type: "document",
+	// 			document: {
+	// 				link: process.env.CLOUDFLARE_R2_URL_PUBLIC + "/871876402681006/5521971178764/document/2026/3/1773961241179-a37e1132-c074-450b-b477-134e5ef21b9b.pdf",
+	// 				filename: "nome.pdf",
+	// 				caption: "mensagem de document com caption do teste automatizado E2E"
+	// 			}
+	// 		}
+	// 	});
+
+	// 	expect(res.code).toBe(204);
+	// });
+
 	test("requisição feita passando null", async () => {
 		const res = await server.emit("chat:send_message", null);
 
@@ -452,7 +484,21 @@ describe("ON - chat:send_message", () => {
 
 		expect(res).toEqual({
 			code: 400,
-			error: 'o campo "string" não deve estar vazio'
+			error: 'O campo "message.string" deve conter um objeto válido'
+		});
+	});
+
+	test("requisição feita passando uma string vazia dentro de 'message.type'", async () => {
+		const res = await server.emit("chat:send_message", {
+			phone: process.env.PHONE_DESTINY_TEST,
+			message: {
+				type: ""
+			}
+		});
+
+		expect(res).toEqual({
+			code: 400,
+			error: 'O campo "message.type" deve ser do tipo string e não deve estar vazio'
 		});
 	});
 
@@ -496,7 +542,7 @@ describe("ON - chat:send_message", () => {
 
 		expect(res).toEqual({
 			code: 400,
-			error: 'o campo "text" não deve estar vazio'
+			error: 'O campo "message.text" deve conter um objeto válido'
 		});
 	});
 
@@ -526,7 +572,7 @@ describe("ON - chat:send_message", () => {
 
 		expect(res).toEqual({
 			code: 400,
-			error: 'O campo "message.text.body" deve ser do tipo string e não deve estar vazio'
+			error: 'O campo "message.text" deve conter um objeto válido'
 		});
 	});
 
@@ -541,7 +587,7 @@ describe("ON - chat:send_message", () => {
 
 		expect(res).toEqual({
 			code: 400,
-			error: 'O campo "message.text.body" deve ser do tipo string e não deve estar vazio'
+			error: 'O campo "message.text" deve conter um objeto válido'
 		});
 	});
 
@@ -556,7 +602,7 @@ describe("ON - chat:send_message", () => {
 
 		expect(res).toEqual({
 			code: 400,
-			error: 'O campo "message.text.body" deve ser do tipo string e não deve estar vazio'
+			error: 'O campo "message.text" deve conter um objeto válido'
 		});
 	});
 
@@ -571,7 +617,7 @@ describe("ON - chat:send_message", () => {
 
 		expect(res).toEqual({
 			code: 400,
-			error: 'O campo "message.text.body" deve ser do tipo string e não deve estar vazio'
+			error: 'O campo "message.text" deve conter um objeto válido'
 		});
 	});
 
@@ -689,7 +735,7 @@ describe("ON - chat:send_message", () => {
 
 		expect(res).toEqual({
 			code: 400,
-			error: 'o campo "audio" não deve estar vazio'
+			error: 'O campo "message.audio" deve conter um objeto válido'
 		});
 	});
 
@@ -719,7 +765,7 @@ describe("ON - chat:send_message", () => {
 
 		expect(res).toEqual({
 			code: 400,
-			error: 'O campo "message.audio.link" deve ser do tipo string e não deve estar vazio'
+			error: 'O campo "message.audio" deve conter um objeto válido'
 		});
 	});
 
@@ -734,7 +780,7 @@ describe("ON - chat:send_message", () => {
 
 		expect(res).toEqual({
 			code: 400,
-			error: 'O campo "message.audio.link" deve ser do tipo string e não deve estar vazio'
+			error: 'O campo "message.audio" deve conter um objeto válido'
 		});
 	});
 
@@ -749,7 +795,7 @@ describe("ON - chat:send_message", () => {
 
 		expect(res).toEqual({
 			code: 400,
-			error: 'O campo "message.audio.link" deve ser do tipo string e não deve estar vazio'
+			error: 'O campo "message.audio" deve conter um objeto válido'
 		});
 	});
 
@@ -939,7 +985,7 @@ describe("ON - chat:send_message", () => {
 
 		expect(res).toEqual({
 			code: 400,
-			error: 'o campo "image" não deve estar vazio'
+			error: 'O campo "message.image" deve conter um objeto válido'
 		});
 	});
 
@@ -969,7 +1015,7 @@ describe("ON - chat:send_message", () => {
 
 		expect(res).toEqual({
 			code: 400,
-			error: 'O campo "message.image.link" deve ser do tipo string e não deve estar vazio'
+			error: 'O campo "message.image" deve conter um objeto válido'
 		});
 	});
 
@@ -984,7 +1030,7 @@ describe("ON - chat:send_message", () => {
 
 		expect(res).toEqual({
 			code: 400,
-			error: 'O campo "message.image.link" deve ser do tipo string e não deve estar vazio'
+			error: 'O campo "message.image" deve conter um objeto válido'
 		});
 	});
 
@@ -999,7 +1045,7 @@ describe("ON - chat:send_message", () => {
 
 		expect(res).toEqual({
 			code: 400,
-			error: 'O campo "message.image.link" deve ser do tipo string e não deve estar vazio'
+			error: 'O campo "message.image" deve conter um objeto válido'
 		});
 	});
 
@@ -1189,7 +1235,7 @@ describe("ON - chat:send_message", () => {
 
 		expect(res).toEqual({
 			code: 400,
-			error: 'o campo "video" não deve estar vazio'
+			error: 'O campo "message.video" deve conter um objeto válido'
 		});
 	});
 
@@ -1219,7 +1265,7 @@ describe("ON - chat:send_message", () => {
 
 		expect(res).toEqual({
 			code: 400,
-			error: 'O campo "message.video.link" deve ser do tipo string e não deve estar vazio'
+			error: 'O campo "message.video" deve conter um objeto válido'
 		});
 	});
 
@@ -1234,7 +1280,7 @@ describe("ON - chat:send_message", () => {
 
 		expect(res).toEqual({
 			code: 400,
-			error: 'O campo "message.video.link" deve ser do tipo string e não deve estar vazio'
+			error: 'O campo "message.video" deve conter um objeto válido'
 		});
 	});
 
@@ -1249,7 +1295,7 @@ describe("ON - chat:send_message", () => {
 
 		expect(res).toEqual({
 			code: 400,
-			error: 'O campo "message.video.link" deve ser do tipo string e não deve estar vazio'
+			error: 'O campo "message.video" deve conter um objeto válido'
 		});
 	});
 
@@ -1428,20 +1474,6 @@ describe("ON - chat:send_message", () => {
 		});
 	});
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 	test("requisição do tipo location com 'message.location' recebendo null", async () => {
 		const res = await server.emit("chat:send_message", {
 			phone: process.env.PHONE_DESTINY_TEST,
@@ -1453,7 +1485,7 @@ describe("ON - chat:send_message", () => {
 
 		expect(res).toEqual({
 			code: 400,
-			error: 'o campo "location" não deve estar vazio'
+			error: 'O campo "message.location" deve conter um objeto válido'
 		});
 	});
 
@@ -1483,7 +1515,7 @@ describe("ON - chat:send_message", () => {
 
 		expect(res).toEqual({
 			code: 400,
-			error: 'O campo "message.location.latitude" deve ser do tipo number'
+			error: 'O campo "message.location" deve conter um objeto válido'
 		});
 	});
 
@@ -1498,7 +1530,7 @@ describe("ON - chat:send_message", () => {
 
 		expect(res).toEqual({
 			code: 400,
-			error: 'O campo "message.location.latitude" deve ser do tipo number'
+			error: 'O campo "message.location" deve conter um objeto válido'
 		});
 	});
 
@@ -1513,7 +1545,7 @@ describe("ON - chat:send_message", () => {
 
 		expect(res).toEqual({
 			code: 400,
-			error: 'O campo "message.location.latitude" deve ser do tipo number'
+			error: 'O campo "message.location" deve conter um objeto válido'
 		});
 	});
 
@@ -1616,6 +1648,654 @@ describe("ON - chat:send_message", () => {
 		expect(res).toEqual({
 			code: 422,
 			error: 'Campo "message.location.latitude" inválido'
+		});
+	});
+
+	test("requisição do tipo location com 'message.location.longitude' recebendo null", async () => {
+		const res = await server.emit("chat:send_message", {
+			phone: process.env.PHONE_DESTINY_TEST,
+			message: {
+				type: "location",
+				location: {
+					latitude: -22.909916052379334,
+					longitude: null
+				}
+			}
+		});
+
+		expect(res).toEqual({
+			code: 400,
+			error: 'O campo "message.location.longitude" deve ser do tipo number'
+		});
+	});
+
+	test("requisição do tipo location com 'message.location.longitude' recebendo um objeto", async () => {
+		const res = await server.emit("chat:send_message", {
+			phone: process.env.PHONE_DESTINY_TEST,
+			message: {
+				type: "location",
+				location: {
+					latitude: -22.909916052379334,
+					longitude: {}
+				}
+			}
+		});
+
+		expect(res).toEqual({
+			code: 400,
+			error: 'O campo "message.location.longitude" deve ser do tipo number'
+		});
+	});
+
+	test("requisição do tipo location com 'message.location.longitude' recebendo um array", async () => {
+		const res = await server.emit("chat:send_message", {
+			phone: process.env.PHONE_DESTINY_TEST,
+			message: {
+				type: "location",
+				location: {
+					latitude: -22.909916052379334,
+					longitude: []
+				}
+			}
+		});
+
+		expect(res).toEqual({
+			code: 400,
+			error: 'O campo "message.location.longitude" deve ser do tipo number'
+		});
+	});
+
+	test("requisição do tipo location com 'message.location.longitude' recebendo uma string", async () => {
+		const res = await server.emit("chat:send_message", {
+			phone: process.env.PHONE_DESTINY_TEST,
+			message: {
+				type: "location",
+				location: {
+					latitude: -22.909916052379334,
+					longitude: "string"
+				}
+			}
+		});
+
+		expect(res).toEqual({
+			code: 400,
+			error: 'O campo "message.location.longitude" deve ser do tipo number'
+		});
+	});
+
+	test("requisição do tipo location com 'message.location.longitude' recebendo um number menor que -180", async () => {
+		const res = await server.emit("chat:send_message", {
+			phone: process.env.PHONE_DESTINY_TEST,
+			message: {
+				type: "location",
+				location: {
+					latitude: -22.909916052379334,
+					longitude: -181
+				}
+			}
+		});
+
+		expect(res).toEqual({
+			code: 422,
+			error: 'Campo "message.location.longitude" inválido'
+		});
+	});
+
+	test("requisição do tipo location com 'message.location.longitude' recebendo um number maior que 180", async () => {
+		const res = await server.emit("chat:send_message", {
+			phone: process.env.PHONE_DESTINY_TEST,
+			message: {
+				type: "location",
+				location: {
+					latitude: -22.909916052379334,
+					longitude: 181
+				}
+			}
+		});
+
+		expect(res).toEqual({
+			code: 422,
+			error: 'Campo "message.location.longitude" inválido'
+		});
+	});
+
+	test("requisição do tipo location com 'message.location.name' recebendo null", async () => {
+		const res = await server.emit("chat:send_message", {
+			phone: process.env.PHONE_DESTINY_TEST,
+			message: {
+				type: "location",
+				location: {
+					latitude: -22.909916052379334,
+					longitude: -43.19812500764271,
+					name: null
+				}
+			}
+		});
+
+		expect(res).toEqual({
+			code: 400,
+			error: 'O campo "message.location.name" deve ser do tipo string'
+		});
+	});
+
+	test("requisição do tipo location com 'message.location.name' recebendo um objeto", async () => {
+		const res = await server.emit("chat:send_message", {
+			phone: process.env.PHONE_DESTINY_TEST,
+			message: {
+				type: "location",
+				location: {
+					latitude: -22.909916052379334,
+					longitude: -43.19812500764271,
+					name: {}
+				}
+			}
+		});
+
+		expect(res).toEqual({
+			code: 400,
+			error: 'O campo "message.location.name" deve ser do tipo string'
+		});
+	});
+
+	test("requisição do tipo location com 'message.location.name' recebendo um array", async () => {
+		const res = await server.emit("chat:send_message", {
+			phone: process.env.PHONE_DESTINY_TEST,
+			message: {
+				type: "location",
+				location: {
+					latitude: -22.909916052379334,
+					longitude: -43.19812500764271,
+					name: []
+				}
+			}
+		});
+
+		expect(res).toEqual({
+			code: 400,
+			error: 'O campo "message.location.name" deve ser do tipo string'
+		});
+	});
+
+	test("requisição do tipo location com 'message.location.name' recebendo um boolean", async () => {
+		const res = await server.emit("chat:send_message", {
+			phone: process.env.PHONE_DESTINY_TEST,
+			message: {
+				type: "location",
+				location: {
+					latitude: -22.909916052379334,
+					longitude: -43.19812500764271,
+					name: true
+				}
+			}
+		});
+
+		expect(res).toEqual({
+			code: 400,
+			error: 'O campo "message.location.name" deve ser do tipo string'
+		});
+	});
+
+	test("requisição do tipo location com 'message.location.name' recebendo um number", async () => {
+		const res = await server.emit("chat:send_message", {
+			phone: process.env.PHONE_DESTINY_TEST,
+			message: {
+				type: "location",
+				location: {
+					latitude: -22.909916052379334,
+					longitude: -43.19812500764271,
+					name: 42
+				}
+			}
+		});
+
+		expect(res).toEqual({
+			code: 400,
+			error: 'O campo "message.location.name" deve ser do tipo string'
+		});
+	});
+
+	test("requisição do tipo location com 'message.location.address' recebendo null", async () => {
+		const res = await server.emit("chat:send_message", {
+			phone: process.env.PHONE_DESTINY_TEST,
+			message: {
+				type: "location",
+				location: {
+					latitude: -22.909916052379334,
+					longitude: -43.19812500764271,
+					name: "42 Rio",
+					address: null
+				}
+			}
+		});
+
+		expect(res).toEqual({
+			code: 400,
+			error: 'O campo "message.location.address" deve ser do tipo string'
+		});
+	});
+
+	test("requisição do tipo location com 'message.location.address' recebendo um onjeto", async () => {
+		const res = await server.emit("chat:send_message", {
+			phone: process.env.PHONE_DESTINY_TEST,
+			message: {
+				type: "location",
+				location: {
+					latitude: -22.909916052379334,
+					longitude: -43.19812500764271,
+					name: "42 Rio",
+					address: {}
+				}
+			}
+		});
+
+		expect(res).toEqual({
+			code: 400,
+			error: 'O campo "message.location.address" deve ser do tipo string'
+		});
+	});
+
+	test("requisição do tipo location com 'message.location.address' recebendo um array", async () => {
+		const res = await server.emit("chat:send_message", {
+			phone: process.env.PHONE_DESTINY_TEST,
+			message: {
+				type: "location",
+				location: {
+					latitude: -22.909916052379334,
+					longitude: -43.19812500764271,
+					name: "42 Rio",
+					address: []
+				}
+			}
+		});
+
+		expect(res).toEqual({
+			code: 400,
+			error: 'O campo "message.location.address" deve ser do tipo string'
+		});
+	});
+
+	test("requisição do tipo location com 'message.location.address' recebendo um boolean", async () => {
+		const res = await server.emit("chat:send_message", {
+			phone: process.env.PHONE_DESTINY_TEST,
+			message: {
+				type: "location",
+				location: {
+					latitude: -22.909916052379334,
+					longitude: -43.19812500764271,
+					name: "42 Rio",
+					address: true
+				}
+			}
+		});
+
+		expect(res).toEqual({
+			code: 400,
+			error: 'O campo "message.location.address" deve ser do tipo string'
+		});
+	});
+
+	test("requisição do tipo location com 'message.location.address' recebendo um number", async () => {
+		const res = await server.emit("chat:send_message", {
+			phone: process.env.PHONE_DESTINY_TEST,
+			message: {
+				type: "location",
+				location: {
+					latitude: -22.909916052379334,
+					longitude: -43.19812500764271,
+					name: "42 Rio",
+					address: 42
+				}
+			}
+		});
+
+		expect(res).toEqual({
+			code: 400,
+			error: 'O campo "message.location.address" deve ser do tipo string'
+		});
+	});
+
+	test("requisição do tipo document com 'message.document' recebendo null", async () => {
+		const res = await server.emit("chat:send_message", {
+			phone: process.env.PHONE_DESTINY_TEST,
+			message: {
+				type: "document",
+				document: null
+			}
+		});
+
+		expect(res).toEqual({
+			code: 400,
+			error: 'O campo "message.document" deve conter um objeto válido'
+		});
+	});
+
+	test("requisição do tipo document com 'message.document' recebendo um objeto", async () => {
+		const res = await server.emit("chat:send_message", {
+			phone: process.env.PHONE_DESTINY_TEST,
+			message: {
+				type: "document",
+				document: {}
+			}
+		});
+
+		expect(res).toEqual({
+			code: 400,
+			error: 'O campo "message.document.link" deve ser do tipo string e não deve estar vazio'
+		});
+	});
+
+	test("requisição do tipo audio com 'message.document' recebendo um array", async () => {
+		const res = await server.emit("chat:send_message", {
+			phone: process.env.PHONE_DESTINY_TEST,
+			message: {
+				type: "document",
+				document: []
+			}
+		});
+
+		expect(res).toEqual({
+			code: 400,
+			error: 'O campo "message.document" deve conter um objeto válido'
+		});
+	});
+
+	test("requisição do tipo document com 'message.document' recebendo uma string", async () => {
+		const res = await server.emit("chat:send_message", {
+			phone: process.env.PHONE_DESTINY_TEST,
+			message: {
+				type: "document",
+				document: "string"
+			}
+		});
+
+		expect(res).toEqual({
+			code: 400,
+			error: 'O campo "message.document" deve conter um objeto válido'
+		});
+	});
+
+	test("requisição do tipo document com 'message.document' recebendo um number", async () => {
+		const res = await server.emit("chat:send_message", {
+			phone: process.env.PHONE_DESTINY_TEST,
+			message: {
+				type: "document",
+				document: 42
+			}
+		});
+
+		expect(res).toEqual({
+			code: 400,
+			error: 'O campo "message.document" deve conter um objeto válido'
+		});
+	});
+
+	test("requisição do tipo document com 'message.document.link' recebendo null", async () => {
+		const res = await server.emit("chat:send_message", {
+			phone: process.env.PHONE_DESTINY_TEST,
+			message: {
+				type: "document",
+				document: {
+					link: null
+				}
+			}
+		});
+
+		expect(res).toEqual({
+			code: 400,
+			error: 'O campo "message.document.link" deve ser do tipo string e não deve estar vazio'
+		});
+	});
+
+	test("requisição do tipo document com 'message.document.link' recebendo um objeto", async () => {
+		const res = await server.emit("chat:send_message", {
+			phone: process.env.PHONE_DESTINY_TEST,
+			message: {
+				type: "document",
+				document: {
+					link: {}
+				}
+			}
+		});
+
+		expect(res).toEqual({
+			code: 400,
+			error: 'O campo "message.document.link" deve ser do tipo string e não deve estar vazio'
+		});
+	});
+
+	test("requisição do tipo document com 'message.document.link' recebendo um array", async () => {
+		const res = await server.emit("chat:send_message", {
+			phone: process.env.PHONE_DESTINY_TEST,
+			message: {
+				type: "document",
+				document: {
+					link: []
+				}
+			}
+		});
+
+		expect(res).toEqual({
+			code: 400,
+			error: 'O campo "message.document.link" deve ser do tipo string e não deve estar vazio'
+		});
+	});
+
+	test("requisição do tipo document com 'message.document.link' recebendo um string vazia", async () => {
+		const res = await server.emit("chat:send_message", {
+			phone: process.env.PHONE_DESTINY_TEST,
+			message: {
+				type: "document",
+				document: {
+					link: ""
+				}
+			}
+		});
+
+		expect(res).toEqual({
+			code: 400,
+			error: 'O campo "message.document.link" deve ser do tipo string e não deve estar vazio'
+		});
+	});
+
+	test("requisição do tipo document com 'message.document.link' recebendo um number", async () => {
+		const res = await server.emit("chat:send_message", {
+			phone: process.env.PHONE_DESTINY_TEST,
+			message: {
+				type: "document",
+				document: {
+					link: 42
+				}
+			}
+		});
+
+		expect(res).toEqual({
+			code: 400,
+			error: 'O campo "message.document.link" deve ser do tipo string e não deve estar vazio'
+		});
+	});
+
+	test("requisição do tipo document com 'message.document.filename' recebendo null", async () => {
+		const res = await server.emit("chat:send_message", {
+			phone: process.env.PHONE_DESTINY_TEST,
+			message: {
+				type: "document",
+				document: {
+					link: process.env.CLOUDFLARE_R2_URL_PUBLIC + "/871876402681006/5521971178764/document/2026/3/1773961241179-a37e1132-c074-450b-b477-134e5ef21b9b.pdf",
+					filename: null
+				}
+			}
+		});
+
+		expect(res).toEqual({
+			code: 400,
+			error: 'O campo "message.document.filename" deve ser do tipo string e não deve estar vazio'
+		});
+	});
+
+	test("requisição do tipo document com 'message.document.filename' recebendo um objeto", async () => {
+		const res = await server.emit("chat:send_message", {
+			phone: process.env.PHONE_DESTINY_TEST,
+			message: {
+				type: "document",
+				document: {
+					link: process.env.CLOUDFLARE_R2_URL_PUBLIC + "/871876402681006/5521971178764/document/2026/3/1773961241179-a37e1132-c074-450b-b477-134e5ef21b9b.pdf",
+					filename: {}
+				}
+			}
+		});
+
+		expect(res).toEqual({
+			code: 400,
+			error: 'O campo "message.document.filename" deve ser do tipo string e não deve estar vazio'
+		});
+	});
+
+	test("requisição do tipo document com 'message.document.filename' recebendo um array", async () => {
+		const res = await server.emit("chat:send_message", {
+			phone: process.env.PHONE_DESTINY_TEST,
+			message: {
+				type: "document",
+				document: {
+					link: process.env.CLOUDFLARE_R2_URL_PUBLIC + "/871876402681006/5521971178764/document/2026/3/1773961241179-a37e1132-c074-450b-b477-134e5ef21b9b.pdf",
+					filename: []
+				}
+			}
+		});
+
+		expect(res).toEqual({
+			code: 400,
+			error: 'O campo "message.document.filename" deve ser do tipo string e não deve estar vazio'
+		});
+	});
+
+	test("requisição do tipo document com 'message.document.filename' recebendo uma string vazia", async () => {
+		const res = await server.emit("chat:send_message", {
+			phone: process.env.PHONE_DESTINY_TEST,
+			message: {
+				type: "document",
+				document: {
+					link: process.env.CLOUDFLARE_R2_URL_PUBLIC + "/871876402681006/5521971178764/document/2026/3/1773961241179-a37e1132-c074-450b-b477-134e5ef21b9b.pdf",
+					filename: ""
+				}
+			}
+		});
+
+		expect(res).toEqual({
+			code: 400,
+			error: 'O campo "message.document.filename" deve ser do tipo string e não deve estar vazio'
+		});
+	});
+
+	test("requisição do tipo document com 'message.document.filename' recebendo um number", async () => {
+		const res = await server.emit("chat:send_message", {
+			phone: process.env.PHONE_DESTINY_TEST,
+			message: {
+				type: "document",
+				document: {
+					link: process.env.CLOUDFLARE_R2_URL_PUBLIC + "/871876402681006/5521971178764/document/2026/3/1773961241179-a37e1132-c074-450b-b477-134e5ef21b9b.pdf",
+					filename: 42
+				}
+			}
+		});
+
+		expect(res).toEqual({
+			code: 400,
+			error: 'O campo "message.document.filename" deve ser do tipo string e não deve estar vazio'
+		});
+	});
+
+	test("requisição do tipo document com 'message.document.caption' recebendo null", async () => {
+		const res = await server.emit("chat:send_message", {
+			phone: process.env.PHONE_DESTINY_TEST,
+			message: {
+				type: "document",
+				document: {
+					link: process.env.CLOUDFLARE_R2_URL_PUBLIC + "/871876402681006/5521971178764/document/2026/3/1773961241179-a37e1132-c074-450b-b477-134e5ef21b9b.pdf",
+					filename: "nome.pdf",
+					caption: null
+				}
+			}
+		});
+
+		expect(res).toEqual({
+			code: 400,
+			error: 'O campo "message.document.caption" deve ser do tipo string'
+		});
+	});
+
+	test("requisição do tipo document com 'message.document.caption' recebendo um objeto", async () => {
+		const res = await server.emit("chat:send_message", {
+			phone: process.env.PHONE_DESTINY_TEST,
+			message: {
+				type: "document",
+				document: {
+					link: process.env.CLOUDFLARE_R2_URL_PUBLIC + "/871876402681006/5521971178764/document/2026/3/1773961241179-a37e1132-c074-450b-b477-134e5ef21b9b.pdf",
+					filename: "nome.pdf",
+					caption: {}
+				}
+			}
+		});
+
+		expect(res).toEqual({
+			code: 400,
+			error: 'O campo "message.document.caption" deve ser do tipo string'
+		});
+	});
+
+	test("requisição do tipo document com 'message.document.caption' recebendo um array", async () => {
+		const res = await server.emit("chat:send_message", {
+			phone: process.env.PHONE_DESTINY_TEST,
+			message: {
+				type: "document",
+				document: {
+					link: process.env.CLOUDFLARE_R2_URL_PUBLIC + "/871876402681006/5521971178764/document/2026/3/1773961241179-a37e1132-c074-450b-b477-134e5ef21b9b.pdf",
+					filename: "nome.pdf",
+					caption: []
+				}
+			}
+		});
+
+		expect(res).toEqual({
+			code: 400,
+			error: 'O campo "message.document.caption" deve ser do tipo string'
+		});
+	});
+
+	test("requisição do tipo document com 'message.document.caption' recebendo um boolean", async () => {
+		const res = await server.emit("chat:send_message", {
+			phone: process.env.PHONE_DESTINY_TEST,
+			message: {
+				type: "document",
+				document: {
+					link: process.env.CLOUDFLARE_R2_URL_PUBLIC + "/871876402681006/5521971178764/document/2026/3/1773961241179-a37e1132-c074-450b-b477-134e5ef21b9b.pdf",
+					filename: "nome.pdf",
+					caption: true
+				}
+			}
+		});
+
+		expect(res).toEqual({
+			code: 400,
+			error: 'O campo "message.document.caption" deve ser do tipo string'
+		});
+	});
+
+	test("requisição do tipo document com 'message.document.caption' recebendo um number", async () => {
+		const res = await server.emit("chat:send_message", {
+			phone: process.env.PHONE_DESTINY_TEST,
+			message: {
+				type: "document",
+				document: {
+					link: process.env.CLOUDFLARE_R2_URL_PUBLIC + "/871876402681006/5521971178764/document/2026/3/1773961241179-a37e1132-c074-450b-b477-134e5ef21b9b.pdf",
+					filename: "nome.pdf",
+					caption: 42
+				}
+			}
+		});
+
+		expect(res).toEqual({
+			code: 400,
+			error: 'O campo "message.document.caption" deve ser do tipo string'
 		});
 	});
 });
