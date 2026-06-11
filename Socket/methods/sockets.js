@@ -43,9 +43,9 @@ export async function configEvents() {
 		socket.on("chat:load_messages", (data, callback) => this.on.chat.loadMessages(socket, data, callback));
 		socket.on("chat:update_human_viewed", (data, callback) => this.on.chat.updateHumanViewed(socket, data, callback));
 		socket.on("chat:reply_window", (data, callback) => this.on.chat.replyWindow(socket, data, callback));
-socket.on("chat:send_message", (data, callback) => this.on.chat.sendMessage(socket, data, callback));
-socket.on("chat:on_off", (data, callback) => this.on.chat.botOnOff(socket, data, callback));
-socket.on("chat:info_contact", (data, callback) => this.on.chat.infoContact(socket, data, callback));
+		socket.on("chat:send_message", (data, callback) => this.on.chat.sendMessage(socket, data, callback));
+		socket.on("chat:on_off", (data, callback) => this.on.chat.botOnOff(socket, data, callback));
+		socket.on("chat:info_contact", (data, callback) => this.on.chat.infoContact(socket, data, callback));
 socket.on("chat:response_suggestion", (data, callback) => this.on.chat.responseSuggestion(socket, data, callback));
 
 		// /human-service

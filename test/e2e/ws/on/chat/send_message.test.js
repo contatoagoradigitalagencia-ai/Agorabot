@@ -22,192 +22,192 @@ describe("ON - chat:send_message", () => {
 		await server.stop();
 	});
 
-	// test("requisição do tipo text feita corretamente", async () => {
-	// 	const res = await server.emit("chat:send_message", {
-	// 		phone: process.env.PHONE_DESTINY_TEST,
-	// 		message: {
-	// 			type: "text",
-	// 			text: {
-	// 				body: "mensagem de texto do teste automatizado E2E"
-	// 			}
-	// 		}
-	// 	});
+	test("requisição do tipo text feita corretamente", async () => {
+		const res = await server.emit("chat:send_message", {
+			phone: process.env.PHONE_DESTINY_TEST,
+			message: {
+				type: "text",
+				text: {
+					body: "mensagem de texto do teste automatizado E2E"
+				}
+			}
+		});
 
-	// 	expect(res.code).toBe(204);
-	// });
+		expect(res.code).toBe(204);
+	});
 
-	// test("requisição do tipo audio feita corretamente com audio do tipo voice", async () => {
-	// 	const res = await server.emit("chat:send_message", {
-	// 		phone: process.env.PHONE_DESTINY_TEST,
-	// 		message: {
-	// 			type: "audio",
-	// 			audio: {
-	// 				link: process.env.CLOUDFLARE_R2_URL_PUBLIC + "/871876402681006/5521971178764/audio/2026/3/1773779330594-f41a33b2-6822-42a8-a145-bcd472cf5210.mpga",
-	// 				voice: true
-	// 			}
-	// 		}
-	// 	});
+	test("requisição do tipo audio feita corretamente com audio do tipo voice", async () => {
+		const res = await server.emit("chat:send_message", {
+			phone: process.env.PHONE_DESTINY_TEST,
+			message: {
+				type: "audio",
+				audio: {
+					link: process.env.CLOUDFLARE_R2_URL_PUBLIC + "/871876402681006/5521971178764/audio/2026/3/1773779330594-f41a33b2-6822-42a8-a145-bcd472cf5210.mpga",
+					voice: true
+				}
+			}
+		});
 
-	// 	expect(res.code).toBe(204);
-	// });
+		expect(res.code).toBe(204);
+	});
 
-	// test("requisição do tipo audio feita corretamente com audio do tipo music", async () => {
-	// 	const res = await server.emit("chat:send_message", {
-	// 		phone: process.env.PHONE_DESTINY_TEST,
-	// 		message: {
-	// 			type: "audio",
-	// 			audio: {
-	// 				link: process.env.CLOUDFLARE_R2_URL_PUBLIC + "/871876402681006/5521971178764/audio/2026/3/1773779330594-f41a33b2-6822-42a8-a145-bcd472cf5210.mpga",
-	// 				voice: false
-	// 			}
-	// 		}
-	// 	});
+	test("requisição do tipo audio feita corretamente com audio do tipo music", async () => {
+		const res = await server.emit("chat:send_message", {
+			phone: process.env.PHONE_DESTINY_TEST,
+			message: {
+				type: "audio",
+				audio: {
+					link: process.env.CLOUDFLARE_R2_URL_PUBLIC + "/871876402681006/5521971178764/audio/2026/3/1773779330594-f41a33b2-6822-42a8-a145-bcd472cf5210.mpga",
+					voice: false
+				}
+			}
+		});
 
-	// 	expect(res.code).toBe(204);
-	// });
+		expect(res.code).toBe(204);
+	});
 
-	// test("requisição do tipo image feita corretamente sem caption", async () => {
-	// 	const res = await server.emit("chat:send_message", {
-	// 		phone: process.env.PHONE_DESTINY_TEST,
-	// 		message: {
-	// 			type: "image",
-	// 			image: {
-	// 				link: process.env.CLOUDFLARE_R2_URL_PUBLIC + "/871876402681006/5521971178764/image/2026/3/1773779116930-bba45ff0-4571-4508-a4f3-9adf4982aa78.jpg",
-	// 				caption: ""
-	// 			}
-	// 		}
-	// 	});
+	test("requisição do tipo image feita corretamente sem caption", async () => {
+		const res = await server.emit("chat:send_message", {
+			phone: process.env.PHONE_DESTINY_TEST,
+			message: {
+				type: "image",
+				image: {
+					link: process.env.CLOUDFLARE_R2_URL_PUBLIC + "/871876402681006/5521971178764/image/2026/3/1773779116930-bba45ff0-4571-4508-a4f3-9adf4982aa78.jpg",
+					caption: ""
+				}
+			}
+		});
 
-	// 	expect(res.code).toBe(204);
-	// });
+		expect(res.code).toBe(204);
+	});
 
-	// test("requisição do tipo image feita corretamente com caption", async () => {
-	// 	const res = await server.emit("chat:send_message", {
-	// 		phone: process.env.PHONE_DESTINY_TEST,
-	// 		message: {
-	// 			type: "image",
-	// 			image: {
-	// 				link: process.env.CLOUDFLARE_R2_URL_PUBLIC + "/871876402681006/5521971178764/image/2026/3/1773779116930-bba45ff0-4571-4508-a4f3-9adf4982aa78.jpg",
-	// 				caption: "mensagem de imagem com caption do teste automatizado E2E"
-	// 			}
-	// 		}
-	// 	});
+	test("requisição do tipo image feita corretamente com caption", async () => {
+		const res = await server.emit("chat:send_message", {
+			phone: process.env.PHONE_DESTINY_TEST,
+			message: {
+				type: "image",
+				image: {
+					link: process.env.CLOUDFLARE_R2_URL_PUBLIC + "/871876402681006/5521971178764/image/2026/3/1773779116930-bba45ff0-4571-4508-a4f3-9adf4982aa78.jpg",
+					caption: "mensagem de imagem com caption do teste automatizado E2E"
+				}
+			}
+		});
 
-	// 	expect(res.code).toBe(204);
-	// });
+		expect(res.code).toBe(204);
+	});
 
-	// test("requisição do tipo video feita corretamente sem caption", async () => {
-	// 	const res = await server.emit("chat:send_message", {
-	// 		phone: process.env.PHONE_DESTINY_TEST,
-	// 		message: {
-	// 			type: "video",
-	// 			video: {
-	// 				link: process.env.CLOUDFLARE_R2_URL_PUBLIC + "/871876402681006/5521971178764/video/2026/3/1773870674570-ce6194d7-4530-45b8-a48f-33b965f47187.mp4",
-	// 				caption: ""
-	// 			}
-	// 		}
-	// 	});
+	test("requisição do tipo video feita corretamente sem caption", async () => {
+		const res = await server.emit("chat:send_message", {
+			phone: process.env.PHONE_DESTINY_TEST,
+			message: {
+				type: "video",
+				video: {
+					link: process.env.CLOUDFLARE_R2_URL_PUBLIC + "/871876402681006/5521971178764/video/2026/3/1773870674570-ce6194d7-4530-45b8-a48f-33b965f47187.mp4",
+					caption: ""
+				}
+			}
+		});
 
-	// 	expect(res.code).toBe(204);
-	// });
+		expect(res.code).toBe(204);
+	});
 
-	// test("requisição do tipo video feita corretamente com caption", async () => {
-	// 	const res = await server.emit("chat:send_message", {
-	// 		phone: process.env.PHONE_DESTINY_TEST,
-	// 		message: {
-	// 			type: "video",
-	// 			video: {
-	// 				link: process.env.CLOUDFLARE_R2_URL_PUBLIC + "/871876402681006/5521971178764/video/2026/3/1773870674570-ce6194d7-4530-45b8-a48f-33b965f47187.mp4",
-	// 				caption: "mensagem de video com caption do teste automatizado E2E"
-	// 			}
-	// 		}
-	// 	});
+	test("requisição do tipo video feita corretamente com caption", async () => {
+		const res = await server.emit("chat:send_message", {
+			phone: process.env.PHONE_DESTINY_TEST,
+			message: {
+				type: "video",
+				video: {
+					link: process.env.CLOUDFLARE_R2_URL_PUBLIC + "/871876402681006/5521971178764/video/2026/3/1773870674570-ce6194d7-4530-45b8-a48f-33b965f47187.mp4",
+					caption: "mensagem de video com caption do teste automatizado E2E"
+				}
+			}
+		});
 
-	// 	expect(res.code).toBe(204);
-	// });
+		expect(res.code).toBe(204);
+	});
 
-	// test("requisição do tipo location feita corretamente so com latitude e longitude", async () => {
-	// 	const res = await server.emit("chat:send_message", {
-	// 		phone: process.env.PHONE_DESTINY_TEST,
-	// 		message: {
-	// 			type: "location",
-	// 			location: {
-	// 				latitude: -22.909916052379334,
-	// 				longitude: -43.19812500764271,
-	// 				name: "",
-	// 				address: ""
-	// 			}
-	// 		}
-	// 	});
+	test("requisição do tipo location feita corretamente so com latitude e longitude", async () => {
+		const res = await server.emit("chat:send_message", {
+			phone: process.env.PHONE_DESTINY_TEST,
+			message: {
+				type: "location",
+				location: {
+					latitude: -22.909916052379334,
+					longitude: -43.19812500764271,
+					name: "",
+					address: ""
+				}
+			}
+		});
 
-	// 	expect(res.code).toBe(204);
-	// });
+		expect(res.code).toBe(204);
+	});
 
-	// test("requisição do tipo location feita corretamente com latitude, longitude e name", async () => {
-	// 	const res = await server.emit("chat:send_message", {
-	// 		phone: process.env.PHONE_DESTINY_TEST,
-	// 		message: {
-	// 			type: "location",
-	// 			location: {
-	// 				latitude: -22.909916052379334,
-	// 				longitude: -43.19812500764271,
-	// 				name: "42 Rio",
-	// 				address: ""
-	// 			}
-	// 		}
-	// 	});
+	test("requisição do tipo location feita corretamente com latitude, longitude e name", async () => {
+		const res = await server.emit("chat:send_message", {
+			phone: process.env.PHONE_DESTINY_TEST,
+			message: {
+				type: "location",
+				location: {
+					latitude: -22.909916052379334,
+					longitude: -43.19812500764271,
+					name: "42 Rio",
+					address: ""
+				}
+			}
+		});
 
-	// 	expect(res.code).toBe(204);
-	// });
+		expect(res.code).toBe(204);
+	});
 
-	// test("requisição do tipo location feita corretamente com latitude, longitude, name e address", async () => {
-	// 	const res = await server.emit("chat:send_message", {
-	// 		phone: process.env.PHONE_DESTINY_TEST,
-	// 		message: {
-	// 			type: "location",
-	// 			location: {
-	// 				latitude: -22.909916052379334,
-	// 				longitude: -43.19812500764271,
-	// 				name: "42 Rio",
-	// 				address: "R. Marquês de Sapucaí, 200 - Santo Cristo, Rio de Janeiro - RJ, 20210-072"
-	// 			}
-	// 		}
-	// 	});
+	test("requisição do tipo location feita corretamente com latitude, longitude, name e address", async () => {
+		const res = await server.emit("chat:send_message", {
+			phone: process.env.PHONE_DESTINY_TEST,
+			message: {
+				type: "location",
+				location: {
+					latitude: -22.909916052379334,
+					longitude: -43.19812500764271,
+					name: "42 Rio",
+					address: "R. Marquês de Sapucaí, 200 - Santo Cristo, Rio de Janeiro - RJ, 20210-072"
+				}
+			}
+		});
 
-	// 	expect(res.code).toBe(204);
-	// });
+		expect(res.code).toBe(204);
+	});
 
-	// test("requisição do tipo document feita corretamente com link e filename", async () => {
-	// 	const res = await server.emit("chat:send_message", {
-	// 		phone: process.env.PHONE_DESTINY_TEST,
-	// 		message: {
-	// 			type: "document",
-	// 			document: {
-	// 				link: process.env.CLOUDFLARE_R2_URL_PUBLIC + "/871876402681006/5521971178764/document/2026/3/1773961241179-a37e1132-c074-450b-b477-134e5ef21b9b.pdf",
-	// 				filename: "nome.pdf",
-	// 				caption: ""
-	// 			}
-	// 		}
-	// 	});
+	test("requisição do tipo document feita corretamente com link e filename", async () => {
+		const res = await server.emit("chat:send_message", {
+			phone: process.env.PHONE_DESTINY_TEST,
+			message: {
+				type: "document",
+				document: {
+					link: process.env.CLOUDFLARE_R2_URL_PUBLIC + "/871876402681006/5521971178764/document/2026/3/1773961241179-a37e1132-c074-450b-b477-134e5ef21b9b.pdf",
+					filename: "nome.pdf",
+					caption: ""
+				}
+			}
+		});
 
-	// 	expect(res.code).toBe(204);
-	// });
+		expect(res.code).toBe(204);
+	});
 
-	// test("requisição do tipo document feita corretamente com link, filename e caption", async () => {
-	// 	const res = await server.emit("chat:send_message", {
-	// 		phone: process.env.PHONE_DESTINY_TEST,
-	// 		message: {
-	// 			type: "document",
-	// 			document: {
-	// 				link: process.env.CLOUDFLARE_R2_URL_PUBLIC + "/871876402681006/5521971178764/document/2026/3/1773961241179-a37e1132-c074-450b-b477-134e5ef21b9b.pdf",
-	// 				filename: "nome.pdf",
-	// 				caption: "mensagem de document com caption do teste automatizado E2E"
-	// 			}
-	// 		}
-	// 	});
+	test("requisição do tipo document feita corretamente com link, filename e caption", async () => {
+		const res = await server.emit("chat:send_message", {
+			phone: process.env.PHONE_DESTINY_TEST,
+			message: {
+				type: "document",
+				document: {
+					link: process.env.CLOUDFLARE_R2_URL_PUBLIC + "/871876402681006/5521971178764/document/2026/3/1773961241179-a37e1132-c074-450b-b477-134e5ef21b9b.pdf",
+					filename: "nome.pdf",
+					caption: "mensagem de document com caption do teste automatizado E2E"
+				}
+			}
+		});
 
-	// 	expect(res.code).toBe(204);
-	// });
+		expect(res.code).toBe(204);
+	});
 
 	test("requisição feita passando null", async () => {
 		const res = await server.emit("chat:send_message", null);
@@ -317,23 +317,23 @@ describe("ON - chat:send_message", () => {
 		});
 	});
 
-	// test("'phone' inválido", async () => {
-	// 	const res = await server.emit("chat:send_message", { phone: "string" });
+	test("'phone' inválido", async () => {
+		const res = await server.emit("chat:send_message", { phone: "string" });
 
-	// 	expect(res).toEqual({
-	// 		code: 404,
-	// 		error: "'phone' não corresponde a busca"
-	// 	});
-	// });
+		expect(res).toEqual({
+			code: 400,
+			error: 'O campo "message" deve ser do tipo object e não deve estar vazio'
+		});
+	});
 
-	// test("'phone' válido mas não existe no banco de dados", async () => {
-	// 	const res = await server.emit("chat:send_message", { phone: "5521999999999" });
+	test("'phone' válido mas não existe no banco de dados", async () => {
+		const res = await server.emit("chat:send_message", { phone: "5521999999999" });
 
-	// 	expect(res).toEqual({
-	// 		code: 404,
-	// 		error: "'phone' não corresponde a busca"
-	// 	});
-	// });
+		expect(res).toEqual({
+			code: 400,
+			error: 'O campo "message" deve ser do tipo object e não deve estar vazio'
+		});
+	});
 
 	test("'message' não enviado", async () => {
 		const res = await server.emit("chat:send_message", {
