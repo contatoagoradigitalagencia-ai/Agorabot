@@ -23,6 +23,7 @@
     "test/e2e/ws/on/chat:update_human_viewed": "node --no-warnings=ExperimentalWarning --experimental-vm-modules node_modules/jest/bin/jest.js test/e2e/ws/on/chat/update_human_viewed.test.js --verbose",
     "test/e2e/ws/on/chat:reply_window": "node --no-warnings=ExperimentalWarning --experimental-vm-modules node_modules/jest/bin/jest.js test/e2e/ws/on/chat/reply_window.test.js --verbose",
     "test/e2e/ws/on/chat:send_message": "node --no-warnings=ExperimentalWarning --experimental-vm-modules node_modules/jest/bin/jest.js test/e2e/ws/on/chat/send_message.test.js --verbose",
+    "test/e2e/ws/on/chat:response_suggestion": "node --no-warnings=ExperimentalWarning --experimental-vm-modules node_modules/jest/bin/jest.js test/e2e/ws/on/chat/response_suggestion.test.js --verbose",
     "test/e2e/ws/on/contacts:load_contacts": "node --no-warnings=ExperimentalWarning --experimental-vm-modules node_modules/jest/bin/jest.js test/e2e/ws/on/contacts/load_contacts.test.js --verbose",
     "test/e2e/ws/on/support:get_info_support": "node --no-warnings=ExperimentalWarning --experimental-vm-modules node_modules/jest/bin/jest.js test/e2e/ws/on/support/get_info_support.test.js --verbose"
   },
