@@ -64,6 +64,17 @@ describe("ON - support:get_info_support", () => {
 		});
 	});
 
+	test("requisição feita passando um boolean", async () => {
+		const res = await server.emit("support:get_info_support", true);
+
+		expect(res).toMatchObject({
+			code: 200,
+			countContact: expect.any(Number),
+			countSpreadsheet: expect.any(Number),
+			system: expect.any(Boolean)
+		});
+	});
+
 	test("requisição feita passando uma string", async () => {
 		const res = await server.emit("support:get_info_support", "string");
 

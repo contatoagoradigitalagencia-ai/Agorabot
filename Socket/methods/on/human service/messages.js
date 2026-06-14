@@ -13,9 +13,13 @@ export async function getMessagesWaitingService(socket, data, callback) {
 	try {
 		const contacts = await mongodb.Contact.find({ idPhone: idPhone, "humanService.waiting": true }).select("-_id phone humanService.timestamp").sort({ timestamp: -1 }).lean();
 
-		callback(contacts.map((contact) => ({ phone: contact.phone, timestamp: contact.humanService.timestamp })));
+		callback({
+			code: 200,
+			contacts: contacts.map((contact) => ({ phone: contact.phone, timestamp: contact.humanService.timestamp }))
+		});
 	} catch (error) {
 		await mongodb.saveError(idPhone, `Error no metodo "saveQuickMessage": ${error}`);
+		callback({ code: 500, error: "Erro interno do servidor" });
 	}
 }
 
@@ -28,14 +32,18 @@ export async function getMessagesWaitingService(socket, data, callback) {
 */
 export async function removeWaitingService(socket, data, callback) {
 	const { idPhone } = socket.account;
-	const { phone } = data;
+	const { phone } = data || {};
 
 	try {
-		if (!phone || typeof phone !== "string") return (callback({ error: 'O campo "phone" deve ser do tipo string e não deve estar vazio' }));
+		if (data == null || typeof data !== "object" || Array.isArray(data)) return (callback({ code: 400, error: "O payload deve ser um objeto" }));
+		if (!phone || typeof phone !== "string") return (callback({ code: 400, error: 'O campo "phone" deve ser do tipo string e não deve estar vazio' }));
 		await mongodb.removeHumanService(idPhone, phone);
 
-		callback(204);
+		callback({
+			code: 204
+		});
 	} catch (error) {
 		await mongodb.saveError(idPhone, `Error no metodo "removeWaitingService": ${error}`);
+		callback({ code: 500, error: "Erro interno do servidor" });
 	}
 }

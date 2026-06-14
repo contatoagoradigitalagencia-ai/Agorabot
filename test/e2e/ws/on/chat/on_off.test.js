@@ -25,9 +25,7 @@ describe("ON - chat:on_off", () => {
 	test("requisição feita corretamente", async () => {
 		const res = await server.emit("chat:on_off", { phone: process.env.PHONE_DESTINY_TEST, stateBot: true });
 
-		expect(res).toMatchObject({
-			code: 204,
-		});
+		expect(res.code).toBe(204);
 	});
 
 	test("requisição feita passando null", async () => {

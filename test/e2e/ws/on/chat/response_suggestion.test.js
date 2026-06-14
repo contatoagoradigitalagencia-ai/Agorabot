@@ -5,7 +5,7 @@ import Server from "../../../serverTest.js";
  * @brief TESTA O EVENTO 'chat:response_suggestion' DO WEBSOCKET
 */
 describe("ON - chat:response_suggestion", () => {
-	const server = new Server({ mongoDB: true });
+	const server = new Server({ mongoDB: true, IA: true });
 
 	beforeAll(async () => {
 		await server.start();
@@ -26,7 +26,7 @@ describe("ON - chat:response_suggestion", () => {
 
 		expect(res).toMatchObject({
 			code: 200,
-			// expiration: expect.any(Boolean)
+			suggestion: expect.any(String)
 		});
 	});
 
@@ -35,7 +35,7 @@ describe("ON - chat:response_suggestion", () => {
 
 		expect(res).toMatchObject({
 			code: 200,
-			// expiration: expect.any(Boolean)
+			suggestion: expect.any(String)
 		});
 	});
 
@@ -111,6 +111,15 @@ describe("ON - chat:response_suggestion", () => {
 		});
 	});
 
+	test("requisição feita passando uma string vazia dentro de 'phone'", async () => {
+		const res = await server.emit("chat:response_suggestion", { phone: "" });
+
+		expect(res).toEqual({
+			code: 400,
+			error: 'O campo "phone" deve ser do tipo string e não deve estar vazio'
+		});
+	});
+
 	test("requisição feita passando um number dentro de 'phone'", async () => {
 		const res = await server.emit("chat:response_suggestion", { phone: 42 });
 
@@ -120,21 +129,75 @@ describe("ON - chat:response_suggestion", () => {
 		});
 	});
 
-	// test("'phone' inválido", async () => {
-	// 	const res = await server.emit("chat:response_suggestion", { phone: "string" });
+	test("requisição feita passando null dentro de 'input'", async () => {
+		const res = await server.emit("chat:response_suggestion", { phone: process.env.PHONE_DESTINY_TEST, input: null });
 
-	// 	expect(res).toEqual({
-	// 		code: 404,
-	// 		error: "'phone' não corresponde a busca"
-	// 	});
-	// });
+		expect(res).toEqual({
+			code: 400,
+			error: 'O campo "input" deve ser do tipo string'
+		});
+	});
 
-	// test("'phone' válido mas não existe no banco de dados", async () => {
-	// 	const res = await server.emit("chat:response_suggestion", { phone: "5521999999999" });
+	test("requisição feita passando null dentro de 'input'", async () => {
+		const res = await server.emit("chat:response_suggestion", { phone: process.env.PHONE_DESTINY_TEST, input: null });
 
-	// 	expect(res).toEqual({
-	// 		code: 404,
-	// 		error: "'phone' não corresponde a busca"
-	// 	});
-	// });
+		expect(res).toEqual({
+			code: 400,
+			error: 'O campo "input" deve ser do tipo string'
+		});
+	});
+
+	test("requisição feita passando um objeto dentro de 'input'", async () => {
+		const res = await server.emit("chat:response_suggestion", { phone: process.env.PHONE_DESTINY_TEST, input: {} });
+
+		expect(res).toEqual({
+			code: 400,
+			error: 'O campo "input" deve ser do tipo string'
+		});
+	});
+
+	test("requisição feita passando um array dentro de 'input'", async () => {
+		const res = await server.emit("chat:response_suggestion", { phone: process.env.PHONE_DESTINY_TEST, input: [] });
+
+		expect(res).toEqual({
+			code: 400,
+			error: 'O campo "input" deve ser do tipo string'
+		});
+	});
+
+	test("requisição feita passando um boolean dentro de 'input'", async () => {
+		const res = await server.emit("chat:response_suggestion", { phone: process.env.PHONE_DESTINY_TEST, input: true });
+
+		expect(res).toEqual({
+			code: 400,
+			error: 'O campo "input" deve ser do tipo string'
+		});
+	});
+
+	test("requisição feita passando um number dentro de 'input'", async () => {
+		const res = await server.emit("chat:response_suggestion", { phone: process.env.PHONE_DESTINY_TEST, input: 42 });
+
+		expect(res).toEqual({
+			code: 400,
+			error: 'O campo "input" deve ser do tipo string'
+		});
+	});
+
+	test("'phone' inválido", async () => {
+		const res = await server.emit("chat:response_suggestion", { phone: "string", input: "" });
+
+		expect(res).toEqual({
+			code: 404,
+			error: "'phone' não corresponde a busca"
+		});
+	});
+
+	test("'phone' válido mas não existe no banco de dados", async () => {
+		const res = await server.emit("chat:response_suggestion", { phone: "5521999999999", input: "" });
+
+		expect(res).toEqual({
+			code: 404,
+			error: "'phone' não corresponde a busca"
+		});
+	});
 });
