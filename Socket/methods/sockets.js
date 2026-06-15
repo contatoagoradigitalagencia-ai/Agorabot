@@ -50,14 +50,14 @@ export async function configEvents() {
 
 		// /human-service
 		socket.on("human-service:get_messages_waiting_service", (data, callback) => this.on.humanService.getMessagesWaitingService(socket, data, callback));
-socket.on("human-service:remove_waiting_service", (data, callback) => this.on.humanService.removeWaitingService(socket, data, callback));
+		socket.on("human-service:remove_waiting_service", (data, callback) => this.on.humanService.removeWaitingService(socket, data, callback));
 
 		// /contacts
 		socket.on("contacts:load_contacts", (data, callback) => this.on.contacts.loadContacts(socket, data, callback));
-socket.on("contacts:save_comment", (data, callback) => this.on.contacts.saveComment(socket, data, callback));
+		socket.on("contacts:save_comment", (data, callback) => this.on.contacts.saveComment(socket, data, callback));
 
 		// /quick-messages
-socket.on("quick-messages:get_quick_messages", (data, callback) => this.on.quickMessages.getQuickMessages(socket, data, callback));
+		socket.on("quick-messages:get_quick_messages", (data, callback) => this.on.quickMessages.getQuickMessages(socket, data, callback));
 socket.on("quick-messages:save_quick_message", (data, callback) => this.on.quickMessages.saveQuickMessage(socket, data, callback));
 socket.on("quick-messages:delete_quick_message", (data, callback) => this.on.quickMessages.deleteQuickMessage(socket, data, callback));
 

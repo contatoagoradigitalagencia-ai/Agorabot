@@ -27,6 +27,8 @@
     "test/e2e/ws/on/human-service:get_messages_waiting_service": "node --no-warnings=ExperimentalWarning --experimental-vm-modules node_modules/jest/bin/jest.js test/e2e/ws/on/human-service/get_messages_waiting_service.test.js --verbose",
     "test/e2e/ws/on/human-service:remove_waiting_service": "node --no-warnings=ExperimentalWarning --experimental-vm-modules node_modules/jest/bin/jest.js test/e2e/ws/on/human-service/remove_waiting_service.test.js --verbose",
     "test/e2e/ws/on/contacts:load_contacts": "node --no-warnings=ExperimentalWarning --experimental-vm-modules node_modules/jest/bin/jest.js test/e2e/ws/on/contacts/load_contacts.test.js --verbose",
+    "test/e2e/ws/on/contacts:save_comment": "node --no-warnings=ExperimentalWarning --experimental-vm-modules node_modules/jest/bin/jest.js test/e2e/ws/on/contacts/save_comment.test.js --verbose",
+    "test/e2e/ws/on/quick-messages:get_quick_messages": "node --no-warnings=ExperimentalWarning --experimental-vm-modules node_modules/jest/bin/jest.js test/e2e/ws/on/quick-messages/get_quick_messages.test.js --verbose",
     "test/e2e/ws/on/support:get_info_support": "node --no-warnings=ExperimentalWarning --experimental-vm-modules node_modules/jest/bin/jest.js test/e2e/ws/on/support/get_info_support.test.js --verbose"
   },
   "keywords": [],

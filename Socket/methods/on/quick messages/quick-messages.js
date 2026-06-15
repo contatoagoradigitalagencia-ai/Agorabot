@@ -11,18 +11,20 @@ import IA from "../../../../IA/IA.js";
 */
 export async function getQuickMessages(socket, data, callback) {
 	const { idPhone } = socket.account;
-	const { type } = data;
+	const { type } = data || {};
 
 	try {
-		if (type && typeof type !== "string") return (callback({ error: 'O campo "type" deve ser do tipo string' }));
-		if (type && !["text", "audio", "image", "video", "location", "document"].includes(type)) return (callback({ error: `Tipo de mensagem "${type}" não existe` }));
+		if (data !== null && (typeof data !== "object" || Array.isArray(data))) return (callback({ code: 400, error: "O payload deve ser um objeto ou não deve ser enviado" }));
+		if (data !== null && typeof data === "object" && (!type || typeof type !== "string")) return (callback({ code: 400, error: 'O campo "type" deve ser do tipo string e não deve estar vazio' }));
+		if (type && !["text", "audio", "image", "video", "location", "document"].includes(type)) return (callback({ code: 422, error: `Tipo de mensagem "${type}" não existe` }));
 		const query = { idPhone: idPhone, ...(type && { "message.type": type }) };
 		const messages = await mongodb.QuickMessage.find(query).select("-idPhone").sort({ timestamp: -1 }).lean();
 		const res = messages.map(({ _id, ...rest }) => ({ id: _id, ...rest }));
 
-		callback(res);
+		callback({ code: 200, messages: res });
 	} catch (error) {
 		await mongodb.saveError(idPhone, `Error no metodo "getQuickMessages": ${error}`);
+		callback({ code: 500, error: "Erro interno do servidor" });
 	}
 }
 
@@ -95,6 +97,7 @@ export async function saveQuickMessage(socket, data, callback) {
 		callback({ id: _id });
 	} catch (error) {
 		await mongodb.saveError(idPhone, `Error no metodo "saveQuickMessage": ${error}`);
+		callback({ code: 500, error: "Erro interno do servidor" });
 	}
 }
 
@@ -118,5 +121,6 @@ export async function deleteQuickMessage(socket, data, callback) {
 		callback(204);
 	} catch (error) {
 		await mongodb.saveError(idPhone, `Error no metodo "deleteQuickMessage": ${error}`);
+		callback({ code: 500, error: "Erro interno do servidor" });
 	}
 }

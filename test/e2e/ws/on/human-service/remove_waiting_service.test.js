@@ -1,4 +1,5 @@
 import Server from "../../../serverTest.js";
+import mongodb from "../../../../../MongoDB/Mongodb.js";
 
 /**
  * @author VAMPETA
@@ -11,12 +12,15 @@ describe("ON - human-service:remove_waiting_service", () => {
 		await server.start();
 		if (!process.env.PHONE_TEST) throw (new Error("PHONE_TEST não configurado"));
 		if (!process.env.PASSWORD_TEST) throw (new Error("PASSWORD_TEST não configurado"));
+		if (!process.env.ID_PHONE_TEST) throw (new Error("ID_PHONE_TEST não configurado"));
 		if (!process.env.PHONE_DESTINY_TEST) throw (new Error("PHONE_DESTINY_TEST não configurado"));
 		await server.login();
 		await server.connect();
+		await mongodb.saveHumanService(process.env.ID_PHONE_TEST, process.env.PHONE_DESTINY_TEST);
 	});
 
 	afterAll(async () => {
+		await mongodb.saveHumanService(process.env.ID_PHONE_TEST, process.env.PHONE_DESTINY_TEST);
 		server.disconnect();
 		await server.stop();
 	});
@@ -24,7 +28,7 @@ describe("ON - human-service:remove_waiting_service", () => {
 	test("requisição feita corretamente", async () => {
 		const res = await server.emit("human-service:remove_waiting_service", { phone: process.env.PHONE_DESTINY_TEST });
 
-		expect(res.code).toBe(204);				// REATIVAR ATENDIMENTO
+		expect(res.code).toBe(204);
 	});
 
 	test("requisição feita passando null", async () => {
