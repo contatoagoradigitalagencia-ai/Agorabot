@@ -6,7 +6,7 @@ import { chatHistory } from "./methods/groq/chatHistory.js";
 import { bot } from "./methods/groq/llama-3.3-70b-versatile/response/bot.js";
 import { products } from "./methods/groq/llama-3.3-70b-versatile/response/products.js";
 import { promptSuggestion } from "./methods/groq/llama-3.3-70b-versatile/response/promptSuggestion.js";
-import { transcribeFileMeta } from "./methods/groq/whisper-large-v3-turbo/transcribeFileMeta.js";
+import { transcribeFileMeta, transcribeFileCloudflare } from "./methods/groq/whisper-large-v3-turbo/transcribeFileMeta.js";
 import { responseSuggestion } from "./methods/groq/llama-3.3-70b-versatile/response/responseSugestion.js";
 
 /**
@@ -36,5 +36,6 @@ export default class IA {
 		this.groq["llama-3.3-70b-versatile"].responseSuggestion = responseSuggestion.bind(this);
 
 		this.groq["whisper-large-v3-turbo"].transcribeFileMeta = transcribeFileMeta.bind(this);
+		this.groq["whisper-large-v3-turbo"].transcribeFileCloudflare = transcribeFileCloudflare.bind(this);
 	}
 };
