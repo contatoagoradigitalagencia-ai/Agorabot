@@ -31,6 +31,7 @@
     "test/e2e/ws/on/quick-messages:get_quick_messages": "node --no-warnings=ExperimentalWarning --experimental-vm-modules node_modules/jest/bin/jest.js test/e2e/ws/on/quick-messages/get_quick_messages.test.js --verbose",
     "test/e2e/ws/on/quick-messages:save_quick_message": "node --no-warnings=ExperimentalWarning --experimental-vm-modules node_modules/jest/bin/jest.js test/e2e/ws/on/quick-messages/save_quick_message.test.js --verbose",
     "test/e2e/ws/on/quick-messages:delete_quick_message": "node --no-warnings=ExperimentalWarning --experimental-vm-modules node_modules/jest/bin/jest.js test/e2e/ws/on/quick-messages/delete_quick_message.test.js --verbose",
+    "test/e2e/ws/on/settings:update_password": "node --no-warnings=ExperimentalWarning --experimental-vm-modules node_modules/jest/bin/jest.js test/e2e/ws/on/settings/update_password.test.js --verbose",
     "test/e2e/ws/on/support:get_info_support": "node --no-warnings=ExperimentalWarning --experimental-vm-modules node_modules/jest/bin/jest.js test/e2e/ws/on/support/get_info_support.test.js --verbose"
   },
   "keywords": [],

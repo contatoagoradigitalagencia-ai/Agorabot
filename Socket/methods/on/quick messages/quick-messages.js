@@ -1,3 +1,5 @@
+import mongoose from "mongoose";
+
 import mongodb from "../../../../MongoDB/Mongodb.js";
 import cloudflareR2 from "../../../../Cloudflare R2/CloudflareR2.js";
 import IA from "../../../../IA/IA.js";
@@ -35,46 +37,6 @@ export async function getQuickMessages(socket, data, callback) {
  * @param {Object} message INFORMACOES DA MENSAGEM
 */
 function validateData(name, message) {
-	// try {
-	// 	if (!name || typeof name !== "string") return ('O campo "name" deve ser do tipo string e não deve estar vazio');
-	// 	if (!message || typeof message !== "object") return ('O campo "message" deve ser do tipo object e não deve estar vazio');
-	// 	if (typeof message.type !== "string") return ('O campo "message.type" dever se do tipo string e não deve esta vazio');
-	// 	if (!message[message.type]) return (`o campo "${message.type}" não deve estar vazio`);
-	// 	switch (message.type) {
-	// 		case "text":
-	// 			if (!message.text.body || typeof message.text.body !== "string") return ('O campo "message.text.body" deve ser do tipo string e não deve estar vazio');
-	// 			break;
-	// 		case "audio":
-	// 			if (!message.audio.link || typeof message.audio.link !== "string") return ('O campo "message.audio.link" deve ser do tipo string e não deve estar vazio');
-	// 			if (typeof message.audio.voice !== "boolean") return ('O campo "message.audio.voice" deve ser do tipo boolean');
-	// 			break;
-	// 		case "image":
-	// 			if (!message.image.link || typeof message.image.link !== "string") return ('O campo "message.image.link" deve ser do tipo string e não deve estar vazio');
-	// 			if (message.image.caption && typeof message.image.caption !== "string") return ('O campo "message.image.caption" deve ser do tipo string');
-	// 			break;
-	// 		case "video":
-	// 			if (!message.video.link || typeof message.video.link !== "string") return ('O campo "message.video.link" deve ser do tipo string e não deve estar vazio');
-	// 			if (message.video.caption && typeof message.video.caption !== "string") return ('O campo "message.video.caption" deve ser do tipo string');
-	// 			break;
-	// 		case "location":
-	// 			if (message.location.name && typeof message.location.name !== "string") return ('O campo "message.location.name" deve ser do tipo string');
-	// 			if (message.location.address && typeof message.location.address !== "string") return ('O campo "message.location.address" deve ser do tipo string');
-	// 			if (!message.location.latitude || typeof message.location.latitude !== "number") return ('O campo "message.location.latitude" deve ser do tipo number e não deve estar vazio');
-	// 			if (message.location.latitude < -90 || message.location.latitude > 90) return ("Latitude fora do intervalo (-90 a 90)");
-	// 			if (!message.location.longitude || typeof message.location.longitude !== "number") return ('O campo "message.location.longitude" deve ser do tipo number e não deve estar vazio');
-	// 			if (message.location.longitude < -180 || message.location.longitude > 180) return ("Longitude fora do intervalo (-180 a 180)");
-	// 			break;
-	// 		case "document":
-	// 			if (!message.document.link || typeof message.document.link !== "string") return ('O campo "message.document.link" deve ser do tipo string e não deve estar vazio');
-	// 			if (!message.document.filename || typeof message.document.filename !== "string") return ('O campo "message.document.filename" deve ser do tipo string e não deve estar vazio');
-	// 			if (message.document.caption && typeof message.document.caption !== "string") return ('O campo "message.document.caption" deve ser do tipo string');
-	// 			break;
-	// 		default:
-	// 			return (null);
-	// 	}
-	// } catch (error) {
-	// 	return (error);
-	// }
 	try {
 		if (!name || typeof name !== "string") return ({ code: 400, error: 'O campo "name" deve ser do tipo string e não deve estar vazio' });
 		if (!message || typeof message !== "object" || Array.isArray(message)) return ({ code: 400, error: 'O campo "message" deve ser do tipo object e não deve estar vazio' });
@@ -158,6 +120,7 @@ export async function deleteQuickMessage(socket, data, callback) {
 	try {
 		if (data == null || typeof data !== "object" || Array.isArray(data)) return (callback({ code: 400, error: "O payload deve ser um objeto" }));
 		if (!id || typeof id !== "string") return (callback({ code: 400, error: 'O campo "id" deve ser do tipo string e não deve estar vazio' }));
+		if (!mongoose.Types.ObjectId.isValid(id)) return (callback({ code: 422, error: 'O campo "id" deve ser um ObjectId válido' }));
 		const message = await mongodb.QuickMessage.findById(id).lean();
 		if (!message) return (callback({ code: 404, error: "'id' não corresponde a busca" }));
 		if (["audio", "image", "video", "document"].includes(message.message?.type)) await cloudflareR2.deleteFile(idPhone, message.message?.[message.message.type]?.link);
