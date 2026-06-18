@@ -79,7 +79,7 @@ socket.on("spreadsheets:get_spreadsheets", (data, callback) => this.on.spreadshe
 socket.on("spreadsheets:update_used_spreadsheets", (data, callback) => this.on.spreadsheets.updateUsedSpreadsheets(socket, data, callback));
 
 		// /settings
-socket.on("settings:update_password", (data, callback) => this.on.settings.updatePassword(socket, data, callback));
+		socket.on("settings:update_password", (data, callback) => this.on.settings.updatePassword(socket, data, callback));
 
 		// /support
 		socket.on("support:get_info_support", (data, callback) => this.on.support.getInfoSupport(socket, data, callback));

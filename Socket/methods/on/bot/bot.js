@@ -12,11 +12,12 @@ export async function getInfoBot(socket, data, callback) {
 	const { idPhone } = socket.account;
 
 	try {
-		const account = await mongodb.Account.findOne({ idPhone: idPhone }).select("bot -_id");
+		const account = await mongodb.Account.findOne({ idPhone: idPhone }).select("bot -_id").lean();
 
-		callback(account.bot);
+		callback({ ...account.bot, code: 200});
 	} catch (error) {
 		await mongodb.saveError(idPhone, `Error no metodo "getInfoBot": ${error}`);
+		callback({ code: 500, error: "Erro interno do servidor" });
 	}
 }
 
