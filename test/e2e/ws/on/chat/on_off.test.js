@@ -55,6 +55,15 @@ describe("ON - chat:on_off", () => {
 		});
 	});
 
+	test("requisição feita passando um boolean", async () => {
+		const res = await server.emit("chat:on_off", true);
+
+		expect(res).toEqual({
+			code: 400,
+			error: "O payload deve ser um objeto"
+		});
+	});
+
 	test("requisição feita passando uma string", async () => {
 		const res = await server.emit("chat:on_off", "string");
 

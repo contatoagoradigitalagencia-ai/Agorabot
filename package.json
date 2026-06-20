@@ -32,6 +32,9 @@
     "test/e2e/ws/on/quick-messages:save_quick_message": "node --no-warnings=ExperimentalWarning --experimental-vm-modules node_modules/jest/bin/jest.js test/e2e/ws/on/quick-messages/save_quick_message.test.js --verbose",
     "test/e2e/ws/on/quick-messages:delete_quick_message": "node --no-warnings=ExperimentalWarning --experimental-vm-modules node_modules/jest/bin/jest.js test/e2e/ws/on/quick-messages/delete_quick_message.test.js --verbose",
     "test/e2e/ws/on/bot:get_info_bot": "node --no-warnings=ExperimentalWarning --experimental-vm-modules node_modules/jest/bin/jest.js test/e2e/ws/on/bot/get_info_bot.test.js --verbose",
+    "test/e2e/ws/on/bot:update_status_bot": "node --no-warnings=ExperimentalWarning --experimental-vm-modules node_modules/jest/bin/jest.js test/e2e/ws/on/bot/update_status_bot.test.js --verbose",
+    "test/e2e/ws/on/bot:update_status_visualization": "node --no-warnings=ExperimentalWarning --experimental-vm-modules node_modules/jest/bin/jest.js test/e2e/ws/on/bot/update_status_visualization.test.js --verbose",
+    "test/e2e/ws/on/bot:update_prompt": "node --no-warnings=ExperimentalWarning --experimental-vm-modules node_modules/jest/bin/jest.js test/e2e/ws/on/bot/update_prompt.test.js --verbose",
     "test/e2e/ws/on/settings:update_password": "node --no-warnings=ExperimentalWarning --experimental-vm-modules node_modules/jest/bin/jest.js test/e2e/ws/on/settings/update_password.test.js --verbose",
     "test/e2e/ws/on/support:get_info_support": "node --no-warnings=ExperimentalWarning --experimental-vm-modules node_modules/jest/bin/jest.js test/e2e/ws/on/support/get_info_support.test.js --verbose"
   },

@@ -62,10 +62,10 @@ export async function configEvents() {
 		socket.on("quick-messages:delete_quick_message", (data, callback) => this.on.quickMessages.deleteQuickMessage(socket, data, callback));
 
 		// /bot
-socket.on("bot:get_info_bot", (data, callback) => this.on.bot.getInfoBot(socket, data, callback));
-socket.on("bot:update_status_bot", (data, callback) => this.on.bot.updateStatusBot(socket, data, callback));
-socket.on("bot:update_status_visualization", (data, callback) => this.on.bot.updateVisualization(socket, data, callback));
-socket.on("bot:update_prompt", (data, callback) => this.on.bot.updatePrompt(socket, data, callback));
+		socket.on("bot:get_info_bot", (data, callback) => this.on.bot.getInfoBot(socket, data, callback));
+		socket.on("bot:update_status_bot", (data, callback) => this.on.bot.updateStatusBot(socket, data, callback));
+		socket.on("bot:update_status_visualization", (data, callback) => this.on.bot.updateVisualization(socket, data, callback));
+		socket.on("bot:update_prompt", (data, callback) => this.on.bot.updatePrompt(socket, data, callback));
 socket.on("bot:prompt_suggestion", (data, callback) => this.on.bot.promptSuggestion(socket, data, callback));
 socket.on("bot:update_message_not_supported", (data, callback) => this.on.bot.updateMessageNotSupported(socket, data, callback));
 socket.on("bot:update_location", (data, callback) => this.on.bot.updateLocation(socket, data, callback));

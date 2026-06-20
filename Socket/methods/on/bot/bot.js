@@ -30,14 +30,16 @@ export async function getInfoBot(socket, data, callback) {
 */
 export async function updateStatusBot(socket, data, callback) {
 	const { idPhone } = socket.account;
-	const { status } = data;
+	const { status } = data || {};
 
 	try {
-		if (typeof status !== "boolean") return (callback({ error: 'Deve existir um campo "status" do tipo boolean' }));
+		if (data == null || typeof data !== "object" || Array.isArray(data)) return (callback({ code: 400, error: "O payload deve ser um objeto" }));
+		if (typeof status !== "boolean") return (callback({ code: 400, error: 'O campo "status" deve ser do tipo boolean' }));
 		await mongodb.updateStateBot(idPhone, status);
-		callback(204);
+		callback({ code: 204 });
 	} catch (error) {
 		await mongodb.saveError(idPhone, `Error no metodo "updateStatusBot": ${error}`);
+		callback({ code: 500, error: "Erro interno do servidor" });
 	}
 }
 
@@ -50,14 +52,16 @@ export async function updateStatusBot(socket, data, callback) {
 */
 export async function updateVisualization(socket, data, callback) {
 	const { idPhone } = socket.account;
-	const { visualization } = data;
+	const { visualization } = data || {};
 
 	try {
-		if (typeof visualization !== "boolean") return (callback({ error: 'Deve existir um campo "visualization" do tipo boolean' }));
+		if (data == null || typeof data !== "object" || Array.isArray(data)) return (callback({ code: 400, error: "O payload deve ser um objeto" }));
+		if (typeof visualization !== "boolean") return (callback({ code: 400, error: 'O campo "visualization" deve ser do tipo boolean' }));
 		await mongodb.updateVisualization(idPhone, visualization);
-		callback(204);
+		callback({ code: 204 });
 	} catch (error) {
 		await mongodb.saveError(idPhone, `Error no metodo "updateVisualization": ${error}`);
+		callback({ code: 500, error: "Erro interno do servidor" });
 	}
 }
 
@@ -70,14 +74,16 @@ export async function updateVisualization(socket, data, callback) {
 */
 export async function updatePrompt(socket, data, callback) {
 	const { idPhone } = socket.account;
-	const { prompt } = data;
+	const { prompt } = data || {};
 
 	try {
-		if (typeof prompt !== "string") return (callback({ error: 'O campo "prompt" deve ser do tipo string' }));
+		if (data == null || typeof data !== "object" || Array.isArray(data)) return (callback({ code: 400, error: "O payload deve ser um objeto" }));
+		if (typeof prompt !== "string") return (callback({ code: 400, error: 'O campo "prompt" deve ser do tipo string' }));
 		await mongodb.savePrompt(idPhone, prompt);
-		callback(204);
+		callback({ code: 204 });
 	} catch (error) {
 		await mongodb.saveError(idPhone, `Error no metodo "updatePrompt": ${error}`);
+		callback({ code: 500, error: "Erro interno do servidor" });
 	}
 }
 
