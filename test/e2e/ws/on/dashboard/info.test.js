@@ -52,6 +52,33 @@ describe("ON - dashboard:info", () => {
 		});
 	});
 
+	test("requisição passando um objeto vazio", async () => {
+		const res = await server.emit("dashboard:info", {});
+
+		expect(res).toEqual({
+			code: 400,
+			error: '"date" ausente'
+		});
+	});
+
+	test("requisição passando um array", async () => {
+		const res = await server.emit("dashboard:info", []);
+
+		expect(res).toEqual({
+			code: 400,
+			error: "O payload deve ser um objeto"
+		});
+	});
+
+	test("requisição passando um boolean", async () => {
+		const res = await server.emit("dashboard:info", true);
+
+		expect(res).toEqual({
+			code: 400,
+			error: '"date" ausente'
+		});
+	});
+
 	test("requisição passando uma string", async () => {
 		const res = await server.emit("dashboard:info", "abc");
 
@@ -67,24 +94,6 @@ describe("ON - dashboard:info", () => {
 		expect(res).toEqual({
 			code: 400,
 			error: "O payload deve ser um objeto"
-		});
-	});
-
-	test("requisição passando um array", async () => {
-		const res = await server.emit("dashboard:info", []);
-
-		expect(res).toEqual({
-			code: 400,
-			error: "O payload deve ser um objeto"
-		});
-	});
-
-	test("requisição passando um objeto vazio", async () => {
-		const res = await server.emit("dashboard:info", {});
-
-		expect(res).toEqual({
-			code: 400,
-			error: '"date" ausente'
 		});
 	});
 
