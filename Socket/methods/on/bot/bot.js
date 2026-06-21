@@ -14,7 +14,7 @@ export async function getInfoBot(socket, data, callback) {
 	try {
 		const account = await mongodb.Account.findOne({ idPhone: idPhone }).select("bot -_id").lean();
 
-		callback({ ...account.bot, code: 200});
+		callback({ ...account.bot, code: 200 });
 	} catch (error) {
 		await mongodb.saveError(idPhone, `Error no metodo "getInfoBot": ${error}`);
 		callback({ code: 500, error: "Erro interno do servidor" });
@@ -96,16 +96,18 @@ export async function updatePrompt(socket, data, callback) {
 */
 export async function promptSuggestion(socket, data, callback) {
 	const { idPhone } = socket.account;
-	const { prompt, input } = data;
+	const { prompt, input } = data || {};
 
 	try {
-		if (typeof prompt !== "string") return (callback({ error: 'O campo "prompt" deve ser do tipo string' }));
-		if (!input || typeof input !== "string") return (callback({ error: 'O campo "input" deve ser do tipo string e não deve estar vazio' }));
+		if (data == null || typeof data !== "object" || Array.isArray(data)) return (callback({ code: 400, error: "O payload deve ser um objeto" }));
+		if (typeof prompt !== "string") return (callback({ code: 400, error: 'O campo "prompt" deve ser do tipo string' }));
+		if (!input || typeof input !== "string") return (callback({ code: 400, error: 'O campo "input" deve ser do tipo string e não deve estar vazio' }));
 		const res = await IA.groq["llama-3.3-70b-versatile"].promptSuggestion(socket.account, prompt, input);
 
-		callback(res);
+		callback({ code: 200, promptSuggestion: res });
 	} catch (error) {
 		await mongodb.saveError(idPhone, `Error no metodo "promptSuggestion": ${error}`);
+		callback({ code: 500, error: "Erro interno do servidor" });
 	}
 }
 
@@ -118,14 +120,16 @@ export async function promptSuggestion(socket, data, callback) {
 */
 export async function updateMessageNotSupported(socket, data, callback) {
 	const { idPhone } = socket.account;
-	const { message } = data;
+	const { message } = data || {};
 
 	try {
-		if (typeof message !== "string") return (callback({ error: 'O campo "message" deve ser do tipo string e não deve estar vazio' }));
+		if (data == null || typeof data !== "object" || Array.isArray(data)) return (callback({ code: 400, error: "O payload deve ser um objeto" }));
+		if (typeof message !== "string") return (callback({ code: 400, error: 'O campo "message" deve ser do tipo string' }));
 		await mongodb.saveMessageNotSupported(idPhone, message);
-		callback(204);
+		callback({ code: 204 });
 	} catch (error) {
 		await mongodb.saveError(idPhone, `Error no metodo "updateMessageNotSupported": ${error}`);
+		callback({ code: 500, error: "Erro interno do servidor" });
 	}
 }
 
@@ -138,17 +142,21 @@ export async function updateMessageNotSupported(socket, data, callback) {
 */
 export async function updateLocation(socket, data, callback) {
 	const { idPhone } = socket.account;
-	const { name, address, latitude, longitude } = data;
+	const { name, address, latitude, longitude } = data || {};
 
 	try {
-		if (!name || typeof name !== "string") return (callback({ error: 'O campo "name" deve ser do tipo string e não deve estar vazio' }));
-		if (!address || typeof address !== "string") return (callback({ error: 'O campo "address" deve ser do tipo string e não deve estar vazio' }));
-		if (!latitude || typeof latitude !== "number") return (callback({ error: 'O campo "latitude" deve ser do tipo number e não deve estar vazio' }));
-		if (!longitude || typeof longitude !== "number") return (callback({ error: 'O campo "longitude" deve ser do tipo number e não deve estar vazio' }));
+		if (data == null || typeof data !== "object" || Array.isArray(data)) return (callback({ code: 400, error: "O payload deve ser um objeto" }));
+		if (!name || typeof name !== "string") return (callback({ code: 400, error: 'O campo "name" deve ser do tipo string e não deve estar vazio' }));
+		if (!address || typeof address !== "string") return (callback({ code: 400, error: 'O campo "address" deve ser do tipo string e não deve estar vazio' }));
+		if (typeof latitude !== "number" || Number.isNaN(latitude)) return (callback({ code: 400, error: 'O campo "latitude" deve ser do tipo number' }));
+		if (latitude < -90 || latitude > 90) return (callback({ code: 422, error: 'Campo "latitude" inválido' }));
+		if (typeof longitude !== "number" || Number.isNaN(longitude)) return (callback({ code: 400, error: 'O campo "longitude" deve ser do tipo number' }));
+		if (longitude < -180 || longitude > 180) return (callback({ code: 422, error: 'Campo "longitude" inválido' }));
 		await mongodb.saveLocation(idPhone, name, address, latitude, longitude);
-		callback(204);
+		callback({ code: 204 });
 	} catch (error) {
 		await mongodb.saveError(idPhone, `Error no metodo "updateLocation": ${error}`);
+		callback({ code: 500, error: "Erro interno do servidor" });
 	}
 }
 
