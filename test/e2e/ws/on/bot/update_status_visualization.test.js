@@ -6,6 +6,7 @@ import Server from "../../../serverTest.js";
 */
 describe("ON - bot:update_status_visualization", () => {
 	const server = new Server({ mongoDB: true });
+	let savePayload;
 
 	beforeAll(async () => {
 		await server.start();
@@ -13,10 +14,12 @@ describe("ON - bot:update_status_visualization", () => {
 		if (!process.env.PASSWORD_TEST) throw (new Error("PASSWORD_TEST não configurado"));
 		await server.login();
 		await server.connect();
+		const res = await server.emit("bot:get_info_bot");
+		savePayload = { visualization: res.visualization };
 	});
 
 	afterAll(async () => {
-		await server.emit("bot:update_status_visualization", { visualization: true });
+		await server.emit("bot:update_status_visualization", savePayload);
 		server.disconnect();
 		await server.stop();
 	});

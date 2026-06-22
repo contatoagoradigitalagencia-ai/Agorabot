@@ -38,6 +38,12 @@
     "test/e2e/ws/on/bot:prompt_suggestion": "node --no-warnings=ExperimentalWarning --experimental-vm-modules node_modules/jest/bin/jest.js test/e2e/ws/on/bot/prompt_suggestion.test.js --verbose",
     "test/e2e/ws/on/bot:update_message_not_supported": "node --no-warnings=ExperimentalWarning --experimental-vm-modules node_modules/jest/bin/jest.js test/e2e/ws/on/bot/update_message_not_supported.test.js --verbose",
     "test/e2e/ws/on/bot:update_location": "node --no-warnings=ExperimentalWarning --experimental-vm-modules node_modules/jest/bin/jest.js test/e2e/ws/on/bot/update_location.test.js --verbose",
+    "test/e2e/ws/on/bot:update_message_new_contact": "node --no-warnings=ExperimentalWarning --experimental-vm-modules node_modules/jest/bin/jest.js test/e2e/ws/on/bot/update_message_new_contact.test.js --verbose",
+    "test/e2e/ws/on/bot:update_status_redirect": "node --no-warnings=ExperimentalWarning --experimental-vm-modules node_modules/jest/bin/jest.js test/e2e/ws/on/bot/update_status_redirect.test.js --verbose",
+    "test/e2e/ws/on/bot:update_numbers_redirect": "node --no-warnings=ExperimentalWarning --experimental-vm-modules node_modules/jest/bin/jest.js test/e2e/ws/on/bot/update_numbers_redirect.test.js --verbose",
+    "test/e2e/ws/on/bot:update_message_redirect": "node --no-warnings=ExperimentalWarning --experimental-vm-modules node_modules/jest/bin/jest.js test/e2e/ws/on/bot/update_message_redirect.test.js --verbose",
+    "test/e2e/ws/on/spreadsheets:get_spreadsheets": "node --no-warnings=ExperimentalWarning --experimental-vm-modules node_modules/jest/bin/jest.js test/e2e/ws/on/spreadsheets/get_spreadsheets.test.js --verbose",
+    "test/e2e/ws/on/spreadsheets:update_used_spreadsheets": "node --no-warnings=ExperimentalWarning --experimental-vm-modules node_modules/jest/bin/jest.js test/e2e/ws/on/spreadsheets/update_used_spreadsheets.test.js --verbose",
     "test/e2e/ws/on/settings:update_password": "node --no-warnings=ExperimentalWarning --experimental-vm-modules node_modules/jest/bin/jest.js test/e2e/ws/on/settings/update_password.test.js --verbose",
     "test/e2e/ws/on/support:get_info_support": "node --no-warnings=ExperimentalWarning --experimental-vm-modules node_modules/jest/bin/jest.js test/e2e/ws/on/support/get_info_support.test.js --verbose"
   },

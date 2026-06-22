@@ -69,13 +69,13 @@ export async function configEvents() {
 		socket.on("bot:prompt_suggestion", (data, callback) => this.on.bot.promptSuggestion(socket, data, callback));
 		socket.on("bot:update_message_not_supported", (data, callback) => this.on.bot.updateMessageNotSupported(socket, data, callback));
 		socket.on("bot:update_location", (data, callback) => this.on.bot.updateLocation(socket, data, callback));
-socket.on("bot:update_message_new_contact", (data, callback) => this.on.bot.updateMessageNewContact(socket, data, callback));
-socket.on("bot:update_status_redirect", (data, callback) => this.on.bot.updateStatusRedirect(socket, data, callback));
-socket.on("bot:update_numbers_redirect", (data, callback) => this.on.bot.updateNumbersRedirect(socket, data, callback));
-socket.on("bot:update_message_redirect", (data, callback) => this.on.bot.updateMessageRedirect(socket, data, callback));
+		socket.on("bot:update_message_new_contact", (data, callback) => this.on.bot.updateMessageNewContact(socket, data, callback));
+		socket.on("bot:update_status_redirect", (data, callback) => this.on.bot.updateStatusRedirect(socket, data, callback));
+		socket.on("bot:update_numbers_redirect", (data, callback) => this.on.bot.updateNumbersRedirect(socket, data, callback));
+		socket.on("bot:update_message_redirect", (data, callback) => this.on.bot.updateMessageRedirect(socket, data, callback));
 
 		// /spreadsheets
-socket.on("spreadsheets:get_spreadsheets", (data, callback) => this.on.spreadsheets.getSpreadsheets(socket, data, callback));
+		socket.on("spreadsheets:get_spreadsheets", (data, callback) => this.on.spreadsheets.getSpreadsheets(socket, data, callback));
 socket.on("spreadsheets:update_used_spreadsheets", (data, callback) => this.on.spreadsheets.updateUsedSpreadsheets(socket, data, callback));
 
 		// /settings

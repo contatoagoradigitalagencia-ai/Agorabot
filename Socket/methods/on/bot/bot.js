@@ -169,34 +169,38 @@ export async function updateLocation(socket, data, callback) {
 */
 export async function updateMessageNewContact(socket, data, callback) {
 	const { idPhone } = socket.account;
-	const { message } = data;
+	const { message } = data || {};
 
 	try {
-		if (typeof message !== "string") return (callback({ error: 'O campo "message" deve ser do tipo string' }));
+		if (data == null || typeof data !== "object" || Array.isArray(data)) return (callback({ code: 400, error: "O payload deve ser um objeto" }));
+		if (typeof message !== "string") return (callback({ code: 400, error: 'O campo "message" deve ser do tipo string' }));
 		await mongodb.saveMessageNewContact(idPhone, message);
-		callback(204);
+		callback({ code: 204 });
 	} catch (error) {
 		await mongodb.saveError(idPhone, `Error no metodo "updateMessageNewContact": ${error}`);
+		callback({ code: 500, error: "Erro interno do servidor" });
 	}
 }
 
 /**
  * @author VAMPETA
- * @brief ATUALIZA A LISTA DE CONTATOS DE REDIRECIONAMENTO
+ * @brief LIGA E DESLIGA O SISTEMA DE REDIRECIONAMENTO HUMANO
  * @param {Object} socket OBJETO SOCKET DO CLIENTE
  * @param {Object} data DADOS ENVIADO PELO CLIENTE
  * @param {Object} callback FUNCAO DE RESPOSTA
 */
 export async function updateStatusRedirect(socket, data, callback) {
 	const { idPhone } = socket.account;
-	const { status } = data;
+	const { status } = data || {};
 
 	try {
-		if (typeof status !== "boolean") return (callback({ error: 'Deve existir um campo "status" do tipo boolean' }));
+		if (data == null || typeof data !== "object" || Array.isArray(data)) return (callback({ code: 400, error: "O payload deve ser um objeto" }));
+		if (typeof status !== "boolean") return (callback({ code: 400, error: 'O campo "status" deve ser do tipo boolean' }));
 		await mongodb.updateStateRedirect(idPhone, status);
-		callback(204);
+		callback({ code: 204 });
 	} catch (error) {
 		await mongodb.saveError(idPhone, `Error no metodo "updateStatusRedirect": ${error}`);
+		callback({ code: 500, error: "Erro interno do servidor" });
 	}
 }
 
@@ -209,14 +213,16 @@ export async function updateStatusRedirect(socket, data, callback) {
 */
 export async function updateNumbersRedirect(socket, data, callback) {
 	const { idPhone } = socket.account;
-	const { numbers } = data;
+	const { numbers } = data || {};
 
 	try {
-		if (!Array.isArray(numbers) || !numbers.every((item) => (typeof item === "string"))) return (callback('O campo "numbers" deve ser um array de strings'));
+		if (data == null || typeof data !== "object" || Array.isArray(data)) return (callback({ code: 400, error: "O payload deve ser um objeto" }));
+		if (!Array.isArray(numbers) || !numbers.every((item) => (typeof item === "string"))) return (callback({ code: 400, error: 'O campo "numbers" deve ser um array de strings'}));
 		await mongodb.newRedirect(idPhone, numbers);
-		callback(204);
+		callback({ code: 204 });
 	} catch (error) {
 		await mongodb.saveError(idPhone, `Error no metodo "updateNumbersRedirect": ${error}`);
+		callback({ code: 500, error: "Erro interno do servidor" });
 	}
 }
 
@@ -229,13 +235,15 @@ export async function updateNumbersRedirect(socket, data, callback) {
 */
 export async function updateMessageRedirect(socket, data, callback) {
 	const { idPhone } = socket.account;
-	const { message } = data;
+	const { message } = data || {};
 
 	try {
-		if (typeof message !== "string") return (callback({ error: 'O campo "message" deve ser do tipo string' }));
+		if (data == null || typeof data !== "object" || Array.isArray(data)) return (callback({ code: 400, error: "O payload deve ser um objeto" }));
+		if (typeof message !== "string") return (callback({ code: 400, error: 'O campo "message" deve ser do tipo string' }));
 		await mongodb.saveMessageRedirect(idPhone, message);
-		callback(204);
+		callback({ code: 204 });
 	} catch (error) {
 		await mongodb.saveError(idPhone, `Error no metodo "updateMessageRedirect": ${error}`);
+		callback({ code: 500, error: "Erro interno do servidor" });
 	}
 }

@@ -6,6 +6,7 @@ import Server from "../../../serverTest.js";
 */
 describe("ON - bot:update_prompt", () => {
 	const server = new Server({ mongoDB: true });
+	let savePayload;
 
 	beforeAll(async () => {
 		await server.start();
@@ -13,10 +14,12 @@ describe("ON - bot:update_prompt", () => {
 		if (!process.env.PASSWORD_TEST) throw (new Error("PASSWORD_TEST não configurado"));
 		await server.login();
 		await server.connect();
+		const res = await server.emit("bot:get_info_bot");
+		savePayload = { prompt: res.prompt };
 	});
 
 	afterAll(async () => {
-		await server.emit("bot:update_prompt", { prompt: "- Você é um atendente virtual de uma empresa que pesta serviços de consultoria.\n- Tirar dúvidas sobre serviços.\n- Informar preços, horários e disponibilidade.\n- Ser educado, direto e claro." });
+		await server.emit("bot:update_prompt", savePayload);
 		server.disconnect();
 		await server.stop();
 	});

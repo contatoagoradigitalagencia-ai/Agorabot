@@ -113,7 +113,7 @@ export async function removeRedirect(idPhone, phone) {
 
 /**
  * @author VAMPETA
- * @brief METODO CRIADO PARA REMOVER ATENDENTE DA LISTA DE ATENDENTES
+ * @brief METODO CRIADO PARA ATUALIZAR ATENDENTES DA LISTA DE ATENDENTES
  * @param {String} idPhone IDENTIFICADOR DO NUMERO DE TELEFONE DO BOT
  * @param {Number<String>} numbers ARRAY COM NUMEROS DE REDIRECIONAMENTO
 */

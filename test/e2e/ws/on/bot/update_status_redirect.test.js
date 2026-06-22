@@ -2,9 +2,9 @@ import Server from "../../../serverTest.js";
 
 /**
  * @author VAMPETA
- * @brief TESTA O EVENTO 'bot:update_status_bot' DO WEBSOCKET
+ * @brief TESTA O EVENTO 'bot:update_status_redirect' DO WEBSOCKET
 */
-describe("ON - bot:update_status_bot", () => {
+describe("ON - bot:update_status_redirect", () => {
 	const server = new Server({ mongoDB: true });
 	let savePayload;
 
@@ -15,23 +15,23 @@ describe("ON - bot:update_status_bot", () => {
 		await server.login();
 		await server.connect();
 		const res = await server.emit("bot:get_info_bot");
-		savePayload = { status: res.activated };
+		savePayload = { status: res.redirect.activated };
 	});
 
 	afterAll(async () => {
-		await server.emit("bot:update_status_bot", savePayload);
+		await server.emit("bot:update_status_redirect", savePayload);
 		server.disconnect();
 		await server.stop();
 	});
 
 	test("requisição feita corretamente", async () => {
-		const res = await server.emit("bot:update_status_bot", { status: true });
+		const res = await server.emit("bot:update_status_redirect", { status: true });
 
 		expect(res.code).toBe(204);
 	});
 
 	test("requisição feita passando null", async () => {
-		const res = await server.emit("bot:update_status_bot", null);
+		const res = await server.emit("bot:update_status_redirect", null);
 
 		expect(res).toEqual({
 			code: 400,
@@ -40,7 +40,7 @@ describe("ON - bot:update_status_bot", () => {
 	});
 
 	test("requisição feita passando um objeto", async () => {
-		const res = await server.emit("bot:update_status_bot", {});
+		const res = await server.emit("bot:update_status_redirect", {});
 
 		expect(res).toEqual({
 			code: 400,
@@ -49,7 +49,7 @@ describe("ON - bot:update_status_bot", () => {
 	});
 
 	test("requisição feita passando um array", async () => {
-		const res = await server.emit("bot:update_status_bot", []);
+		const res = await server.emit("bot:update_status_redirect", []);
 
 		expect(res).toEqual({
 			code: 400,
@@ -58,7 +58,7 @@ describe("ON - bot:update_status_bot", () => {
 	});
 
 	test("requisição feita passando um boolean", async () => {
-		const res = await server.emit("bot:update_status_bot", true);
+		const res = await server.emit("bot:update_status_redirect", true);
 
 		expect(res).toEqual({
 			code: 400,
@@ -67,7 +67,7 @@ describe("ON - bot:update_status_bot", () => {
 	});
 
 	test("requisição feita passando uma string", async () => {
-		const res = await server.emit("bot:update_status_bot", "string");
+		const res = await server.emit("bot:update_status_redirect", "string");
 
 		expect(res).toEqual({
 			code: 400,
@@ -76,7 +76,7 @@ describe("ON - bot:update_status_bot", () => {
 	});
 
 	test("requisição feita passando um number", async () => {
-		const res = await server.emit("bot:update_status_bot", 42);
+		const res = await server.emit("bot:update_status_redirect", 42);
 
 		expect(res).toEqual({
 			code: 400,
@@ -85,7 +85,7 @@ describe("ON - bot:update_status_bot", () => {
 	});
 
 	test("requisição feita passando null dentro de 'status'", async () => {
-		const res = await server.emit("bot:update_status_bot", { status: null });
+		const res = await server.emit("bot:update_status_redirect", { status: null });
 
 		expect(res).toEqual({
 			code: 400,
@@ -94,7 +94,7 @@ describe("ON - bot:update_status_bot", () => {
 	});
 
 	test("requisição feita passando um objeto dentro de 'status'", async () => {
-		const res = await server.emit("bot:update_status_bot", { status: {} });
+		const res = await server.emit("bot:update_status_redirect", { status: {} });
 
 		expect(res).toEqual({
 			code: 400,
@@ -103,7 +103,7 @@ describe("ON - bot:update_status_bot", () => {
 	});
 
 	test("requisição feita passando um array dentro de 'status'", async () => {
-		const res = await server.emit("bot:update_status_bot", { status: [] });
+		const res = await server.emit("bot:update_status_redirect", { status: [] });
 
 		expect(res).toEqual({
 			code: 400,
@@ -112,7 +112,7 @@ describe("ON - bot:update_status_bot", () => {
 	});
 
 	test("requisição feita passando uma string dentro de 'status'", async () => {
-		const res = await server.emit("bot:update_status_bot", { status: "string" });
+		const res = await server.emit("bot:update_status_redirect", { status: "string" });
 
 		expect(res).toEqual({
 			code: 400,
@@ -121,7 +121,7 @@ describe("ON - bot:update_status_bot", () => {
 	});
 
 	test("requisição feita passando um number dentro de 'status'", async () => {
-		const res = await server.emit("bot:update_status_bot", { status: 42 });
+		const res = await server.emit("bot:update_status_redirect", { status: 42 });
 
 		expect(res).toEqual({
 			code: 400,

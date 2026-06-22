@@ -2,9 +2,9 @@ import Server from "../../../serverTest.js";
 
 /**
  * @author VAMPETA
- * @brief TESTA O EVENTO 'bot:update_message_not_supported' DO WEBSOCKET
+ * @brief TESTA O EVENTO 'bot:update_message_redirect' DO WEBSOCKET
 */
-describe("ON - bot:update_message_not_supported", () => {
+describe("ON - bot:update_message_redirect", () => {
 	const server = new Server({ mongoDB: true });
 	let savePayload;
 
@@ -15,23 +15,29 @@ describe("ON - bot:update_message_not_supported", () => {
 		await server.login();
 		await server.connect();
 		const res = await server.emit("bot:get_info_bot");
-		savePayload = { message: res.messageNotSupported };
+		savePayload = { message: res.redirect.message };
 	});
 
 	afterAll(async () => {
-		await server.emit("bot:update_message_not_supported", savePayload);
+		await server.emit("bot:update_message_redirect", savePayload);
 		server.disconnect();
 		await server.stop();
 	});
 
-	test("requisição feita corretamente", async () => {
-		const res = await server.emit("bot:update_message_not_supported", { message: "Mensagem teste E2E" });
+	test("requisição feita corretamente removendo a mensagem", async () => {
+		const res = await server.emit("bot:update_message_redirect", { message: "" });
+
+		expect(res.code).toBe(204);
+	});
+
+	test("requisição feita corretamente adicionando uma mensagem", async () => {
+		const res = await server.emit("bot:update_message_redirect", { message: "Mensagem teste E2E" });
 
 		expect(res.code).toBe(204);
 	});
 
 	test("requisição feita passando null", async () => {
-		const res = await server.emit("bot:update_message_not_supported", null);
+		const res = await server.emit("bot:update_message_redirect", null);
 
 		expect(res).toEqual({
 			code: 400,
@@ -40,7 +46,7 @@ describe("ON - bot:update_message_not_supported", () => {
 	});
 
 	test("requisição feita passando um objeto", async () => {
-		const res = await server.emit("bot:update_message_not_supported", {});
+		const res = await server.emit("bot:update_message_redirect", {});
 
 		expect(res).toEqual({
 			code: 400,
@@ -49,7 +55,7 @@ describe("ON - bot:update_message_not_supported", () => {
 	});
 
 	test("requisição feita passando um array", async () => {
-		const res = await server.emit("bot:update_message_not_supported", []);
+		const res = await server.emit("bot:update_message_redirect", []);
 
 		expect(res).toEqual({
 			code: 400,
@@ -58,7 +64,7 @@ describe("ON - bot:update_message_not_supported", () => {
 	});
 
 	test("requisição feita passando um boolean", async () => {
-		const res = await server.emit("bot:update_message_not_supported", true);
+		const res = await server.emit("bot:update_message_redirect", true);
 
 		expect(res).toEqual({
 			code: 400,
@@ -67,7 +73,7 @@ describe("ON - bot:update_message_not_supported", () => {
 	});
 
 	test("requisição feita passando uma string", async () => {
-		const res = await server.emit("bot:update_message_not_supported", "string");
+		const res = await server.emit("bot:update_message_redirect", "string");
 
 		expect(res).toEqual({
 			code: 400,
@@ -76,7 +82,7 @@ describe("ON - bot:update_message_not_supported", () => {
 	});
 
 	test("requisição feita passando um number", async () => {
-		const res = await server.emit("bot:update_message_not_supported", 42);
+		const res = await server.emit("bot:update_message_redirect", 42);
 
 		expect(res).toEqual({
 			code: 400,
@@ -85,7 +91,7 @@ describe("ON - bot:update_message_not_supported", () => {
 	});
 
 	test("requisição feita passando null dentro de 'message'", async () => {
-		const res = await server.emit("bot:update_message_not_supported", { message: null });
+		const res = await server.emit("bot:update_message_redirect", { message: null });
 
 		expect(res).toEqual({
 			code: 400,
@@ -94,7 +100,7 @@ describe("ON - bot:update_message_not_supported", () => {
 	});
 
 	test("requisição feita passando um objeto dentro de 'message'", async () => {
-		const res = await server.emit("bot:update_message_not_supported", { message: {} });
+		const res = await server.emit("bot:update_message_redirect", { message: {} });
 
 		expect(res).toEqual({
 			code: 400,
@@ -103,7 +109,7 @@ describe("ON - bot:update_message_not_supported", () => {
 	});
 
 	test("requisição feita passando um array dentro de 'message'", async () => {
-		const res = await server.emit("bot:update_message_not_supported", { message: [] });
+		const res = await server.emit("bot:update_message_redirect", { message: [] });
 
 		expect(res).toEqual({
 			code: 400,
@@ -112,7 +118,7 @@ describe("ON - bot:update_message_not_supported", () => {
 	});
 
 	test("requisição feita passando um boolean dentro de 'message'", async () => {
-		const res = await server.emit("bot:update_message_not_supported", { message: true });
+		const res = await server.emit("bot:update_message_redirect", { message: true });
 
 		expect(res).toEqual({
 			code: 400,
@@ -121,7 +127,7 @@ describe("ON - bot:update_message_not_supported", () => {
 	});
 
 	test("requisição feita passando um number dentro de 'message'", async () => {
-		const res = await server.emit("bot:update_message_not_supported", { message: 42 });
+		const res = await server.emit("bot:update_message_redirect", { message: 42 });
 
 		expect(res).toEqual({
 			code: 400,

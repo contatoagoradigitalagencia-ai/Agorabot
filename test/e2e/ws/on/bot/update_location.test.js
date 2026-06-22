@@ -6,6 +6,7 @@ import Server from "../../../serverTest.js";
 */
 describe("ON - bot:update_location", () => {
 	const server = new Server({ mongoDB: true });
+	let savePayload;
 
 	beforeAll(async () => {
 		await server.start();
@@ -13,9 +14,17 @@ describe("ON - bot:update_location", () => {
 		if (!process.env.PASSWORD_TEST) throw (new Error("PASSWORD_TEST não configurado"));
 		await server.login();
 		await server.connect();
+		const res = await server.emit("bot:get_info_bot");
+		savePayload = {
+			name: res.location.name,
+			address: res.location.address,
+			latitude: res.location.latitude,
+			longitude: res.location.longitude
+		};
 	});
 
 	afterAll(async () => {
+		await server.emit("bot:update_location", savePayload);
 		server.disconnect();
 		await server.stop();
 	});
