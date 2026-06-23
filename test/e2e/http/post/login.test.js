@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import Server from "../serverTest.js";
+import Server from "../../serverTest.js";
 
 /**
  * @author VAMPETA

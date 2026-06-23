@@ -76,7 +76,7 @@ export async function configEvents() {
 
 		// /spreadsheets
 		socket.on("spreadsheets:get_spreadsheets", (data, callback) => this.on.spreadsheets.getSpreadsheets(socket, data, callback));
-socket.on("spreadsheets:update_used_spreadsheets", (data, callback) => this.on.spreadsheets.updateUsedSpreadsheets(socket, data, callback));
+		socket.on("spreadsheets:update_used_spreadsheets", (data, callback) => this.on.spreadsheets.updateUsedSpreadsheets(socket, data, callback));
 
 		// /settings
 		socket.on("settings:update_password", (data, callback) => this.on.settings.updatePassword(socket, data, callback));

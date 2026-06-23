@@ -11,9 +11,14 @@
     "test": "node --no-warnings=ExperimentalWarning --experimental-vm-modules node_modules/jest/bin/jest.js --verbose",
 
     "test/integration/http/login": "node --no-warnings=ExperimentalWarning --experimental-vm-modules node_modules/jest/bin/jest.js test/integration/http/login.test.js --verbose",
+
     "test/integration/ws/auth": "node --no-warnings=ExperimentalWarning --experimental-vm-modules node_modules/jest/bin/jest.js test/integration/ws/auth.test.js --verbose",
 
-    "test/e2e/http/login": "node --no-warnings=ExperimentalWarning --experimental-vm-modules node_modules/jest/bin/jest.js test/e2e/http/login.test.js --verbose",
+    "test/e2e/http/get/webhook": "node --no-warnings=ExperimentalWarning --experimental-vm-modules node_modules/jest/bin/jest.js test/e2e/http/get/webhook.test.js --verbose",
+    "test/e2e/http/post/webhook": "node --no-warnings=ExperimentalWarning --experimental-vm-modules node_modules/jest/bin/jest.js test/e2e/http/post/webhook.test.js --verbose",
+    "test/e2e/http/post/login": "node --no-warnings=ExperimentalWarning --experimental-vm-modules node_modules/jest/bin/jest.js test/e2e/http/post/login.test.js --verbose",
+    "test/e2e/http/post/upload": "node --no-warnings=ExperimentalWarning --experimental-vm-modules node_modules/jest/bin/jest.js test/e2e/http/post/upload.test.js --verbose",
+
     "test/e2e/ws/connect": "node --no-warnings=ExperimentalWarning --experimental-vm-modules node_modules/jest/bin/jest.js test/e2e/ws/connect.test.js --verbose",
     "test/e2e/ws/on/dashboard:info": "node --no-warnings=ExperimentalWarning --experimental-vm-modules node_modules/jest/bin/jest.js test/e2e/ws/on/dashboard/info.test.js --verbose",
     "test/e2e/ws/on/chats:load_chats": "node --no-warnings=ExperimentalWarning --experimental-vm-modules node_modules/jest/bin/jest.js test/e2e/ws/on/chats/load_chats.test.js --verbose",
