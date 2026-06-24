@@ -4,7 +4,7 @@ import Server from "../../serverTest.js";
 
 /**
  * @author VAMPETA
- * @brief ROTA DE LOGIN
+ * @brief ROTA DE AUTENTICACAO DO WEBHOOK DO SERVIDOR
  * @method GET
  * @route /webhook
 */

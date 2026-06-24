@@ -58,6 +58,7 @@ async function login() {
 
 	if (res.status !== 200) throw new Error("Falha ao autenticar usuário de teste");
 	this.token = res.data.token;
+	return (this.token);
 }
 
 /**

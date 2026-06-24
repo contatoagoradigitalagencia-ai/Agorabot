@@ -27,7 +27,7 @@ export default async function uploadAuthentication(req, res, next) {
 	}
 	if (typeof idPhone !== "string" || typeof phone !== "string") return (res.sendStatus(401));
 	try {
-		const account = await mongodb.Account.findOne({ idPhone: idPhone, phone: phone }).select("-_id -login");
+		const account = await mongodb.Account.findOne({ idPhone: idPhone, phone: phone }).select("-_id -login").lean();
 		if (!account) return (res.sendStatus(403));
 		req.account = account;
 	} catch (error) {

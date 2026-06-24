@@ -5,7 +5,7 @@ import Server from "../../serverTest.js";
 
 /**
  * @author VAMPETA
- * @brief ROTA DE LOGIN
+ * @brief ROTA DE REBIMENTO DE MENSAGENS E DADOS DA META API
  * @method POST
  * @route /webhook
 */
