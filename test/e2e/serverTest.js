@@ -28,8 +28,8 @@ async function start() {
 	const { server, io } = configWebSocket(this.app);
 	this.io = io;
 	configSocket(this.io);
-	await new Promise((resolve) => this.server = server.listen(3001, resolve));
-	this.url = "http://localhost:3001";
+	await new Promise((resolve) => this.server = server.listen(0, resolve));
+	this.url = `http://localhost:${this.server.address().port}`;
 }
 
 /**

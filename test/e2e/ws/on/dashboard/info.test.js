@@ -75,7 +75,7 @@ describe("ON - dashboard:info", () => {
 
 		expect(res).toEqual({
 			code: 400,
-			error: '"date" ausente'
+			error: "O payload deve ser um objeto"
 		});
 	});
 
