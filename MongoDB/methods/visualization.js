@@ -55,7 +55,12 @@ export async function saveVisualization(idPhone, wamid, phone, status) {
 						...(status === "read" ? { readAt: { $ifNull: ["$readAt", new Date()] } } : {})
 					}
 				}
-			]
+			],
+			// Mongoose 9 passou a exigir essa flag explícita pra aceitar
+			// array (pipeline update) — sem ela, TODA chamada falhava
+			// silenciosamente (caía no catch, status nunca avançava).
+			// Achado só na homologação real, não pegava em node --check.
+			{ updatePipeline: true }
 		);
 	} catch (error) {
 		await this.saveError(idPhone, `Error no metodo "saveVisualization": ${error}`);
