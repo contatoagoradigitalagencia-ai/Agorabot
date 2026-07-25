@@ -19,6 +19,7 @@ import { saveLocationReceived, saveLocationSent } from "./methods/location.js";
 import { saveContactsReceived, saveContactsSent } from "./methods/contacts.js";
 import { saveDocumentReceived, saveDocumentSent } from "./methods/document.js";
 import { saveButtonSent } from "./methods/button.js";
+import { saveTemplateSent } from "./methods/template.js";
 import { saveListSent } from "./methods/list.js";
 import { updateStateRedirect, updateRedirect, saveRedirect, removeRedirect, newRedirect, saveMessageRedirect, saveHumanService, removeHumanService } from "./methods/redirect.js";
 import { saveStateBot, updateStateBot } from "./methods/configChat.js";
@@ -85,6 +86,7 @@ export default class Mongodb {
 		this.saveDocumentReceived = saveDocumentReceived.bind(this);
 		this.saveDocumentSent = saveDocumentSent.bind(this);
 		this.saveButtonSent = saveButtonSent.bind(this);
+		this.saveTemplateSent = saveTemplateSent.bind(this);
 		this.saveListSent = saveListSent.bind(this);
 
 		this.updateStateRedirect = updateStateRedirect.bind(this);

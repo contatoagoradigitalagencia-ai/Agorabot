@@ -7,9 +7,14 @@ import mongodb from "../../MongoDB/Mongodb.js";
  * @param {Object} account DADOS DO NUMERO QUE RECEBEU ATUALIZACOES
  * @param {String} phone NUMERO QUE VAI RECEBER A MENSAGEM
  * @param {String} template NOME DO TEMPLATE
+ * @param {Object} options OBJETO OPCIONAL COM language E parameters (variáveis do corpo do template)
+ * @param {String} [options.language] CODIGO DO IDIOMA DO TEMPLATE (padrão pt_BR)
+ * @param {Array<String>} [options.parameters] VALORES DAS VARIAVEIS {{1}}, {{2}}... DO CORPO DO TEMPLATE, NA ORDEM
  * @return {String} RETORNA O WAMID DA MENSAGEM
 */
-export default async function template(account, phone, template) {
+export default async function template(account, phone, template, options = {}) {
+	const { language, parameters } = options;
+
 	try {
 		const data = {
 			messaging_product: "whatsapp",
@@ -18,8 +23,11 @@ export default async function template(account, phone, template) {
 			template: {
 				name: template,
 				language: {
-					code: "pt_BR"
-				}
+					code: language || "pt_BR"
+				},
+				components: (Array.isArray(parameters) && parameters.length)
+					? [{ type: "body", parameters: parameters.map((text) => ({ type: "text", text: String(text) })) }]
+					: undefined
 			}
 		};
 		const res = await axios({
@@ -36,22 +44,8 @@ export default async function template(account, phone, template) {
 		if (!wamid) throw ("Wamid não retornado pela API da Meta");
 		delete data.messaging_product;
 		delete data.to;
-		// await mongodb.saveTemplateSent(account.idPhone, wamid, phone, data);
+		await mongodb.saveTemplateSent(account.idPhone, wamid, phone, data);
 		return (wamid);
-
-
-
-// const response = await axios({
-//   method: "get",
-//   url: "https://graph.facebook.com/v22.0/" + "1928907784506308" + "/message_templates",
-//   headers: {
-//     Authorization: "Bearer " + "EAFrQAbUntCsBQIEWpKEx2QfQNIQOTd6VOz3ZBUolzZAcnbZC4I0EpU2HpjMqKgB9zx7WBcHy0g2QRoMerYRRKj35QGf7y3CZCwuBfiYJqNABm12Ts9pWqGa3bD9IKkgfX3pZBBoHpK2W6p4k5tQUjoAVsO8P5q9KeZAxAltyzYDXQQrZAYanfXKHjBB7DZA4fgZDZD"
-//   }
-// });
-
-// // console.log(response.data.data);
-// console.log(response.data);
-
 	} catch (error) {
 		await mongodb.saveError(account.idPhone, `Erro na função "template": ${error}`);
 		return (null);
