@@ -25,6 +25,16 @@ const message = new mongoose.Schema({
 		type: String,
 		default: undefined
 	},
+	// Timestamps próprios de delivered/read — antes só existia o
+	// "status" atual (sobrescrito a cada evento), sem trilha de quando
+	// cada etapa aconteceu. Necessário pra auditoria de entrega (ex.:
+	// notificações do Jarvis).
+	deliveredAt: {
+		type: Date
+	},
+	readAt: {
+		type: Date
+	},
 	react: {
 		type: String
 	},
