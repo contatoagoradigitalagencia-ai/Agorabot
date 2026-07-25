@@ -12,9 +12,12 @@ export async function getSpreadsheets(socket, data, callback) {
 	const { idPhone } = socket.account;
 
 	try {
-		const pages = await googleSheets.getPages(socket.account);
 		const account = await mongodb.Account.findOne({ idPhone: idPhone }).select("googleSheets -_id").lean();
 
+		// Conta sem planilha (ex.: Jarvis) — estado vazio, não erro.
+		if (!account.googleSheets) return (callback({ code: 200, url: null, pages: [] }));
+
+		const pages = await googleSheets.getPages(socket.account);
 		callback({
 			code: 200,
 			url: account.googleSheets.spreadsheet,

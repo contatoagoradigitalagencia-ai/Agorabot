@@ -8,6 +8,7 @@ import mongodb from "../../MongoDB/Mongodb.js";
  * @return {Array<Object>} RETORNA UM OBJETO COM O CONTEUDO DE page NO FORMATO JSON
 */
 export async function getPageJson(account, page) {
+	if (!account.googleSheets) return ([]);
 	try {
 		const res = await this.googleSheets.spreadsheets.values.get({
 			spreadsheetId: account.googleSheets.spreadsheet,
@@ -35,6 +36,7 @@ export async function getPageJson(account, page) {
  * @return {String} RETORNA UMA STRING COM AS INFORMACOES DAS PAGINAS
 */
 export async function getPageJsonText(account) {
+	if (!account.googleSheets) return ("");
 	try {
 		let text = "";
 		const availablePages = await this.getPages(account);
@@ -59,6 +61,7 @@ export async function getPageJsonText(account) {
  * @return {String} RETORNA UM OBJETO COM O CONTEUDO DE page
 */
 export async function getPageTable(account, page) {
+	if (!account.googleSheets) return ("");
 	try {
 		const res = await this.googleSheets.spreadsheets.values.get({
 			spreadsheetId: account.googleSheets.spreadsheet,

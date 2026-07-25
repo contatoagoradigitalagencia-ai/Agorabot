@@ -82,9 +82,12 @@ const account = new mongoose.Schema({
 		type: [String],
 		required: true
 	},
+	// Opcional — contas transacionais (ex.: Jarvis) não alimentam a IA
+	// com planilha nenhuma. O índice único abaixo já é sparse, então
+	// múltiplas contas sem esse campo convivem sem conflito.
 	googleSheets: {
 		type: googleSheets,
-		required: true
+		required: false
 	},
 	bot: {
 		type: bot,

@@ -10,7 +10,7 @@ import googleSheets from "../../Google Sheets/GoogleSheets.js";
 */
 export async function spreadsheets(account, message) {
 	try {
-		if (account.googleSheets.pages.length) {
+		if (account.googleSheets?.pages.length) {
 			await send.text(account, message.from, { text: { body: `Nomes das planilhas que alimentam o bot:${account.googleSheets.pages.map((page) => (`\n\`${page}\``)).join("")}` } });
 		} else {
 			await send.text(account, message.from, { text: { body: "Nenhuma planilha configurada para alimentar o bot" } });
